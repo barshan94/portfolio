@@ -1,0 +1,60 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+          <rect x="3" y="6" width="26" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M10 16h12M10 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="23" cy="11" r="2" fill="currentColor"/>
+        </svg>
+      </span>
+      <div>
+        <p class="footer-name">Barshan Ghosh</p>
+        <p class="footer-tag">Building practical software, exploring intelligent systems.</p>
+      </div>
+    </div>
+
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#writing">Writing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="footer-meta">
+      <span>&copy; <span id="year"></span> Barshan Ghosh</span>
+      <span class="footer-dot">&middot;</span>
+      <span>Built with Astro</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  padding: 3rem 0 2rem;
+}
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+.footer-brand .brand-mark { color: var(--accent); }
+.footer-name { font-weight: 600; margin: 0; }
+.footer-tag { margin: 0.15rem 0 0; font-size: var(--step-1); color: var(--ink-muted); }
+.footer-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.footer-nav a { font-size: var(--step-1); color: var(--ink-muted); transition: color 0.15s ease; }
+.footer-nav a:hover { color: var(--ink); }
+.footer-meta { display: flex; gap: 0.5rem; align-items: center; font-size: var(--step-1); color: var(--ink-faint); }
+.footer-dot { color: var(--line-strong); }
+</style>
+
+<script>
+  const y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
+</script>

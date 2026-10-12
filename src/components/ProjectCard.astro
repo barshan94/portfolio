@@ -1,0 +1,108 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags?: string[];
+  repo?: string;
+  live?: string;
+  status?: "completed" | "in-progress";
+  accent?: "default" | "accent" | "accent-2";
+}
+const { title, description, tags = [], repo, live, status = "completed", accent = "default" } = Astro.props as Props;
+const accentClass = accent === "accent" ? "card--accent" : accent === "accent-2" ? "card--accent-2" : "";
+---
+
+<article class={`project-card ${accentClass}`}>
+  <div class="card-top">
+    <div class="card-title-row">
+      <h3 class="card-title">{title}</h3>
+      {status === "in-progress" && <span class="status-badge">In progress</span>}
+    </div>
+    <p class="card-desc">{description}</p>
+  </div>
+  {tags.length > 0 && (
+    <ul class="card-tags">
+      {tags.map((t) => <li class="tag">{t}</li>)}
+    </ul>
+  )}
+  <div class="card-links">
+    {repo && <a href={repo} target="_blank" rel="noopener noreferrer" class="card-link">
+      <span>GitHub</span>
+      <span aria-hidden="true">↗</span>
+    </a>}
+    {live && <a href={live} target="_blank" rel="noopener noreferrer" class="card-link">
+      <span>Live</span>
+      <span aria-hidden="true">↗</span>
+    </a>}
+  </div>
+</article>
+
+<style>
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  height: 100%;
+}
+.project-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.card--accent { border-top: 3px solid var(--accent); }
+.card--accent-2 { border-top: 3px solid var(--accent-2); }
+.card-top { display: flex; flex-direction: column; gap: 0.5rem; }
+.card-title-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.card-title {
+  margin: 0;
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.status-badge {
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+.card-desc { margin: 0; color: var(--ink-muted); font-size: var(--step-1); line-height: 1.65; }
+.card-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-muted);
+  font-size: var(--step-0);
+  font-family: var(--font-mono);
+  border: 1px solid var(--line);
+}
+.card-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.card-link {
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.15s ease;
+}
+.card-link:hover { color: var(--accent); }
+.card-link span:last-child { font-size: 1.1em; }
+</style>
