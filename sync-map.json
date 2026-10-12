@@ -1,0 +1,8 @@
+{
+  "_comment": "Maps a GitHub repo name to its content slug for repos that are curated by hand (not auto-generated). The sync workflow skips any repo listed here so it never duplicates an existing entry.",
+  "money-calculator": "money-calculator",
+  "asta-store": "asta-store",
+  "MountRoyalAcademy-website": "mount-royal-academy",
+  "Thesis": "biot-thesis",
+  "KeywordResearch": "keyword-research"
+}

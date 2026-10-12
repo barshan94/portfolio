@@ -8,10 +8,15 @@ interface Props {
 }
 const { role, org, period, bullets, type = "work" } = Astro.props as Props;
 const dotColor = type === "internship" ? "var(--accent-2)" : type === "project" ? "var(--warn)" : "var(--ink-muted)";
+const labelMap = { work: "Employment", internship: "Internship", project: "Project" };
+const label = labelMap[type];
 ---
 
 <div class="timeline-entry reveal">
-  <div class="timeline-dot" style={`--color: ${dotColor}`}></div>
+  <div class="timeline-side">
+    <span class="timeline-dot" style={`--color: ${dotColor}`}></span>
+    <span class="timeline-type">{label}</span>
+  </div>
   <div class="timeline-body">
     <header class="timeline-header">
       <h3 class="timeline-role">{role}</h3>
@@ -26,44 +31,79 @@ const dotColor = type === "internship" ? "var(--accent-2)" : type === "project" 
 
 <style>
 .timeline-entry {
-  display: flex;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.25rem;
   position: relative;
-  padding-bottom: 2rem;
+  padding-bottom: 2.25rem;
 }
 .timeline-entry:last-child { padding-bottom: 0; }
 
+.timeline-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  padding-top: 0.3rem;
+}
 .timeline-dot {
   width: 12px;
   height: 12px;
   min-width: 12px;
-  margin-top: 0.45em;
   border-radius: 50%;
   background: var(--color, var(--ink-muted));
   border: 2px solid var(--bg);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color, var(--ink-muted)) 30%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color, var(--ink-muted)) 28%, transparent);
+  transition: transform var(--dur-med) var(--ease-out);
 }
-.timeline-body { flex: 1; padding-left: 0.5rem; }
+.timeline-entry:hover .timeline-dot { transform: scale(1.3); }
+.timeline-type {
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.timeline-body { flex: 1; padding-left: 0.25rem; }
 .timeline-header { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
 .timeline-role { margin: 0; font-size: var(--step-2); font-weight: 600; color: var(--ink); }
 .timeline-org { font-size: var(--step-1); color: var(--ink-2); font-weight: 500; }
-.timeline-period { margin: 0.3rem 0 0.6rem; font-size: var(--step-1); color: var(--ink-muted); font-family: var(--font-mono); }
-.timeline-bullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
+.timeline-period {
+  margin: 0.3rem 0 0.7rem;
+  font-size: var(--step-1);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.timeline-period::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--color, var(--ink-muted));
+}
+.timeline-bullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
 .timeline-bullets li {
-  padding-left: 1.1rem;
+  padding-left: 1.2rem;
   position: relative;
   font-size: var(--step-1);
   color: var(--ink-muted);
-  line-height: 1.55;
+  line-height: 1.6;
 }
 .timeline-bullets li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.55em;
+  top: 0.6em;
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: var(--line-strong);
+}
+@media (max-width: 640px) {
+  .timeline-type { display: none; }
 }
 </style>

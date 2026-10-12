@@ -6,7 +6,6 @@ repo: "https://github.com/barshan94/Thesis"
 status: "completed"
 featured: false
 accent: "default"
-type: "research"
 ---
 
 Undergraduate thesis: *"Blockchain Internet of Things (bIoT): A review of blockchain healthcare security technologies and its applications and market opportunities."*

@@ -38,6 +38,22 @@ npm run build        # production build → dist/
 npm run preview      # preview the production build locally
 ```
 
+## Adding a project
+
+Scaffold a new project entry (frontmatter + stub body) from a GitHub repo:
+
+```bash
+node scripts/add-project.mjs <repo-slug>                 # pulls description/tags from GitHub API
+node scripts/add-project.mjs <repo-slug> --featured     # top row, larger card
+node scripts/add-project.mjs <repo-slug> --title "X" --description "Does Y." --tags "A,B" --status in-progress --live "https://..." --accent accent
+```
+
+- Repo metadata comes from the **GitHub API** (a verified source) when not passed explicitly.
+- If the repo doesn't exist on GitHub, you must pass `--description` — nothing is invented.
+- Edit the generated file, then run `npm run build`.
+
+**To delete a project:** remove `src/content/projects/<slug>.md` and rebuild.
+
 ## Verified sources
 
 All factual claims on the site are verified against:

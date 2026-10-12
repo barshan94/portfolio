@@ -18,6 +18,12 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Subtle ambient gradient that gives the page depth instead of a flat fill. */
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, var(--accent-soft) 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, var(--accent-2-soft) 0%, transparent 55%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 a {
@@ -43,16 +49,41 @@ button {
 /* ---- Reveal animation ---- */
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(18px);
+  transition: opacity var(--dur-med) var(--ease-out),
+    transform var(--dur-med) var(--ease-out);
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
+/* Staggered reveal for lists: each child fades in a touch later. */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur-med) var(--ease-out),
+    transform var(--dur-med) var(--ease-out);
+}
+.reveal-stagger.is-visible > * {
+  animation: stagger-in var(--dur-slow) var(--ease-out) forwards;
+}
+@keyframes stagger-in {
+  0% { opacity: 0; transform: translateY(14px); }
+}
+/* nth-child delays — covers up to 8 items; extend if a list grows. */
+.reveal-stagger.is-visible > *:nth-child(1) { animation-delay: 0ms; }
+.reveal-stagger.is-visible > *:nth-child(2) { animation-delay: 70ms; }
+.reveal-stagger.is-visible > *:nth-child(3) { animation-delay: 140ms; }
+.reveal-stagger.is-visible > *:nth-child(4) { animation-delay: 210ms; }
+.reveal-stagger.is-visible > *:nth-child(5) { animation-delay: 280ms; }
+.reveal-stagger.is-visible > *:nth-child(6) { animation-delay: 350ms; }
+.reveal-stagger.is-visible > *:nth-child(7) { animation-delay: 420ms; }
+.reveal-stagger.is-visible > *:nth-child(8) { animation-delay: 490ms; }
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal-stagger > * { opacity: 1; transform: none; transition: none; animation: none; }
 }
 
 /* ---- Utility ---- */
@@ -62,3 +93,10 @@ button {
 .accent { color: var(--accent); }
 .divider { height: 1px; background: var(--line); border: none; }
 .center { text-align: center; }
+
+/* ---- Glass card surface ---- */
+.glass {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}

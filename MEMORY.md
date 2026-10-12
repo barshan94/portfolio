@@ -1,7 +1,7 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-12
+Last updated: 2026-10-12 (continuity cleanup)
 
 ---
 
@@ -20,7 +20,7 @@ Last updated: 2026-10-12
 | CV / bio / skills / contact | `src/content/cv/profile.md` | `cvSchema` in `src/content.config.ts` |
 | Writing & Research | `src/content/writing/*.md` (2 files) | `writingSchema` in `src/content.config.ts` |
 
-**To add a project:** create `src/content/projects/<slug>.md` with the frontmatter fields. It appears after `npm run build`.
+**To add a project:** `node scripts/add-project.mjs <repo-slug>` scaffolds the frontmatter file (pulling description/tags from the GitHub API when available). Edit the generated file, then `npm run build`.
 **To delete a project:** remove the `.md` file.
 **To update CV data:** edit `src/content/cv/profile.md`.
 
@@ -43,9 +43,9 @@ Last updated: 2026-10-12
 | Digital Fire Safety | ~2 years 3 months | 2026-10-12 | master brief (approximate — no exact dates available) |
 | Digital marketing since | 2020 | 2026-10-12 | master brief |
 
-## Unverified / placeholder information
+## Verified contact details
 
-- **Contact details** — all verified and live as of 2026-10-12:
+All live as of 2026-10-12:
   - Email: `barshan.ghoshofficial@gmail.com`
   - GitHub: `https://github.com/barshan94` (you supplied `?tab=repositories` — stripped to the bare URL; the tab param is cosmetic)
   - LinkedIn: `https://www.linkedin.com/in/barshan-ghosh/`
@@ -57,6 +57,7 @@ Last updated: 2026-10-12
 
 - The `KeywordResearch` and `Various Systems Projects` cards link to the profile root or group many small projects. Descriptions are summaries, not per-repo facts.
 - No images on the site yet (headshot or project screenshots). Would require image files in `public/` and a component to display them.
+- The hero "Public repos" stat is a hardcoded literal (`repoCount = 43` in `index.astro`). It goes stale if the GitHub count changes — update it manually or wire up a build hook.
 
 ## Deployment
 

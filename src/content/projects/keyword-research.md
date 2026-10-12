@@ -6,7 +6,6 @@ repo: "https://github.com/barshan94/KeywordResearch"
 status: "completed"
 featured: false
 accent: "default"
-type: "marketing"
 ---
 
 A collection of digital marketing projects built through self-directed learning and freelance work (2020–present).

@@ -30,6 +30,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Known
 
-- Contact details are placeholders.
 - `KeywordResearch` and `Various Systems Projects` cards link to the profile root or group many small repos; descriptions are summaries.
-- No custom favicon yet.
+- No images on the site yet (headshot or project screenshots).
+- The hero "Public repos" stat is a hardcoded literal (`repoCount = 43` in `index.astro`) — update it if the GitHub count changes.
+
+---
+
+## [2026-10-12] — Continuity cleanup
+
+### Changed
+
+- Reconciled `PROGRESS.md`, `CHECKPOINT.md`, `CHANGELOG.md`, and `MEMORY.md` — removed "remaining" items that were already done (favicon, In-Progress badges, Writing collection), fixed the duplicate "Add a photo" entry, and corrected the "Unverified / placeholder" section header since contact details are now verified.
+- `RULES.md` rule 9 updated to name the real contact details as verified, replacing stale placeholder addresses.
+
+### Removed
+
+- Dead `type` field (`software | research | marketing | systems`) from `projectSchema` and from the three project files that set it — nothing on the site reads it.
+
+---
+
+## [2026-10-12] — Project add automation
+
+### Added
+
+- `scripts/add-project.mjs` — scaffolds `src/content/projects/<slug>.md` from a GitHub repo slug. Pulls description and tags from the GitHub API (a verified source); refuses to create an entry with no description rather than inventing one. Supports `--title`, `--description`, `--tags`, `--live`, `--status`, `--featured`, `--accent`.
+- `README.md` documents the new `add-project` command.

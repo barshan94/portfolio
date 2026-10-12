@@ -17,7 +17,7 @@ const { eyebrow, title, subtitle, id } = Astro.props as Props;
 </section>
 
 <style>
-.section { padding: 5rem 0; }
+.section { padding: 5.5rem 0; }
 .section-head { max-width: 720px; }
 .section-eyebrow {
   margin: 0 0 0.75rem;
@@ -33,7 +33,22 @@ const { eyebrow, title, subtitle, id } = Astro.props as Props;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--ink);
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
 }
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.12em;
+  width: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent-grad);
+  transition: width var(--dur-med) var(--ease-out);
+}
+.section-head.is-visible .section-title::after { width: 48%; }
 .section-subtitle {
   margin: 1rem 0 0;
   font-size: var(--step-2);

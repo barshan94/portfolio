@@ -22,18 +22,19 @@ The portfolio is a **complete, single-page static site** powered by Astro conten
 | Writing | ✅ complete (reads `src/content/writing/*.md`) |
 | Contact | ✅ verified and live (reads `cv/profile.md`) |
 | Favicon | ✅ custom branded SVG (terminal screen mark) |
+| In-Progress badges | ✅ amber badge via `status: "in-progress"` |
 | Build | ✅ passing, no warnings |
 | Design system | ✅ tokens + dark mode |
 | Memory system | ✅ 6 files created |
 | Deploy config | ✅ `vercel.json` + `netlify.toml` in place |
+| Project add automation | ✅ `scripts/add-project.mjs` scaffolds new entries from a repo slug |
 
 ## Open items (in priority order)
 
 1. **Add a photo** — no images in the site yet.
-2. **Add a photo** — no images in the site yet.
-3. **Actually deploy** — config files are ready; you run `vercel --prod` or `netlify deploy --dir=dist --prod`.
+2. **Actually deploy** — config files are ready; you run `vercel --prod` or `netlify deploy --dir=dist --prod`.
 
-> Note: "In Progress" badges are now supported. Set `status: "in-progress"` in a project's frontmatter to show an amber badge on its card.
+> Note: "In Progress" badges are supported. Set `status: "in-progress"` in a project's frontmatter to show an amber badge on its card.
 
 ## How to resume
 
@@ -46,7 +47,15 @@ The portfolio is a **complete, single-page static site** powered by Astro conten
 
 ## How to add a project
 
-Create `src/content/projects/<slug>.md` with this frontmatter:
+Use the scaffolding script (see `README.md` for flags):
+
+```bash
+node scripts/add-project.mjs <repo-slug> --featured --accent accent
+```
+
+It pulls description/tags from the GitHub API when available and refuses to create an entry with no description. Then edit the generated file and run `npm run build`.
+
+The frontmatter it writes:
 
 ```yaml
 ---

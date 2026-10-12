@@ -9,7 +9,6 @@ const projectSchema = z.object({
   status: z.enum(["completed", "in-progress"]).default("completed"),
   featured: z.boolean().default(false),
   accent: z.enum(["default", "accent", "accent-2"]).default("default"),
-  type: z.enum(["software", "research", "marketing", "systems"]).optional(),
 });
 
 const cvSchema = z.object({

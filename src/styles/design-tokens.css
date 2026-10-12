@@ -1,6 +1,6 @@
 /* ============================================================
    Design tokens — Barshan Ghosh portfolio
-   Single source of truth for colors, spacing, typography.
+   Single source of truth for colors, spacing, typography, motion.
    ============================================================ */
 
 :root {
@@ -10,20 +10,23 @@
   --surface: #ffffff;
   --surface-2: #f1f1ec;
 
-  --ink: #1a1a1a;
-  --ink-2: #3a3a3a;
-  --ink-muted: #6b6b66;
-  --ink-faint: #9a9a93;
+  --ink: #15151a;
+  --ink-2: #34343c;
+  --ink-muted: #5c5c55;
+  --ink-faint: #8c8c86;
 
   --line: #e4e4de;
   --line-strong: #d4d4cd;
 
-  --accent: #1f6feb;
-  --accent-ink: #1757d2;
+  --accent: #2f6bff;
+  --accent-ink: #1f54d6;
   --accent-soft: #e8f0fe;
+  --accent-grad: linear-gradient(135deg, #2f6bff 0%, #7b4bff 100%);
 
   --accent-2: #0f9d6b;
+  --accent-2-ink: #0b7d54;
   --accent-2-soft: #e3f4ec;
+  --accent-2-grad: linear-gradient(135deg, #0f9d6b 0%, #2fb8c4 100%);
 
   --warn: #b5770f;
   --warn-soft: #fdf3e0;
@@ -31,10 +34,12 @@
   --shadow-sm: 0 1px 2px rgba(15, 15, 15, 0.06);
   --shadow-md: 0 6px 18px rgba(15, 15, 15, 0.08);
   --shadow-lg: 0 18px 40px rgba(15, 15, 15, 0.10);
+  --shadow-xl: 0 30px 60px rgba(15, 15, 15, 0.14);
 
   --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 18px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 
   /* ---- Typography ---- */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -50,36 +55,47 @@
   --step-6: clamp(2.25rem, 2rem + 1.25vw, 2.5rem);
   --step-7: clamp(2.8125rem, 2.5rem + 1.5625vw, 3rem);
   --step-8: clamp(3.5rem, 3rem + 2.5vw, 4rem);
+  --step-9: clamp(4.5rem, 3.5rem + 3.5vw, 6rem);
 
   --measure: 68ch;
 
   /* ---- Layout ---- */
-  --header-h: 68px;
+  --header-h: 72px;
   --nav-w: min(1120px, calc(100% - 2.5rem));
   --content-w: min(1120px, calc(100% - 2.5rem));
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-med: 320ms;
+  --dur-slow: 520ms;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e0e0d;
-    --bg-soft: #141413;
-    --surface: #171716;
-    --surface-2: #1f1f1e;
+    --bg: #0a0a0a;
+    --bg-soft: #111110;
+    --surface: #151514;
+    --surface-2: #1c1c1b;
 
-    --ink: #f2f2ef;
-    --ink-2: #cfcfc9;
+    --ink: #f4f4f2;
+    --ink-2: #d6d6d0;
     --ink-muted: #8a8a84;
     --ink-faint: #5f5f59;
 
-    --line: #2a2a28;
-    --line-strong: #3a3a38;
+    --line: #262624;
+    --line-strong: #363633;
 
     --accent: #6ea0ff;
     --accent-ink: #89b4ff;
     --accent-soft: #1a2740;
+    --accent-grad: linear-gradient(135deg, #6ea0ff 0%, #b08bff 100%);
 
     --accent-2: #4fdca0;
+    --accent-2-ink: #6fdcb0;
     --accent-2-soft: #10241c;
+    --accent-2-grad: linear-gradient(135deg, #4fdca0 0%, #5ec4d4 100%);
 
     --warn: #f0c971;
     --warn-soft: #2a2310;
@@ -87,5 +103,6 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.45);
     --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.55);
+    --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.65);
   }
 }

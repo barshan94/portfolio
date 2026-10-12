@@ -36,15 +36,28 @@ Tracks what has been done, what is in progress, and what remains.
   - LinkedIn: https://www.linkedin.com/in/barshan-ghosh/
 - Build passes cleanly with all contact links rendered correctly in dist/index.html.
 
+### Favicon & In-Progress badges (2026-10-12)
+
+- Custom branded SVG favicon added (`public/favicon.svg`) and wired into `Layout.astro`.
+- "In Progress" amber badge implemented in `ProjectCard.astro` — set `status: "in-progress"` in a project's frontmatter.
+
+### Project add automation (2026-10-12)
+
+- `scripts/add-project.mjs` — scaffolds `src/content/projects/<slug>.md` from a repo slug. Pulls description and tags from the GitHub API; refuses to create an entry with no description rather than inventing one. Supports `--title`, `--description`, `--tags`, `--live`, `--status`, `--featured`, `--accent`.
+- `README.md` documents the new command.
+
+### Continuity file cleanup (2026-10-12)
+
+- `PROGRESS.md`, `CHECKPOINT.md`, `CHANGELOG.md`, `MEMORY.md`, and `RULES.md` reconciled — removed items already completed, fixed a wrong section header, and synced `RULES.md` rule 9 with the real contact details.
+- Removed the unused `type` field from `projectSchema` and the three project files that set it.
+
 ---
 
 ## ⬜ Remaining
 
-1. Custom favicon — currently the Astro default mark, needs a branded SVG/favicon.
+1. Add a photo or custom mark — no images on the site yet.
 2. Deploy target — not yet decided. Static output is Vercel/Netlify-ready.
-3. Add "In Progress" badges — if any projects should be marked unfinished (`status: "in-progress"` in frontmatter).
-4. Move Writing section to a content collection — currently hardcoded in `index.astro`.
-5. Add a photo or custom mark — no images on the site yet.
+3. Automate rebuilds (optional) — wire GitHub → Netlify/Vercel build hook so content changes redeploys without a manual `npm run build`.
 
 ---
 

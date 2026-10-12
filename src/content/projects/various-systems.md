@@ -6,7 +6,6 @@ repo: "https://github.com/barshan94"
 status: "completed"
 featured: false
 accent: "default"
-type: "systems"
 ---
 
 A collection of academic and practice systems projects built during coursework and self-study.
