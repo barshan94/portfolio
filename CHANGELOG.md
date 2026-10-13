@@ -5,6 +5,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2026-10-13] — Full redesign: ranak.bio-inspired terminal aesthetic
+
+### Changed
+
+- `src/pages/index.astro`: Complete page restructure inspired by ranak.bio's terminal/developer-console aesthetic.
+  - **Boot sequence header** replaces generic hero: "INITIALIZING SYSTEM" with DATA, SECURITY, RUNTIME, AI progress streams ending in "SYSTEM READY".
+  - **Numbered section navigation** (01–07) with hash links replacing generic anchor navigation.
+  - **Impact section (02)** with stat-grid layout showing CGPA, years, repo count, and experience roles — modeled on ranak.bio's "Impact, measured in production" section.
+  - **Projects section (03)** keeps existing `ProjectCard` components with custom visual previews (finance charts, store grids, portal UI, thesis graphs, system terminals) — reuses actual project data, no invented achievements.
+  - **Experience section (04)** uses existing `TimelineEntry` with vertical timeline layout.
+  - **Skills section (05)** restructured as "Stack Manifest" — categorized colon-separated tag inventory (LANGUAGES, MOBILE, BACKEND, etc.) inspired by ranak.bio's stack manifest.
+  - **Writing section (06)** as article cards with type labels and read links.
+  - **Contact section (07)** centered with icon buttons and email fallback.
+
+### Removed
+
+- `src/pages/index.astro`: Old hero with floating orbs, code panel, and stats bar.
+- `src/pages/index.astro`: Old About section with 4 cards.
+- `src/pages/index.astro`: Old divider separators (`<div class="divider">`).
+
+### Fixed
+
+- `src/pages/index.astro`: Section IDs now match boot navigation (system, impact, projects, experience, skills, writing, contact).
+- `src/pages/index.astro`: Reveal animations apply to all sections via `.reveal` class and IntersectionObserver.
+- `src/pages/index.astro`: Reduced-motion support disables all animations.
+- Build passes cleanly with all existing content collections.
+
+---
+
 ## [2026-10-13] — Hero redesign: content clarity, motion restraint, accessibility
 
 ### Changed

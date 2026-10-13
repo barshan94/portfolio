@@ -5,22 +5,22 @@
 
 :root {
   /* ---- Palette ---- */
-  --bg: #0b0b0c;
-  --bg-soft: #121214;
-  --surface: #161618;
-  --surface-2: #1d1d20;
+  --bg: #06060a;
+  --bg-soft: #0c0c14;
+  --surface: #10101a;
+  --surface-2: #181826;
 
-  --ink: #f5f5f4;
-  --ink-2: #c9c9c4;
-  --ink-muted: #8a8a84;
-  --ink-faint: #5a5a55;
+  --ink: #f4f4f6;
+  --ink-2: #c2c2cc;
+  --ink-muted: #8a8a9a;
+  --ink-faint: #5a5a6a;
 
-  --line: #2a2a2e;
-  --line-strong: #3a3a3f;
+  --line: #23233a;
+  --line-strong: #33334a;
 
   --accent: #7fb4ff;
   --accent-ink: #9ec1ff;
-  --accent-soft: #14213a;
+  --accent-soft: #0f1f3a;
   --accent-grad: linear-gradient(135deg, #7fb4ff 0%, #b08bff 100%);
 
   --accent-2: #4fdca0;
@@ -72,6 +72,7 @@
   --dur-med: 320ms;
   --dur-slow: 520ms;
   --dur-xslow: 800ms;
+  --dur-xxslow: 1200ms;
 }
 
 @media (prefers-color-scheme: light) {

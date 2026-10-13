@@ -1,7 +1,7 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-13 (hero redesign: content clarity, motion restraint, accessibility)
+Last updated: 2026-10-13 (full redesign: ranak.bio-inspired terminal aesthetic)
 
 ---
 

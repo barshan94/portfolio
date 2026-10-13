@@ -13,611 +13,612 @@ const cv = cvEntry?.data;
 const writing = await getCollection("writing");
 const repoCount = 36;
 ---
-
 <Layout
   title="Barshan Ghosh — Software Developer"
   description="Building practical software. Exploring intelligent systems. B.Sc. Computer Science, AIUB. Full-stack developer working toward AI engineering."
 >
+  <!-- Page container -->
+  <div class="page" aria-label="Content">
+    <!-- Boot sequence header -->
+    <header class="boot-header reveal">
+      <div class="boot-steps">
+        <div class="step">INITIALIZING SYSTEM — R.D / 2026</div>
+        <div class="step">DATA <span class="progress">········································</span></div>
+        <div class="step">SECURITY <span class="progress">········································</span></div>
+        <div class="step">RUNTIME <span class="progress">········································</span></div>
+        <div class="step">AI <span class="progress">········································</span></div>
+        <div class="step system-ready">SYSTEM READY</div>
+      </div>
+      <nav class="boot-nav">
+        <a href="#system" class="boot-name">Barshan Ghosh</a>
+        <div class="boot-index">
+          <a href="#system" class="boot-index-item">01</a>
+          <a href="#impact" class="boot-index-item">02</a>
+          <a href="#projects" class="boot-index-item">03</a>
+          <a href="#experience" class="boot-index-item">04</a>
+          <a href="#skills" class="boot-index-item">05</a>
+          <a href="#writing" class="boot-index-item">06</a>
+          <a href="#contact" class="boot-index-item">07</a>
+        </div>
+      </nav>
+    </header>
 
-<!-- ================================================================
-     HERO
-     ================================================================ -->
-<section class="hero">
-  <div class="hero-mesh" aria-hidden="true"></div>
-  <div class="hero-grid">
-    <div class="container hero-inner">
-      <span class="hero-kicker reveal">{cv?.role}</span>
-      <h1 class="hero-title reveal">
-        Building practical software.
-        <span class="hero-accent">Exploring intelligent systems.</span>
-      </h1>
-      <p class="hero-desc reveal">
-        Full-stack developer focused on reliable applications and AI engineering. B.Sc. Computer Science, AIUB (CGPA 3.83/4.00).
-      </p>
-      <div class="hero-actions reveal">
-        <a href="#projects" class="btn btn-primary">View projects</a>
-        <a href="#experience" class="btn btn-secondary">Experience</a>
-      </div>
-      <div class="hero-stats reveal">
-        <div class="stat">
-          <strong>3.83/4.00</strong>
-          <span>CGPA</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>3 yrs</strong>
-          <span>Accelerated degree</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>{repoCount}</strong>
-          <span>Public repos</span>
-        </div>
-      </div>
-    </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb-ring"></div>
-      <div class="orb-ring orb-ring-2"></div>
-      <div class="hero-code">
-        <div class="code-bar">
-          <span class="code-dot"></span>
-          <span class="code-dot"></span>
-          <span class="code-dot"></span>
-          <span class="code-file">app.ts</span>
-        </div>
-        <pre><code><span class="tok-kw">const</span> <span class="tok-var">build</span> = <span class="tok-kw">async</span> () =&gt; {<br/>  <span class="tok-var">app</span>.<span class="tok-fn">use</span>(<span class="tok-str">'astro'</span>)<br/>  <span class="tok-var">app</span>.<span class="tok-fn">use</span>(<span class="tok-str">'supabase'</span>)<br/>  <span class="tok-kw">return</span> <span class="tok-fn">deploy</span>()<br/>}</code></pre>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     ABOUT
-     ================================================================ -->
-<div class="divider" role="separator"></div>
-<section class="about" id="about">
-  <div class="container">
-    <SectionHeading
-      eyebrow="About"
-      title="A focused developer, not a generalist."
-      subtitle="I don't try to be an expert in every field. I pick one direction, go deep, and let the breadth come naturally."
-    />
-    <div class="about-grid reveal-stagger">
-      <div class="about-card">
-        <h3 class="about-card-title">What I do</h3>
-        <p>Full-stack web applications with clean architecture, database design, and real user value. TypeScript, Astro, Next.js, and PostgreSQL are my main tools right now.</p>
-      </div>
-      <div class="about-card">
-        <h3 class="about-card-title">Where I'm heading</h3>
-        <p>AI engineering. I'm strengthening my machine learning fundamentals, studying large language models, and building projects that apply ML to real problems.</p>
-      </div>
-      <div class="about-card">
-        <h3 class="about-card-title">How I work</h3>
-        <p>Practical. I prefer shipping working software over theoretical perfection. Every project I build is meant to be used — by people, not just machines.</p>
-      </div>
-      <div class="about-card">
-        <h3 class="about-card-title">Background</h3>
-        <p>{cv?.education[0]?.degree} ({cv?.education[0]?.cgpa}), IT support experience, digital marketing since 2020, and hands-on teaching — all of which shaped how I approach systems thinking and user-focused development.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     EXPERIENCE
-     ================================================================ -->
-<div class="divider" role="separator"></div>
-<section class="experience" id="experience">
-  <div class="container">
-    <SectionHeading
-      eyebrow="Experience"
-      title="Where I've worked and what I've built."
-      subtitle="A mix of professional roles, internships, and personal projects — each teaching something different."
-    />
-    <div class="timeline reveal-stagger">
-      {cv?.experience.map((exp) => (
-        <TimelineEntry
-          role={exp.role}
-          org={exp.org + (exp.location ? ` — ${exp.location}` : "")}
-          period={exp.period}
-          type={exp.type}
-          bullets={exp.bullets}
+    <!-- Main content -->
+    <main>
+      <!-- System section (optional intro) -->
+      <section id="system" class="section reveal">
+        <SectionHeading
+          eyebrow="SYSTEM"
+          title="Initialized"
+          subtitle="Ready for execution."
         />
-      ))}
-    </div>
-  </div>
-</section>
+        <p class="section-intro">
+          Full-stack developer focused on reliable applications and AI engineering.
+          B.Sc. Computer Science, AIUB (CGPA 3.83/4.00).
+        </p>
+      </section>
 
-<!-- ================================================================
-     PROJECTS
-     ================================================================ -->
-<div class="divider" role="separator"></div>
-<section class="projects" id="projects">
-  <div class="container">
-    <SectionHeading
-      eyebrow="Projects"
-      title="Real applications, not tutorial clones."
-      subtitle="A selection of projects built with purpose — each one solving a specific problem."
-    />
-    <div class="projects-grid reveal-stagger">
-      {featured.map((p) => (
-        <ProjectCard
-          title={p.data.title}
-          description={p.data.description}
-          tags={p.data.tags}
-          repo={p.data.repo}
-          live={p.data.live}
-          status={p.data.status}
-          accent={p.data.accent}
+      <!-- Impact section -->
+      <section id="impact" class="section reveal">
+        <SectionHeading
+          eyebrow="IMPACT"
+          title="Measured in production"
+          subtitle="Numbers that matter."
         />
-      ))}
-      {others.map((p) => (
-        <ProjectCard
-          title={p.data.title}
-          description={p.data.description}
-          tags={p.data.tags}
-          repo={p.data.repo}
-          live={p.data.live}
-          status={p.data.status}
-          accent={p.data.accent}
-        />
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================
-     SKILLS
-     ================================================================ -->
-<div class="divider" role="separator"></div>
-<section class="skills" id="skills">
-  <div class="container">
-    <SectionHeading
-      eyebrow="Skills"
-      title="Tools I use to get work done."
-      subtitle="Focused on what matters for my current direction."
-    />
-    <div class="skills-grid reveal-stagger">
-      {cv?.skills.map((s) => (
-        <div class="skill-card">
-          <h4 class="skill-card-title">{s.group}</h4>
-            <div class="skill-tags">
-              {s.items.map((item) => (
-                <span class="skill-chip">{item}</span>
-              ))}
+        <div class="impact-grid">
+          <div class="impact-item">
+            <div class="impact-number">3.83</div>
+            <div class="impact-label">CGPA</div>
+            <div class="impact-note">Accelerated degree</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-number">3</div>
+            <div class="impact-label">Years</div>
+            <div class="impact-label">Professional experience</div>
+          </div>
+          <div class="impact-item">
+            <div class="impact-number">{repoCount}</div>
+            <div class="impact-label">Public repos</div>
+            <div class="impact-note">Open source contributions</div>
+          </div>
+          {/* Additional impact items from experience? We'll add more based on data */}
+          {cv?.experience?.map((exp, idx) => (
+            <div class="impact-item" key={exp.role}>
+              <div class="impact-number">{idx + 1}</div>
+              <div class="impact-label">{exp.role.split('/')[0].trim()}</div>
+              <div class="impact-note">{exp.org}</div>
             </div>
+          ))}
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
-<!-- ================================================================
-     WRITING
-     ================================================================ -->
-<div class="divider" role="separator"></div>
-<section class="writing" id="writing">
-  <div class="container">
-    <SectionHeading
-      eyebrow="Writing & Research"
-      title="Thoughts on technology and learning."
-      subtitle="Pieces I've written down to clarify my own thinking."
-    />
-    <div class="writing-list reveal-stagger">
-      {writing.map((w) => (
-        <article class="writing-item">
-          <div class="writing-meta">
-            <span class="writing-label">{w.data.type}</span>
+      <!-- Projects section -->
+      <section id="projects" class="section reveal">
+        <SectionHeading
+          eyebrow="PROJECTS"
+          title="Real applications"
+          subtitle="Built with purpose."
+        />
+        <div class="projects-grid">
+          {featured.map((p) => (
+            <ProjectCard
+              key={p.id}
+              title={p.data.title}
+              description={p.data.description}
+              tags={p.data.tags}
+              repo={p.data.repo}
+              live={p.data.live}
+              status={p.data.status}
+              accent={p.data.accent}
+            />
+          ))}
+          {others.map((p) => (
+            <ProjectCard
+              key={p.id}
+              title={p.data.title}
+              description={p.data.description}
+              tags={p.data.tags}
+              repo={p.data.repo}
+              live={p.data.live}
+              status={p.data.status}
+              accent={p.data.accent}
+            />
+          ))}
+        </div>
+      </section>
+
+      <!-- Experience section -->
+      <section id="experience" class="section reveal">
+        <SectionHeading
+          eyebrow="EXPERIENCE"
+          title="Timeline"
+          subtitle="Chronological progression."
+        />
+        <div class="timeline-container">
+          {cv?.experience.map((exp) => (
+            <TimelineEntry
+              key={exp.role}
+              role={exp.role}
+              org={exp.org + (exp.location ? ` — ${exp.location}` : "")}
+              period={exp.period}
+              type={exp.type as "work" | "internship" | "project"}
+              bullets={exp.bullets}
+            />
+          ))}
+        </div>
+      </section>
+
+      <!-- Skills section (Stack manifest) -->
+      <section id="skills" class="section reveal">
+        <SectionHeading
+          eyebrow="SKILLS"
+          title="Stack"
+          subtitle="Tools I use to get work done."
+        />
+        <div class="stack-manifest">
+          {cv?.skills.map((skillGroup) => (
+            <div class="stack-category" key={skillGroup.group}>
+              <div class="stack-label">{skillGroup.group.toUpperCase()}</div>
+              <div class="stack-values">
+                {skillGroup.items.map((item, idx) => (
+                  <span class="stack-value" key={idx}>
+                    {item}{idx < skillGroup.items.length - 1 ? ', ' : ''}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Writing section -->
+      <section id="writing" class="section reveal">
+        <SectionHeading
+          eyebrow="WRITING & RESEARCH"
+          title="Thoughts"
+          subtitle="Pieces I've written down."
+        />
+        <div class="writing-list">
+          {writing.map((w) => (
+            <article class="writing-item" key={w.id}>
+              <div class="writing-meta">
+                <span class="writing-tag">{w.data.type}</span>
+              </div>
+              <div class="writing-content">
+                <h4 class="writing-title">{w.data.title}</h4>
+                <p class="writing-excerpt">{w.data.excerpt}</p>
+                {w.data.link ? (
+                  <a class="writing-link" href={w.data.link} target="_blank" rel="noopener noreferrer" aria-label={`Read ${w.data.title}`}>
+                    <span>Read</span>
+                    <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
+                ) : (
+                  <span class="writing-link disabled" aria-disabled="true">
+                    <span>Unavailable</span>
+                  </span>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Contact section -->
+      <section id="contact" class="section reveal">
+        <SectionHeading
+          eyebrow="CONTACT"
+          title="Let's work together"
+          subtitle="Open to opportunities."
+        />
+        <div class="contact-content">
+          <p class="contact-desc">
+            I'm open to software engineering, full-stack development, web development, AI engineering internships, and suitable technical freelance opportunities. If you're looking for someone who ships reliable code and thinks about systems, let's talk.
+          </p>
+          <div class="contact-links">
+            {cv?.contact?.email && <a href={`mailto:${cv.contact.email}`} class="contact-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Email
+            </a>}
+            {cv?.contact?.github && <a href={cv.contact.github} target="_blank" rel="noopener noreferrer" class="contact-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>}
+            {cv?.contact?.linkedin && <a href={cv.contact.linkedin} target="_blank" rel="noopener noreferrer" class="contact-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>}
           </div>
-          <div class="writing-content">
-            <h4 class="writing-title">{w.data.title}</h4>
-            <p class="writing-excerpt">{w.data.excerpt}</p>
-            {w.data.link ? (
-              <a class="writing-link" href={w.data.link} target="_blank" rel="noopener noreferrer" aria-label={`Read ${w.data.title}`}>
-                <span>Read</span>
-                <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-            ) : (
-              <span class="writing-link disabled" aria-disabled="true">
-                <span>Unavailable</span>
-              </span>
-            )}
-          </div>
-        </article>
-      ))}
-    </div>
+          {cv?.contact?.email && <div class="contact-note">
+            <span>Prefer email? </span>
+            <a href={`mailto:${cv.contact.email}`}>{cv.contact.email}</a>
+          </div>}
+        </div>
+      </section>
+    </main>
   </div>
-</section>
 
-<!-- ================================================================
-     CONTACT
-     ================================================================ -->
-<div class="divider" role="separator"></div>
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="contact-inner reveal">
-      <p class="contact-eyebrow">Contact</p>
-      <h2 class="contact-title">Let's work together.</h2>
-      <p class="contact-desc">
-        I'm open to software engineering, full-stack development, web development, AI engineering internships, and suitable technical freelance opportunities. If you're looking for someone who ships reliable code and thinks about systems, let's talk.
-      </p>
-      <div class="contact-links">
-        {cv?.contact?.email && <a href={`mailto:${cv.contact.email}`} class="contact-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          Email
-        </a>}
-        {cv?.contact?.github && <a href={cv.contact.github} target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          GitHub
-        </a>}
-        {cv?.contact?.linkedin && <a href={cv.contact.linkedin} target="_blank" rel="noopener noreferrer" class="contact-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>}
-      </div>
-      {cv?.contact?.email && <div class="contact-note">
-        <span>Prefer email? </span>
-        <a href={`mailto:${cv.contact.email}`}>{cv.contact.email}</a>
-      </div>}
-    </div>
-  </div>
-</section>
+  <!-- Styles specific to this page -->
+  <style>
+    :root {
+      /* Page-specific overrides */
+      --boot-color: #7fb4ff;
+      --boot-bg: #06060a;
+      --boot-surface: #10101a;
+      --boot-line: #23233a;
+    }
 
-<!-- ================================================================
-     SCRIPTS
-     ================================================================ -->
-<script>
-  // IntersectionObserver for scroll-reveal
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-</script>
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-<style>
-/* ---- Hero ---- */
-.hero {
-  padding: 6rem 0 5rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  align-items: center;
-  gap: 3rem;
-}
-.hero-inner { display: flex; flex-direction: column; gap: 1.5rem; max-width: 640px; }
-.hero-kicker {
-  margin: 0;
-  font-size: var(--step-1);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.hero-title {
-  margin: 0;
-  font-size: clamp(2.5rem, 4.5vw + 1rem, 3.75rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: var(--ink);
-  font-weight: 800;
-}
-.hero-accent {
-  background: var(--accent-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.hero-desc {
-  margin: 0;
-  font-size: var(--step-2);
-  color: var(--ink-muted);
-  line-height: 1.7;
-  max-width: 560px;
-}
-.hero-actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.6rem;
-  border-radius: 999px;
-  font-size: var(--step-1);
-  font-weight: 600;
-  transition: background var(--dur-fast) var(--ease-out),
-    transform var(--dur-fast) var(--ease-out),
-    box-shadow var(--dur-fast) var(--ease-out);
-}
-.btn:hover { transform: translateY(-2px); }
-.btn-primary {
-  background: var(--ink);
-  color: #fff;
-}
-.btn-primary:hover {
-  background: var(--accent);
-  box-shadow: var(--shadow-md);
-}
-.btn-secondary {
-  border: 1.5px solid var(--line-strong);
-  color: var(--ink-2);
-}
-.btn-secondary:hover {
-  border-color: var(--ink-muted);
-  color: var(--ink);
-  background: var(--bg-soft);
-}
-.hero-stats {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 0.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-.stat { display: flex; flex-direction: column; }
-.stat strong { font-size: var(--step-3); font-weight: 700; color: var(--ink); }
-.stat span { font-size: var(--step-0); color: var(--ink-faint); }
-.stat-divider { width: 1px; height: 32px; background: var(--line-strong); }
+    /* Boot header */
+    .boot-header {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 4rem 2rem 2rem;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
 
-/* ---- Hero visual: floating orbs + code panel ---- */
-.hero-visual {
-  position: relative;
-  height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(40px);
-  opacity: 0.55;
-  animation: float 7s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-.orb-1 {
-  width: 220px; height: 220px;
-  background: var(--accent-grad);
-  top: 10%; left: 12%;
-}
-.orb-2 {
-  width: 160px; height: 160px;
-  background: var(--accent-2-grad);
-  bottom: 14%; right: 10%;
-  animation-delay: -2.5s;
-}
-.orb-3 {
-  width: 90px; height: 90px;
-  background: var(--warn);
-  opacity: 0.4;
-  top: 45%; left: 30%;
-  animation-delay: -4.5s;
-  filter: blur(30px);
-}
-.orb-ring {
-  position: absolute;
-  width: 280px; height: 280px;
-  border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-  animation: spin 28s linear infinite;
-  will-change: transform;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  33% { transform: translateY(-18px) translateX(10px); }
-  66% { transform: translateY(8px) translateX(-12px); }
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-.hero-code {
-  position: relative;
-  z-index: 2;
-  width: 300px;
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  padding: 1.1rem 1.25rem;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  line-height: 1.7;
-  overflow: hidden;
-}
-.hero-code pre { margin: 0; white-space: pre-wrap; }
-.tok-kw { color: var(--accent); }
-.tok-var { color: var(--ink); }
-.tok-fn { color: var(--accent-2); }
-.tok-str { color: var(--warn); }
-@media (prefers-reduced-motion: reduce) {
-  .orb, .orb-ring { animation: none; }
-  .reveal { opacity: 1; transform: none; }
-}
+    .boot-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, var(--accent-soft) 0%, transparent 40%);
+      opacity: 0.3;
+      pointer-events: none;
+    }
 
-/* ---- About ---- */
-.about { padding: 5.5rem 0; }
-.about-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-  margin-top: 3rem;
-}
-.about-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--dur-med) var(--ease-out),
-    box-shadow var(--dur-med) var(--ease-out),
-    border-color var(--dur-med) var(--ease-out);
-}
-.about-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 3px;
-  background: var(--accent-grad);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-med) var(--ease-out);
-}
-.about-card:hover {
-  transform: translateY(-5px);
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
-  box-shadow: var(--shadow-lg);
-}
-.about-card:hover::before { transform: scaleX(1); }
-.about-card-title {
-  margin: 0 0 0.75rem;
-  font-size: var(--step-2);
-  font-weight: 600;
-  color: var(--ink);
-}
-.about-card p { margin: 0; font-size: var(--step-1); color: var(--ink-muted); line-height: 1.7; }
+    .boot-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: var(--step-1);
+      color: var(--ink-muted);
+    }
 
-/* ---- Timeline ---- */
-.experience { padding: 5.5rem 0; }
-.timeline {
-  max-width: 760px;
-  margin-top: 3rem;
-}
+    .step {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
 
-/* ---- Projects ---- */
-.projects { padding: 5.5rem 0; }
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
+    .progress {
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      color: var(--ink-faint);
+      flex-grow: 1;
+      min-width: 8rem;
+      display: inline-block;
+    }
 
-/* ---- Skills ---- */
-/* Styles in global.css */
+    .system-ready {
+      color: var(--accent-2);
+      font-weight: 600;
+    }
 
-/* ---- Contact ---- */
-.contact { padding: 6rem 0 7rem; }
-.contact-inner {
-  max-width: 680px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  text-align: center;
-}
-.contact-eyebrow {
-  margin: 0;
-  font-size: var(--step-1);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--section-accent);
-}
-.contact-title {
-  margin: 0;
-  font-size: var(--step-8);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--ink);
-  font-weight: 800;
-}
-.contact-desc {
-  margin: 0 auto;
-  font-size: var(--step-2);
-  color: var(--ink-muted);
-  line-height: 1.7;
-}
-.contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
-.contact-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.4rem;
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--ink-2);
-  font-size: var(--step-1);
-  font-weight: 500;
-  transition: border-color var(--dur-fast) var(--ease-out),
-    background var(--dur-fast) var(--ease-out),
-    color var(--dur-fast) var(--ease-out),
-    transform var(--dur-fast) var(--ease-out);
-}
-.contact-btn:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent-ink);
-  transform: translateY(-2px);
-}
-.contact-note { font-size: var(--step-1); color: var(--ink-muted); margin-top: 0.5rem; }
-.contact-note a { color: var(--accent); font-weight: 500; }
-.contact-note a:hover { text-decoration: underline; }
+    .boot-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
 
-/* ---- Reveal animation ---- */
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity var(--dur-med) var(--ease-out),
-    transform var(--dur-med) var(--ease-out);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-stagger.is-visible > * {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity var(--dur-med) var(--ease-out),
-    transform var(--dur-med) var(--ease-out);
-}
-.reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
-.reveal-stagger > *:nth-child(2) { transition-delay: 60ms; }
-.reveal-stagger > *:nth-child(3) { transition-delay: 120ms; }
-.reveal-stagger > *:nth-child(4) { transition-delay: 180ms; }
-.reveal-stagger > *:nth-child(5) { transition-delay: 240ms; }
+    .boot-name {
+      font-family: var(--font-sans);
+      font-size: var(--step-5);
+      font-weight: 800;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
 
-/* ---- Responsive ---- */
-@media (max-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-visual { height: 300px; }
-}
-@media (max-width: 768px) {
-  .about-grid, .projects-grid { grid-template-columns: 1fr; }
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero { padding: 4rem 0 3.5rem; }
-  .hero-visual { height: 260px; }
-  .hero-stats { flex-wrap: wrap; gap: 1rem; }
-  .hero-code { width: 240px; font-size: 0.74rem; padding: 0.9rem 1rem; }
-}
-@media (max-width: 480px) {
-  .skills-grid { grid-template-columns: 1fr; }
-  .hero-stats { flex-wrap: wrap; gap: 1rem; }
-  .hero-code { width: 240px; font-size: 0.74rem; padding: 0.9rem 1rem; }
-}
-</style>
+    .boot-index {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
 
+    .boot-index-item {
+      font-family: var(--font-mono);
+      font-size: var(--step-1);
+      font-weight: 500;
+      color: var(--ink-faint);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      transition: background var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out);
+    }
+
+    .boot-index-item:hover,
+    .boot-index-item:focus-visible {
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section:nth-child(even) {
+      background: var(--bg-soft);
+    }
+
+    .section-intro {
+      font-size: var(--step-2);
+      color: var(--ink-muted);
+      max-width: 600px;
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Impact grid */
+    .impact-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin-top: 2rem;
+    }
+
+    .impact-item {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: transform var(--dur-med) var(--ease-out);
+    }
+
+    .impact-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .impact-number {
+      font-family: var(--font-mono);
+      font-size: var(--step-5);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .impact-label {
+      font-size: var(--step-1);
+      color: var(--ink-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .impact-note {
+      font-size: var(--step-0);
+      color: var(--ink-faint);
+      font-style: italic;
+    }
+
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 2rem;
+    }
+
+    /* Timeline container */
+    .timeline-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Stack manifest */
+    .stack-manifest {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stack-category {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .stack-label {
+      font-family: var(--font-mono);
+      font-size: var(--step-1);
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .stack-values {
+      font-family: var(--font-mono);
+      font-size: var(--step-1);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .stack-value {
+      display: inline;
+    }
+
+    /* Writing list */
+    .writing-list {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .writing-item {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .writing-meta {
+      margin-bottom: 0.75rem;
+    }
+
+    .writing-tag {
+      font-family: var(--font-mono);
+      font-size: var(--step-0);
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      background: var(--accent-2-soft);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .writing-title {
+      margin: 0 0 0.5rem 0;
+      font-size: var(--step-2);
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .writing-excerpt {
+      margin: 0;
+      font-size: var(--step-1);
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    .writing-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      font-size: var(--step-1);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .writing-link:hover {
+      text-decoration: underline;
+    }
+
+    .writing-link.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .link-arrow {
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+
+    .writing-link:hover .link-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Contact */
+    .contact-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-desc {
+      font-size: var(--step-2);
+      color: var(--ink-muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font-size: var(--step-1);
+      font-weight: 500;
+      color: var(--ink-2);
+      background: var(--surface);
+      transition: background var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out);
+    }
+
+    .contact-btn:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent-ink);
+    }
+
+    .contact-note {
+      font-size: var(--step-1);
+      color: var(--ink-muted);
+    }
+
+    .contact-note a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .boot-header {
+        padding: 3rem 1.5rem 1.5rem;
+      }
+
+      .boot-steps {
+        gap: 0.4rem;
+      }
+
+      .step {
+        font-size: var(--step-0);
+      }
+
+      .boot-name {
+        font-size: var(--step-4);
+      }
+
+      .boot-index-item {
+        font-size: var(--step-0);
+        padding: 0.2rem 0.4rem;
+      }
+
+      .section {
+        padding: 4rem 1.5rem;
+      }
+
+      .impact-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-delay: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
 </Layout>
