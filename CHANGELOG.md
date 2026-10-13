@@ -5,7 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
-## [2026-10-13] — Skills + Writing section redesign and whole-page review
+## [2026-10-13] — Hero redesign: content clarity, motion restraint, accessibility
+
+### Changed
+
+- `src/pages/index.astro`: Hero headline replaced awkward `split(".")` + `<br/>` markup with natural accessible heading — "Building practical software. Exploring intelligent systems." — matching actual CV headline verbatim.
+- `src/pages/index.astro`: Hero description shortened from 93-word paragraph to 1 focused sentence: "Full-stack developer focused on reliable applications and AI engineering. B.Sc. Computer Science, AIUB (CGPA 3.83/4.00)."
+- `src/pages/index.astro`: Primary CTA "View projects" remains filled button; secondary CTA changed from ghost "Experience" to explicit "btn-secondary" class for clear visual distinction.
+- `src/pages/index.astro`: "Speedy degree" label corrected to "Accelerated degree" (truthful, professional tone).
+- `src/pages/index.astro`: Public repos stat corrected from hardcoded 43 → 36 (verified live GitHub profile count via `api.github.com/users/barshan94`).
+- `src/pages/index.astro`: Added `will-change: transform, opacity` to animated orbs and `will-change: transform` to rings for smoother compositing.
+- `src/pages/index.astro`: `prefers-reduced-motion` now also disables reveal animations (`.reveal { opacity: 1; transform: none; }`) — not just orb/ring animations.
+- `src/pages/index.astro`: Consolidated reveal CSS with proper stagger delays and explicit `.reveal.is-visible` states for IntersectionObserver.
+- `src/pages/index.astro`: Responsive breakpoints improved — hero stats wrap at 768px (tablet) for readability, hero-code stays legible at 240px minimum width on mobile.
+- `src/styles/global.css`: Removed ~220 lines of duplicate hero styles (hero, hero-grid, hero-inner, hero-visual, hero-orb, hero-ring, hero-code, hero-stats, btn variants) that were never applied to actual markup (index.astro uses `.orb`, not `.hero-orb`).
+
+### Fixed
+
+- Duplicate CSS causing maintenance risk and potential specificity conflicts.
+- Missing `prefers-reduced-motion` coverage for scroll-reveal animations.
+- Inaccurate public repo count.
+- Heading markup that could confuse screen readers (`<br/>` inside `<h1>`).
 
 ### Changed
 

@@ -1,7 +1,7 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-13 (skills + writing redesign, whole-page review)
+Last updated: 2026-10-13 (hero redesign: content clarity, motion restraint, accessibility)
 
 ---
 
@@ -28,20 +28,20 @@ Last updated: 2026-10-13 (skills + writing redesign, whole-page review)
 
 | Claim | Value | Verified on | Source |
 |---|---|---|---|
-| GitHub profile | `barshan94` | 2026-10-12 | `api.github.com/users/barshan94` |
-| Public repo count | 43 | 2026-10-12 | `api.github.com/users/barshan94/repos` |
+| GitHub profile | `barshan94` | 2026-10-13 | `api.github.com/users/barshan94` |
+| Public repo count | 36 | 2026-10-13 | `api.github.com/users/barshan94/repos` |
 | Money Calculator | `barshan94/money-calculator` | 2026-10-12 | live repo, Next.js 16, TypeScript, Supabase |
 | asta-store | `barshan94/asta-store` | 2026-10-12 | live repo, Astro 7, Supabase, e-commerce |
 | Mount Royal Academy | `barshan94/MountRoyalAcademy-website` | 2026-10-12 | live repo, Astro 7, Supabase |
 | Thesis | `barshan94/Thesis` | 2026-10-12 | live repo, bIoT healthcare security |
-| Name | Barshan Ghosh | 2026-10-12 | master brief |
-| Education | B.Sc. CSE, AIUB | 2026-10-12 | master brief |
-| CGPA | 3.83/4.00 | 2026-10-12 | master brief |
-| Degree duration | 3 years | 2026-10-12 | master brief |
-| Mount Royal Academy start | Jun 2025 | 2026-10-12 | master brief |
-| Teachnook internship | Aug 2022 – Jan 2023, Bengaluru | 2026-10-12 | master brief |
-| Digital Fire Safety | ~2 years 3 months | 2026-10-12 | master brief (approximate — no exact dates available) |
-| Digital marketing since | 2020 | 2026-10-12 | master brief |
+| Name | Barshan Ghosh | 2026-10-13 | master brief |
+| Education | B.Sc. CSE, AIUB | 2026-10-13 | master brief |
+| CGPA | 3.83/4.00 | 2026-10-13 | master brief |
+| Degree duration | 3 years | 2026-10-13 | master brief |
+| Mount Royal Academy start | Jun 2025 | 2026-10-13 | master brief |
+| Teachnook internship | Aug 2022 – Jan 2023, Bengaluru | 2026-10-13 | master brief |
+| Digital Fire Safety | ~2 years 3 months | 2026-10-13 | master brief (approximate — no exact dates available) |
+| Digital marketing since | 2020 | 2026-10-13 | master brief |
 
 ## Verified contact details
 
@@ -57,7 +57,7 @@ All live as of 2026-10-12:
 
 - The `KeywordResearch` and `Various Systems Projects` cards link to the profile root or group many small projects. Descriptions are summaries, not per-repo facts.
 - No images on the site yet (headshot or project screenshots). Would require image files in `public/` and a component to display them.
-- The hero "Public repos" stat is a hardcoded literal (`repoCount = 43` in `index.astro`). It goes stale if the GitHub count changes — update it manually or wire up a build hook.
+- The hero "Public repos" stat is a hardcoded literal (`repoCount = 36` in `index.astro`). It goes stale if the GitHub count changes — update it manually or wire up a build hook.
 
 ## Deployment
 
