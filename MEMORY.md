@@ -1,7 +1,7 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-13 (full redesign: ranak.bio-inspired terminal aesthetic)
+Last updated: 2026-10-13 (full redesign: cinematic editorial aesthetic with flagship case study and asymmetric showcases)
 
 ---
 
@@ -57,7 +57,9 @@ All live as of 2026-10-12:
 
 - The `KeywordResearch` and `Various Systems Projects` cards link to the profile root or group many small projects. Descriptions are summaries, not per-repo facts.
 - No images on the site yet (headshot or project screenshots). Would require image files in `public/` and a component to display them.
-- The hero "Public repos" stat is a hardcoded literal (`repoCount = 36` in `index.astro`). It goes stale if the GitHub count changes — update it manually or wire up a build hook.
+- The redesign's flagship section has no "Live Application" button because `money-calculator.md` has no `live:` frontmatter field. It renders only "Source Code". Add a `live:` URL to that file if one exists; do not invent one.
+- `src/components/SectionHeading.astro`, `ProjectCard.astro`, and `TimelineEntry.astro` are no longer rendered by the page but are kept on disk. Safe to delete if the old markup is confirmed unwanted.
+- The redesign has no `#system` section anymore; the header/footer nav use `#about` (the hero) instead.
 
 ## Deployment
 

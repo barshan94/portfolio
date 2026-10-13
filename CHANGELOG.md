@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - `src/pages/index.astro`: Section IDs now match boot navigation (system, impact, projects, experience, skills, writing, contact).
 - `src/pages/index.astro`: Reveal animations apply to all sections via `.reveal` class and IntersectionObserver.
 - `src/pages/index.astro`: Reduced-motion support disables all animations.
+- `src/pages/index.astro`: Added `id="about"` to the hero section. The header and footer nav links pointed at `#about`, but the redesign had dropped the old `#system` section, leaving those anchors dangling.
 - Build passes cleanly with all existing content collections.
 
 ---

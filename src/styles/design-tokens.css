@@ -26,6 +26,7 @@
   --accent-2: #4fdca0;
   --accent-2-ink: #6fdcb0;
   --accent-2-soft: #0f241c;
+  --accent-2-dark: #2a8f7f;
   --accent-2-grad: linear-gradient(135deg, #4fdca0 0%, #5ec4d4 100%);
 
   --warn: #f0c971;
