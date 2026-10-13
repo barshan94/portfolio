@@ -23,6 +23,7 @@ const repoCount = 43;
      HERO
      ================================================================ -->
 <section class="hero">
+  <div class="hero-mesh" aria-hidden="true"></div>
   <div class="hero-grid">
     <div class="container hero-inner">
       <span class="hero-kicker reveal">{cv?.role}</span>
@@ -58,9 +59,15 @@ const repoCount = 43;
     <div class="hero-visual" aria-hidden="true">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
       <div class="orb-ring"></div>
+      <div class="orb-ring orb-ring-2"></div>
       <div class="hero-code">
+        <div class="code-bar">
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-file">app.ts</span>
+        </div>
         <pre><code><span class="tok-kw">const</span> <span class="tok-var">build</span> = <span class="tok-kw">async</span> () =&gt; {<br/>  <span class="tok-var">app</span>.<span class="tok-fn">use</span>(<span class="tok-str">'astro'</span>)<br/>  <span class="tok-var">app</span>.<span class="tok-fn">use</span>(<span class="tok-str">'supabase'</span>)<br/>  <span class="tok-kw">return</span> <span class="tok-fn">deploy</span>()<br/>}</code></pre>
       </div>
     </div>
@@ -173,11 +180,15 @@ const repoCount = 43;
       title="Tools I use to get work done."
       subtitle="Focused on what matters for my current direction."
     />
-    <div class="skills-grid reveal">
+    <div class="skills-grid reveal-stagger">
       {cv?.skills.map((s) => (
-        <div class="skill-group">
-          <h4 class="skill-group-title">{s.group}</h4>
-          <p class="skill-list">{s.items.join(", ")}</p>
+        <div class="skill-card">
+          <h4 class="skill-card-title">{s.group}</h4>
+            <div class="skill-tags">
+              {s.items.map((item) => (
+                <span class="skill-chip">{item}</span>
+              ))}
+            </div>
         </div>
       ))}
     </div>
@@ -195,18 +206,27 @@ const repoCount = 43;
       title="Thoughts on technology and learning."
       subtitle="Pieces I've written down to clarify my own thinking."
     />
-    <div class="writing-list reveal">
+    <div class="writing-list reveal-stagger">
       {writing.map((w) => (
-        <div class="writing-item">
-          <span class="writing-label">{w.data.type}</span>
-          <h4 class="writing-title">{w.data.title}</h4>
-          <p class="writing-excerpt">{w.data.excerpt}</p>
-          {w.data.link ? (
-            <a class="writing-link" href={w.data.link} target="_blank" rel="noopener noreferrer">View →</a>
-          ) : (
-            <span class="writing-link">View →</span>
-          )}
-        </div>
+        <article class="writing-item">
+          <div class="writing-meta">
+            <span class="writing-label">{w.data.type}</span>
+          </div>
+          <div class="writing-content">
+            <h4 class="writing-title">{w.data.title}</h4>
+            <p class="writing-excerpt">{w.data.excerpt}</p>
+            {w.data.link ? (
+              <a class="writing-link" href={w.data.link} target="_blank" rel="noopener noreferrer" aria-label={`Read ${w.data.title}`}>
+                <span>Read</span>
+                <svg class="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            ) : (
+              <span class="writing-link disabled" aria-disabled="true">
+                <span>Unavailable</span>
+              </span>
+            )}
+          </div>
+        </article>
       ))}
     </div>
   </div>
@@ -491,87 +511,7 @@ const repoCount = 43;
 }
 
 /* ---- Skills ---- */
-.skills { padding: 5.5rem 0; }
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-top: 3rem;
-}
-.skill-group {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem;
-  position: relative;
-  overflow: hidden;
-  transition: transform var(--dur-med) var(--ease-out),
-    box-shadow var(--dur-med) var(--ease-out),
-    border-color var(--dur-med) var(--ease-out);
-}
-.skill-group::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 3px;
-  background: var(--accent-2-grad);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-med) var(--ease-out);
-}
-.skill-group:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--accent-2) 35%, var(--line));
-  box-shadow: var(--shadow-md);
-}
-.skill-group:hover::before { transform: scaleX(1); }
-.skill-group-title {
-  margin: 0 0 0.7rem;
-  font-size: var(--step-1);
-  font-weight: 600;
-  color: var(--ink);
-}
-.skill-list { margin: 0; font-size: var(--step-1); color: var(--ink-muted); line-height: 1.6; }
-
-/* ---- Writing ---- */
-.writing { padding: 5.5rem 0; }
-.writing-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 3rem;
-  max-width: 760px;
-}
-.writing-item {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem 1.75rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  transition: transform var(--dur-med) var(--ease-out),
-    box-shadow var(--dur-med) var(--ease-out),
-    border-color var(--dur-med) var(--ease-out);
-}
-.writing-item:hover {
-  transform: translateX(4px);
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
-  box-shadow: var(--shadow-md);
-}
-.writing-label {
-  flex: 0 0 auto;
-  display: inline-block;
-  font-size: var(--step-0);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.4rem;
-}
-.writing-title { margin: 0 0 0.4rem; font-size: var(--step-2); font-weight: 600; color: var(--ink); }
-.writing-excerpt { margin: 0 0 0.75rem; font-size: var(--step-1); color: var(--ink-muted); line-height: 1.6; }
-.writing-link { font-size: var(--step-1); font-weight: 500; color: var(--accent); transition: gap var(--dur-fast) var(--ease-out); }
+/* Styles in global.css */
 
 /* ---- Contact ---- */
 .contact { padding: 6rem 0 7rem; }
@@ -588,7 +528,7 @@ const repoCount = 43;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--section-accent);
 }
 .contact-title {
   margin: 0;

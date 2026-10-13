@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2026-10-13] — Skills + Writing section redesign and whole-page review
+
+### Changed
+
+- `src/pages/index.astro`: Redesigned Skills section markup from comma-separated plain text lists (`.skill-list`) to tag badge chips (`.skill-chip` inside `.skill-tags`) inside cards (`.skill-card`). Applied `reveal-stagger` for sequenced scroll-in animations. Cleaned up redundant styles from `<style>` block.
+- `src/pages/index.astro`: Redesigned Writing section markup from plain list items to semantic `<article>` cards with grid layout (meta label, content column, link column). Added SVG arrow icons and accessible labels (`aria-label`, `aria-disabled`).
+- `src/styles/global.css`: Added clean styling for `.skill-card`, `.skill-tags`, and `.skill-chip` with hover transitions, gradient border indicator (`--accent-2-grad`), and responsive grid layouts.
+- `src/styles/global.css`: Added premium styling for `.writing-item` grid layout, `.writing-meta` label badges, and `.writing-link` with animated arrow icons. Removed duplicate styles from `index.astro`'s `<style>` block.
+- `src/styles/global.css`: Updated responsive breakpoints — added writing item grid collapse and contact button column layout for mobile widths.
+
+---
+
 ## [2026-10-12] — Content collections + continuity system
 
 ### Added

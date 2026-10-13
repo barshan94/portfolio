@@ -1,7 +1,7 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-12 (continuity cleanup)
+Last updated: 2026-10-13 (skills + writing redesign, whole-page review)
 
 ---
 

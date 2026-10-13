@@ -7,34 +7,184 @@ interface Props {
   live?: string;
   status?: "completed" | "in-progress";
   accent?: "default" | "accent" | "accent-2";
+  type?: "work" | "internship" | "project";
 }
-const { title, description, tags = [], repo, live, status = "completed", accent = "default" } = Astro.props as Props;
+
+const {
+  title,
+  description,
+  tags = [],
+  repo,
+  live,
+  status = "completed",
+  accent = "default",
+  type,
+} = Astro.props as Props;
+
 const accentClass = accent === "accent" ? "card--accent" : accent === "accent-2" ? "card--accent-2" : "";
 const statusClass = status === "in-progress" ? "card--in-progress" : "";
+
+const titleLower = title.toLowerCase();
+const isMoneyCalc = titleLower.includes("money");
+const isStore = titleLower.includes("asta") || titleLower.includes("store");
+const isPortal = titleLower.includes("royal") || titleLower.includes("academy");
+const isThesis = titleLower.includes("thesis") || titleLower.includes("biot");
+const isSystem = !isMoneyCalc && !isStore && !isPortal && !isThesis;
 ---
 
 <article class={`project-card ${accentClass} ${statusClass}`}>
-  <div class="card-top">
-    <div class="card-title-row">
-      <h3 class="card-title">{title}</h3>
-      {status === "in-progress" && <span class="status-badge">In progress</span>}
-    </div>
-    <p class="card-desc">{description}</p>
+  <!-- Decorative CSS Visual Preview -->
+  <div class="card-preview" aria-hidden="true">
+    {isMoneyCalc && (
+      <div class="preview-shell preview-finance">
+        <div class="pv-finance-header">
+          <div class="pv-finance-stat">
+            <span class="pv-finance-label">NET BALANCE</span>
+            <span class="pv-finance-val">$24,850.00</span>
+          </div>
+          <span class="pv-trend-badge">+14.2%</span>
+        </div>
+        <div class="pv-finance-chart">
+          <div class="pv-bar pv-bar-1"></div>
+          <div class="pv-bar pv-bar-2"></div>
+          <div class="pv-bar pv-bar-3"></div>
+          <div class="pv-bar pv-bar-4"></div>
+          <div class="pv-bar pv-bar-5"></div>
+          <div class="pv-bar pv-bar-6"></div>
+          <div class="pv-bar pv-bar-7"></div>
+          <div class="pv-bar pv-bar-8"></div>
+        </div>
+        <div class="pv-finance-footer">
+          <span class="pv-pill">Checking</span>
+          <span class="pv-pill">Savings</span>
+          <span class="pv-pill pv-pill-accent">RPC Audited</span>
+        </div>
+      </div>
+    )}
+
+    {isStore && (
+      <div class="preview-shell preview-store">
+        <div class="pv-store-top">
+          <div class="pv-store-brand">ASTA LEATHER</div>
+          <span class="pv-store-cart">Cart (2)</span>
+        </div>
+        <div class="pv-store-grid">
+          <div class="pv-store-item">
+            <div class="pv-item-box"></div>
+            <div class="pv-item-meta">
+              <span class="pv-item-bar"></span>
+              <span class="pv-item-price">$120</span>
+            </div>
+          </div>
+          <div class="pv-store-item">
+            <div class="pv-item-box pv-item-box-alt"></div>
+            <div class="pv-item-meta">
+              <span class="pv-item-bar"></span>
+              <span class="pv-item-price">$85</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {isPortal && (
+      <div class="preview-shell preview-portal">
+        <div class="pv-portal-nav">
+          <span class="pv-dot"></span>
+          <span class="pv-dot"></span>
+          <span class="pv-portal-title">ADMISSION PORTAL</span>
+        </div>
+        <div class="pv-portal-content">
+          <div class="pv-portal-card">
+            <span class="pv-badge-portal">Open</span>
+            <div class="pv-lines">
+              <span class="pv-line-long"></span>
+              <span class="pv-line-short"></span>
+            </div>
+          </div>
+          <div class="pv-portal-sidebar">
+            <div class="pv-sidebar-pill">Calendar</div>
+            <div class="pv-sidebar-pill">Notice Board</div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {isThesis && (
+      <div class="preview-shell preview-thesis">
+        <div class="pv-thesis-header">
+          <span class="pv-node-tag">bIoT HEALTHCARE</span>
+          <span class="pv-node-id">0x7F...C3</span>
+        </div>
+        <div class="pv-graph-net">
+          <div class="pv-node pv-node-1">
+            <span class="pv-node-core"></span>
+            <span class="pv-node-lbl">Device</span>
+          </div>
+          <div class="pv-node-edge"></div>
+          <div class="pv-node pv-node-center">
+            <span class="pv-node-core"></span>
+            <span class="pv-node-lbl">Ledger</span>
+          </div>
+          <div class="pv-node-edge"></div>
+          <div class="pv-node pv-node-2">
+            <span class="pv-node-core"></span>
+            <span class="pv-node-lbl">Clinical</span>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {isSystem && (
+      <div class="preview-shell preview-system">
+        <div class="pv-sys-top">
+          <span class="pv-dot"></span>
+          <span class="pv-dot"></span>
+          <span class="pv-dot"></span>
+          <span class="pv-sys-title">SYSTEM CLUSTER</span>
+        </div>
+        <div class="pv-sys-body">
+          <div class="pv-code-line"><span class="pv-kw">&gt; status</span> --all --format=json</div>
+          <div class="pv-code-line pv-code-ok">[OK] 43 services synchronized</div>
+          <div class="pv-sys-meters">
+            <div class="pv-meter"><div class="pv-fill pv-fill-1"></div></div>
+            <div class="pv-meter"><div class="pv-fill pv-fill-2"></div></div>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
-  {tags.length > 0 && (
-    <ul class="card-tags">
-      {tags.map((t) => <li class="tag">{t}</li>)}
-    </ul>
-  )}
-  <div class="card-links">
-    {repo && <a href={repo} target="_blank" rel="noopener noreferrer" class="card-link">
-      <span>GitHub</span>
-      <span aria-hidden="true">↗</span>
-    </a>}
-    {live && <a href={live} target="_blank" rel="noopener noreferrer" class="card-link">
-      <span>Live</span>
-      <span aria-hidden="true">↗</span>
-    </a>}
+
+  <div class="card-content">
+    <div class="card-top">
+      <div class="card-title-row">
+        <h3 class="card-title">{title}</h3>
+        {status === "in-progress" && <span class="status-badge">In progress</span>}
+        {type && <span class="type-badge">{type}</span>}
+      </div>
+      <p class="card-desc">{description}</p>
+    </div>
+
+    {tags.length > 0 && (
+      <ul class="card-tags">
+        {tags.map((t) => <li class="tag">{t}</li>)}
+      </ul>
+    )}
+
+    <div class="card-links">
+      {repo && (
+        <a href={repo} target="_blank" rel="noopener noreferrer" class="card-link">
+          <span>GitHub</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      )}
+      {live && (
+        <a href={live} target="_blank" rel="noopener noreferrer" class="card-link">
+          <span>Live</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </div>
   </div>
 </article>
 
@@ -43,10 +193,8 @@ const statusClass = status === "in-progress" ? "card--in-progress" : "";
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  padding: 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   height: 100%;
   position: relative;
   overflow: hidden;
@@ -62,16 +210,375 @@ const statusClass = status === "in-progress" ? "card--in-progress" : "";
   opacity: 0;
   transition: opacity var(--dur-med) var(--ease-out);
   pointer-events: none;
+  z-index: 0;
 }
 .project-card:hover {
   transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
   box-shadow: var(--shadow-xl);
 }
-.project-card:hover::before { opacity: 0.06; }
+.project-card:hover::before { opacity: 0.04; }
 .card--accent { border-top: 3px solid var(--accent); }
 .card--accent-2 { border-top: 3px solid var(--accent-2); }
 .card--in-progress { border-top-color: var(--warn); }
+
+/* ---- Preview Container ---- */
+.card-preview {
+  position: relative;
+  height: 140px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  user-select: none;
+}
+
+.preview-shell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 0.75rem 0.9rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.project-card:hover .preview-shell {
+  transform: scale(1.02);
+}
+
+/* 1. Finance Preview (Money Calculator) */
+.preview-finance {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+}
+.pv-finance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pv-finance-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.pv-finance-label {
+  font-size: 0.62rem;
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.pv-finance-val {
+  font-size: 1.05rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.pv-trend-badge {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--accent-2);
+  background: var(--accent-2-soft);
+  border: 1px solid color-mix(in srgb, var(--accent-2) 30%, transparent);
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+}
+.pv-finance-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  height: 28px;
+  padding: 0.2rem 0;
+}
+.pv-bar {
+  flex: 1;
+  background: var(--line-strong);
+  border-radius: 3px 3px 1px 1px;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.pv-bar-1 { height: 35%; }
+.pv-bar-2 { height: 50%; }
+.pv-bar-3 { height: 40%; }
+.pv-bar-4 { height: 75%; background: color-mix(in srgb, var(--accent) 60%, var(--line-strong)); }
+.pv-bar-5 { height: 60%; background: color-mix(in srgb, var(--accent) 70%, var(--line-strong)); }
+.pv-bar-6 { height: 85%; background: var(--accent); }
+.pv-bar-7 { height: 70%; background: var(--accent); }
+.pv-bar-8 { height: 100%; background: var(--accent-2); }
+
+.pv-finance-footer {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.pv-pill {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: var(--bg-soft);
+  color: var(--ink-muted);
+  border: 1px solid var(--line);
+}
+.pv-pill-accent {
+  margin-left: auto;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* 2. Storefront Preview */
+.preview-store {
+  background: var(--surface);
+}
+.pv-store-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pv-store-brand {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-2);
+}
+.pv-store-cart {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+}
+.pv-store-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+.pv-store-item {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pv-item-box {
+  height: 24px;
+  background: color-mix(in srgb, var(--accent-2) 20%, var(--surface-2));
+  border-radius: 4px;
+}
+.pv-item-box-alt {
+  background: color-mix(in srgb, var(--accent) 20%, var(--surface-2));
+}
+.pv-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pv-item-bar {
+  width: 32px;
+  height: 4px;
+  background: var(--line-strong);
+  border-radius: 2px;
+}
+.pv-item-price {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* 3. Portal Preview */
+.preview-portal {
+  background: var(--surface);
+}
+.pv-portal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.35rem;
+}
+.pv-portal-title {
+  margin-left: 0.3rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+}
+.pv-portal-content {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.3rem;
+}
+.pv-portal-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pv-badge-portal {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+.pv-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.pv-line-long { width: 75%; height: 4px; background: var(--line-strong); border-radius: 2px; }
+.pv-line-short { width: 45%; height: 4px; background: var(--line); border-radius: 2px; }
+.pv-portal-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pv-sidebar-pill {
+  font-size: 0.62rem;
+  padding: 0.2rem 0.4rem;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink-muted);
+}
+
+/* 4. Thesis Preview */
+.preview-thesis {
+  background: var(--surface);
+}
+.pv-thesis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pv-node-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.pv-node-id {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+}
+.pv-graph-net {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.4rem;
+}
+.pv-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.pv-node-core {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+}
+.pv-node-center .pv-node-core {
+  border-color: var(--accent-2);
+  background: var(--accent-2-soft);
+}
+.pv-node-lbl {
+  font-size: 0.58rem;
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+}
+.pv-node-edge {
+  flex: 1;
+  height: 1px;
+  background: var(--line-strong);
+  margin: 0 0.25rem;
+  margin-bottom: 0.8rem;
+}
+
+/* 5. System Preview */
+.preview-system {
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+}
+.pv-sys-top {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.3rem;
+}
+.pv-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+.pv-sys-title {
+  margin-left: 0.35rem;
+  font-size: 0.62rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+}
+.pv-sys-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+.pv-code-line {
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+}
+.pv-kw { color: var(--accent); }
+.pv-code-ok { color: var(--accent-2); font-weight: 500; }
+.pv-sys-meters {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+}
+.pv-meter {
+  flex: 1;
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.pv-fill { height: 100%; }
+.pv-fill-1 { width: 68%; background: var(--accent); }
+.pv-fill-2 { width: 92%; background: var(--accent-2); }
+
+/* ---- Card Content ---- */
+.card-content {
+  padding: 1.5rem 1.75rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
 .card-top { display: flex; flex-direction: column; gap: 0.5rem; }
 .card-title-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .card-title {
@@ -83,6 +590,7 @@ const statusClass = status === "in-progress" ? "card--in-progress" : "";
   transition: color var(--dur-fast) var(--ease-out);
 }
 .project-card:hover .card-title { color: var(--accent); }
+
 .status-badge {
   font-size: var(--step-0);
   font-weight: 600;
@@ -94,6 +602,18 @@ const statusClass = status === "in-progress" ? "card--in-progress" : "";
   padding: 0.15rem 0.55rem;
   border-radius: 999px;
 }
+.type-badge {
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
 .card-desc { margin: 0; color: var(--ink-muted); font-size: var(--step-1); line-height: 1.65; }
 .card-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .tag {
@@ -108,6 +628,7 @@ const statusClass = status === "in-progress" ? "card--in-progress" : "";
     color var(--dur-fast) var(--ease-out);
 }
 .project-card:hover .tag { background: var(--accent-soft); color: var(--accent-ink); }
+
 .card-links {
   display: flex;
   gap: 0.75rem;
