@@ -10,7 +10,7 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;height:100%;background:#07080a;overflow:hidden}
-  canvas{display:block;width:100vw;height:100vh;cursor:none}
+  canvas{display:block;width:100vw;height:100dvh;cursor:none;touch-action:manipulation}
   #ui{position:fixed;top:14px;right:14px;z-index:50;display:flex;gap:8px;
       font-family:'JetBrains Mono',monospace;opacity:.18;transition:opacity .35s}
   #ui:hover{opacity:1}
@@ -22,6 +22,38 @@
   #hint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;
       font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.28em;
       color:rgba(120,170,180,.22);text-transform:uppercase;pointer-events:none}
+
+  @media (max-width: 600px) {
+    #ui {
+      left: 8px;
+      right: 8px;
+      top: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 5px;
+      opacity: 1;
+    }
+
+    #ui button {
+      padding: 7px 8px;
+      font-size: 7px;
+      letter-spacing: .08em;
+    }
+
+    #hint {
+      bottom: 8px;
+      max-width: calc(100vw - 20px);
+      font-size: 7px;
+      letter-spacing: .08em;
+      line-height: 1.5;
+      text-align: center;
+      color: rgba(120,170,180,.65);
+    }
+
+    canvas {
+      cursor: auto;
+    }
+  }
 </style>
 </head>
 <body>
@@ -89,7 +121,7 @@ const after=(x,i)=>x>=STARTS[i];
 function resize(){
   dpr=Math.min(window.devicePixelRatio||1,2);
   W=window.innerWidth; H=window.innerHeight;
-  S=clamp(W/1600,.62,1.7);
+  S=W<=600?clamp(W/1600,.34,.48):clamp(W/1600,.62,1.7);
   canvas.width=W*dpr; canvas.height=H*dpr;
   ctx.setTransform(dpr,0,0,dpr,0,0);
   build();
