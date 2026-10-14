@@ -1,6 +1,6 @@
 ---
 title: "Money Calculator"
-description: "A personal finance application for tracking transactions, accounts, loans, repayments, investments, and tuition payments, with an emphasis on financial integrity."
+description: "A personal finance application built around ledger-connected transactions, account balances, loan lifecycles, tuition payments, and traceable financial corrections."
 tags: ["Next.js 16", "TypeScript", "Supabase", "PostgreSQL", "React 19", "Tailwind", "Recharts"]
 repo: "https://github.com/barshan94/money-calculator"
 status: "completed"
@@ -8,39 +8,51 @@ featured: true
 accent: "accent"
 ---
 
-A personal financial management application built to make everyday money records easier to organize and review. The project focuses on keeping financial activity connected to database records and making important changes traceable.
+Money Calculator is a personal finance application designed to organize everyday financial activity while preserving consistency between transactions, account balances, and related records.
+
+The central engineering challenge is ensuring financial changes remain consistent when a transaction is edited, voided, repaid, or corrected.
 
 ## The problem
 
-Income, expenses, account balances, lending, borrowing, and recurring obligations can become difficult to manage when they are scattered across separate notes or spreadsheets. Money Calculator brings these records into one application so they can be reviewed together.
+Financial records become unreliable when balances and related records drift apart. Editing a transaction should not leave its previous effect behind, and recording a repayment should update the relevant outstanding balance.
 
-## Core capabilities
+The application explores these challenges through connected financial workflows, database-backed operations, and explicit lifecycle management.
 
-- Record income and expenses and review balances across multiple accounts.
-- Track money lent and borrowed, including repayment activity.
-- Organize investments, deposits, and long-term assets.
-- Keep tuition students and payment status in the same financial workflow.
-- Manage budgets, goals, and recurring transactions where implemented.
+## Core workflows
+
+- **Transaction integrity:** create, update, and void transactions while accounting for their effects on financial balances.
+- **Loans and repayments:** track money lent or borrowed, record repayments, and maintain related loan records and outstanding amounts.
+- **Tuition tracking:** manage student payment records, payment history, and outstanding tuition amounts.
+- **Accounts and balances:** organize financial activity across accounts and connect balances to recorded transactions.
+- **Traceable corrections:** support reversible financial changes rather than treating corrections as isolated edits.
 
 ## Engineering approach
 
-The application uses the Next.js App Router, with server components for data retrieval and client components for interactive workflows. Supabase provides authentication and database access, while PostgreSQL-backed functions handle financial mutations.
+### Financial consistency
 
-The design emphasizes financial integrity: changes to financial records should flow through the application's data layer rather than rely on hardcoded totals. Transaction corrections, voiding, loan repayments, and account-balance updates need to remain consistent with the underlying records.
+A transaction change can affect an account balance or a related obligation. The application emphasizes coordinated database operations and consistency across these relationships.
 
-## Technical highlights
+### Explicit financial lifecycles
 
-- **Database-backed records:** financial information is read from persisted records rather than hardcoded display values.
-- **Connected financial workflows:** transactions, accounts, loans, and repayments are designed to work together rather than behave as isolated forms.
-- **Traceable changes:** auditability and reversible operations are important design goals for correcting financial records.
-- **Authentication and access control:** the application uses Supabase SSR authentication and database row-level security policies.
+Loans and repayments have relationships that need to remain coherent as activity is recorded. Explicit workflows help prevent repayments or corrections from becoming disconnected from the underlying obligation.
+
+### Authentication and access control
+
+The application uses Supabase SSR authentication and PostgreSQL row-level security policies to support authenticated access to user financial data.
+
+### Testing and verification
+
+The development process includes unit and database integration tests for loan lifecycle handling, settlement, balance integrity, transaction corrections, reversal audit trails, and tuition payment history.
 
 ## Technology
 
-Next.js, React, TypeScript, Supabase, PostgreSQL, Tailwind CSS, and Recharts.
+- **Application:** Next.js, React, TypeScript
+- **Database and security:** Supabase, PostgreSQL, server-side authentication, row-level security
+- **Interface and visualization:** Tailwind CSS, Recharts
+- **Quality assurance:** Vitest and database integration testing
 
 ## Project status
 
-This is an actively evolving personal application. The capabilities described here should be read alongside the current repository and live implementation; not every planned financial or reporting feature should be assumed complete.
+Money Calculator is an evolving personal software project. Its implemented workflows and tests demonstrate the current engineering focus; planned features and reporting capabilities should not be assumed complete without verification against the current repository.
 
 [View the source code on GitHub](https://github.com/barshan94/money-calculator)

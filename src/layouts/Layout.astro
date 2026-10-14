@@ -1,4 +1,4 @@
----
+﻿---
 import Header from "./Header.astro";
 import Footer from "./Footer.astro";
 
@@ -6,7 +6,11 @@ interface Props {
   title?: string;
   description?: string;
 }
-const { title = "Barshan Ghosh — Software Developer", description = "Building practical software. Exploring intelligent systems. B.Sc. Computer Science, AIUB (CGPA 3.83/4.00)." } = Astro.props as Props;
+
+const {
+  title = "Barshan Ghosh — Software Developer",
+  description = "Barshan Ghosh is a computer science graduate and software developer interested in practical web applications, financial systems, and AI engineering.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -18,15 +22,16 @@ const { title = "Barshan Ghosh — Software Developer", description = "Building 
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
     <link rel="icon" href="/favicon.svg" />
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
     <Header />
-    <main>
-      <slot />
-    </main>
+    <slot />
     <Footer />
   </body>
 </html>
