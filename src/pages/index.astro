@@ -1,6 +1,7 @@
 
 ---
 import Layout from "../layouts/Layout.astro";
+import MoneyCalculatorTransition from "../components/MoneyCalculatorTransition.astro";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects");
@@ -194,6 +195,8 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           </div>
           <span class="section-side-note">Personal finance / Web application</span>
         </div>
+
+        <MoneyCalculatorTransition />
 
         <div class="flagship-card" data-reveal>
           <div class="flagship-content">
