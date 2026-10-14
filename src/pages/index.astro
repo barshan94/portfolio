@@ -157,7 +157,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     </section>
 
     <!-- FEATURED PROJECT -->
-    {#if flagship}
+    {flagship && (
       <section
         class="flagship section-wrap section-block"
         id="flagship"
@@ -225,7 +225,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             </div>
 
             <div class="flagship-actions">
-              {#if getProjectRepo(flagship)}
+              {getProjectRepo(flagship) && (
                 <a
                   class="button button-primary"
                   href={getProjectRepo(flagship)}
@@ -234,9 +234,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 >
                   View source <span aria-hidden="true">↗</span>
                 </a>
-              {/if}
+              )}
 
-              {#if getProjectLink(flagship)}
+              {getProjectLink(flagship) && (
                 <a
                   class="button button-quiet"
                   href={getProjectLink(flagship)}
@@ -245,7 +245,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 >
                   Open project <span aria-hidden="true">↗</span>
                 </a>
-              {/if}
+              )}
             </div>
           </div>
 
@@ -340,7 +340,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           </div>
         </div>
       </section>
-    {/if}
+    )}
 
     <!-- PROJECTS -->
     <section
@@ -362,9 +362,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </p>
       </div>
 
-      {#if otherProjects.length > 0}
+      {otherProjects.length > 0 ? (
         <div class="project-grid">
-          {#each otherProjects as project, index}
+          {otherProjects.map((project, index) => (
             <article
               class:list={[
                 "project-card",
@@ -387,7 +387,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               </div>
 
               <div class="project-art" aria-hidden="true">
-                {#if project.slug === "asta-store"}
+                {project.slug === "asta-store" ? (
                   <div class="art-store">
                     <div class="store-topbar"><span></span><span></span><span></span></div>
                     <div class="store-body">
@@ -400,7 +400,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                     </div>
                     <div class="store-footer"><i></i><i></i><i></i></div>
                   </div>
-                {:else if project.slug === "mount-royal-academy"}
+                ) : project.slug === "mount-royal-academy" ? (
                   <div class="art-academy">
                     <div class="academy-header"><span></span><span></span></div>
                     <div class="academy-hero">
@@ -409,7 +409,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                     </div>
                     <div class="academy-cards"><i></i><i></i><i></i></div>
                   </div>
-                {:else if project.slug === "biot-thesis"}
+                ) : project.slug === "biot-thesis" ? (
                   <div class="art-research">
                     <div class="research-node node-one">DATA</div>
                     <div class="research-node node-two">MODEL</div>
@@ -418,14 +418,14 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                     <div class="research-line line-two"></div>
                     <div class="research-line line-three"></div>
                   </div>
-                {:else}
+                ) : (
                   <div class="art-generic">
                     <span class="generic-orbit"></span>
                     <span class="generic-core">✳</span>
                     <span class="generic-line generic-line-one"></span>
                     <span class="generic-line generic-line-two"></span>
                   </div>
-                {/if}
+                )}
               </div>
 
               <div class="project-card-body">
@@ -434,16 +434,16 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   {project.data.description}
                 </p>
 
-                {#if getProjectTags(project).length > 0}
+                {getProjectTags(project).length > 0 && (
                   <div class="tag-list project-tags">
-                    {#each getProjectTags(project).slice(0, 5) as tag}
+                    {getProjectTags(project).slice(0, 5).map((tag) => (
                       <span>{tag}</span>
-                    {/each}
+                    ))}
                   </div>
-                {/if}
+                )}
 
                 <div class="project-card-links">
-                  {#if getProjectLink(project)}
+                  {getProjectLink(project) && (
                     <a
                       href={getProjectLink(project)}
                       target="_blank"
@@ -451,9 +451,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                     >
                       View project <span aria-hidden="true">↗</span>
                     </a>
-                  {/if}
+                  )}
 
-                  {#if getProjectRepo(project)}
+                  {getProjectRepo(project) && (
                     <a
                       href={getProjectRepo(project)}
                       target="_blank"
@@ -461,22 +461,22 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                     >
                       Source code <span aria-hidden="true">↗</span>
                     </a>
-                  {/if}
+                  )}
                 </div>
               </div>
             </article>
-          {/each}
+          ))}
         </div>
-      {:else}
+      ) : (
         <div class="empty-state" data-reveal>
           <span class="empty-mark">✳</span>
           <p>More projects will appear here as they are added to the portfolio.</p>
         </div>
-      {/if}
+      )}
     </section>
 
     <!-- EXPERIENCE -->
-    {#if cv?.experience?.length}
+    {cv?.experience?.length && (
       <section
         class="experience section-wrap section-block"
         id="experience"
@@ -496,43 +496,43 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
 
         <div class="timeline">
-          {#each cv.experience as experience, index}
+          {cv.experience.map((experience, index) => (
             <article class="timeline-item" data-reveal>
               <div class="timeline-marker">
                 <span>{projectNumber(index)}</span>
               </div>
               <div class="timeline-content">
                 <div class="timeline-meta">
-                  {#if getExperienceDate(experience)}
+                  {getExperienceDate(experience) && (
                     <span>{getExperienceDate(experience)}</span>
-                  {/if}
-                  {#if experience.location}
+                  )}
+                  {experience.location && (
                     <span>{experience.location}</span>
-                  {/if}
+                  )}
                 </div>
                 <h3>{experience.role || experience.title}</h3>
                 <p class="timeline-company">
                   {experience.company || experience.organization}
                 </p>
-                {#if experience.description}
+                {experience.description && (
                   <p class="timeline-description">{experience.description}</p>
-                {/if}
-                {#if experience.highlights?.length}
+                )}
+                {experience.highlights?.length && (
                   <ul class="timeline-highlights">
-                    {#each experience.highlights as highlight}
+                    {experience.highlights.map((highlight) => (
                       <li>{highlight}</li>
-                    {/each}
+                    ))}
                   </ul>
-                {/if}
+                )}
               </div>
             </article>
-          {/each}
+          ))}
         </div>
       </section>
-    {/if}
+    )}
 
     <!-- SKILLS -->
-    {#if cv?.skills?.length}
+    {cv?.skills?.length && (
       <section
         class="skills section-wrap section-block"
         id="skills"
@@ -552,38 +552,38 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
 
         <div class="skills-grid">
-          {#each cv.skills as skill, index}
+          {cv.skills.map((skill, index) => (
             <article class="skill-card" data-reveal>
               <span class="skill-index">{projectNumber(index)}</span>
               <div class="skill-content">
                 <h3>{skill.category || skill.name || skill.title}</h3>
-                {#if Array.isArray(skill.items)}
+                {Array.isArray(skill.items) ? (
                   <div class="skill-tags">
-                    {#each skill.items as item}
+                    {skill.items.map((item) => (
                       <span>{item}</span>
-                    {/each}
+                    ))}
                   </div>
-                {:else if Array.isArray(skill.skills)}
+                ) : Array.isArray(skill.skills) ? (
                   <div class="skill-tags">
-                    {#each skill.skills as item}
+                    {skill.skills.map((item) => (
                       <span>{item}</span>
-                    {/each}
+                    ))}
                   </div>
-                {:else if typeof skill === "string"}
+                ) : typeof skill === "string" ? (
                   <div class="skill-tags"><span>{skill}</span></div>
-                {:else if skill.description}
+                ) : skill.description ? (
                   <p>{skill.description}</p>
-                {/if}
+                ) : null}
               </div>
               <span class="skill-arrow" aria-hidden="true">↗</span>
             </article>
-          {/each}
+          ))}
         </div>
       </section>
-    {/if}
+    )}
 
     <!-- WRITING -->
-    {#if writing.length > 0}
+    {writing.length > 0 && (
       <section
         class="writing section-wrap section-block"
         id="writing"
@@ -602,7 +602,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
 
         <div class="writing-list">
-          {#each writing as entry, index}
+          {writing.map((entry, index) => (
             <a
               class="writing-item"
               href={getWritingLink(entry)}
@@ -614,16 +614,16 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   {entry.data.type || "Article"}
                 </span>
                 <h3>{entry.data.title}</h3>
-                {#if entry.data.excerpt || entry.data.description}
+                {entry.data.excerpt || entry.data.description && (
                   <p>{entry.data.excerpt || entry.data.description}</p>
-                {/if}
+                )}
               </div>
               <span class="writing-arrow" aria-hidden="true">↗</span>
             </a>
-          {/each}
+          ))}
         </div>
       </section>
-    {/if}
+    )}
 
     <!-- CONTACT -->
     <section
@@ -645,7 +645,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           </p>
 
           <div class="contact-links">
-            {#if contact?.email}
+            {contact?.email && (
               <a
                 class="contact-link contact-email"
                 href={`mailto:${contact.email}`}
@@ -653,9 +653,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 <span>{contact.email}</span>
                 <span aria-hidden="true">↗</span>
               </a>
-            {/if}
+            )}
 
-            {#if contact?.github}
+            {contact?.github && (
               <a
                 class="contact-link"
                 href={contact.github.startsWith("http")
@@ -667,9 +667,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 <span>GitHub</span>
                 <span aria-hidden="true">↗</span>
               </a>
-            {/if}
+            )}
 
-            {#if contact?.linkedin}
+            {contact?.linkedin && (
               <a
                 class="contact-link"
                 href={contact.linkedin.startsWith("http")
@@ -681,7 +681,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 <span>LinkedIn</span>
                 <span aria-hidden="true">↗</span>
               </a>
-            {/if}
+            )}
           </div>
         </div>
 
