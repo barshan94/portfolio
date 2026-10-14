@@ -2593,5 +2593,19 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       transform: none;
     }
   }
+
+  / Portfolio hero refinement */
+  .hero { gap: clamp(2.75rem, 6vw, 6rem); }
+  .hero-copy { position: relative; z-index: 1; }
+  .hero h1 { font-size: clamp(3.3rem, 6.8vw, 6.25rem); line-height: .97; text-wrap: balance; }
+  .hero-description { max-width: 34rem; line-height: 1.8; }
+  .hero .accent-text { color: #56d6c2; }
+  .hero .status-dot { background: #56d6c2; box-shadow: 0 0 14px rgba(86,214,194,.45); }
+  .hero .button-primary { color: #07110f; background: #56d6c2; border-color: #56d6c2; }
+  .hero .button-primary:hover { background: #78e4d3; border-color: #78e4d3; }
+  .hero-visual-frame { border-color: rgba(148,163,184,.24); background: radial-gradient(circle at 50% 45%, rgba(86,214,194,.09), transparent 56%), rgba(255,255,255,.012); }
+  .hero-facts { gap: clamp(1.25rem, 3vw, 2rem); }
+  @media (max-width: 600px) { .hero h1 { font-size: clamp(2.9rem, 12.5vw, 4.2rem); } .hero { gap: 2.75rem; padding-top: 4.5rem; } }
+
 </style>
 
