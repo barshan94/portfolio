@@ -1,13 +1,14 @@
-
+﻿
 ---
 import Layout from "../layouts/Layout.astro";
 import MoneyCalculatorTransition from "../components/MoneyCalculatorTransition.astro";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects");
+const projectId = (project) => project.id.replace(/\.md$/, "");
 
 const flagship =
-  allProjects.find((project) => project.slug === "money-calculator") ||
+  allProjects.find((project) => projectId(project) === "money-calculator") ||
   allProjects.find((project) =>
     project.data.title.toLowerCase().includes("money")
   ) ||
@@ -38,10 +39,10 @@ const getProjectTags = (project: (typeof allProjects)[number]) =>
   Array.isArray(project.data.tags) ? project.data.tags : [];
 
 const getExperienceDate = (experience: any) =>
-  [experience.start, experience.end].filter(Boolean).join(" — ");
+  [experience.start, experience.end].filter(Boolean).join(" â€” ");
 
 const getWritingLink = (entry: (typeof writing)[number]) =>
-  entry.data.url || `/writing/${entry.slug}/`;
+  entry.data.url || `/writing/${entry.id}/`;
 ---
 
 <script>
@@ -75,7 +76,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 </script>
 
 <Layout
-  title="Barshan Ghosh — Software Developer"
+  title="Barshan Ghosh â€” Software Developer"
   description="Barshan Ghosh is a computer science graduate and software developer interested in practical web applications, financial systems, and AI engineering."
 >
   
@@ -83,7 +84,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
   <div class="boot-panel">
     <div class="boot-brand"><span>BG</span> / SYSTEM INITIALIZER</div>
     <div class="boot-rule"></div>
-    <p class="boot-kicker">INITIALIZING SYSTEM — B.G / 2026</p>
+    <p class="boot-kicker">INITIALIZING SYSTEM â€” B.G / 2026</p>
     <h2>Building systems<span class="boot-cursor">_</span></h2>
     <div class="boot-log" aria-hidden="true">
       <p><span>[ OK ]</span> INTERFACE KERNEL</p>
@@ -92,7 +93,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     </div>
     <div class="boot-progress"><span></span></div>
     <div class="boot-bottom"><span>STARTUP SEQUENCE</span><span>2026 / READY</span></div>
-    <button class="boot-skip" id="skipBoot" type="button">SKIP INTRO ↗</button>
+    <button class="boot-skip" id="skipBoot" type="button">SKIP INTRO â†—</button>
   </div>
 </div>
 
@@ -120,10 +121,10 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         <div class="hero-actions">
           <a class="button button-primary" href="#flagship">
             Explore my work
-            <span aria-hidden="true">↘</span>
+            <span aria-hidden="true">â†˜</span>
           </a>
           <a class="button button-quiet" href="#contact">
-            Get in touch <span aria-hidden="true">↗</span>
+            Get in touch <span aria-hidden="true">â†—</span>
           </a>
         </div>
 
@@ -175,7 +176,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           <span class="console-state">PASSING*</span>
         </div>
         <p class="console-footnote">*Previously recorded unit and integration test baseline; not a live CI status.</p>
-        <div class="console-bottomline"><span>FINANCIAL SYSTEMS</span><span>BUILD / WITH PURPOSE ↗</span></div>
+        <div class="console-bottomline"><span>FINANCIAL SYSTEMS</span><span>BUILD / WITH PURPOSE â†—</span></div>
       </div>
     </section>
 
@@ -188,7 +189,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">01 — FEATURED PROJECT</p>
+            <p class="section-kicker">01 â€” FEATURED PROJECT</p>
             <h2 id="flagship-title">
               Money, made <span class="accent-text">understandable.</span>
             </h2>
@@ -290,7 +291,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View source <span aria-hidden="true">↗</span>
+                  View source <span aria-hidden="true">â†—</span>
                 </a>
               )}
 
@@ -301,7 +302,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open project <span aria-hidden="true">↗</span>
+                  Open project <span aria-hidden="true">â†—</span>
                 </a>
               )}
             </div>
@@ -392,8 +393,8 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             </div>
 
             <p class="concept-note">
-              <span aria-hidden="true">↳</span>
-              Concept visualization — illustrative shapes, not live financial data.
+              <span aria-hidden="true">â†³</span>
+              Concept visualization â€” illustrative shapes, not live financial data.
             </p>
           </div>
         </div>
@@ -408,7 +409,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     >
       <div class="section-heading" data-reveal>
         <div>
-          <p class="section-kicker">02 — SELECTED WORK</p>
+          <p class="section-kicker">02 â€” SELECTED WORK</p>
           <h2 id="projects-title">
             Different problems.<br />
             <span class="accent-text">Different approaches.</span>
@@ -426,7 +427,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             <article
               class:list={[
                 "project-card",
-                `project-card-${project.slug}`,
+                `project-card-${projectId(project)}`,
                 index === 0 ? "project-card-featured" : ""
               ]}
               data-reveal
@@ -434,18 +435,18 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               <div class="project-card-top">
                 <span class="project-number">{projectNumber(index)}</span>
                 <span class="project-category">
-                  {project.slug === "asta-store"
+                  {projectId(project) === "asta-store"
                     ? "E-commerce"
-                    : project.slug === "mount-royal-academy"
+                    : projectId(project) === "mount-royal-academy"
                       ? "Education"
-                      : project.slug === "biot-thesis"
+                      : projectId(project) === "biot-thesis"
                         ? "Research"
                         : "Selected project"}
                 </span>
               </div>
 
               <div class="project-art" aria-hidden="true">
-                {project.slug === "asta-store" ? (
+                {projectId(project) === "asta-store" ? (
                   <div class="art-store">
                     <div class="store-topbar"><span></span><span></span><span></span></div>
                     <div class="store-body">
@@ -459,7 +460,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                     <div class="store-footer"><i></i><i></i><i></i></div>
                   </div>
                 
-) : project.slug === "mount-royal-academy" ? (
+) : projectId(project) === "mount-royal-academy" ? (
   <div class="art-academy-animation">
     <iframe
       src="/mount-royal-academy-animation.html"
@@ -468,7 +469,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       tabindex="-1"
     ></iframe>
   </div>
-) : project.slug === "biot-thesis" ? (
+) : projectId(project) === "biot-thesis" ? (
 
                   <div class="art-research">
                     <div class="research-node node-one">DATA</div>
@@ -481,7 +482,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 ) : (
                   <div class="art-generic">
                     <span class="generic-orbit"></span>
-                    <span class="generic-core">✳</span>
+                    <span class="generic-core">âœ³</span>
                     <span class="generic-line generic-line-one"></span>
                     <span class="generic-line generic-line-two"></span>
                   </div>
@@ -509,7 +510,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      View project <span aria-hidden="true">↗</span>
+                      View project <span aria-hidden="true">â†—</span>
                     </a>
                   )}
 
@@ -519,7 +520,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Source code <span aria-hidden="true">↗</span>
+                      Source code <span aria-hidden="true">â†—</span>
                     </a>
                   )}
                 </div>
@@ -529,7 +530,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
       ) : (
         <div class="empty-state" data-reveal>
-          <span class="empty-mark">✳</span>
+          <span class="empty-mark">âœ³</span>
           <p>More projects will appear here as they are added to the portfolio.</p>
         </div>
       )}
@@ -544,7 +545,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">03 — EXPERIENCE</p>
+            <p class="section-kicker">03 â€” EXPERIENCE</p>
             <h2 id="experience-title">
               Learning by <span class="accent-text">doing.</span>
             </h2>
@@ -600,7 +601,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">04 — TOOLKIT</p>
+            <p class="section-kicker">04 â€” TOOLKIT</p>
             <h2 id="skills-title">
               Tools for <span class="accent-text">the work.</span>
             </h2>
@@ -635,7 +636,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   <p>{skill.description}</p>
                 ) : null}
               </div>
-              <span class="skill-arrow" aria-hidden="true">↗</span>
+              <span class="skill-arrow" aria-hidden="true">â†—</span>
             </article>
           ))}
         </div>
@@ -651,7 +652,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">05 — NOTES & IDEAS</p>
+            <p class="section-kicker">05 â€” NOTES & IDEAS</p>
             <h2 id="writing-title">
               Thinking in <span class="accent-text">public.</span>
             </h2>
@@ -678,7 +679,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   <p>{entry.data.excerpt || entry.data.description}</p>
                 )}
               </div>
-              <span class="writing-arrow" aria-hidden="true">↗</span>
+              <span class="writing-arrow" aria-hidden="true">â†—</span>
             </a>
           ))}
         </div>
@@ -693,7 +694,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     >
       <div class="contact-wrap" data-reveal>
         <div class="contact-copy">
-          <p class="section-kicker">06 — CONTACT</p>
+          <p class="section-kicker">06 â€” CONTACT</p>
           <h2 id="contact-title">
             Have a good<br />
             <span class="accent-text">problem to solve?</span>
@@ -711,7 +712,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 href={`mailto:${contact.email}`}
               >
                 <span>{contact.email}</span>
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">â†—</span>
               </a>
             )}
 
@@ -725,7 +726,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 rel="noopener noreferrer"
               >
                 <span>GitHub</span>
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">â†—</span>
               </a>
             )}
 
@@ -739,7 +740,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 rel="noopener noreferrer"
               >
                 <span>LinkedIn</span>
-                <span aria-hidden="true">↗</span>
+                <span aria-hidden="true">â†—</span>
               </a>
             )}
           </div>
@@ -763,9 +764,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       </a>
       <p>Built with care, curiosity, and Astro.</p>
       <a class="back-to-top" href="#about">
-        Back to top <span aria-hidden="true">↑</span>
+        Back to top <span aria-hidden="true">â†‘</span>
       </a>
-      <span class="footer-year">© <span id="year">{currentYear}</span></span>
+      <span class="footer-year">Â© <span id="year">{currentYear}</span></span>
     </footer>
   </main>
 
@@ -2784,4 +2785,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
   @media (max-width: 600px) { .hero h1 { font-size: clamp(2.9rem, 12.5vw, 4.2rem); } .hero { gap: 2.75rem; padding-top: 4.5rem; } }
 
 </style>
+
+
+
 
