@@ -3,12 +3,33 @@ import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects");
-const flagship = allProjects.find((p) => p.slug === "money-calculator" || p.data.title.toLowerCase().includes("money")) || allProjects[0];
+const flagship =
+  allProjects.find((p) => p.slug === "money-calculator") ||
+  allProjects.find((p) => p.data.title.toLowerCase().includes("money")) ||
+  allProjects[0];
 const otherProjects = allProjects.filter((p) => p !== flagship);
 const [cvEntry] = await getCollection("cv");
 const cv = cvEntry?.data;
 const writing = await getCollection("writing");
 ---
+
+<script>
+  // Scroll-triggered reveal for .reveal elements. No JS dependency, no build step.
+  if (typeof window !== "undefined" && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  }
+</script>
 
 <Layout
   title="Barshan Ghosh — Software Developer"
@@ -16,105 +37,139 @@ const writing = await getCollection("writing");
 >
   <div class="portfolio-shell">
 
-    <!-- 1. CINEMATIC EDITORIAL HERO -->
-    <section id="about" class="hero-section">
-      <div class="container hero-grid">
+    <!-- 1. HERO -->
+    <section id="about" class="hero reveal">
+      <div class="hero-grid">
         <div class="hero-copy">
-          <span class="hero-eyebrow">SOFTWARE ENGINEERING & SYSTEMS</span>
-          <h1 class="hero-title">
-            Building practical software.<br />
-            <span class="hero-gradient">Engineering intelligent systems.</span>
+          <span class="hero-eyebrow reveal" data-delay="0">Software Engineer · AI Engineering</span>
+          <h1 class="hero-title reveal" data-delay="60">
+            Building software<br />
+            that ships,<br />
+            <span class="hero-accent">and stays honest.</span>
           </h1>
-          <p class="hero-desc">
-            Full-stack developer focused on auditable software architecture, Supabase ecosystems, and AI engineering. B.Sc. Computer Science, AIUB (CGPA 3.83/4.00).
+          <p class="hero-desc reveal" data-delay="180">
+            Full-stack developer and B.Sc. Computer Science graduate (AIUB, CGPA 3.83/4.00).
+            I build production systems — from auditable financial platforms to e-commerce
+            and research tooling — and I write about the problems underneath.
           </p>
-          <div class="hero-actions">
-            <a href="#flagship" class="btn-cta primary">Explore Flagship System</a>
-            <a href="#projects" class="btn-cta secondary">View All Projects</a>
+          <div class="hero-actions reveal" data-delay="300">
+            <a href="#flagship" class="btn btn-primary">View Money Calculator ↗</a>
+            <a href="#projects" class="btn btn-secondary">All projects</a>
+          </div>
+          <div class="hero-meta reveal" data-delay="420">
+            <div class="meta-item"><strong>3+</strong><span>years shipping</span></div>
+            <div class="meta-item"><strong>6</strong><span>systems built</span></div>
+            <div class="meta-item"><strong>Open</strong><span>to work</span></div>
           </div>
         </div>
 
-        <div class="hero-canvas">
-          <div class="canvas-card">
-            <div class="card-glow"></div>
-            <div class="canvas-header">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-              <span class="canvas-title">architecture.ts</span>
-            </div>
-            <div class="canvas-code">
-              <span class="code-line"><span class="keyword">const</span> system = <span class="keyword">new</span> <span class="class">AppRouter</span>(&#123;</span>
-              <span class="code-line indent">db: <span class="string">"PostgreSQL & Supabase SSR"</span>,</span>
-              <span class="code-line indent">security: <span class="string">"Row Level Security (RLS)"</span>,</span>
-              <span class="code-line indent">integrity: <span class="string">"Auditable RPC Functions"</span>,</span>
-              <span class="code-line">&#125;);</span>
-              <span class="code-line"><span class="keyword">await</span> system.<span class="function">deploy</span>(&#123; mode: <span class="string">"production"</span> &#125;);</span>
+        <div class="hero-visual reveal" data-delay="240">
+          <div class="hero-visual-frame">
+            <div class="frame-glow"></div>
+            <div class="frame-inner">
+              <div class="frame-head">
+                <span class="frame-dot"></span>
+                <span class="frame-dot"></span>
+                <span class="frame-dot"></span>
+                <span class="frame-title">bg — personal site</span>
+              </div>
+              <div class="frame-body">
+                <div class="frame-line w70"></div>
+                <div class="frame-line w90"></div>
+                <div class="frame-line w55"></div>
+                <div class="frame-line w80"></div>
+                <div class="frame-line w45"></div>
+                <div class="frame-tag">// auditable · shipped · maintained</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. FLAGSHIP CASE STUDY: MONEY CALCULATOR -->
-    <section id="flagship" class="flagship-section">
-      <div class="container">
-        <div class="section-badge">Flagship Case Study 01</div>
-        <h2 class="section-heading">Money Calculator</h2>
-        <p class="section-sub">A comprehensive personal financial management platform with strict database auditability and real-time insights.</p>
+    <!-- 2. FLAGSHIP: MONEY CALCULATOR -->
+    <section id="flagship" class="flagship reveal">
+      <div class="container flagship-grid">
+        <div class="flagship-copy">
+          <span class="section-eyebrow reveal">Flagship · Financial Software</span>
+          <h2 class="section-title reveal" data-delay="60">Money Calculator</h2>
+          <p class="section-sub reveal" data-delay="180">
+            A personal financial management platform built for correctness, not
+            presentation. Every figure on screen comes from real database records —
+            nothing is estimated or hardcoded.
+          </p>
 
-        <div class="flagship-grid">
-          <div class="flagship-specs">
+          <div class="spec-grid reveal" data-delay="300">
             <div class="spec-block">
-              <h3>Architecture & Stack</h3>
-              <p>Next.js 16 App Router, TypeScript, React 19, Supabase SSR, PostgreSQL RPC, Tailwind CSS, Recharts.</p>
+              <h3>Architecture &amp; stack</h3>
+              <p>Next.js 16 App Router · TypeScript · React 19 · Supabase SSR · PostgreSQL RPC · Tailwind CSS · Recharts.</p>
             </div>
             <div class="spec-block">
-              <h3>Core Capabilities</h3>
+              <h3>What it does</h3>
               <ul>
-                <li>Double-entry ledger & multi-account balance tracking</li>
-                <li>Loan lifecycle management (lent/borrowed) & asset tracking</li>
-                <li>Tuition tracking and recurring transaction cron execution</li>
-                <li>Natural-language AI financial query assistant</li>
+                <li>Double-entry ledger with multi-account balance tracking</li>
+                <li>Loan lifecycle management (lent &amp; borrowed) and asset tracking</li>
+                <li>Tuition tracking with recurring transaction execution</li>
+                <li>Natural-language AI assistant for financial queries</li>
               </ul>
             </div>
-            <div class="flagship-links">
-              {flagship?.data.live && (
-                <a href={flagship.data.live} target="_blank" rel="noopener noreferrer" class="link-btn primary">
-                  Live Application ↗
-                </a>
-              )}
-              {flagship?.data.repo && (
-                <a href={flagship.data.repo} target="_blank" rel="noopener noreferrer" class="link-btn secondary">
-                  Source Code ↗
-                </a>
-              )}
-            </div>
           </div>
 
-          <div class="flagship-preview">
-            <div class="preview-mockup">
-              <div class="mockup-bar">
-                <span>Dashboard / Financial Intelligence</span>
-                <span class="mockup-status">Production Verified</span>
+          <div class="flagship-links reveal" data-delay="420">
+            {flagship?.data.repo && (
+              <a href={flagship.data.repo} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                Source code ↗
+              </a>
+            )}
+            <a href="#projects" class="btn btn-secondary">See the rest →</a>
+          </div>
+        </div>
+
+        <div class="flagship-visual reveal" data-delay="240">
+          <div class="dash-frame">
+            <div class="dash-glow"></div>
+            <div class="dash-inner">
+              <div class="dash-head">
+                <div class="dash-dots"><span></span><span></span><span></span></div>
+                <span class="dash-title">money-calculator · dashboard</span>
+                <span class="dash-live"><i></i> concept visualization</span>
               </div>
-              <div class="mockup-dashboard">
-                <div class="dash-stat">
-                  <span class="stat-lbl">NET BALANCE</span>
-                  <span class="stat-val">$24,850.00</span>
-                  <span class="stat-trend">+14.2% this month</span>
+
+              <div class="dash-panels">
+                <div class="dash-panel">
+                  <span class="dash-lbl">Total accounts</span>
+                  <span class="dash-num">6</span>
+                  <span class="dash-sub">across checking, savings, assets</span>
                 </div>
+                <div class="dash-panel">
+                  <span class="dash-lbl">Ledger entries</span>
+                  <span class="dash-num">1,248</span>
+                  <span class="dash-sub">double-entry, auditable</span>
+                </div>
+                <div class="dash-panel">
+                  <span class="dash-lbl">Active loans</span>
+                  <span class="dash-num">3</span>
+                  <span class="dash-sub">lent + borrowed tracked</span>
+                </div>
+              </div>
+
+              <div class="dash-chart-wrap">
+                <div class="dash-chart-label">Monthly cash flow</div>
                 <div class="dash-chart">
-                  <div class="bar" style="height: 40%"></div>
-                  <div class="bar" style="height: 65%"></div>
-                  <div class="bar" style="height: 50%"></div>
-                  <div class="bar" style="height: 85%"></div>
-                  <div class="bar active" style="height: 100%"></div>
+                  <div class="dash-bar" style="--h:38%"></div>
+                  <div class="dash-bar" style="--h:62%"></div>
+                  <div class="dash-bar" style="--h:48%"></div>
+                  <div class="dash-bar" style="--h:80%"></div>
+                  <div class="dash-bar" style="--h:70%"></div>
+                  <div class="dash-bar" style="--h:95%"></div>
+                  <div class="dash-bar" style="--h:60%"></div>
                 </div>
-                <div class="dash-footer">
-                  <span class="pill">RPC Audited</span>
-                  <span class="pill">RLS Secured</span>
-                </div>
+              </div>
+
+              <div class="dash-foot">
+                <span class="dash-pill">RPC audited</span>
+                <span class="dash-pill">RLS secured</span>
+                <span class="dash-pill">Recharts</span>
               </div>
             </div>
           </div>
@@ -122,35 +177,113 @@ const writing = await getCollection("writing");
       </div>
     </section>
 
-    <!-- 3. PROJECT SHOWCASE (ASTA, MRA, THESIS, & SYSTEMS) -->
-    <section id="projects" class="projects-section">
+    <!-- 3. PROJECTS -->
+    <section id="projects" class="projects reveal">
       <div class="container">
-        <div class="section-badge">Selected Works</div>
-        <h2 class="section-heading">Systems & Products</h2>
-        <p class="section-sub">Production-grade applications and research built with rigorous technical standards.</p>
+        <div class="section-head reveal">
+          <span class="section-eyebrow">Selected Works</span>
+          <h2 class="section-title">Systems &amp; products</h2>
+          <p class="section-sub">Production-grade applications and research, each with its own shape.</p>
+        </div>
 
-        <div class="asymmetric-grid">
-          {otherProjects.map((p, idx) => (
-            <article class={`project-tile tile-${idx + 1}`} style={{ "--tile-accent": p.data.accent === "accent-2" ? "var(--accent-2)" : "var(--accent)" }} key={p.id}>
-              <div class="tile-header">
-                <span class="tile-index">0{idx + 2}</span>
-                <span class="tile-status">{p.data.status}</span>
-              </div>
-              <h3 class="tile-title">{p.data.title}</h3>
-              <p class="tile-desc">{p.data.description}</p>
+        <div class="project-showcase">
 
-              <div class="tile-tags">
-                {p.data.tags.map((tag) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </div>
+          {otherProjects.map((p, idx) => {
+            const accent = p.data.accent === "accent-2" ? "var(--accent-2)" : "var(--accent)";
+            const links = [
+              p.data.repo && { label: "GitHub ↗", href: p.data.repo },
+              p.data.live && { label: "Live ↗", href: p.data.live },
+            ].filter(Boolean);
 
-              <div class="tile-links">
-                {p.data.repo && <a href={p.data.repo} target="_blank" rel="noopener noreferrer">GitHub ↗</a>}
-                {p.data.live && <a href={p.data.live} target="_blank" rel="noopener noreferrer">Live Demo ↗</a>}
-              </div>
-            </article>
-          ))}
+            if (p.slug === "asta-store") {
+              return (
+                <article class="proj proj-banner reveal" data-delay={idx * 80} key={p.id} style={{ "--accent": accent }}>
+                  <div class="proj-banner-visual" aria-hidden="true">
+                    <div class="banner-grid"></div>
+                    <div class="banner-overlay"></div>
+                    <div class="banner-glyph">◆</div>
+                  </div>
+                  <div class="proj-banner-copy">
+                    <span class="proj-num">01 — E-commerce</span>
+                    <h3 class="proj-title">{p.data.title}</h3>
+                    <p class="proj-desc">{p.data.description}</p>
+                    <div class="proj-tags">
+                      {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                    </div>
+                    <div class="proj-links">
+                      {links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
+                    </div>
+                  </div>
+                </article>
+              );
+            }
+
+            if (p.slug === "mount-royal-academy") {
+              return (
+                <article class="proj proj-tall reveal" data-delay={idx * 80} key={p.id} style={{ "--accent": accent }}>
+                  <div class="proj-tall-visual" aria-hidden="true">
+                    <div class="tall-glyph">▲</div>
+                    <div class="tall-lines">
+                      <i></i><i></i><i></i><i></i>
+                    </div>
+                  </div>
+                  <div class="proj-tall-copy">
+                    <span class="proj-num">02 — Institutional</span>
+                    <span class="proj-status">{p.data.status}</span>
+                    <h3 class="proj-title">{p.data.title}</h3>
+                    <p class="proj-desc">{p.data.description}</p>
+                    <div class="proj-tags">
+                      {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                    </div>
+                    <div class="proj-links">
+                      {links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
+                    </div>
+                  </div>
+                </article>
+              );
+            }
+
+            if (p.slug === "biot-thesis") {
+              return (
+                <article class="proj proj-editorial reveal" data-delay={idx * 80} key={p.id} style={{ "--accent": accent }}>
+                  <div class="proj-ed-visual" aria-hidden="true">
+                    <div class="ed-ring"></div>
+                    <div class="ed-ring ed-ring-2"></div>
+                    <span class="ed-glyph">◎</span>
+                  </div>
+                  <div class="proj-ed-copy">
+                    <span class="proj-num">03 — Research</span>
+                    <span class="proj-type">{p.data.tags[0] || "Project"}</span>
+                    <h3 class="proj-title">{p.data.title}</h3>
+                    <p class="proj-desc">{p.data.description}</p>
+                    <div class="proj-tags">
+                      {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                    </div>
+                    <div class="proj-links">
+                      {links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
+                    </div>
+                  </div>
+                </article>
+              );
+            }
+
+            return (
+              <article class="proj proj-card reveal" data-delay={idx * 80} key={p.id} style={{ "--accent": accent }}>
+                <div class="proj-card-head">
+                  <span class="proj-num">0{idx + 4}</span>
+                  <span class="proj-status">{p.data.status}</span>
+                </div>
+                <h3 class="proj-title">{p.data.title}</h3>
+                <p class="proj-desc">{p.data.description}</p>
+                <div class="proj-tags">
+                  {p.data.tags.map((t) => <span class="tag">{t}</span>)}
+                </div>
+                <div class="proj-links">
+                  {links.map((l) => <a href={l.href} target="_blank" rel="noopener">{l.label}</a>)}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -203,23 +336,30 @@ const writing = await getCollection("writing");
       </div>
     </section>
 
-    <!-- 6. WRITING & RESEARCH -->
-    <section id="writing" class="writing-section">
+    <!-- 6. WRITING -->
+    <section id="writing" class="writing reveal">
       <div class="container">
-        <div class="section-badge">Research & Notes</div>
-        <h2 class="section-heading">Writing</h2>
-        <p class="section-sub">Technical documentation and research papers.</p>
+        <div class="section-head reveal">
+          <span class="section-eyebrow">Research &amp; notes</span>
+          <h2 class="section-title">Writing</h2>
+          <p class="section-sub">Technical documentation and research papers.</p>
+        </div>
 
-        <div class="writing-grid">
-          {writing.map((w) => (
-            <article class="writing-card">
-              <span class="writing-type">{w.data.type}</span>
-              <h3 class="writing-title">{w.data.title}</h3>
-              <p class="writing-excerpt">{w.data.excerpt}</p>
-              {w.data.link && (
-                <a href={w.data.link} target="_blank" rel="noopener noreferrer" class="writing-link">
-                  Read Document ↗
+        <div class="writing-list">
+          {writing.map((w, idx) => (
+            <article class="writing-item reveal" data-delay={idx * 100} key={w.id}>
+              <span class="writing-num">0{idx + 1}</span>
+              <div class="writing-content">
+                <span class="writing-type">{w.data.type}</span>
+                <h3 class="writing-title">{w.data.title}</h3>
+                <p class="writing-excerpt">{w.data.excerpt}</p>
+              </div>
+              {w.data.link ? (
+                <a href={w.data.link} target="_blank" rel="noopener" class="writing-link">
+                  Read <span class="wl-arrow">↗</span>
                 </a>
+              ) : (
+                <span class="writing-link wl-disabled">Unavailable</span>
               )}
             </article>
           ))}
@@ -227,29 +367,41 @@ const writing = await getCollection("writing");
       </div>
     </section>
 
-    <!-- 7. EDITORIAL CONTACT -->
-    <section id="contact" class="contact-section">
-      <div class="container contact-box">
-        <span class="hero-eyebrow">GET IN TOUCH</span>
-        <h2 class="section-heading">Let's build reliable software.</h2>
-        <p class="section-sub">Open to software engineering, full-stack development, and AI engineering opportunities.</p>
-
-        <div class="contact-actions">
-          {cv?.contact?.email && (
-            <a href={`mailto:${cv.contact.email}`} class="btn-cta primary">
-              {cv.contact.email}
-            </a>
-          )}
-          {cv?.contact?.github && (
-            <a href={cv.contact.github} target="_blank" rel="noopener noreferrer" class="btn-cta secondary">
-              GitHub Profile
-            </a>
-          )}
-          {cv?.contact?.linkedin && (
-            <a href={cv.contact.linkedin} target="_blank" rel="noopener noreferrer" class="btn-cta secondary">
-              LinkedIn Profile
-            </a>
-          )}
+    <!-- 7. CONTACT -->
+    <section id="contact" class="contact reveal">
+      <div class="container contact-wrap">
+        <div class="contact-left reveal">
+          <span class="section-eyebrow">Get in touch</span>
+          <h2 class="contact-title">Let's build<br />something <span class="hero-accent">reliable.</span></h2>
+          <p class="contact-desc">
+            Open to software engineering, full-stack development, and AI engineering
+            opportunities. If you're building something that needs an honest, careful
+            hand, say hello.
+          </p>
+        </div>
+        <div class="contact-right reveal" data-delay="200">
+          <div class="contact-links">
+            {cv?.contact?.email && (
+              <a href={`mailto:${cv.contact.email}`} class="btn btn-primary">
+                {cv.contact.email}
+              </a>
+            )}
+            {cv?.contact?.github && (
+              <a href={cv.contact.github} target="_blank" rel="noopener" class="btn btn-secondary">
+                GitHub ↗
+              </a>
+            )}
+            {cv?.contact?.linkedin && (
+              <a href={cv.contact.linkedin} target="_blank" rel="noopener" class="btn btn-secondary">
+                LinkedIn ↗
+              </a>
+            )}
+          </div>
+          <div class="contact-foot">
+            <span>© <span id="year"></span> Barshan Ghosh</span>
+            <span class="cf-dot">·</span>
+            <span>Built with Astro</span>
+          </div>
         </div>
       </div>
     </section>
