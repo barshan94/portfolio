@@ -6,8 +6,13 @@ const projectSchema = z.object({
   tags: z.array(z.string()).default([]),
 
   
+  
   repo: z.string().url("repo must be a valid URL").optional(),
   live: z.string().url("live must be a valid URL").optional(),
+  language: z.string().min(1).optional(),
+  lastUpdated: z.string().datetime().optional(),
+
+  
   language: z.string().min(1).optional(),
   lastUpdated: z.string().datetime().optional(),
 
