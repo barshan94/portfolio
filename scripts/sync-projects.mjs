@@ -1,90 +1,165 @@
 #!/usr/bin/env node
 // scripts/sync-projects.mjs
 //
-// Driven by .github/workflows/sync-projects.yml on a schedule.
-//
-// Fetches barshan94's public repos from the GitHub API and generates a
-// frontmatter file for any repo that doesn't already have one. Repos already
-// curated by hand are listed in sync-map.json and skipped. Forks and repos
-// with no description are skipped — content is never invented.
-//
-// Output: prints each added slug and exits 0. Writes files into
-// src/content/projects/; the workflow commits them and opens a PR.
+// Discovers public repositories owned by barshan94, across all API pages.
+// Generates missing project entries without overwriting existing content.
+// The GitHub Actions workflow commits new files and opens a pull request.
 
-import { existsSync, writeFileSync, readdirSync, readFileSync } from "node:fs";
+import { writeFileSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const USER = "barshan94";
 const CONTENT_DIR = resolve("src/content/projects");
 const SYNC_MAP_PATH = resolve("sync-map.json");
 
-// Repo names that are already curated by hand (see sync-map.json). Any repo
-// whose name is a key here is skipped so we never duplicate an existing entry.
 const curated = JSON.parse(readFileSync(SYNC_MAP_PATH, "utf8"));
 
-// Convert a GitHub repo name into a kebab-case content slug.
-// MountRoyalAcademy-website -> mount-royal-academy-website
 const toSlug = (name) =>
-  name
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-    .toLowerCase();
+name
+.replace(/([a-z])([A-Z])/g, "$1-$2")
+.replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+.toLowerCase();
 
-// Slugs already present on disk, plus every slug the sync map points at.
 const existing = new Set(
-  readdirSync(CONTENT_DIR)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => f.replace(/\.md$/, ""))
-);
-for (const slug of Object.values(curated)) existing.add(slug);
-
-const res = await fetch(
-  `https://api.github.com/users/${USER}/repos?per_page=100&sort=updated`,
-  { headers: { Accept: "application/vnd.github+json" } }
+readdirSync(CONTENT_DIR)
+.filter((file) => file.endsWith(".md"))
+.map((file) => file.replace(/.md$/, ""))
 );
 
-if (!res.ok) {
-  console.error(`GitHub API error ${res.status} ${res.statusText}`);
-  process.exit(1);
+for (const slug of Object.values(curated)) {
+existing.add(slug);
 }
 
-const repos = await res.json();
+async function fetchAllRepositories() {
+const repositories = [];
+let page = 1;
+
+while (true) {
+const url = new URL(
+"https://api.github.com/users/${USER}/repos"
+);
+
+url.searchParams.set("type", "owner");
+url.searchParams.set("per_page", "100");
+url.searchParams.set("page", String(page));
+url.searchParams.set("sort", "updated");
+url.searchParams.set("direction", "desc");
+
+const response = await fetch(url, {
+  headers: {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  },
+});
+
+if (!response.ok) {
+  throw new Error(
+    `GitHub API error ${response.status}: ${response.statusText}`
+  );
+}
+
+const batch = await response.json();
+repositories.push(...batch);
+
+console.log(`Fetched page ${page}: ${batch.length} repositories`);
+
+if (batch.length < 100) break;
+page++;
+
+}
+
+return repositories;
+}
+
+const yamlString = (value) => JSON.stringify(String(value));
+
+async function main() {
+const repositories = await fetchAllRepositories();
 let added = 0;
+let skipped = 0;
 
-for (const repo of repos) {
-  if (curated[repo.name]) continue; // already curated by hand
-  if (repo.fork) continue; // not original work
-  if (!repo.description) continue; // never invent a description
-
-  const slug = toSlug(repo.name);
-  if (existing.has(slug)) continue; // already on disk under this slug
-
-  const esc = (s) => String(s).replace(/"/g, '\\"');
-  const tags = (repo.topics || []).slice(0, 6);
-  const fm = [
-    "---",
-    `title: "${esc(repo.name)}"`,
-    `description: "${esc(repo.description)}"`,
-    tags.length
-      ? `tags:\n${tags.map((t) => `    "${esc(t)}"`).join("\n")}`
-      : "tags: []",
-    `repo: "https://github.com/${USER}/${repo.name}"`,
-    `status: "completed"`,
-    `featured: false`,
-    `accent: "default"`,
-    "---",
-    "",
-    repo.description,
-    "",
-    "> Auto-generated from the GitHub repo. Edit the body to add details, screenshots, or architecture notes.",
-    "",
-  ].join("\n");
-
-  writeFileSync(resolve(CONTENT_DIR, `${slug}.md`), fm + "\n");
-  existing.add(slug);
-  console.log(`+ ${slug}  (repo: ${repo.name})`);
-  added++;
+for (const repo of repositories) {
+// Only original, public, active repositories owned by this account.
+if (
+repo.owner?.login?.toLowerCase() !== USER.toLowerCase() ||
+repo.private ||
+repo.fork ||
+repo.archived ||
+repo.disabled
+) {
+skipped++;
+continue;
 }
 
-console.log(`\nAdded ${added} new project(s).`);
-if (added === 0) console.log("Nothing new — no files written.");
+// Preserve hand-curated portfolio projects.
+if (curated[repo.name]) {
+  skipped++;
+  continue;
+}
+
+// Do not create a low-quality entry without a verified description.
+if (!repo.description?.trim()) {
+  skipped++;
+  continue;
+}
+
+const slug = toSlug(repo.name);
+
+// Never overwrite an existing project entry.
+if (existing.has(slug)) {
+  skipped++;
+  continue;
+}
+
+const tags = [
+  ...(repo.language ? [repo.language] : []),
+  ...(repo.topics || []),
+].filter((tag, index, all) => all.indexOf(tag) === index).slice(0, 6);
+
+const frontmatter = [
+  "---",
+  `title: ${yamlString(repo.name)}`,
+  `description: ${yamlString(repo.description)}`,
+  tags.length
+    ? `tags:\n${tags.map((tag) => `  - ${yamlString(tag)}`).join("\n")}`
+    : "tags: []",
+  `repo: ${yamlString(repo.html_url)}`,
+  ...(repo.homepage?.trim()
+    ? [`live: ${yamlString(repo.homepage.trim())}`]
+    : []),
+  'status: "completed"',
+  "featured: false",
+  'accent: "default"',
+  "---",
+  "",
+  repo.description.trim(),
+  "",
+  "> Automatically discovered from GitHub. Add verified project details when available.",
+  "",
+].join("\n");
+
+const outputPath = resolve(CONTENT_DIR, `${slug}.md`);
+writeFileSync(outputPath, frontmatter + "\n", {
+  flag: "wx",
+});
+
+existing.add(slug);
+console.log(`+ ${slug} (${repo.full_name})`);
+added++;
+
+}
+
+console.log("\nRepositories fetched: ${repositories.length}");
+console.log("New project entries: ${added}");
+console.log("Skipped repositories: ${skipped}");
+
+if (added === 0) {
+console.log("No new project entries were needed.");
+}
+}
+
+main().catch((error) => {
+console.error(error);
+process.exitCode = 1;
+});
+
