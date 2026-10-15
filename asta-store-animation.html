@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Asta Store — E-Commerce Animation</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#07080a}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
+#title{
+  position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none;opacity:0;
+  transition:opacity 1s ease;
+}
+#title.on{opacity:1}
+#title h1{
+  font-family:'Segoe UI',system-ui,sans-serif;
+  font-size:clamp(1.6rem,5vw,3.8rem);font-weight:200;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(220,234,240,0);text-align:center;line-height:1.15;
+  transition:color 1.4s ease,transform 1.4s ease;
+  transform:translateY(14px);
+}
+#title h1.on{color:#e2eef2;transform:translateY(0)}
+#title h1 b{font-weight:600}
+#title .rule{
+  width:0;height:1px;margin-top:12px;
+  background:linear-gradient(90deg,transparent,rgba(77,212,216,.5),transparent);
+  transition:width 2s ease .2s;
+}
+#title .rule.on{width:clamp(100px,20vw,260px)}
+#title p{
+  margin-top:12px;font-family:system-ui,sans-serif;
+  font-size:clamp(.5rem,1.1vw,.85rem);font-weight:400;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(100,180,190,0);text-align:center;
+  transition:color 1s ease .4s;
+}
+#title p.on{color:rgba(100,180,190,.55)}
+#dbg{position:fixed;top:8px;left:8px;z-index:99;color:rgba(77,212,216,.25);font:10px/1.4 monospace;pointer-events:none}
+#ctrls{position:fixed;top:8px;right:8px;z-index:50;display:flex;gap:5px;opacity:.12;transition:opacity .3s}
+#ctrls:hover{opacity:1}
+#ctrls button{
+  background:rgba(10,14,18,.85);border:1px solid rgba(77,212,216,.25);
+  color:rgba(140,210,215,.7);font:9px/1 system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;
+  border-radius:3px;cursor:pointer;min-height:34px;
+}
+#ctrls button:hover{background:rgba(30,60,70,.3);color:#dff4f6;border-color:rgba(77,212,216,.5)}
+#skip{
+  position:fixed;bottom:18px;right:18px;z-index:50;
+  background:rgba(10,14,18,.78);border:1px solid rgba(77,212,216,.2);
+  color:rgba(140,210,215,.5);font:10px/1 system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;
+  border-radius:3px;cursor:pointer;min-height:40px;transition:opacity .4s;
+}
+#skip:hover{background:rgba(30,60,70,.3);color:#dff4f6}
+#skip.off{opacity:0;pointer-events:none}
+#hud{
+  position:fixed;left:14px;bottom:14px;z-index:50;pointer-events:none;
+  font:8px/1.4 system-ui,sans-serif;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(77,212,216,.22);
+}
+#prog{width:clamp(70px,13vw,160px);height:1px;margin-top:5px;background:rgba(77,212,216,.1)}
+#progF{height:100%;width:0%;background:rgba(77,212,216,.4)}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="title">
+  <h1 id="tN">Asta<b> Store</b></h1>
+  <div class="rule" id="tR"></div>
+  <p id="tP">Bags &nbsp;·&nbsp; Fashion &nbsp;·&nbsp; E-Commerce</p>
+</div>
+<div id="dbg"></div>
+<div id="ctrls">
+  <button id="bR">Replay</button>
+  <button id="bP">Pause</button>
+  <button id="bE">Export</button>
+</div>
+<button id="skip">Skip ↗</button>
+<div id="hud"><span id="phL"></span><div id="prog"><div id="progF"></div></div></div>
+<script>
+var c = document.getElementById('c');
+var ctx = c.getContext('2d');
+var dbg = document.getElementById('dbg');
+var W, H, S, mob, dpr;
+
+function resize(){
+  dpr = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  S = Math.max(.42, Math.min(1.5, W/1400));
+  mob = W < 640;
+  c.width = W*dpr; c.height = H*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+/* ── Helpers ─────────────────────────────────────── */
+var sd = 42;
+function rn(){sd=(sd*16807)%2147483647;return sd/2147483647}
+function lr(a,b,k){return a+(b-a)*k}
+function cl(v,a,b){return v<a?a:v>b?b:v}
+function eo(k){return 1-Math.pow(1-k,3)}
+function eio(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
+function sm(a,b,k){k=cl((k-a)/(b-a),0,1);return k*k*(3-2*k)}
+function ha(hex,a){var n=parseInt(hex.slice(1),16);return'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'}
+
+/* ── Palette (matches Money Calculator / MRA portfolio) ── */
+var BG='#07080a';
+var NAVY='#0c1018';
+var CYAN='#4dd4d8';
+var TEAL='#2b9ea0';
+var BLUE='#3f8bea';
+var AMBER='#d9a84a';
+var WHITE='#e2eef2';
+var DIM='rgba(176,206,214,0.42)';
+var GRID1='rgba(46,66,76,0.13)';
+var GRID2='rgba(58,84,96,0.22)';
+
+/* ── Timeline ────────────────────────────────────── */
+var PD=[2.8, 3.5, 3.0, 3.5, 3.2, 4.0, 3.5];
+var PL=[
+  'initializing storefront',
+  'loading product catalog',
+  'browsing collection',
+  'selecting product',
+  'adding to bag',
+  'asta store',
+  'asta store'
+];
+var TOT=0, PS=[];
+for(var i=0;i<PD.length;i++){PS.push(TOT);TOT+=PD[i]}
+
+function gp(sk){
+  for(var i=PD.length-1;i>=0;i--)if(sk>=PS[i])return{i:i,p:cl((sk-PS[i])/PD[i],0,1)};
+  return{i:0,p:0};
+}
+
+/* ── State ───────────────────────────────────────── */
+var fc=0,t=0,sk=0,prevNow=0,paused=false,ended=false,titled=false;
+
+/* ═══════════ PARTICLES ═══════════ */
+var pts=[];
+function mkPts(){
+  pts=[];sd=101;
+  var n=mob?22:48;
+  for(var i=0;i<n;i++)pts.push({
+    x:rn()*W,y:rn()*H,vx:-1.5+rn()*3,vy:-3-rn()*6,
+    r:(.3+rn()*1.1)*S,a:.02+rn()*.09,
+    col:rn()>.7?AMBER:(rn()>.5?CYAN:TEAL),ph:rn()*6.283
+  });
+}
+
+function drPts(dt,f){
+  for(var i=0;i<pts.length;i++){
+    var p=pts[i];
+    p.x+=p.vx*dt;p.y+=p.vy*dt*.25;
+    p.x+=Math.sin(t*.4+p.ph)*.1;
+    if(p.y<-12){p.y=H+12;p.x=rn()*W}
+    if(p.x<-12)p.x=W+12;if(p.x>W+12)p.x=-12;
+    ctx.globalAlpha=p.a*f*(.5+.5*Math.sin(t*1.1+p.ph));
+    ctx.fillStyle=p.col;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ GRID ═══════════ */
+function drGrid(f){
+  if(f<.005)return;
+  var fn=20*S,mj=120*S,gx,gy;
+  ctx.globalAlpha=f*.35;ctx.strokeStyle=GRID1;ctx.lineWidth=.3;
+  ctx.beginPath();
+  for(gx=0;gx<=W;gx+=fn){ctx.moveTo(gx|0,0);ctx.lineTo(gx|0,H)}
+  for(gy=0;gy<=H;gy+=fn){ctx.moveTo(0,gy|0);ctx.lineTo(W,gy|0)}
+  ctx.stroke();
+  ctx.globalAlpha=f*.55;ctx.strokeStyle=GRID2;ctx.lineWidth=.4;
+  ctx.beginPath();
+  for(gx=0;gx<=W;gx+=mj){ctx.moveTo(gx|0,0);ctx.lineTo(gx|0,H)}
+  for(gy=0;gy<=H;gy+=mj){ctx.moveTo(0,gy|0);ctx.lineTo(W,gy|0)}
+  ctx.stroke();ctx.globalAlpha=1;
+}
+
+/* ═══════════ BAG DRAWING FUNCTIONS ═══════════ */
+
+function drawBagSatchel(cx,cy,sz,col,alpha){
+  ctx.globalAlpha=alpha;
+  var s=sz/120;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  /* shadow */
+  ctx.globalAlpha=alpha*.15;
+  ctx.fillStyle='rgba(0,0,0,.3)';
+  ctx.beginPath();ctx.ellipse(0,52,33,6,0,0,6.283);ctx.fill();
+  ctx.globalAlpha=alpha;
+  /* handle */
+  ctx.strokeStyle=col.line;ctx.lineWidth=3.4;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-16,-6);ctx.quadraticCurveTo(-16,-28,0,-28);
+  ctx.quadraticCurveTo(16,-28,16,-6);ctx.stroke();
+  /* body */
+  ctx.fillStyle=col.body;ctx.strokeStyle=col.line;ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(-34,-8);ctx.lineTo(34,-8);
+  ctx.quadraticCurveTo(39,-8,39,-3);ctx.lineTo(39,40);
+  ctx.quadraticCurveTo(39,49,30,49);ctx.lineTo(-30,49);
+  ctx.quadraticCurveTo(-39,49,-39,40);ctx.lineTo(-39,-3);
+  ctx.quadraticCurveTo(-39,-8,-34,-8);ctx.closePath();ctx.fill();ctx.stroke();
+  /* flap */
+  ctx.fillStyle=col.flap;
+  ctx.beginPath();ctx.moveTo(-39,-8);ctx.lineTo(39,-8);ctx.lineTo(39,12);
+  ctx.quadraticCurveTo(39,18,33,18);ctx.lineTo(-33,18);
+  ctx.quadraticCurveTo(-39,18,-39,12);ctx.closePath();ctx.fill();ctx.stroke();
+  /* clasp */
+  ctx.fillStyle=col.acc;
+  ctx.beginPath();ctx.roundRect(-6,10,12,12,2.5);ctx.fill();
+  /* stitch line */
+  ctx.globalAlpha=alpha*.4;ctx.strokeStyle=col.line;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(-39,30);ctx.lineTo(39,30);ctx.stroke();
+  /* highlight */
+  ctx.globalAlpha=alpha*.25;ctx.strokeStyle='#fff';ctx.lineWidth=1.8;
+  ctx.beginPath();ctx.moveTo(-30,-2);ctx.lineTo(-30,40);ctx.stroke();
+  ctx.restore();ctx.globalAlpha=1;
+}
+
+function drawBagCross(cx,cy,sz,col,alpha){
+  ctx.globalAlpha=alpha;var s=sz/120;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  ctx.globalAlpha=alpha*.15;ctx.fillStyle='rgba(0,0,0,.3)';
+  ctx.beginPath();ctx.ellipse(0,48,28,5,0,0,6.283);ctx.fill();
+  ctx.globalAlpha=alpha;
+  /* strap */
+  ctx.strokeStyle=col.line;ctx.lineWidth=2.6;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-26,2);ctx.quadraticCurveTo(-35,-34,0,-49);
+  ctx.quadraticCurveTo(35,-34,26,2);ctx.stroke();
+  /* body */
+  ctx.fillStyle=col.body;ctx.strokeStyle=col.line;ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(-27,0);ctx.lineTo(27,0);
+  ctx.quadraticCurveTo(32,0,32,5);ctx.lineTo(32,39);
+  ctx.quadraticCurveTo(32,48,23,48);ctx.lineTo(-23,48);
+  ctx.quadraticCurveTo(-32,48,-32,39);ctx.lineTo(-32,5);
+  ctx.quadraticCurveTo(-32,0,-27,0);ctx.closePath();ctx.fill();ctx.stroke();
+  /* flap */
+  ctx.fillStyle=col.flap;
+  ctx.beginPath();ctx.moveTo(-32,0);ctx.lineTo(32,0);ctx.lineTo(32,20);
+  ctx.quadraticCurveTo(32,26,26,26);ctx.lineTo(-26,26);
+  ctx.quadraticCurveTo(-32,26,-32,20);ctx.closePath();ctx.fill();ctx.stroke();
+  /* clasp */
+  ctx.fillStyle=col.acc;
+  ctx.beginPath();ctx.roundRect(-6,18,12,10,2);ctx.fill();
+  /* highlight */
+  ctx.globalAlpha=alpha*.25;ctx.strokeStyle='#fff';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.moveTo(-24,6);ctx.lineTo(-24,39);ctx.stroke();
+  ctx.restore();ctx.globalAlpha=1;
+}
+
+function drawBagTote(cx,cy,sz,col,alpha){
+  ctx.globalAlpha=alpha;var s=sz/120;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  ctx.globalAlpha=alpha*.15;ctx.fillStyle='rgba(0,0,0,.3)';
+  ctx.beginPath();ctx.ellipse(0,52,34,6,0,0,6.283);ctx.fill();
+  ctx.globalAlpha=alpha;
+  /* handles */
+  ctx.strokeStyle=col.line;ctx.lineWidth=3.2;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-23,-14);ctx.quadraticCurveTo(-23,-36,-13.5,-36);
+  ctx.quadraticCurveTo(-4,-36,-4,-14);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(4,-14);ctx.quadraticCurveTo(4,-36,13.5,-36);
+  ctx.quadraticCurveTo(23,-36,23,-14);ctx.stroke();
+  /* body */
+  ctx.fillStyle=col.body;ctx.strokeStyle=col.line;ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(-38,-16);ctx.lineTo(38,-16);
+  ctx.lineTo(32.5,43);ctx.quadraticCurveTo(32,49,26,49);
+  ctx.lineTo(-26,49);ctx.quadraticCurveTo(-32,49,-32.5,43);ctx.closePath();
+  ctx.fill();ctx.stroke();
+  /* stitch */
+  ctx.globalAlpha=alpha*.4;ctx.strokeStyle=col.line;ctx.lineWidth=1.1;
+  ctx.beginPath();ctx.moveTo(-36,-3);ctx.lineTo(36,-3);ctx.stroke();
+  /* pocket */
+  ctx.globalAlpha=alpha*.7;ctx.fillStyle=col.acc;
+  ctx.beginPath();ctx.roundRect(-9,10,18,12,2);ctx.fill();
+  /* highlight */
+  ctx.globalAlpha=alpha*.22;ctx.strokeStyle='#fff';ctx.lineWidth=1.8;
+  ctx.beginPath();ctx.moveTo(-29,-10);ctx.lineTo(-31,43);ctx.stroke();
+  ctx.restore();ctx.globalAlpha=1;
+}
+
+function drawBagBackpack(cx,cy,sz,col,alpha){
+  ctx.globalAlpha=alpha;var s=sz/120;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  ctx.globalAlpha=alpha*.15;ctx.fillStyle='rgba(0,0,0,.3)';
+  ctx.beginPath();ctx.ellipse(0,50,31,5,0,0,6.283);ctx.fill();
+  ctx.globalAlpha=alpha;
+  /* straps */
+  ctx.strokeStyle=col.line;ctx.lineWidth=2.8;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-22,-12);ctx.quadraticCurveTo(-35,2,-28,44);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(22,-12);ctx.quadraticCurveTo(35,2,28,44);ctx.stroke();
+  /* top handle */
+  ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(-7,-30);ctx.quadraticCurveTo(-7,-38,0,-38);
+  ctx.quadraticCurveTo(7,-38,7,-30);ctx.stroke();
+  /* body */
+  ctx.fillStyle=col.body;ctx.strokeStyle=col.line;ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(-30,-12);ctx.quadraticCurveTo(-30,-30,-12,-30);
+  ctx.lineTo(12,-30);ctx.quadraticCurveTo(30,-30,30,-12);ctx.lineTo(30,39);
+  ctx.quadraticCurveTo(30,48,21,48);ctx.lineTo(-21,48);
+  ctx.quadraticCurveTo(-30,48,-30,39);ctx.closePath();ctx.fill();ctx.stroke();
+  /* top stitch */
+  ctx.globalAlpha=alpha*.4;ctx.strokeStyle=col.line;ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(-29,-6);ctx.quadraticCurveTo(0,1,29,-6);ctx.stroke();
+  /* front pocket */
+  ctx.globalAlpha=alpha;ctx.fillStyle=col.flap;ctx.strokeStyle=col.line;ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(-20,12);ctx.lineTo(20,12);
+  ctx.quadraticCurveTo(23,12,23,15);ctx.lineTo(23,33);
+  ctx.quadraticCurveTo(23,38,18,38);ctx.lineTo(-18,38);
+  ctx.quadraticCurveTo(-23,38,-23,33);ctx.lineTo(-23,15);
+  ctx.quadraticCurveTo(-23,12,-20,12);ctx.closePath();ctx.fill();ctx.stroke();
+  /* pocket stitch */
+  ctx.globalAlpha=alpha*.4;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(-21,20);ctx.lineTo(21,20);ctx.stroke();
+  /* buckle */
+  ctx.globalAlpha=alpha;ctx.fillStyle=col.acc;
+  ctx.beginPath();ctx.roundRect(-5,26,10,8,1.8);ctx.fill();
+  ctx.restore();ctx.globalAlpha=1;
+}
+
+function drawBagDuffel(cx,cy,sz,col,alpha){
+  ctx.globalAlpha=alpha;var s=sz/120;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  ctx.globalAlpha=alpha*.15;ctx.fillStyle='rgba(0,0,0,.3)';
+  ctx.beginPath();ctx.ellipse(0,48,36,5,0,0,6.283);ctx.fill();
+  ctx.globalAlpha=alpha;
+  /* handles */
+  ctx.strokeStyle=col.line;ctx.lineWidth=3.2;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(-15,-6);ctx.quadraticCurveTo(-15,-22,0,-22);
+  ctx.quadraticCurveTo(15,-22,15,-6);ctx.stroke();
+  /* body */
+  ctx.fillStyle=col.body;ctx.strokeStyle=col.line;ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(-40,4);ctx.quadraticCurveTo(-40,-8,-22,-10);
+  ctx.lineTo(22,-10);ctx.quadraticCurveTo(40,-8,40,4);ctx.lineTo(40,28);
+  ctx.quadraticCurveTo(40,40,22,42);ctx.lineTo(-22,42);
+  ctx.quadraticCurveTo(-40,40,-40,28);ctx.closePath();ctx.fill();ctx.stroke();
+  /* top curve stitch */
+  ctx.globalAlpha=alpha*.4;ctx.strokeStyle=col.line;ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(-34,5);ctx.quadraticCurveTo(0,0,34,5);ctx.stroke();
+  /* zipper */
+  ctx.globalAlpha=alpha;ctx.fillStyle=col.acc;
+  ctx.beginPath();ctx.roundRect(-9,-18,18,8,4);ctx.fill();
+  /* side lines */
+  ctx.globalAlpha=alpha*.22;ctx.strokeStyle='#fff';ctx.lineWidth=1.6;
+  ctx.beginPath();ctx.moveTo(-27,-6);ctx.lineTo(-27,41);ctx.stroke();
+  ctx.globalAlpha=alpha*.3;ctx.strokeStyle=col.line;ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(27,-6);ctx.lineTo(27,41);ctx.stroke();
+  ctx.restore();ctx.globalAlpha=1;
+}
+
+/* ═══════════ BAG DATA ═══════════ */
+var BAGS = [
+  {name:'SATCHEL',     price:'$186', draw:drawBagSatchel,
+   body:'#b3a392',flap:'#a5947f',line:'#6f6153',acc:CYAN},
+  {name:'CROSSBODY',   price:'$94',  draw:drawBagCross,
+   body:'#8c6a4f',flap:'#7d5d44',line:'#533a27',acc:AMBER},
+  {name:'EVERYDAY TOTE',price:'$128',draw:drawBagTote,
+   body:'#6e7355',flap:'#616749',line:'#43472f',acc:TEAL},
+  {name:'BACKPACK',    price:'$142', draw:drawBagBackpack,
+   body:'#4a6068',flap:'#3d5258',line:'#2a3a40',acc:CYAN},
+  {name:'WEEKEND DUFFEL',price:'$164',draw:drawBagDuffel,
+   body:'#5a544c',flap:'#4d473f',line:'#3a342c',acc:AMBER}
+];
+
+/* ═══════════ PRODUCT NODES ═══════════ */
+var nodes = [];
+function mkNodes(){
+  nodes = [];
+  var n = BAGS.length;
+  for(var i=0;i<n;i++){
+    var ang = (i/n)*6.283 - 1.5708;
+    var dist = (mob?100:160)*S;
+    nodes.push({
+      hx: W*.5 + Math.cos(ang)*dist*1.3,
+      hy: H*.48 + Math.sin(ang)*dist*.75,
+      x: W*.5, y: H*.48,
+      a: 0, sz: (mob?55:75)*S,
+      ph: rn()*6.283,
+      bag: BAGS[i]
+    });
+  }
+}
+
+/* ═══════════ CONNECTION EDGES ═══════════ */
+var EDGES = [[0,1],[1,2],[2,3],[3,4],[4,0],[0,2],[1,3],[2,4]];
+
+/* ═══════════ PRODUCT DATA STREAMS ═══════════ */
+var streams = [];
+function mkStreams(){
+  streams = [];sd=200;
+  var n = mob?6:10;
+  for(var i=0;i<n;i++){
+    streams.push({
+      y: H*(.1+(i/n)*.8),
+      sp: 30+rn()*80,
+      off: rn()*500,
+      col: [CYAN,TEAL,AMBER,BLUE][i%4],
+      a: .06+rn()*.1,
+      label: ['SKU-'+Math.floor(rn()*9999),'$'+(50+Math.floor(rn()*200))+'.00',
+              BAGS[i%5].name,'IN STOCK','LEATHER','CANVAS','NYLON'][Math.floor(rn()*7)]
+    });
+  }
+}
+
+function drStreams(f){
+  if(f<.005)return;
+  ctx.setLineDash([3*S,10*S]);
+  for(var i=0;i<streams.length;i++){
+    var s=streams[i];
+    ctx.globalAlpha=f*s.a;ctx.strokeStyle=ha(s.col,.5);ctx.lineWidth=.4;
+    ctx.lineDashOffset=-(t*s.sp+s.off);
+    ctx.beginPath();ctx.moveTo(0,s.y|0);ctx.lineTo(W,s.y|0);ctx.stroke();
+    /* label */
+    ctx.globalAlpha=f*s.a*.6;
+    ctx.font=(7*S)+'px system-ui,sans-serif';ctx.fillStyle=s.col;ctx.textAlign='left';
+    var lx = ((t*s.sp*.3+s.off)%W);
+    ctx.fillText(s.label,lx,s.y-4*S);
+  }
+  ctx.setLineDash([]);ctx.globalAlpha=1;
+}
+
+/* ═══════════ SELECTION HIGHLIGHT ═══════════ */
+var selIdx = 2; /* tote */
+var selPulse = 0;
+
+/* ═══════════ CART COUNTER ═══════════ */
+var cartCount = 0;
+var cartFlash = 0;
+
+/* ═══════════ SHOPPING BAG ICON (top-right HUD) ═══════════ */
+function drCart(f,ph){
+  if(ph.i<2)return;
+  var cx=W*.88,cy=H*.08;
+  var vis=sm(.1,.6,(ph.i>=2?1:0))*f;
+  if(ph.i>=5)vis*=cl(1-ph.p*.6,0,1);
+  if(vis<.01)return;
+
+  ctx.globalAlpha=vis*.6;ctx.strokeStyle=CYAN;ctx.lineWidth=1.2;ctx.lineCap='round';ctx.lineJoin='round';
+  /* bag body */
+  ctx.beginPath();
+  ctx.moveTo(cx-10*S,cy-4*S);ctx.lineTo(cx+10*S,cy-4*S);
+  ctx.lineTo(cx+8*S,cy+12*S);ctx.lineTo(cx-8*S,cy+12*S);ctx.closePath();ctx.stroke();
+  /* handle */
+  ctx.beginPath();ctx.moveTo(cx-5*S,cy-4*S);
+  ctx.quadraticCurveTo(cx-5*S,cy-12*S,cx,cy-12*S);
+  ctx.quadraticCurveTo(cx+5*S,cy-12*S,cx+5*S,cy-4*S);ctx.stroke();
+
+  /* count */
+  if(cartCount>0){
+    var fl=.7+.3*Math.sin(cartFlash*8);
+    ctx.globalAlpha=vis*fl;
+    ctx.fillStyle=AMBER;
+    ctx.beginPath();ctx.arc(cx+11*S,cy-8*S,7*S,0,6.283);ctx.fill();
+    ctx.globalAlpha=vis;ctx.fillStyle='#07080a';
+    ctx.font='bold '+(8*S)+'px system-ui,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(cartCount.toString(),cx+11*S,cy-7.5*S);
+  }
+
+  /* label */
+  ctx.globalAlpha=vis*.35;ctx.fillStyle=DIM;
+  ctx.font=(7*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText('BAG',cx,cy+20*S);
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ DRAW NODES + CONNECTIONS ═══════════ */
+function drNodes(ph){
+  var i,n,nd,col;
+
+  /* update node positions */
+  for(i=0;i<nodes.length;i++){
+    nd=nodes[i];
+    var em=ph.i>=1?cl((ph.i===1?ph.p:1)-.04*i,0,1):0;
+    nd.a=eo(cl(em*2.5,0,1));
+    if(ph.i>=5)nd.a=cl(nd.a*(1-ph.p*.8),0,1);
+    nd.x=lr(W*.5,nd.hx,nd.a)+Math.sin(t*.4+nd.ph)*2.5*S;
+    nd.y=lr(H*.48,nd.hy,nd.a)+Math.cos(t*.35+nd.ph)*1.8*S;
+  }
+
+  /* connections */
+  if(ph.i>=2){
+    ctx.lineWidth=.4;
+    for(i=0;i<EDGES.length;i++){
+      var a=nodes[EDGES[i][0]],b=nodes[EDGES[i][1]];
+      if(a.a<.03||b.a<.03)continue;
+      var ca=cl((ph.i===2?ph.p:1)*a.a*b.a*.5,0,.18);
+      if(ph.i>=5)ca*=cl(1-ph.p*2,0,1);
+      if(ca<.003)continue;
+      ctx.globalAlpha=ca;ctx.strokeStyle=ha(TEAL,.45);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      /* traveling particle */
+      if(ph.i>=2&&ph.i<5){
+        var tp=(t*.3+i*.12)%1;
+        ctx.globalAlpha=ca*2.5;ctx.fillStyle=CYAN;
+        ctx.beginPath();ctx.arc(lr(a.x,b.x,tp),lr(a.y,b.y,tp),1.2*S,0,6.283);ctx.fill();
+      }
+    }
+  }
+
+  /* draw each bag node */
+  for(i=0;i<nodes.length;i++){
+    nd=nodes[i];if(nd.a<.02)continue;
+    col={body:nd.bag.body,flap:nd.bag.flap,line:nd.bag.line,acc:nd.bag.acc};
+
+    /* node ring */
+    var ringCol=i===selIdx?AMBER:TEAL;
+    ctx.globalAlpha=nd.a*.3;ctx.strokeStyle=ringCol;ctx.lineWidth=.7;
+    ctx.beginPath();ctx.arc(nd.x,nd.y,nd.sz*.62,0,6.283);ctx.stroke();
+
+    /* glow for selected */
+    if(i===selIdx&&ph.i>=3&&ph.i<5){
+      selPulse+=0.016;
+      var sp=.3+.15*Math.sin(selPulse*4);
+      ctx.globalAlpha=nd.a*sp;
+      var sg=ctx.createRadialGradient(nd.x,nd.y,0,nd.x,nd.y,nd.sz*.8);
+      sg.addColorStop(0,AMBER);sg.addColorStop(1,ha(AMBER,0));
+      ctx.fillStyle=sg;ctx.beginPath();ctx.arc(nd.x,nd.y,nd.sz*.8,0,6.283);ctx.fill();
+    }
+
+    /* bag illustration */
+    nd.bag.draw(nd.x,nd.y,nd.sz*1.1,col,nd.a*.85);
+
+    /* label */
+    ctx.globalAlpha=nd.a*.65;
+    ctx.font='500 '+(7.5*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=i===selIdx?AMBER:CYAN;ctx.textAlign='center';
+    ctx.fillText(nd.bag.name,nd.x,nd.y+nd.sz*.62+12*S);
+
+    /* price */
+    ctx.globalAlpha=nd.a*.4;
+    ctx.font=(7*S)+'px system-ui,sans-serif';ctx.fillStyle=DIM;
+    ctx.fillText(nd.bag.price,nd.x,nd.y+nd.sz*.62+22*S);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ ADD-TO-BAG EFFECT ═══════════ */
+function drAddEffect(ph){
+  if(ph.i!==4)return;
+  var k=eio(ph.p);
+  var nd=nodes[selIdx];
+  if(nd.a<.02)return;
+
+  /* expanding ring */
+  var rr=cl(k*1.5,0,1);
+  ctx.globalAlpha=.3*(1-rr);ctx.strokeStyle=AMBER;ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.arc(nd.x,nd.y,lr(nd.sz*.3,nd.sz*1.5,eo(rr)),0,6.283);ctx.stroke();
+
+  /* converging lines */
+  var cx=W*.88,cy=H*.08;
+  if(k>.3){
+    var lk=cl((k-.3)*2,0,1);
+    ctx.globalAlpha=.2*(1-lk);ctx.strokeStyle=ha(AMBER,.6);ctx.lineWidth=.5;
+    ctx.beginPath();ctx.moveTo(nd.x,nd.y);ctx.lineTo(lr(nd.x,cx,eo(lk)),lr(nd.y,cy,eo(lk)));ctx.stroke();
+    /* traveling dot */
+    ctx.globalAlpha=.7*(1-lk);ctx.fillStyle=AMBER;
+    ctx.beginPath();ctx.arc(lr(nd.x,cx,eo(lk)),lr(nd.y,cy,eo(lk)),2*S,0,6.283);ctx.fill();
+  }
+
+  /* flash at cart */
+  if(k>.7){
+    var fk=cl((k-.7)*3.3,0,1);
+    ctx.globalAlpha=.12*(1-fk);
+    var fg=ctx.createRadialGradient(cx,cy,0,cx,cy,30*S);
+    fg.addColorStop(0,AMBER);fg.addColorStop(1,ha(AMBER,0));
+    ctx.fillStyle=fg;ctx.beginPath();ctx.arc(cx,cy,30*S,0,6.283);ctx.fill();
+  }
+
+  /* "ADDED TO BAG" text */
+  if(k>.5){
+    var tk=cl((k-.5)*2,0,1);
+    ctx.globalAlpha=eo(tk)*(1-cl((k-.85)*6.67,0,1))*.7;
+    ctx.font='600 '+(9*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=AMBER;ctx.textAlign='center';
+    ctx.fillText('ADDED TO BAG',nd.x,nd.y-nd.sz*.62-15*S);
+  }
+
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ LIGHT SWEEP ═══════════ */
+function drSweep(ph){
+  if(ph.i<4)return;
+  var sp;
+  if(ph.i===5)sp=eio(ph.p);
+  else return;
+  if(sp<.01)return;
+  var sx=lr(-W*.3,W*1.3,sp),sw=W*.18;
+  ctx.globalAlpha=.05;
+  var g=ctx.createLinearGradient(sx-sw,0,sx+sw,0);
+  g.addColorStop(0,ha(CYAN,0));g.addColorStop(.5,ha(CYAN,.25));g.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=g;ctx.fillRect(sx-sw,0,sw*2,H);ctx.globalAlpha=1;
+}
+
+/* ═══════════ FILM TREATMENT ═══════════ */
+function drFilm(){
+  ctx.globalAlpha=1;
+  var g=ctx.createRadialGradient(W*.5,H*.47,Math.min(W,H)*.2,W*.5,H*.47,W*.7);
+  g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.55)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  var g2=ctx.createLinearGradient(0,0,0,H);
+  g2.addColorStop(0,'rgba(0,0,0,.25)');g2.addColorStop(.18,'rgba(0,0,0,0)');
+  g2.addColorStop(.82,'rgba(0,0,0,0)');g2.addColorStop(1,'rgba(0,0,0,.25)');
+  ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+  ctx.globalAlpha=.025;ctx.fillStyle='#000';
+  for(var y=0;y<H;y+=3)ctx.fillRect(0,y,W,1);
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ CENTER BRAND DISPLAY (Phase 0) ═══════════ */
+function drBrand(ph){
+  if(ph.i>1)return;
+  var vis=ph.i===0?eio(cl(ph.p*2,0,1)):cl(1-ph.p*2,0,1);
+  if(vis<.01)return;
+  var cx=W*.5,cy=H*.46;
+  /* glow */
+  ctx.globalAlpha=vis*.08;
+  var g=ctx.createRadialGradient(cx,cy,0,cx,cy,120*S);
+  g.addColorStop(0,CYAN);g.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,120*S,0,6.283);ctx.fill();
+  /* text */
+  ctx.globalAlpha=vis*.8;
+  ctx.font='200 '+(32*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=WHITE;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('ASTA STORE',cx,cy);
+  /* subtitle */
+  ctx.globalAlpha=vis*.4;
+  ctx.font=(9*S)+'px system-ui,sans-serif';ctx.fillStyle=TEAL;
+  ctx.fillText('BAGS FOR EVERY JOURNEY',cx,cy+28*S);
+  /* lines */
+  ctx.globalAlpha=vis*.3;ctx.strokeStyle=ha(CYAN,.4);ctx.lineWidth=.5;
+  var lw=100*S*vis;
+  ctx.beginPath();ctx.moveTo(cx-lw,cy-20*S);ctx.lineTo(cx+lw,cy-20*S);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-lw,cy+42*S);ctx.lineTo(cx+lw,cy+42*S);ctx.stroke();
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ INIT ═══════════ */
+function init(){
+  sd=42;mkPts();mkNodes();mkStreams();
+  titled=false;ended=false;cartCount=0;cartFlash=0;selPulse=0;
+  document.getElementById('title').classList.remove('on');
+  document.getElementById('tN').classList.remove('on');
+  document.getElementById('tR').classList.remove('on');
+  document.getElementById('tP').classList.remove('on');
+  document.getElementById('skip').classList.remove('off');
+}
+
+function showT(){
+  if(titled)return;titled=true;
+  document.getElementById('title').classList.add('on');
+  setTimeout(function(){
+    document.getElementById('tN').classList.add('on');
+    document.getElementById('tR').classList.add('on');
+    document.getElementById('tP').classList.add('on');
+  },80);
+}
+
+/* ═══════════ MAIN LOOP ═══════════ */
+init();
+prevNow = performance.now();
+
+function loop(now){
+  requestAnimationFrame(loop);
+  var dt=(now-prevNow)/1000;
+  if(dt>.1)dt=.016;
+  prevNow=now;fc++;
+  if(paused)return;
+  t+=dt;
+  if(!ended)sk+=dt;
+  if(sk>TOT){sk=TOT;ended=true;}
+
+  var ph=gp(sk);
+  var fade=sm(0,1.2,sk);
+
+  /* cart update */
+  if(ph.i>=4&&cartCount===0){cartCount=1;cartFlash=t;}
+  if(ph.i<4)cartCount=0;
+
+  /* background */
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  var bg=ctx.createRadialGradient(W*.5,H*.46,0,W*.5,H*.46,W*.55);
+  bg.addColorStop(0,ha(NAVY,.6));bg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  /* layers */
+  drGrid(fade*(ph.i>=6?lr(1,.3,ph.p):1));
+  drStreams(fade*(ph.i>=1?.8:0)*(ph.i>=5?cl(1-ph.p*1.5,0,1):1));
+  drPts(dt,fade*.7);
+  drBrand(ph);
+  drNodes(ph);
+  drAddEffect(ph);
+  drCart(fade,ph);
+  drSweep(ph);
+  drFilm();
+
+  /* title */
+  if(ph.i>=5&&ph.p>.18)showT();
+  if(ph.i>=6)document.getElementById('skip').classList.add('off');
+
+  /* hud */
+  document.getElementById('phL').textContent=PL[ph.i];
+  document.getElementById('progF').style.width=(sk/TOT*100)+'%';
+
+  dbg.textContent='F:'+fc+' T:'+t.toFixed(1)+'s PH:'+ph.i+' '+W+'x'+H;
+}
+
+requestAnimationFrame(loop);
+
+/* ═══════════ CONTROLS ═══════════ */
+document.getElementById('bR').onclick=function(){
+  sk=0;t=0;fc=0;ended=false;paused=false;init();
+  prevNow=performance.now();
+  document.getElementById('bP').textContent='Pause';
+};
+document.getElementById('bP').onclick=function(){
+  if(ended&&paused){document.getElementById('bR').onclick();return}
+  paused=!paused;if(!paused)prevNow=performance.now();
+  this.textContent=paused?'Play':'Pause';
+};
+document.getElementById('skip').onclick=function(){
+  sk=PS[5]+.5;if(paused){paused=false;prevNow=performance.now()}
+  document.getElementById('bP').textContent='Pause';
+};
+document.getElementById('bE').onclick=function(){
+  var ow=c.width,oh=c.height,sc=2;
+  c.width=Math.round(W*sc);c.height=Math.round(H*sc);
+  ctx.setTransform(sc,0,0,sc,0,0);
+  var ph=gp(sk);var fade=sm(0,1.2,sk);
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  drGrid(fade);drStreams(fade*.8);drPts(0,fade*.7);drBrand(ph);
+  drNodes(ph);drAddEffect(ph);drCart(fade,ph);drSweep(ph);drFilm();
+  var url=c.toDataURL('image/jpeg',.95);
+  c.width=ow;c.height=oh;
+  var d=Math.min(window.devicePixelRatio||1,2);
+  ctx.setTransform(d,0,0,d,0,0);
+  var a=document.createElement('a');a.href=url;
+  a.download='asta-store.jpg';a.click();
+};
+document.addEventListener('keydown',function(e){
+  if(e.key===' '){e.preventDefault();document.getElementById('bP').onclick()}
+  else if(e.key==='r')document.getElementById('bR').onclick();
+  else if(e.key==='s'||e.key==='Escape')document.getElementById('skip').onclick();
+});
+</script>
+</body>
+</html>

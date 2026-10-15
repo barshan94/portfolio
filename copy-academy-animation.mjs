@@ -2,11 +2,28 @@
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const source = resolve(root, 'mount-royal-academy-animation.html');
-const destination = resolve(root, 'dist', 'mount-royal-academy-animation.html');
+const dist = resolve(root, 'dist');
 
-await access(source);
-await access(resolve(root, 'dist'));
+const animations = [
+  {
+    source: 'mount-royal-academy-animation.html',
+    destination: 'mount-royal-academy-animation.html',
+    label: 'Mount Royal Academy',
+  },
+  {
+    source: 'asta-store-animation.html',
+    destination: 'asta-store-animation.html',
+    label: 'Asta Store',
+  },
+];
 
-await copyFile(source, destination);
-console.log('Mount Royal Academy animation copied to dist.');
+await access(dist);
+
+for (const animation of animations) {
+  const source = resolve(root, animation.source);
+  const destination = resolve(dist, animation.destination);
+
+  await access(source);
+  await copyFile(source, destination);
+  console.log(`${animation.label} animation copied to dist.`);
+}
