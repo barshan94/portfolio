@@ -2,8 +2,8 @@ name: Sync projects
 
 on:
   schedule:
-    # Every Monday at 08:00 UTC — runs when the repo is idle.
-    - cron: "0 8 * * 1"
+    # Run every hour, at 17 minutes past the hour.
+    - cron: "17 * * * *"
   workflow_dispatch:
     # Manual trigger from the Actions tab.
 
