@@ -506,6 +506,21 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   {project.data.description}
                 </p>
 
+{(project.data.language || getProjectUpdatedDate(project)) && (
+  <div class="project-meta">
+    {project.data.language && (
+      <span class="project-language">
+        <i aria-hidden="true"></i>
+        {project.data.language}
+      </span>
+    )}
+    {getProjectUpdatedDate(project) && (
+      <span>Updated {getProjectUpdatedDate(project)}</span>
+    )}
+  </div>
+)}
+
+
                 {getProjectTags(project).length > 0 && (
                   <div class="tag-list project-tags">
                     {getProjectTags(project).slice(0, 5).map((tag) => (
