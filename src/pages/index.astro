@@ -2046,6 +2046,35 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     line-height: 1.8;
   }
 
+
+.project-meta {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 10px;
+margin-top: 13px;
+color: var(--quiet);
+font-size: 0.68rem;
+letter-spacing: 0.03em;
+}
+
+.project-language {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+color: #c7d0e7;
+}
+
+.project-language i {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background: #56d6c2;
+box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
+}
+
+
+
   .project-tags {
     margin-top: 18px;
   }
