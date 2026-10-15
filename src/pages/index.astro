@@ -416,6 +416,38 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       </section>
     )}
 
+    <!-- STUDENT PERFORMANCE DASHBOARD -->
+    <section
+      class="dashboard-showcase section-wrap section-block"
+      id="student-dashboard"
+      aria-labelledby="student-dashboard-title"
+    >
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">INTERACTIVE DATA VISUALIZATION</p>
+          <h2 id="student-dashboard-title">
+            Student Performance<br />
+            <span class="accent-text">Dashboard.</span>
+          </h2>
+        </div>
+        <p class="section-sub">
+          An animated academic analytics experience exploring student results,
+          attendance, assessment averages, and classroom performance.
+        </p>
+      </div>
+
+      <div class="dashboard-frame">
+        <iframe
+          src="/student-performance-dashboard.html"
+          title="Interactive Student Performance Dashboard demonstration"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <p class="dashboard-note">
+        Demonstration with illustrative sample data, not live student records.
+      </p>
+    </section>
     <!-- PROJECTS -->
     <section
       class="projects section-wrap section-block"
@@ -863,6 +895,52 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
   .system-boot { animation: none; }
   .boot-progress span, .boot-cursor { animation: none; }
 }
+
+  /* Student Performance Dashboard showcase */
+  .dashboard-showcase .section-heading {
+    margin-bottom: 34px;
+  }
+
+  .dashboard-frame {
+    position: relative;
+    width: 100%;
+    height: clamp(620px, 68vw, 860px);
+    overflow: hidden;
+    border: 1px solid rgba(105, 226, 230, 0.2);
+    border-radius: 18px;
+    background: #050914;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+  }
+
+  .dashboard-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #050914;
+  }
+
+  .dashboard-note {
+    margin: 14px 0 0;
+    color: var(--muted-text, #929bad);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .dashboard-frame {
+      height: 720px;
+      border-radius: 14px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .dashboard-frame {
+      height: 650px;
+      border-radius: 10px;
+    }
+  }
+
 </style>
 
 
@@ -2849,7 +2927,55 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   .hero-facts { gap: clamp(1.25rem, 3vw, 2rem); }
   @media (max-width: 600px) { .hero h1 { font-size: clamp(2.9rem, 12.5vw, 4.2rem); } .hero { gap: 2.75rem; padding-top: 4.5rem; } }
 
+
+  /* Student Performance Dashboard showcase */
+  .dashboard-showcase .section-heading {
+    margin-bottom: 34px;
+  }
+
+  .dashboard-frame {
+    position: relative;
+    width: 100%;
+    height: clamp(620px, 68vw, 860px);
+    overflow: hidden;
+    border: 1px solid rgba(105, 226, 230, 0.2);
+    border-radius: 18px;
+    background: #050914;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+  }
+
+  .dashboard-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #050914;
+  }
+
+  .dashboard-note {
+    margin: 14px 0 0;
+    color: var(--muted-text, #929bad);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .dashboard-frame {
+      height: 720px;
+      border-radius: 14px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .dashboard-frame {
+      height: 650px;
+      border-radius: 10px;
+    }
+  }
+
 </style>
+
+
 
 
 
