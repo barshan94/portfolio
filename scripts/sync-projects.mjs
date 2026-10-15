@@ -138,10 +138,18 @@ async function main() {
       tags.length
         ? `tags:\n${tags.map((tag) => `  - ${yamlString(tag)}`).join("\n")}`
         : "tags: []",
+      
       `repo: ${yamlString(repo.html_url)}`,
       ...(repo.homepage?.trim()
         ? [`live: ${yamlString(repo.homepage.trim())}`]
         : []),
+      ...(repo.language
+        ? [`language: ${yamlString(repo.language)}`]
+        : []),
+      ...(repo.updated_at
+        ? [`lastUpdated: ${yamlString(repo.updated_at)}`]
+        : []),
+
       'status: "completed"',
       "featured: false",
       'accent: "default"',
