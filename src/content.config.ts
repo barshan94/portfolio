@@ -4,8 +4,15 @@ const projectSchema = z.object({
   title: z.string().min(1, "title is required"),
   description: z.string().min(1, "description is required"),
   tags: z.array(z.string()).default([]),
+
+  
   repo: z.string().url("repo must be a valid URL").optional(),
   live: z.string().url("live must be a valid URL").optional(),
+  language: z.string().min(1).optional(),
+  lastUpdated: z.string().datetime().optional(),
+
+
+  
   status: z.enum(["completed", "in-progress"]).default("completed"),
   featured: z.boolean().default(false),
   accent: z.enum(["default", "accent", "accent-2"]).default("default"),
