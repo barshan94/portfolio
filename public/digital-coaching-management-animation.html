@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Coaching Management System</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#07080a}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
+#title{
+  position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none;opacity:0;
+  transition:opacity 1s ease;
+}
+#title.on{opacity:1}
+#title h1{
+  font-family:system-ui,-apple-system,sans-serif;
+  font-size:clamp(1.1rem,3.4vw,2.6rem);font-weight:200;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(220,234,240,0);text-align:center;line-height:1.2;
+  transition:color 1.4s ease,transform 1.4s ease;
+  transform:translateY(14px);max-width:92vw;
+}
+#title h1.on{color:#e2eef2;transform:translateY(0)}
+#title h1 b{font-weight:600}
+#title .rule{
+  width:0;height:1px;margin-top:10px;
+  background:linear-gradient(90deg,transparent,rgba(77,212,216,.45),transparent);
+  transition:width 2s ease .2s;
+}
+#title .rule.on{width:clamp(80px,20vw,240px)}
+#title p{
+  margin-top:10px;font-family:system-ui,sans-serif;
+  font-size:clamp(.45rem,.95vw,.75rem);font-weight:400;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(100,180,190,0);text-align:center;
+  transition:color 1s ease .4s;
+}
+#title p.on{color:rgba(100,180,190,.5)}
+#dbg{position:fixed;top:8px;left:8px;z-index:99;color:rgba(77,212,216,.2);font:10px/1.4 monospace;pointer-events:none}
+#ctrls{position:fixed;top:8px;right:8px;z-index:50;display:flex;gap:5px;opacity:.12;transition:opacity .3s}
+#ctrls:hover{opacity:1}
+#ctrls button{
+  background:rgba(10,14,18,.85);border:1px solid rgba(77,212,216,.25);
+  color:rgba(140,210,215,.7);font:9px/1 system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;
+  border-radius:3px;cursor:pointer;min-height:34px;
+}
+#ctrls button:hover{background:rgba(30,60,70,.3);color:#dff4f6;border-color:rgba(77,212,216,.5)}
+#skip{
+  position:fixed;bottom:18px;right:18px;z-index:50;
+  background:rgba(10,14,18,.78);border:1px solid rgba(77,212,216,.2);
+  color:rgba(140,210,215,.5);font:10px/1 system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;
+  border-radius:3px;cursor:pointer;min-height:40px;transition:opacity .4s;
+}
+#skip:hover{background:rgba(30,60,70,.3);color:#dff4f6}
+#skip.off{opacity:0;pointer-events:none}
+#hud{
+  position:fixed;left:14px;bottom:14px;z-index:50;pointer-events:none;
+  font:8px/1.4 system-ui,sans-serif;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(77,212,216,.22);
+}
+#prog{width:clamp(70px,13vw,160px);height:1px;margin-top:5px;background:rgba(77,212,216,.1)}
+#progF{height:100%;width:0%;background:rgba(77,212,216,.4)}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="title">
+  <h1 id="tN">Digital Coaching<br><b>Management System</b></h1>
+  <div class="rule" id="tR"></div>
+  <p id="tP">Attendance · Payments · Reports · Communication</p>
+</div>
+<div id="dbg" hidden></div>
+<div id="ctrls">
+  <button id="bR">Replay</button>
+  <button id="bP">Pause</button>
+  <button id="bE">Export</button>
+</div>
+<button id="skip">Skip ↗</button>
+<div id="hud"><span id="phL"></span><div id="prog"><div id="progF"></div></div></div>
+<script>
+var c=document.getElementById('c');
+var ctx=c.getContext('2d');
+var dbg=document.getElementById('dbg');
+var W,H,S,mob,dpr;
+
+function resize(){
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  W=window.innerWidth;H=window.innerHeight;
+  S=Math.max(.38,Math.min(1.5,W/1400));
+  mob=W<640;
+  c.width=W*dpr;c.height=H*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize',resize);
+resize();
+
+/* ── Helpers ────────────────────────── */
+var sd=42;
+function rn(){sd=(sd*16807)%2147483647;return sd/2147483647}
+function lr(a,b,k){return a+(b-a)*k}
+function cl(v,a,b){return v<a?a:v>b?b:v}
+function eo(k){return 1-Math.pow(1-k,3)}
+function eio(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
+function sm(a,b,k){k=cl((k-a)/(b-a),0,1);return k*k*(3-2*k)}
+function ha(hex,a){var n=parseInt(hex.slice(1),16);return'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'}
+
+/* ── Palette ────────────────────────── */
+var BG='#07080a',NAVY='#0c1018';
+var CYAN='#4dd4d8',TEAL='#2b9ea0',BLUE='#3f8bea';
+var AMBER='#d9a84a',GREEN='#4dcb8a',RED='#e05555';
+var PURPLE='#a78bfa',WHITE='#e2eef2',DIM='rgba(176,206,214,0.42)';
+var GRID1='rgba(46,66,76,0.13)',GRID2='rgba(58,84,96,0.22)';
+var WHATSAPP='#25d366';
+
+/* ── Timeline ───────────────────────── */
+var PD=[2.4,3.6,3.2,3.4,3.4,3.0,3.6,4.2,3.5];
+var PL=[
+  'initializing coaching system',
+  'loading student registry',
+  'recording daily attendance',
+  'processing monthly payments',
+  'generating progress reports',
+  'preparing communication',
+  'composing system overview',
+  'digital coaching management',
+  'digital coaching management'
+];
+var TOT=0,PS=[];
+for(var i=0;i<PD.length;i++){PS.push(TOT);TOT+=PD[i]}
+function gp(sk){
+  for(var i=PD.length-1;i>=0;i--)if(sk>=PS[i])return{i:i,p:cl((sk-PS[i])/PD[i],0,1)};
+  return{i:0,p:0};
+}
+
+var fc=0,t=0,sk=0,prevNow=0,paused=false,ended=false,titled=false;
+
+/* ═══════ FICTIONAL DATA ═══════ */
+var STUDENTS=[
+  {id:'CS-001',name:'Aarav Sharma',cls:'VIII',sub:'Math',ph:'+880-XXXX'},
+  {id:'CS-002',name:'Fatima Begum',cls:'VI',sub:'Science',ph:'+880-XXXX'},
+  {id:'CS-003',name:'Ravi Patel',cls:'IX',sub:'English',ph:'+880-XXXX'},
+  {id:'CS-004',name:'Sneha Das',cls:'VII',sub:'Math',ph:'+880-XXXX'},
+  {id:'CS-005',name:'Imran Khan',cls:'VIII',sub:'Bengali',ph:'+880-XXXX'},
+  {id:'CS-006',name:'Priya Roy',cls:'X',sub:'Physics',ph:'+880-XXXX'},
+  {id:'CS-007',name:'Tanmoy Ghosh',cls:'VI',sub:'Math',ph:'+880-XXXX'},
+  {id:'CS-008',name:'Nusrat Jahan',cls:'IX',sub:'Chemistry',ph:'+880-XXXX'}
+];
+var REG_COLS=['ID','STUDENT','CLASS','SUBJECT','GUARDIAN'];
+
+var ATT_DATES=['12-Jun','13-Jun','14-Jun','15-Jun','16-Jun'];
+var ATT_DATA=[
+  ['P','P','A','P','P'],
+  ['P','A','P','P','P'],
+  ['P','P','P','P','A'],
+  ['A','P','P','P','P'],
+  ['P','P','P','A','P'],
+  ['P','P','P','P','P'],
+  ['P','A','P','P','P'],
+  ['P','P','A','P','P']
+];
+
+var PAY_MONTHS=['Jan','Feb','Mar','Apr','May','Jun'];
+var PAY_DATA=[
+  ['✓','✓','✓','✓','✓','—'],
+  ['✓','✓','—','✓','✓','—'],
+  ['✓','✓','✓','✓','—','—'],
+  ['✓','✓','✓','✓','✓','✓'],
+  ['✓','—','✓','✓','✓','—'],
+  ['✓','✓','✓','✓','✓','—'],
+  ['✓','✓','✓','—','✓','—'],
+  ['✓','✓','✓','✓','✓','—']
+];
+
+/* ═══════ PARTICLES ═══════ */
+var pts=[];
+function mkPts(){
+  pts=[];sd=101;
+  var n=mob?18:42;
+  for(var i=0;i<n;i++)pts.push({
+    x:rn()*W,y:rn()*H,vx:-1+rn()*2,vy:-2-rn()*4,
+    r:(.25+rn()*.9)*S,a:.015+rn()*.07,
+    col:[CYAN,TEAL,BLUE,GREEN,AMBER,PURPLE][Math.floor(rn()*6)],ph:rn()*6.283
+  });
+}
+function drPts(dt,f){
+  for(var i=0;i<pts.length;i++){
+    var p=pts[i];
+    p.x+=p.vx*dt;p.y+=p.vy*dt*.2;
+    p.x+=Math.sin(t*.35+p.ph)*.08;
+    if(p.y<-10){p.y=H+10;p.x=rn()*W}
+    if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;
+    ctx.globalAlpha=p.a*f*(.5+.5*Math.sin(t*.9+p.ph));
+    ctx.fillStyle=p.col;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ GRID ═══════ */
+function drGrid(f){
+  if(f<.005)return;
+  var fn=20*S,mj=120*S,gx,gy;
+  ctx.globalAlpha=f*.35;ctx.strokeStyle=GRID1;ctx.lineWidth=.3;
+  ctx.beginPath();
+  for(gx=0;gx<=W;gx+=fn){ctx.moveTo(gx|0,0);ctx.lineTo(gx|0,H)}
+  for(gy=0;gy<=H;gy+=fn){ctx.moveTo(0,gy|0);ctx.lineTo(W,gy|0)}
+  ctx.stroke();
+  ctx.globalAlpha=f*.55;ctx.strokeStyle=GRID2;ctx.lineWidth=.4;
+  ctx.beginPath();
+  for(gx=0;gx<=W;gx+=mj){ctx.moveTo(gx|0,0);ctx.lineTo(gx|0,H)}
+  for(gy=0;gy<=H;gy+=mj){ctx.moveTo(0,gy|0);ctx.lineTo(W,gy|0)}
+  ctx.stroke();ctx.globalAlpha=1;
+}
+
+/* ═══════ DATA STREAMS ═══════ */
+var streams=[];
+function mkStreams(){
+  streams=[];sd=200;
+  var n=mob?5:9;
+  for(var i=0;i<n;i++)streams.push({
+    y:H*(.06+(i/n)*.88),sp:22+rn()*55,off:rn()*400,
+    col:[CYAN,TEAL,BLUE,GREEN,AMBER,PURPLE][i%6],a:.04+rn()*.07,
+    lb:['ATTENDANCE','PAYMENT','REPORT','STU-'+Math.floor(rn()*999),
+        'PRESENT','MONTHLY','WEEKLY','CLASS VIII','GUARDIAN'][Math.floor(rn()*9)]
+  });
+}
+function drStreams(f){
+  if(f<.005)return;
+  ctx.setLineDash([3*S,10*S]);
+  for(var i=0;i<streams.length;i++){
+    var s=streams[i];
+    ctx.globalAlpha=f*s.a;ctx.strokeStyle=ha(s.col,.4);ctx.lineWidth=.4;
+    ctx.lineDashOffset=-(t*s.sp+s.off);
+    ctx.beginPath();ctx.moveTo(0,s.y|0);ctx.lineTo(W,s.y|0);ctx.stroke();
+    ctx.globalAlpha=f*s.a*.45;ctx.font=(6*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=s.col;ctx.textAlign='left';
+    ctx.fillText(s.lb,((t*s.sp*.22+s.off)%W),s.y-3*S);
+  }
+  ctx.setLineDash([]);ctx.globalAlpha=1;
+}
+
+/* ═══════ BRAND (Phase 0) ═══════ */
+function drBrand(ph){
+  if(ph.i>1)return;
+  var v=ph.i===0?eio(cl(ph.p*2,0,1)):cl(1-ph.p*2.5,0,1);
+  if(v<.01)return;
+  var cx=W*.5,cy=H*.43;
+  ctx.globalAlpha=v*.06;
+  var g=ctx.createRadialGradient(cx,cy,0,cx,cy,90*S);
+  g.addColorStop(0,CYAN);g.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,90*S,0,6.283);ctx.fill();
+
+  ctx.globalAlpha=v*.7;
+  ctx.font='200 '+(24*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=WHITE;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('DIGITAL COACHING',cx,cy-14*S);
+  ctx.globalAlpha=v*.55;
+  ctx.font='600 '+(24*S)+'px system-ui,sans-serif';
+  ctx.fillText('MANAGEMENT SYSTEM',cx,cy+18*S);
+  ctx.globalAlpha=v*.3;ctx.font=(8*S)+'px system-ui,sans-serif';ctx.fillStyle=TEAL;
+  ctx.fillText('GOOGLE SHEETS · APPS SCRIPT · AUTOMATION',cx,cy+44*S);
+
+  ctx.globalAlpha=v*.2;ctx.strokeStyle=ha(CYAN,.3);ctx.lineWidth=.5;
+  var lw=80*S*v;
+  ctx.beginPath();ctx.moveTo(cx-lw,cy-30*S);ctx.lineTo(cx+lw,cy-30*S);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-lw,cy+56*S);ctx.lineTo(cx+lw,cy+56*S);ctx.stroke();
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ SHEET PANEL helper ═══════ */
+function drawPanel(ox,oy,pw,ph2,label,labelCol,alpha){
+  ctx.globalAlpha=alpha*.08;ctx.fillStyle=CYAN;
+  ctx.beginPath();ctx.roundRect(ox-4*S,oy-18*S,pw+8*S,ph2+24*S,4*S);ctx.fill();
+  ctx.globalAlpha=alpha*.25;ctx.strokeStyle=ha(CYAN,.4);ctx.lineWidth=.5;
+  ctx.beginPath();ctx.roundRect(ox-4*S,oy-18*S,pw+8*S,ph2+24*S,4*S);ctx.stroke();
+  ctx.globalAlpha=alpha*.5;ctx.font='600 '+(7*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=labelCol;ctx.textAlign='left';
+  ctx.fillText(label,ox,oy-6*S);
+}
+
+/* ═══════ STUDENT REGISTRY (Phase 1) ═══════ */
+function drRegistry(ph){
+  if(ph.i<1)return;
+  var ap=ph.i===1?eio(cl(ph.p*1.4,0,1)):1;
+  var fd=ph.i>=3?cl(1-(ph.p)*.8,0,1):1;
+  if(ph.i>=4)fd=cl(1-1,0,1);
+  var v=ap*fd;if(v<.01)return;
+
+  var ox=W*(mob?.03:.08),oy=H*(mob?.12:.14);
+  var cw=(mob?38:58)*S,rh=(mob?13:17)*S;
+  var numC=mob?3:5,numR=mob?5:STUDENTS.length;
+  var pw=numC*cw;
+
+  drawPanel(ox,oy,pw,rh*(numR+1.2),'STUDENT REGISTRY',CYAN,v);
+
+  /* header */
+  for(var ci=0;ci<numC;ci++){
+    var rv=cl(ap*(numC+1)-ci,0,1);
+    ctx.globalAlpha=v*.45*rv;ctx.fillStyle=CYAN;
+    ctx.font='600 '+(6.5*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+    ctx.fillText(REG_COLS[ci],ox+ci*cw+cw*.5,oy+4*S);
+  }
+  ctx.globalAlpha=v*.25;ctx.strokeStyle=ha(CYAN,.35);ctx.lineWidth=.4;
+  ctx.beginPath();ctx.moveTo(ox,oy+rh*.6);ctx.lineTo(ox+pw*cl(ap*1.5,0,1),oy+rh*.6);ctx.stroke();
+
+  /* rows */
+  for(var ri=0;ri<numR;ri++){
+    var s=STUDENTS[ri];
+    var ry=oy+rh*(ri+1.15);
+    var rr=cl(ap*(numR+3)-ri*1.3,0,1);
+    if(rr<.01)continue;
+    var vals=[s.id,s.name,s.cls,s.sub,s.ph];
+    for(var cj=0;cj<numC;cj++){
+      var cr=cl(rr*numC-cj*.7,0,1);if(cr<.01)continue;
+      ctx.globalAlpha=v*.5*eo(cr);
+      ctx.fillStyle=cj===0?TEAL:DIM;
+      ctx.font=(cj===1?'500':'400')+' '+(6*S)+'px system-ui,sans-serif';
+      ctx.textAlign='center';
+      ctx.fillText(vals[cj],ox+cj*cw+cw*.5,ry);
+    }
+    ctx.globalAlpha=v*.04*rr;ctx.strokeStyle=TEAL;ctx.lineWidth=.25;
+    ctx.beginPath();ctx.moveTo(ox,ry+rh*.4);ctx.lineTo(ox+pw,ry+rh*.4);ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ ATTENDANCE SHEET (Phase 2) ═══════ */
+function drAttendance(ph){
+  if(ph.i<2)return;
+  var ap=ph.i===2?eio(cl(ph.p*1.3,0,1)):1;
+  var fd=ph.i>=4?cl(1-ph.p*1.2,0,1):1;
+  var v=ap*fd;if(v<.01)return;
+
+  var ox=W*(mob?.03:.06),oy=H*(mob?.12:.13);
+  var nameW=(mob?50:80)*S,dateW=(mob?24:34)*S;
+  var rh=(mob?13:16)*S;
+  var numD=mob?3:ATT_DATES.length;
+  var numR=mob?5:STUDENTS.length;
+  var pw=nameW+numD*dateW;
+
+  drawPanel(ox,oy,pw,rh*(numR+1.4),'DAILY ATTENDANCE',GREEN,v);
+
+  /* header */
+  ctx.globalAlpha=v*.45;ctx.fillStyle=TEAL;
+  ctx.font='600 '+(6*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText('STUDENT',ox+nameW*.5,oy+4*S);
+  for(var di=0;di<numD;di++){
+    var dr=cl(ap*(numD+2)-di*1.5,0,1);
+    ctx.globalAlpha=v*.45*dr;
+    /* newest date column has highlight */
+    if(di===numD-1&&ap>.6){
+      ctx.fillStyle=AMBER;
+      ctx.globalAlpha=v*.6*dr;
+    } else {
+      ctx.fillStyle=GREEN;
+    }
+    ctx.fillText(ATT_DATES[di],ox+nameW+di*dateW+dateW*.5,oy+4*S);
+  }
+  ctx.globalAlpha=v*.2;ctx.strokeStyle=ha(GREEN,.35);ctx.lineWidth=.4;
+  ctx.beginPath();ctx.moveTo(ox,oy+rh*.6);ctx.lineTo(ox+pw*cl(ap*1.4,0,1),oy+rh*.6);ctx.stroke();
+
+  /* new-column indicator arrow */
+  if(ap>.5&&ap<1){
+    var arrowX=ox+nameW+(numD-1)*dateW+dateW*.5;
+    ctx.globalAlpha=v*.5*Math.sin(t*4);
+    ctx.fillStyle=AMBER;
+    ctx.beginPath();
+    ctx.moveTo(arrowX,oy-14*S);ctx.lineTo(arrowX-4*S,oy-20*S);
+    ctx.lineTo(arrowX+4*S,oy-20*S);ctx.closePath();ctx.fill();
+    ctx.globalAlpha=v*.3;ctx.font='500 '+(5.5*S)+'px system-ui,sans-serif';
+    ctx.fillText('AUTO',arrowX,oy-24*S);
+  }
+
+  /* rows */
+  for(var ri=0;ri<numR;ri++){
+    var ry=oy+rh*(ri+1.15);
+    var rr=cl(ap*(numR+3)-ri*1.2,0,1);if(rr<.01)continue;
+    /* name */
+    ctx.globalAlpha=v*.45*eo(rr);ctx.fillStyle=DIM;
+    ctx.font='400 '+(6*S)+'px system-ui,sans-serif';ctx.textAlign='left';
+    ctx.fillText(STUDENTS[ri].name,ox+4*S,ry);
+    /* status cells */
+    for(var dj=0;dj<numD;dj++){
+      var cr=cl(rr*(numD+1)-dj*.9,0,1);if(cr<.01)continue;
+      var val=ATT_DATA[ri][dj];
+      var isP=val==='P';
+      ctx.globalAlpha=v*.6*eo(cr);
+      ctx.fillStyle=isP?GREEN:RED;
+      ctx.font='700 '+(7*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+      ctx.fillText(val,ox+nameW+dj*dateW+dateW*.5,ry);
+      /* cell bg tint */
+      ctx.globalAlpha=v*.04*eo(cr);
+      ctx.fillStyle=isP?GREEN:RED;
+      ctx.fillRect(ox+nameW+dj*dateW+2,ry-rh*.35,dateW-4,rh*.7);
+    }
+    ctx.globalAlpha=v*.035*rr;ctx.strokeStyle=TEAL;ctx.lineWidth=.25;
+    ctx.beginPath();ctx.moveTo(ox,ry+rh*.4);ctx.lineTo(ox+pw,ry+rh*.4);ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ MONTHLY PAYMENTS (Phase 3) ═══════ */
+function drPayments(ph){
+  if(ph.i<3)return;
+  var ap=ph.i===3?eio(cl(ph.p*1.3,0,1)):1;
+  var fd=ph.i>=5?cl(1-ph.p*1.2,0,1):1;
+  var v=ap*fd;if(v<.01)return;
+
+  var ox=W*(mob?.52:.54),oy=H*(mob?.12:.13);
+  var nameW=(mob?46:72)*S,mW=(mob?20:28)*S;
+  var rh=(mob?13:16)*S;
+  var numM=mob?4:PAY_MONTHS.length;
+  var numR=mob?5:STUDENTS.length;
+  var pw=nameW+numM*mW;
+
+  drawPanel(ox,oy,pw,rh*(numR+1.4),'MONTHLY PAYMENTS',AMBER,v);
+
+  /* header */
+  ctx.globalAlpha=v*.45;ctx.fillStyle=TEAL;
+  ctx.font='600 '+(6*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+  ctx.fillText('STUDENT',ox+nameW*.5,oy+4*S);
+  for(var mi=0;mi<numM;mi++){
+    var mr=cl(ap*(numM+2)-mi*1.4,0,1);
+    ctx.globalAlpha=v*.45*mr;
+    if(mi===numM-1&&ap>.6){ctx.fillStyle=AMBER;ctx.globalAlpha=v*.6*mr}
+    else ctx.fillStyle=TEAL;
+    ctx.fillText(PAY_MONTHS[mi],ox+nameW+mi*mW+mW*.5,oy+4*S);
+  }
+
+  /* auto indicator */
+  if(ap>.5&&ap<1){
+    var ax=ox+nameW+(numM-1)*mW+mW*.5;
+    ctx.globalAlpha=v*.5*Math.sin(t*4);ctx.fillStyle=AMBER;
+    ctx.beginPath();ctx.moveTo(ax,oy-14*S);ctx.lineTo(ax-4*S,oy-20*S);
+    ctx.lineTo(ax+4*S,oy-20*S);ctx.closePath();ctx.fill();
+    ctx.globalAlpha=v*.3;ctx.font='500 '+(5.5*S)+'px system-ui,sans-serif';
+    ctx.fillText('AUTO',ax,oy-24*S);
+  }
+
+  ctx.globalAlpha=v*.2;ctx.strokeStyle=ha(AMBER,.35);ctx.lineWidth=.4;
+  ctx.beginPath();ctx.moveTo(ox,oy+rh*.6);ctx.lineTo(ox+pw*cl(ap*1.4,0,1),oy+rh*.6);ctx.stroke();
+
+  for(var ri=0;ri<numR;ri++){
+    var ry=oy+rh*(ri+1.15);
+    var rr=cl(ap*(numR+3)-ri*1.2,0,1);if(rr<.01)continue;
+    ctx.globalAlpha=v*.45*eo(rr);ctx.fillStyle=DIM;
+    ctx.font='400 '+(6*S)+'px system-ui,sans-serif';ctx.textAlign='left';
+    ctx.fillText(STUDENTS[ri].name,ox+4*S,ry);
+    for(var mj=0;mj<numM;mj++){
+      var cr=cl(rr*(numM+1)-mj*.8,0,1);if(cr<.01)continue;
+      var pv=PAY_DATA[ri][mj];
+      var paid=pv==='✓';
+      ctx.globalAlpha=v*.6*eo(cr);
+      ctx.fillStyle=paid?GREEN:(pv==='—'?ha(AMBER,.5):RED);
+      ctx.font='700 '+(7*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+      ctx.fillText(paid?'✓':'—',ox+nameW+mj*mW+mW*.5,ry);
+      ctx.globalAlpha=v*.035*eo(cr);
+      ctx.fillStyle=paid?GREEN:AMBER;
+      ctx.fillRect(ox+nameW+mj*mW+1,ry-rh*.35,mW-2,rh*.7);
+    }
+    ctx.globalAlpha=v*.035*rr;ctx.strokeStyle=AMBER;ctx.lineWidth=.25;
+    ctx.beginPath();ctx.moveTo(ox,ry+rh*.4);ctx.lineTo(ox+pw,ry+rh*.4);ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ REPORT CARDS (Phase 4) ═══════ */
+function drReports(ph){
+  if(ph.i<4)return;
+  var ap=ph.i===4?eio(cl(ph.p*1.3,0,1)):1;
+  var fd=ph.i>=6?cl(1-ph.p*1.2,0,1):1;
+  var v=ap*fd;if(v<.01)return;
+
+  var cards=[
+    {name:'Aarav Sharma',cls:'VIII',att:'87%',pay:'5/6',grade:'B+',col:CYAN,dx:0},
+    {name:'Fatima Begum',cls:'VI',att:'93%',pay:'4/6',grade:'A',col:GREEN,dx:1},
+    {name:'Sneha Das',cls:'VII',att:'96%',pay:'6/6',grade:'A+',col:PURPLE,dx:2}
+  ];
+  var numCards=mob?2:3;
+  var cw=(mob?100:145)*S,ch=(mob?90:110)*S,gap=16*S;
+  var totalW=numCards*(cw+gap)-gap;
+  var startX=W*.5-totalW*.5;
+  var cy=H*(mob?.55:.52);
+
+  for(var i=0;i<numCards;i++){
+    var cd=cards[i];
+    var cr=cl(ap*(numCards+2)-i*1.2,0,1);if(cr<.01)continue;
+    var cx2=startX+i*(cw+gap);
+    var vis=v*eo(cr);
+    var yOff=(1-eo(cr))*15*S;
+
+    /* card bg */
+    ctx.globalAlpha=vis*.1;ctx.fillStyle=cd.col;
+    ctx.beginPath();ctx.roundRect(cx2,cy+yOff,cw,ch,5*S);ctx.fill();
+    ctx.globalAlpha=vis*.3;ctx.strokeStyle=ha(cd.col,.5);ctx.lineWidth=.5;
+    ctx.beginPath();ctx.roundRect(cx2,cy+yOff,cw,ch,5*S);ctx.stroke();
+
+    /* card label */
+    ctx.globalAlpha=vis*.35;ctx.font='600 '+(5.5*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=cd.col;ctx.textAlign='left';
+    ctx.fillText('PROGRESS REPORT',cx2+8*S,cy+yOff+12*S);
+
+    /* student name */
+    ctx.globalAlpha=vis*.65;ctx.font='600 '+(8*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=WHITE;
+    ctx.fillText(cd.name,cx2+8*S,cy+yOff+26*S);
+
+    /* class */
+    ctx.globalAlpha=vis*.35;ctx.font='400 '+(6*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=DIM;
+    ctx.fillText('Class '+cd.cls,cx2+8*S,cy+yOff+37*S);
+
+    /* metrics row */
+    var my=cy+yOff+52*S;
+    var metrics=[
+      {lb:'ATT',val:cd.att,c:GREEN},
+      {lb:'PAY',val:cd.pay,c:AMBER},
+      {lb:'GRADE',val:cd.grade,c:cd.col}
+    ];
+    var mx=cx2+8*S;
+    for(var mi=0;mi<3;mi++){
+      var m=metrics[mi];
+      ctx.globalAlpha=vis*.3;ctx.font='500 '+(5*S)+'px system-ui,sans-serif';
+      ctx.fillStyle=DIM;ctx.textAlign='left';
+      ctx.fillText(m.lb,mx,my);
+      ctx.globalAlpha=vis*.7;ctx.font='700 '+(9*S)+'px system-ui,sans-serif';
+      ctx.fillStyle=m.c;
+      ctx.fillText(m.val,mx,my+12*S);
+      mx+=(mob?28:40)*S;
+    }
+
+    /* bar indicator */
+    var barY=cy+yOff+ch-14*S;
+    var barW=cw-16*S;
+    var pct=parseInt(cd.att)/100;
+    ctx.globalAlpha=vis*.1;ctx.fillStyle=DIM;
+    ctx.beginPath();ctx.roundRect(cx2+8*S,barY,barW,3*S,1.5*S);ctx.fill();
+    ctx.globalAlpha=vis*.5;ctx.fillStyle=cd.col;
+    ctx.beginPath();ctx.roundRect(cx2+8*S,barY,barW*pct*cl(ap*1.5,0,1),3*S,1.5*S);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ COMMUNICATION CONCEPT (Phase 5) ═══════ */
+function drComms(ph){
+  if(ph.i<5)return;
+  var ap=ph.i===5?eio(cl(ph.p*1.5,0,1)):1;
+  var fd=ph.i>=6?cl(1-(ph.p)*.9,0,1):1;
+  var v=ap*fd;if(v<.01)return;
+
+  var cx=W*(mob?.5:.72),cy=H*(mob?.3:.35);
+  var bw=(mob?130:180)*S,bh=(mob?75:95)*S;
+
+  /* message bubble */
+  ctx.globalAlpha=v*.1;ctx.fillStyle=WHATSAPP;
+  ctx.beginPath();ctx.roundRect(cx-bw*.5,cy-bh*.5,bw,bh,6*S);ctx.fill();
+  ctx.globalAlpha=v*.35;ctx.strokeStyle=ha(WHATSAPP,.5);ctx.lineWidth=.6;
+  ctx.beginPath();ctx.roundRect(cx-bw*.5,cy-bh*.5,bw,bh,6*S);ctx.stroke();
+
+  /* WhatsApp icon area */
+  ctx.globalAlpha=v*.55;ctx.fillStyle=WHATSAPP;
+  ctx.beginPath();ctx.arc(cx-bw*.5+16*S,cy-bh*.5+16*S,8*S,0,6.283);ctx.fill();
+  ctx.globalAlpha=v*.8;ctx.font='700 '+(8*S)+'px system-ui,sans-serif';
+  ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('W',cx-bw*.5+16*S,cy-bh*.5+16.5*S);
+
+  /* header */
+  ctx.globalAlpha=v*.5;ctx.font='600 '+(6.5*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=WHATSAPP;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText('ATTENDANCE NOTIFICATION',cx-bw*.5+30*S,cy-bh*.5+18*S);
+
+  /* message content */
+  var lines=[
+    'Dear Guardian,',
+    'Ravi Patel was absent today (14-Jun).',
+    'Please contact the coaching center.',
+    '— Digital Coaching System'
+  ];
+  ctx.font='400 '+(5.8*S)+'px system-ui,sans-serif';
+  for(var li=0;li<lines.length;li++){
+    var lr2=cl(ap*(lines.length+2)-li*1.5,0,1);
+    ctx.globalAlpha=v*.4*eo(lr2);
+    ctx.fillStyle=li===0||li===3?TEAL:DIM;
+    ctx.fillText(lines[li],cx-bw*.5+10*S,cy-bh*.5+34*S+li*11*S);
+  }
+
+  /* link indicator */
+  ctx.globalAlpha=v*.3;ctx.font='500 '+(5*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=WHATSAPP;ctx.textAlign='center';
+  ctx.fillText('WHATSAPP MESSAGE LINK — ILLUSTRATIVE CONCEPT',cx,cy+bh*.5+12*S);
+
+  /* connecting line from absent cell */
+  if(ap>.3){
+    var lk=cl((ap-.3)*1.5,0,1);
+    ctx.globalAlpha=v*.15*lk;ctx.strokeStyle=ha(WHATSAPP,.5);ctx.lineWidth=.5;
+    ctx.setLineDash([3*S,4*S]);
+    ctx.beginPath();ctx.moveTo(cx-bw*.6,cy);ctx.lineTo(cx-bw*.5,cy);ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ OVERVIEW NODES (Phase 6) ═══════ */
+var OV_NODES=[
+  {lb:'STUDENTS',val:'32',col:CYAN,rx:.2,ry:.35},
+  {lb:'ATTENDANCE',val:'91%',col:GREEN,rx:.4,ry:.28},
+  {lb:'PAYMENTS',val:'86%',col:AMBER,rx:.6,ry:.35},
+  {lb:'REPORTS',val:'24',col:PURPLE,rx:.8,ry:.28},
+  {lb:'CLASSES',val:'4',col:BLUE,rx:.3,ry:.55},
+  {lb:'SUBJECTS',val:'6',col:TEAL,rx:.5,ry:.62},
+  {lb:'ALERTS',val:'3',col:RED,rx:.7,ry:.55}
+];
+var OV_EDGES=[[0,1],[1,2],[2,3],[0,4],[1,5],[2,6],[3,6],[4,5],[5,6],[0,2],[1,3]];
+var ovN=[];
+
+function mkOvNodes(){
+  ovN=[];sd=88;
+  for(var i=0;i<OV_NODES.length;i++){
+    var o=OV_NODES[i];
+    ovN.push({hx:W*o.rx,hy:H*o.ry,x:W*.5,y:H*.45,a:0,
+      r:(mob?20:30)*S,ph:rn()*6.283,o:o});
+  }
+}
+
+function drOverview(ph){
+  if(ph.i<6)return;
+  var ap=ph.i===6?eio(cl(ph.p*1.3,0,1)):1;
+  var fd=ph.i>=7?cl(1-ph.p*.8,0,1):1;
+  var v=ap*fd;if(v<.01)return;
+
+  /* update positions */
+  for(var i=0;i<ovN.length;i++){
+    var nd=ovN[i];
+    var em=cl(ap*1.5-.08*i,0,1);
+    nd.a=eo(cl(em*2.5,0,1));
+    if(ph.i>=7)nd.a=cl(nd.a*(1-ph.p*.85),0,1);
+    nd.x=lr(W*.5,nd.hx,nd.a)+Math.sin(t*.3+nd.ph)*2*S;
+    nd.y=lr(H*.45,nd.hy,nd.a)+Math.cos(t*.25+nd.ph)*1.5*S;
+  }
+
+  /* edges */
+  ctx.lineWidth=.35;
+  for(var ei=0;ei<OV_EDGES.length;ei++){
+    var a=ovN[OV_EDGES[ei][0]],b=ovN[OV_EDGES[ei][1]];
+    if(a.a<.03||b.a<.03)continue;
+    var ca=cl(ap*a.a*b.a*.4,0,.16)*fd;if(ca<.003)continue;
+    ctx.globalAlpha=ca;ctx.strokeStyle=ha(TEAL,.4);
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    if(ph.i<8){
+      var tp=(t*.22+ei*.09)%1;
+      ctx.globalAlpha=ca*2;ctx.fillStyle=CYAN;
+      ctx.beginPath();ctx.arc(lr(a.x,b.x,tp),lr(a.y,b.y,tp),1*S,0,6.283);ctx.fill();
+    }
+  }
+
+  /* nodes */
+  for(var ni=0;ni<ovN.length;ni++){
+    var nd2=ovN[ni];if(nd2.a<.02)continue;
+    var o2=nd2.o;
+    ctx.globalAlpha=nd2.a*.3*fd;ctx.strokeStyle=o2.col;ctx.lineWidth=.6;
+    ctx.beginPath();ctx.arc(nd2.x,nd2.y,nd2.r,0,6.283);ctx.stroke();
+    ctx.globalAlpha=nd2.a*.1*fd;
+    ctx.beginPath();ctx.arc(nd2.x,nd2.y,nd2.r*.5,0,6.283);ctx.stroke();
+    ctx.globalAlpha=nd2.a*.05*fd;
+    var ng=ctx.createRadialGradient(nd2.x,nd2.y,0,nd2.x,nd2.y,nd2.r*1.8);
+    ng.addColorStop(0,o2.col);ng.addColorStop(1,ha(o2.col,0));
+    ctx.fillStyle=ng;ctx.beginPath();ctx.arc(nd2.x,nd2.y,nd2.r*1.8,0,6.283);ctx.fill();
+    ctx.globalAlpha=nd2.a*.75*fd;ctx.fillStyle=o2.col;
+    ctx.beginPath();ctx.arc(nd2.x,nd2.y,1.8*S,0,6.283);ctx.fill();
+    ctx.globalAlpha=nd2.a*.7*fd;
+    ctx.font='700 '+(9*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=o2.col;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(o2.val,nd2.x,nd2.y);
+    ctx.globalAlpha=nd2.a*.4*fd;
+    ctx.font='500 '+(6*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=DIM;ctx.textBaseline='alphabetic';
+    ctx.fillText(o2.lb,nd2.x,nd2.y+nd2.r+9*S);
+  }
+
+  /* overview label */
+  ctx.globalAlpha=v*.35*fd;ctx.font='500 '+(8*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=TEAL;ctx.textAlign='center';
+  ctx.fillText('SYSTEM OVERVIEW — ILLUSTRATIVE DEMONSTRATION',W*.5,H*.82);
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ LIGHT SWEEP ═══════ */
+function drSweep(ph){
+  if(ph.i!==7)return;
+  var sp=eio(ph.p);if(sp<.01)return;
+  var sx=lr(-W*.3,W*1.3,sp),sw=W*.18;
+  ctx.globalAlpha=.05;
+  var g=ctx.createLinearGradient(sx-sw,0,sx+sw,0);
+  g.addColorStop(0,ha(CYAN,0));g.addColorStop(.5,ha(CYAN,.2));g.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=g;ctx.fillRect(sx-sw,0,sw*2,H);ctx.globalAlpha=1;
+}
+
+/* ═══════ FILM ═══════ */
+function drFilm(){
+  ctx.globalAlpha=1;
+  var g=ctx.createRadialGradient(W*.5,H*.47,Math.min(W,H)*.2,W*.5,H*.47,W*.7);
+  g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.52)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  var g2=ctx.createLinearGradient(0,0,0,H);
+  g2.addColorStop(0,'rgba(0,0,0,.22)');g2.addColorStop(.18,'rgba(0,0,0,0)');
+  g2.addColorStop(.82,'rgba(0,0,0,0)');g2.addColorStop(1,'rgba(0,0,0,.22)');
+  ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+  ctx.globalAlpha=.022;ctx.fillStyle='#000';
+  for(var y=0;y<H;y+=3)ctx.fillRect(0,y,W,1);
+  ctx.globalAlpha=1;
+}
+
+/* ═══════ INIT ═══════ */
+function init(){
+  sd=42;mkPts();mkStreams();mkOvNodes();
+  titled=false;ended=false;
+  document.getElementById('title').classList.remove('on');
+  document.getElementById('tN').classList.remove('on');
+  document.getElementById('tR').classList.remove('on');
+  document.getElementById('tP').classList.remove('on');
+  document.getElementById('skip').classList.remove('off');
+}
+function showT(){
+  if(titled)return;titled=true;
+  document.getElementById('title').classList.add('on');
+  setTimeout(function(){
+    document.getElementById('tN').classList.add('on');
+    document.getElementById('tR').classList.add('on');
+    document.getElementById('tP').classList.add('on');
+  },80);
+}
+
+/* ═══════ MAIN LOOP ═══════ */
+init();prevNow=performance.now();
+
+function loop(now){
+  requestAnimationFrame(loop);
+  var dt=(now-prevNow)/1000;if(dt>.1)dt=.016;prevNow=now;fc++;
+  if(paused)return;
+  t+=dt;if(!ended)sk+=dt;
+  if(sk>TOT){sk=TOT;ended=true;}
+
+  var ph=gp(sk);
+  var fade=sm(0,1.2,sk);
+
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  var bg=ctx.createRadialGradient(W*.5,H*.46,0,W*.5,H*.46,W*.55);
+  bg.addColorStop(0,ha(NAVY,.6));bg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  drGrid(fade*(ph.i>=8?lr(1,.3,ph.p):1));
+  drStreams(fade*(ph.i>=1?.6:0)*(ph.i>=7?cl(1-ph.p*1.5,0,1):1));
+  drPts(dt,fade*.5);
+  drBrand(ph);
+  drRegistry(ph);
+  drAttendance(ph);
+  drPayments(ph);
+  drReports(ph);
+  drComms(ph);
+  drOverview(ph);
+  drSweep(ph);
+  drFilm();
+
+  if(ph.i>=7&&ph.p>.18)showT();
+  if(ph.i>=8)document.getElementById('skip').classList.add('off');
+  document.getElementById('phL').textContent=PL[ph.i];
+  document.getElementById('progF').style.width=(sk/TOT*100)+'%';
+  dbg.textContent='F:'+fc+' T:'+t.toFixed(1)+'s PH:'+ph.i+' '+W+'x'+H;
+}
+requestAnimationFrame(loop);
+
+/* ═══════ CONTROLS ═══════ */
+document.getElementById('bR').onclick=function(){
+  sk=0;t=0;fc=0;ended=false;paused=false;init();prevNow=performance.now();
+  document.getElementById('bP').textContent='Pause';
+};
+document.getElementById('bP').onclick=function(){
+  if(ended&&paused){document.getElementById('bR').onclick();return}
+  paused=!paused;if(!paused)prevNow=performance.now();
+  this.textContent=paused?'Play':'Pause';
+};
+document.getElementById('skip').onclick=function(){
+  sk=PS[7]+.5;if(paused){paused=false;prevNow=performance.now()}
+  document.getElementById('bP').textContent='Pause';
+};
+document.getElementById('bE').onclick=function(){
+  var ow=c.width,oh=c.height,sc=2;
+  c.width=Math.round(W*sc);c.height=Math.round(H*sc);
+  ctx.setTransform(sc,0,0,sc,0,0);
+  var ph=gp(sk),fade=sm(0,1.2,sk);
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  drGrid(fade);drStreams(fade*.6);drPts(0,fade*.5);drBrand(ph);
+  drRegistry(ph);drAttendance(ph);drPayments(ph);drReports(ph);
+  drComms(ph);drOverview(ph);drSweep(ph);drFilm();
+  var url=c.toDataURL('image/jpeg',.95);
+  c.width=ow;c.height=oh;ctx.setTransform(dpr,0,0,dpr,0,0);
+  var a=document.createElement('a');a.href=url;
+  a.download='coaching-dashboard.jpg';a.click();
+};
+document.addEventListener('keydown',function(e){
+  if(e.key===' '){e.preventDefault();document.getElementById('bP').onclick()}
+  else if(e.key==='r')document.getElementById('bR').onclick();
+  else if(e.key==='s'||e.key==='Escape')document.getElementById('skip').onclick();
+});
+</script>
+</body>
+</html>
