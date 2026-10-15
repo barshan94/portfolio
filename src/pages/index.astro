@@ -36,7 +36,22 @@ const getProjectRepo = (project: (typeof allProjects)[number]) =>
   project.data.repo || project.data.github || "";
 
 const getProjectTags = (project: (typeof allProjects)[number]) =>
-  Array.isArray(project.data.tags) ? project.data.tags : [];
+  Array.isArray(project.data.tags)
+    ? project.data.tags.filter(
+        (tag) =>
+          tag.toLowerCase() !== project.data.language?.toLowerCase()
+      )
+    : [];
+
+const getProjectUpdatedDate = (
+  project: (typeof allProjects)[number]
+) =>
+  project.data.lastUpdated
+    ? new Date(project.data.lastUpdated).toLocaleDateString("en-GB", {
+        month: "short",
+        year: "numeric",
+      })
+    : "";
 
 const getExperienceDate = (experience: any) =>
   [experience.start, experience.end].filter(Boolean).join(" â€” ");
