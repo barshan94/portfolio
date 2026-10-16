@@ -15,6 +15,7 @@ Tracks what has been done, what is in progress, and what remains.
 - Corrected stylesheet load order: base CSS first, portfolio-specific CSS second.
 - Repaired common mojibake in homepage text and symbols.
 - Marked Money Calculator as in progress.
+- Added a responsive grid of all 12 original digital marketing repositories beneath the animation, separate from the selected project cards.
 - Removed duplicate project schema fields.
 - Updated README, MEMORY, CHANGELOG, and CHECKPOINT to reflect the current structure.
 - **Verification pending:** Vercel must report a successful build/deployment before the changes are considered complete.
