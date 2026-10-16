@@ -513,6 +513,34 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 
 
 
+    <!-- DIGITAL GROWTH & MARKETING SYSTEMS -->
+    <section class="marketing-showcase section-wrap section-block" id="digital-growth-marketing" aria-labelledby="marketing-title">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">DIGITAL MARKETING / CONNECTED WORKFLOW</p>
+          <h2 id="marketing-title">Digital Growth &amp;<br /><span class="accent-text">Marketing Systems.</span></h2>
+        </div>
+        <p class="section-sub">
+          One connected showcase of research, Google Business Profile (GBP), content,
+          website optimization, WordPress implementation, campaigns, creative, and automation.
+        </p>
+      </div>
+      <div class="marketing-animation-frame">
+        <iframe src="/digital-growth-marketing-animation.html" title="Interactive Digital Growth and Marketing Systems showcase" loading="lazy" allow="fullscreen"></iframe>
+      </div>
+      <p class="marketing-demo-note">
+        Interactive portfolio walkthrough with illustrative stages and fictional demo framing.
+        Google Business Profile (GBP) is shown as a distinct local-search capability. No live analytics,
+        advertising accounts, or business profiles are connected.
+      </p>
+      <div class="marketing-showcase-links">
+        <a href="https://github.com/barshan94/KeywordResearch" target="_blank" rel="noopener noreferrer">Keyword research ↗</a>
+        <a href="https://github.com/barshan94/Google-Business-Profile" target="_blank" rel="noopener noreferrer">Google Business Profile (GBP) ↗</a>
+        <a href="https://github.com/barshan94/WebsiteAudit" target="_blank" rel="noopener noreferrer">Website audit ↗</a>
+        <a href="https://github.com/barshan94/AutomationsUsingManychat" target="_blank" rel="noopener noreferrer">Manychat automation ↗</a>
+      </div>
+    </section>
+
     <!-- PROJECTS -->
     <section
       class="projects section-wrap section-block"
@@ -3111,6 +3139,25 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 
 
 
+
+
+  /* Digital Growth & Marketing Systems showcase */
+  .marketing-showcase .section-heading { margin-bottom: 30px; }
+  .marketing-animation-frame {
+    position: relative; width: 100%; height: clamp(680px, 76vw, 1050px);
+    overflow: hidden; border: 1px solid rgba(117, 240, 197, .22);
+    border-radius: 16px; background: #07100f; box-shadow: 0 24px 70px rgba(0, 0, 0, .24);
+  }
+  .marketing-animation-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .marketing-demo-note { margin: 14px 0 18px; color: var(--muted, #94a3b8); font-size: .84rem; line-height: 1.7; }
+  .marketing-showcase-links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+  .marketing-showcase-links a { color: var(--accent, #70e1d0); font-size: .88rem; font-weight: 600; text-decoration: none; }
+  .marketing-showcase-links a:hover { text-decoration: underline; }
+  @media (max-width: 900px) { .marketing-animation-frame { height: 820px; } }
+  @media (max-width: 600px) {
+    .marketing-animation-frame { height: 980px; border-radius: 12px; }
+    .marketing-showcase-links { flex-direction: column; gap: 12px; }
+  }
 
 </style>
 
