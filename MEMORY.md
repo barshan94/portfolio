@@ -68,8 +68,8 @@ All live as of 2026-10-12:
 
 ## Known issues
 
-- The `KeywordResearch` and `Various Systems Projects` cards link to the profile root or group many small projects. Descriptions are summaries, not per-repo facts.
-- No images on the site yet (headshot or project screenshots). Would require image files in `public/` and a component to display them.
+- The `Various Systems Projects` card links to the GitHub profile because its academic projects are spread across repositories. Replace this with direct repository links only after verifying the exact source repositories.
+- No personal headshot or real project screenshots are present; the current visuals are CSS mockups and custom animations.
 - The flagship Money Calculator section has no "Live Application" button because `money-calculator.md` has no `live:` frontmatter field. It renders only "Source Code". Add a `live:` URL only if a stable public demo exists; do not invent one.
 - `src/pages/index.astro` remains over 3,000 lines and contains many showcase sections and styles. Next maintainability pass should extract sections into Astro components without changing their behavior.
 - `design-tokens.css` is now the canonical token source, imported before the base and portfolio-specific styles. Continue replacing hardcoded component values with tokens when those areas are refactored.
