@@ -11,21 +11,22 @@ Tracks what has been done, what is in progress, and what remains.
 - Reordered homepage content: selected project cards now appear before the long animated walkthroughs.
 - Added an Interactive Walkthroughs heading to separate demonstrations from the project index.
 - Removed the timed startup overlay so content appears immediately.
-- Reduced background grid/glow and removed blur from the fixed navigation dock.
+- Reduced background grid/glow, increased muted-text contrast, and removed blur from the fixed navigation dock.
+- Consolidated palette, typography, spacing, and motion tokens into `design-tokens.css`.
+- Moved tablet navigation into the document flow to prevent it overlapping page content.
 - Corrected stylesheet load order: base CSS first, portfolio-specific CSS second.
 - Repaired common mojibake in homepage text and symbols.
 - Marked Money Calculator as in progress.
 - Added a responsive grid of all 12 original digital marketing repositories beneath the animation, separate from the selected project cards.
 - Removed duplicate project schema fields.
 - Updated README, MEMORY, CHANGELOG, and CHECKPOINT to reflect the current structure.
-- **Verification:** Vercel checks succeeded for the homepage/style changes and 12-repository grid. A visual screenshot review remains useful.
+- **Verification:** Vercel checks succeeded for the homepage/style changes, 12-repository grid, canonical tokens, and responsive navigation. A visual screenshot review remains useful.
 
 ### Next
 
 1. Verify production deployment.
 2. Split the oversized homepage into maintainable Astro components.
-3. Consolidate overlapping CSS tokens.
-4. Inspect mobile and desktop rendering after deployment.
+3. Inspect mobile and desktop rendering after deployment.
 
 ## ✅ Completed
 
@@ -78,7 +79,7 @@ Tracks what has been done, what is in progress, and what remains.
 
 1. Confirm latest Vercel build and live rendering.
 2. Refactor the 3,000+ line homepage into components.
-3. Consolidate CSS tokens and remove obsolete style rules.
+3. Inspect mobile and desktop rendering after deployment.
 4. Consider a personal photo if a suitable image is supplied.
 
 ---
