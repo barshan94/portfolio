@@ -15,7 +15,10 @@ const flagship =
   allProjects[0];
 
 const otherProjects = allProjects.filter(
-  (project) => project !== flagship
+  (project) =>
+    project !== flagship &&
+    // Keyword research is part of the unified Digital Marketing & Growth Systems project.
+    projectId(project) !== "keyword-research"
 );
 
 const [cvEntry] = await getCollection("cv");
@@ -518,18 +521,18 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       <div class="section-heading" data-reveal>
         <div>
           <p class="section-kicker">DIGITAL MARKETING / CONNECTED WORKFLOW</p>
-          <h2 id="marketing-title">Digital Growth &amp;<br /><span class="accent-text">Marketing Systems.</span></h2>
+          <h2 id="marketing-title">Digital Marketing &amp;<br /><span class="accent-text">Growth Systems.</span></h2>
         </div>
         <p class="section-sub">
-          One connected showcase of research, Google Business Profile (GBP), content,
-          website optimization, WordPress implementation, campaigns, creative, and automation.
+          One unified digital marketing project combining keyword research, Google Business Profile (GBP), content,
+          YouTube SEO, Facebook ad campaigns, website optimization, WordPress implementation, creative, and automation.
         </p>
       </div>
       <div class="marketing-animation-frame">
         <iframe src="/digital-growth-marketing-animation.html" title="Interactive Digital Growth and Marketing Systems showcase" loading="lazy" allow="fullscreen"></iframe>
       </div>
       <p class="marketing-demo-note">
-        Interactive portfolio walkthrough with illustrative stages and fictional demo framing.
+        One unified portfolio project connecting 12 supporting repositories into a single marketing workflow.
         Google Business Profile (GBP) is shown as a distinct local-search capability. No live analytics,
         advertising accounts, or business profiles are connected.
       </p>
