@@ -5,6 +5,11 @@ const root = process.cwd();
 const dist = resolve(root, 'dist');
 
 const animations = [
+    {
+    source: '999-emergency-service-animation.html',
+    destination: '999-emergency-service-animation.html',
+    label: '999 National Emergency Service',
+  },
   {
     source: 'mount-royal-academy-animation.html',
     destination: 'mount-royal-academy-animation.html',
@@ -16,7 +21,8 @@ const animations = [
     label: 'Asta Store',
   },
 ];
-
+  
+ 
 await access(dist);
 
 for (const animation of animations) {
