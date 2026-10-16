@@ -15,7 +15,7 @@ Last updated: 2026-10-16 (portfolio audit: corrected CSS load order, reduced haz
 - Cleaned duplicate language and lastUpdated declarations from the project collection schema.
 - Common mojibake in homepage text and symbols was corrected.
 - The Digital Marketing & Growth Systems section now renders the 12 actual repositories as individual responsive cards below the animation; they remain separate from the "Different problems. Different approaches." project index.
-- The clarity/hierarchy changes passed Vercel; the latest 12-repository card update is awaiting its deployment check.
+- The clarity/hierarchy changes and 12-repository card grid passed Vercel checks on their source/style commits. A final screenshot-based visual review is still advisable.
 
 ## Architecture
 
