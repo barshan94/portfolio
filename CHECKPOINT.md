@@ -19,6 +19,7 @@ The portfolio is a single-page Astro static site. Bio, experience, skills, conta
 | About | ✅ complete (reads `cv/profile.md`) |
 | Experience | ✅ complete (4 entries, reads `cv/profile.md`) |
 | Selected projects | ✅ curated cards from `src/content/projects/*.md` |
+| Digital marketing showcase | ✅ animation plus 12 responsive repository cards below it |
 | Skills | ✅ complete (6 groups, reads `cv/profile.md`) |
 | Writing | ✅ complete (reads `src/content/writing/*.md`) |
 | Contact | ✅ verified and live (reads `cv/profile.md`) |
