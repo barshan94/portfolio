@@ -1,9 +1,20 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-13 (full redesign: cinematic editorial aesthetic with flagship case study and asymmetric showcases)
+Last updated: 2026-10-16 (portfolio audit: corrected CSS load order, reduced haze, simplified first load, and reorganized projects)
 
 ---
+
+## Current portfolio audit (2026-10-16)
+
+- The page hierarchy is now: hero → featured Money Calculator → selected project cards → interactive project walkthroughs → experience → skills → writing → contact.
+- Removed the forced startup overlay so visitors can read the page immediately.
+- Reduced the background grid/radial glow and removed blur from the fixed navigation dock to improve clarity.
+- Layout.astro now imports the legacy base stylesheet before the portfolio-specific system stylesheet, so the intended design overrides load last.
+- Money Calculator is marked in progress, matching the active development state.
+- Cleaned duplicate language and lastUpdated declarations from the project collection schema.
+- Common mojibake in homepage text and symbols was corrected.
+- Latest changes are committed to main; the Vercel build/deployment must be checked before calling this audit pass verified.
 
 ## Architecture
 
@@ -57,7 +68,9 @@ All live as of 2026-10-12:
 
 - The `KeywordResearch` and `Various Systems Projects` cards link to the profile root or group many small projects. Descriptions are summaries, not per-repo facts.
 - No images on the site yet (headshot or project screenshots). Would require image files in `public/` and a component to display them.
-- The redesign's flagship section has no "Live Application" button because `money-calculator.md` has no `live:` frontmatter field. It renders only "Source Code". Add a `live:` URL to that file if one exists; do not invent one.
+- The flagship Money Calculator section has no "Live Application" button because `money-calculator.md` has no `live:` frontmatter field. It renders only "Source Code". Add a `live:` URL only if a stable public demo exists; do not invent one.
+- `src/pages/index.astro` remains over 3,000 lines and contains many showcase sections and styles. Next maintainability pass should extract sections into Astro components without changing their behavior.
+- `global.css` and `system-ui.css` still both contain overlapping token definitions. Load order is corrected, but a later pass should consolidate tokens into one canonical source.
 - `src/components/SectionHeading.astro`, `ProjectCard.astro`, and `TimelineEntry.astro` are no longer rendered by the page but are kept on disk. Safe to delete if the old markup is confirmed unwanted.
 - The redesign has no `#system` section anymore; the header/footer nav use `#about` (the hero) instead.
 
@@ -65,4 +78,5 @@ All live as of 2026-10-12:
 
 - Build: `npm run build` → `dist/`
 - Preview: `npm run preview` → `localhost:4321`
-- Deploy target: not yet decided. Static output is Vercel/Netlify-ready.
+- Deploy target: Vercel, connected to `barshan94/portfolio`.
+- Do not report a deployment as successful until the Vercel status is `success` and the live page reflects the latest commit.
