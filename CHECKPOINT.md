@@ -3,7 +3,7 @@
 Use this file to resume work quickly. It answers: "What is the state of the project right now, and what should I do next?"
 
 **Last checkpoint:** 2026-10-16
-**Build status:** ✅ Vercel checks succeeded for the homepage/style changes and 12-repository grid; latest documentation-only commits may trigger a fresh deployment.
+**Build status:** ✅ Vercel check succeeded for the latest code changes (repository grid, canonical tokens, responsive navigation).
 **Live site:** `https://portfolio-beta-eight-b4vx6dfs83.vercel.app/`
 **Local preview:** `npm run preview` → `http://localhost:4321`
 
@@ -35,9 +35,8 @@ The portfolio is a single-page Astro static site. Bio, experience, skills, conta
 
 1. **Verify the current Vercel deployment** — confirm the production build passes and the live homepage reflects the latest commit.
 2. **Refactor homepage markup** — `src/pages/index.astro` is still over 3,000 lines; extract sections into small Astro components without changing their behavior.
-3. **Consolidate CSS tokens** — `global.css` and `system-ui.css` currently overlap; make one canonical design-token source.
-4. **Review mobile and desktop visually** — confirm the clearer background, section order, fixed navigation, and animation frames at common viewport sizes.
-5. **Optional personal photo** — only add if a suitable image is supplied.
+3. **Review mobile and desktop visually** — confirm the clearer background, section order, responsive navigation, and animation frames at common viewport sizes.
+4. **Optional personal photo** — only add if a suitable image is supplied.
 
 > Note: "In Progress" badges are supported. Set `status: "in-progress"` in a project's frontmatter to show an amber badge on its card.
 
