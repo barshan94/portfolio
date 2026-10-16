@@ -25,7 +25,7 @@ The portfolio is a single-page Astro static site. Bio, experience, skills, conta
 | Contact | ✅ verified and live (reads `cv/profile.md`) |
 | Favicon | ✅ custom branded SVG (terminal screen mark) |
 | In-Progress badges | ✅ amber badge via `status: "in-progress"` |
-| Build / deploy | ⏳ latest audit commits awaiting Vercel verification |
+| Build / deploy | ✅ Vercel passed for the latest code changes |
 | Design system | ✅ tokens + dark mode |
 | Memory system | ✅ 6 files created |
 | Deployment | ✅ Vercel connected to GitHub |
@@ -33,9 +33,9 @@ The portfolio is a single-page Astro static site. Bio, experience, skills, conta
 
 ## Open items (in priority order)
 
-1. **Verify the current Vercel deployment** — confirm the production build passes and the live homepage reflects the latest commit.
-2. **Refactor homepage markup** — `src/pages/index.astro` is still over 3,000 lines; extract sections into small Astro components without changing their behavior.
-3. **Review mobile and desktop visually** — confirm the clearer background, section order, responsive navigation, and animation frames at common viewport sizes.
+1. **Refactor homepage markup** — `src/pages/index.astro` is still over 3,000 lines; extract sections into small Astro components without changing their behavior.
+2. **Review mobile and desktop visually** — confirm the clearer background, section order, responsive navigation, and animation frames at common viewport sizes.
+3. **Improve project metadata** — replace profile-root links with direct repository links wherever the exact project can be verified.
 4. **Optional personal photo** — only add if a suitable image is supplied.
 
 > Note: "In Progress" badges are supported. Set `status: "in-progress"` in a project's frontmatter to show an amber badge on its card.
