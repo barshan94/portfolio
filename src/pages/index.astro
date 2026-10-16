@@ -516,6 +516,46 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 
 
 
+    <!-- DIGITAL MARKETING ANIMATION: embedded on the homepage -->
+    <section
+      class="digital-growth-showcase section-wrap section-block"
+      id="digital-growth-showcase"
+      aria-labelledby="digital-growth-showcase-title"
+    >
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">INTERACTIVE PROJECT WALKTHROUGH</p>
+          <h2 id="digital-growth-showcase-title">
+            Digital Marketing<br />
+            <span class="accent-text">&amp; Growth Systems.</span>
+          </h2>
+        </div>
+        <p class="section-sub">
+          One connected workflow combining search research, local SEO, content,
+          YouTube, paid campaigns, WordPress, creative work, and automation.
+        </p>
+      </div>
+      <div class="digital-growth-animation-frame">
+        <iframe
+          src="/digital-growth-marketing-animation.html"
+          title="Digital Marketing and Growth Systems animated showcase"
+          loading="lazy"
+          allow="fullscreen"
+        ></iframe>
+      </div>
+      <p class="digital-growth-demo-note">
+        Interactive showcase with illustrative sample data. The animation brings together 12 supporting repositories.
+      </p>
+      <div class="digital-growth-source-link">
+        <a
+          class="button button-quiet"
+          href="https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View GitHub source <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
     <!-- PROJECTS -->
     <section
       class="projects section-wrap section-block"
@@ -559,15 +599,15 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               <p class="project-description">
                 One connected marketing project combining keyword research, Google Business Profile (GBP),
                 YouTube SEO, Facebook ad campaigns, content, website audits, WordPress, design, and Manychat automation.
-                Explore all 12 supporting repositories in one interactive workflow.
+                See the complete workflow in the interactive showcase above.
               </p>
               <div class="tag-list project-tags">
                 <span>SEO</span><span>Google Business Profile</span><span>YouTube SEO</span>
                 <span>Facebook Ads</span><span>WordPress</span><span>Automation</span>
               </div>
               <div class="project-card-links">
-                <a href="/digital-growth-marketing-animation.html">Explore showcase <span aria-hidden="true">↗</span></a>
-                <a href="/digital-growth-marketing-animation.html">View all 12 repositories <span aria-hidden="true">↗</span></a>
+                <a href="#digital-growth-showcase">View animation <span aria-hidden="true">↗</span></a>
+                <a href="https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html" target="_blank" rel="noopener noreferrer">GitHub source <span aria-hidden="true">↗</span></a>
               </div>
             </div>
           </article>
@@ -3147,6 +3187,26 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 
 
 
+
+  /* Homepage-embedded Digital Marketing & Growth Systems animation */
+  .digital-growth-showcase .section-heading { margin-bottom: 30px; }
+  .digital-growth-animation-frame {
+    width: 100%;
+    height: clamp(560px, 64vw, 820px);
+    overflow: hidden;
+    border: 1px solid rgba(117, 240, 197, .22);
+    border-radius: 16px;
+    background: #071014;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .24);
+  }
+  .digital-growth-animation-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .digital-growth-demo-note { margin: 14px 0 0; color: var(--muted, #94a3b8); font-size: .84rem; line-height: 1.7; }
+  .digital-growth-source-link { margin-top: 18px; }
+  @media (max-width: 900px) { .digital-growth-animation-frame { height: 680px; } }
+  @media (max-width: 600px) {
+    .digital-growth-animation-frame { height: 620px; border-radius: 11px; }
+    .digital-growth-source-link .button { width: fit-content; }
+  }
 
   /* Unified digital marketing card art */
   .art-marketing-system {
