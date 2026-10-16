@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Verification
 - Source changes are committed to main.
-- The base clarity/hierarchy changes passed Vercel. The follow-up 12-repository card update is awaiting its own deployment check.
+- Vercel checks succeeded for the clarity/hierarchy changes and the 12-repository card grid. A screenshot-based visual review remains useful.
 - Follow-up maintainability work: extract index.astro sections into components and consolidate overlapping CSS tokens.
 
 ---
