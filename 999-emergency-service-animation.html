@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>999 National Emergency Service</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0e14}
+canvas{display:block;width:100%;height:100%}
+#title{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 1.4s ease}
+#title.on{opacity:1;pointer-events:auto}
+#title h1{font:800 clamp(24px,5vw,62px)/1.12 system-ui,sans-serif;color:#dce6ee;letter-spacing:.05em;text-align:center}
+#title h1 b{color:#e03b3b}
+.rule{width:0;height:2px;background:linear-gradient(90deg,transparent,#e03b3b,transparent);margin:16px auto;transition:width 1.1s ease .35s}
+#title.on .rule{width:min(360px,65vw)}
+#title p{font:500 clamp(9px,1.2vw,14px)/1 system-ui,sans-serif;color:rgba(150,178,195,.6);letter-spacing:.18em;text-transform:uppercase;margin-top:6px}
+#title .note{font:400 clamp(8px,.9vw,11px)/1.5 system-ui,sans-serif;color:rgba(150,178,195,.3);margin-top:16px;letter-spacing:.03em;text-transform:none;max-width:420px;text-align:center}
+#title .cta{display:inline-block;margin-top:22px;padding:10px 28px;font:600 13px/1 system-ui,sans-serif;color:#dce6ee;background:rgba(224,59,59,.18);border:1px solid rgba(224,59,59,.45);border-radius:5px;text-decoration:none;letter-spacing:.06em;transition:background .25s,border-color .25s}
+#title .cta:hover{background:rgba(224,59,59,.32);border-color:#e03b3b}
+#dbg{position:fixed;top:8px;left:8px;font:11px/1.4 monospace;color:rgba(150,178,195,.35);pointer-events:none;z-index:20}
+#ctrls{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:20}
+#ctrls button,#skip{font:600 12px/1 system-ui,sans-serif;padding:7px 15px;background:rgba(17,24,35,.88);color:#dce6ee;border:1px solid rgba(150,178,195,.2);border-radius:4px;cursor:pointer;transition:border-color .2s,color .2s}
+#ctrls button:hover,#skip:hover{border-color:#45c8d8;color:#45c8d8}
+#skip{position:fixed;top:14px;right:16px;z-index:20}
+#hud{position:fixed;bottom:52px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:20}
+#phL{font:11px/1 monospace;color:rgba(150,178,195,.4);white-space:nowrap;max-width:42vw;overflow:hidden;text-overflow:ellipsis}
+#prog{width:min(180px,26vw);height:3px;background:rgba(150,178,195,.1);border-radius:2px;overflow:hidden}
+#progF{height:100%;width:0;background:#e03b3b;border-radius:2px;transition:width .25s linear}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="title">
+  <h1><b>999</b> National Emergency<br>Service</h1>
+  <div class="rule"></div>
+  <p>Register &middot; Request &middot; Respond</p>
+  <div class="note">A web application helping every citizen access emergency services — from police and fire to healthcare and government support. Built with the vision of Digital Bangladesh.</div>
+  <a class="cta" href="https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE" target="_blank" rel="noopener noreferrer">View Source Code ↗</a>
+</div>
+<div id="dbg"></div>
+<div id="ctrls">
+  <button id="bR">Replay</button>
+  <button id="bP">Pause</button>
+</div>
+<button id="skip">Skip ↗</button>
+<div id="hud">
+  <span id="phL"></span>
+  <div id="prog"><div id="progF"></div></div>
+</div>
+<script>
+var c = document.getElementById('c');
+var ctx = c.getContext('2d');
+var W, H, S, mob, dpr;
+
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  W = window.innerWidth;
+  H = window.innerHeight;
+  S = Math.max(0.38, Math.min(1.5, W / 1400));
+  mob = W < 640;
+  c.width = W * dpr;
+  c.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+var BG = '#0a0e14';
+var PANEL = '#111823';
+var PANEL2 = '#16202c';
+var RED = '#e03b3b';
+var REDDIM = '#a82e2e';
+var CYAN = '#45c8d8';
+var TEAL = '#2b8f9e';
+var GREEN = '#3fb97c';
+var BLUE = '#4a86d4';
+var AMBER = '#d9a84a';
+var PURPLE = '#a78bfa';
+var WHITE = '#dce6ee';
+var DIM = 'rgba(150,178,195,0.45)';
+var DIMMER = 'rgba(150,178,195,0.2)';
+var GRID1 = 'rgba(42,62,80,0.12)';
+
+var sd = 42;
+function rn() { sd = (sd * 16807) % 2147483647; return sd / 2147483647; }
+function lr(a, b, k) { return a + (b - a) * k; }
+function cl(v, a, b) { return v < a ? a : v > b ? b : v; }
+function eo(k) { return 1 - Math.pow(1 - k, 3); }
+function eio(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+function sm(a, b, k) { k = cl((k - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
+function ha(hex, a) {
+  var n = parseInt(hex.slice(1), 16);
+  return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
+}
+
+/* ── timeline: 10 phases ── */
+var PD = [2.4, 3.8, 3.6, 4.2, 4.4, 3.8, 3.6, 3.8, 4.2, 4.0];
+var PL = [
+  'booting emergency platform',
+  'citizen registration — NID primary key',
+  'user authentication — login session',
+  'emergency service directory',
+  'dispatching service request',
+  'request rate control — one per service',
+  'profile management — NID immutable',
+  'admin monitoring panel',
+  'login session tracking table',
+  '999 national emergency service'
+];
+var TOT = 0, PS = [];
+for (var i = 0; i < PD.length; i++) { PS.push(TOT); TOT += PD[i]; }
+function gp(elapsed) {
+  for (var i = PD.length - 1; i >= 0; i--)
+    if (elapsed >= PS[i]) return { i: i, p: cl((elapsed - PS[i]) / PD[i], 0, 1) };
+  return { i: 0, p: 0 };
+}
+
+/* ── data ── */
+var REG_FIELDS = [
+  { lb: 'FULL NAME', val: 'Rahim Uddin', col: WHITE },
+  { lb: 'NID', val: '1998-7264-0031', col: CYAN },
+  { lb: 'PHONE', val: '+880-1XXXXXXXXX', col: WHITE },
+  { lb: 'ADDRESS', val: 'Ward 12, Dhaka', col: WHITE },
+  { lb: 'PASSWORD', val: '••••••••••', col: DIM }
+];
+
+var SERVICES = [
+  { name: 'POLICE', ico: '🛡', col: BLUE, sub: 'Law enforcement dispatch' },
+  { name: 'FIRE', ico: '🔥', col: RED, sub: 'Fire brigade response' },
+  { name: 'AMBULANCE', ico: '🚑', col: GREEN, sub: 'Medical emergency' },
+  { name: 'COVID', ico: '🦠', col: PURPLE, sub: 'COVID special service' },
+  { name: 'DOCTOR', ico: '⚕', col: TEAL, sub: 'Medical consultation' },
+  { name: 'CHILD HELPLINE', ico: '📞', col: AMBER, sub: 'Child protection' },
+  { name: 'WOMEN & CHILD', ico: '⚖', col: CYAN, sub: 'Prevention cell' },
+  { name: 'ANTI-CORRUPTION', ico: '🔍', col: AMBER, sub: 'Report corruption' },
+  { name: 'GOVT SERVICES', ico: '🏛', col: BLUE, sub: 'Government assistance' }
+];
+
+var USERS_DB = [
+  { nid: '1998-7264-0031', name: 'Rahim Uddin', req: 'FIRE', status: 'PROCESSED' },
+  { nid: '2001-4418-0092', name: 'Ayesha Khatun', req: 'POLICE', status: 'PENDING' },
+  { nid: '1995-8832-0147', name: 'Kamal Hossain', req: 'AMBULANCE', status: 'PROCESSED' },
+  { nid: '2003-1156-0268', name: 'Fatima Begum', req: 'COVID', status: 'PENDING' },
+  { nid: '1990-6673-0055', name: 'Jamal Ahmed', req: 'DOCTOR', status: 'PROCESSED' }
+];
+
+var LOGIN_TABLE = [
+  { nid: '1998-7264-0031', name: 'Rahim Uddin', time: '14:32', status: 'ACTIVE' },
+  { nid: '2001-4418-0092', name: 'Ayesha Khatun', time: '14:35', status: 'ACTIVE' },
+  { nid: '2003-1156-0268', name: 'Fatima Begum', time: '14:41', status: 'ACTIVE' }
+];
+
+/* ── particles ── */
+var PTS = [];
+function initPts() {
+  PTS = [];
+  for (var i = 0; i < 50; i++)
+    PTS.push({ x: rn() * W, y: rn() * H, vx: (rn() - .5) * 12, vy: (rn() - .5) * 8, r: rn() * 1.3 + .4, a: rn() * .2 + .06 });
+}
+
+/* ── drawing helpers ── */
+function drGrid(a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  var gap = Math.max(18, Math.round(38 * S));
+  ctx.strokeStyle = GRID1; ctx.lineWidth = .5;
+  for (var x = 0; x < W; x += gap) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (var y = 0; y < H; y += gap) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+  ctx.restore();
+}
+
+function drPts(dt, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a;
+  for (var i = 0; i < PTS.length; i++) {
+    var p = PTS[i];
+    p.x += p.vx * dt; p.y += p.vy * dt;
+    if (p.x < 0) p.x += W; if (p.x > W) p.x -= W;
+    if (p.y < 0) p.y += H; if (p.y > H) p.y -= H;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+    ctx.fillStyle = ha(CYAN, p.a); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function rrect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+}
+
+function drBox(x, y, w, h, r, fill, stroke, a) {
+  if (a < .01) return;
+  ctx.save(); ctx.globalAlpha = cl(a, 0, 1);
+  rrect(x, y, w, h, r);
+  if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+  if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 1; ctx.stroke(); }
+  ctx.restore();
+}
+
+function drT(txt, x, y, sz, col, a, al) {
+  if (a < .01) return;
+  ctx.save(); ctx.globalAlpha = cl(a, 0, 1);
+  ctx.font = '600 ' + Math.round(sz * S) + 'px system-ui,sans-serif';
+  ctx.fillStyle = col; ctx.textAlign = al || 'left'; ctx.textBaseline = 'middle';
+  ctx.fillText(txt, x, y); ctx.restore();
+}
+
+function drM(txt, x, y, sz, col, a, al) {
+  if (a < .01) return;
+  ctx.save(); ctx.globalAlpha = cl(a, 0, 1);
+  ctx.font = '400 ' + Math.round(sz * S) + 'px monospace';
+  ctx.fillStyle = col; ctx.textAlign = al || 'left'; ctx.textBaseline = 'middle';
+  ctx.fillText(txt, x, y); ctx.restore();
+}
+
+function drGlow(x, y, r, col, a) {
+  if (a < .01) return;
+  ctx.save();
+  var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, ha(col, a)); g.addColorStop(1, ha(col, 0));
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2);
+  ctx.restore();
+}
+
+function drScan(y, a) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha = a * .5;
+  var g = ctx.createLinearGradient(0, y - 30, 0, y + 30);
+  g.addColorStop(0, 'rgba(69,200,216,0)');
+  g.addColorStop(0.5, 'rgba(69,200,216,0.4)');
+  g.addColorStop(1, 'rgba(69,200,216,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, y - 30, W, 60);
+  ctx.restore();
+}
+
+function drFilm() {
+  var g = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .2, W / 2, H / 2, Math.max(W, H) * .78);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.45)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.globalAlpha = .02; ctx.fillStyle = '#000';
+  for (var y = 0; y < H; y += 3) ctx.fillRect(0, y, W, 1);
+  ctx.restore();
+}
+
+/* ── fade helper: element fades in during its phase, fades out before title ── */
+function phA(phIdx, prog) {
+  var fadeIn = sm(PS[phIdx], PS[phIdx] + 1.2, sk);
+  var fadeOut = sk > PS[8] ? Math.max(0, 1 - sm(PS[9], PS[9] + 1.8, sk)) : 1;
+  return fadeIn * fadeOut;
+}
+
+/* ══════════════════════════════════════
+   PHASE 0 — BOOT
+   ══════════════════════════════════════ */
+function drBoot(p) {
+  var a = eo(cl(p * 2.5, 0, 1));
+  drScan(eio(p) * H, a * (1 - p * .6));
+
+  drM('999 EMERGENCY PLATFORM v1.0', W / 2, H * .42, 13, CYAN, a, 'center');
+
+  var bw = 220 * S, bh = 4 * S;
+  ctx.save(); ctx.globalAlpha = a;
+  rrect(W / 2 - bw / 2, H * .48, bw, bh, 2); ctx.fillStyle = ha(CYAN, .12); ctx.fill();
+  rrect(W / 2 - bw / 2, H * .48, bw * eo(p), bh, 2); ctx.fillStyle = ha(CYAN, .55); ctx.fill();
+  ctx.restore();
+
+  var bootLines = [
+    '> connecting database...',
+    '> loading user module...',
+    '> loading service directory...',
+    '> initializing admin panel...',
+    '> verifying NID schema...',
+    '> system ready — Digital Bangladesh'
+  ];
+  var shown = Math.floor(p * bootLines.length);
+  for (var i = 0; i <= shown && i < bootLines.length; i++) {
+    var la = i === shown ? sm(0, .18, p - i / bootLines.length) : 1;
+    var lc = i === bootLines.length - 1 ? GREEN : TEAL;
+    drM(bootLines[i], W / 2 - bw / 2, H * .54 + i * 15 * S, 9, lc, a * la, 'left');
+  }
+}
+
+/* ══════════════════════════════════════
+   PHASE 1 — REGISTRATION FORM
+   ══════════════════════════════════════ */
+function drReg(p) {
+  var a = phA(1);
+  if (a < .01) return;
+
+  var cW = Math.min(340 * S, W * .85);
+  var cH = (REG_FIELDS.length * 32 + 68) * S;
+  var cX = mob ? W * .08 : W * .1;
+  var cY = lr(H * .55, H * .18, eo(cl(p * 2, 0, 1)));
+
+  drBox(cX, cY, cW, cH, 5 * S, PANEL, ha(CYAN, .25 * a), a);
+  drBox(cX, cY, cW, 28 * S, 5 * S, ha(CYAN, .08), null, a);
+  drT('NEW USER REGISTRATION', cX + 12 * S, cY + 14 * S, 10, CYAN, a, 'left');
+
+  for (var i = 0; i < REG_FIELDS.length; i++) {
+    var fA = sm(PS[1] + .6 + i * .4, PS[1] + 1.2 + i * .4, sk) * (a > 0 ? a : 0);
+    var fy = cY + 40 * S + i * 32 * S;
+    var f = REG_FIELDS[i];
+    drM(f.lb, cX + 12 * S, fy, 8.5, DIM, fA, 'left');
+    drM(f.val, cX + 100 * S, fy, 9, f.col, fA, 'left');
+    if (f.lb === 'NID') {
+      drM('← PRIMARY KEY', cX + cW - 12 * S, fy, 7.5, RED, fA * (.55 + .45 * Math.sin(t * 2.8)), 'right');
+    }
+  }
+
+  var btnA = sm(PS[1] + 2.6, PS[1] + 3.2, sk) * a;
+  var btnY = cY + cH - 32 * S;
+  drBox(cX + cW / 2 - 55 * S, btnY, 110 * S, 24 * S, 3 * S, ha(CYAN, .12), ha(CYAN, .5 * btnA), btnA);
+  drT('REGISTER', cX + cW / 2, btnY + 12 * S, 9, CYAN, btnA, 'center');
+}
+
+/* ══════════════════════════════════════
+   PHASE 2 — LOGIN / SESSION
+   ══════════════════════════════════════ */
+function drLogin(p) {
+  var a = phA(2);
+  if (a < .01) return;
+
+  var cW = Math.min(280 * S, W * .72);
+  var cH = 140 * S;
+  var cX = mob ? W * .12 : W * .55;
+  var cY = lr(H * .5, H * .22, eo(cl(p * 2, 0, 1)));
+
+  drBox(cX, cY, cW, cH, 5 * S, PANEL, ha(GREEN, .25 * a), a);
+  drBox(cX, cY, cW, 26 * S, 5 * S, ha(GREEN, .08), null, a);
+  drT('USER LOGIN', cX + 12 * S, cY + 13 * S, 10, GREEN, a, 'left');
+
+  var fA1 = sm(PS[2] + .5, PS[2] + 1.1, sk) * a;
+  drM('NID:', cX + 12 * S, cY + 44 * S, 9, DIM, fA1, 'left');
+  drM('1998-7264-0031', cX + 55 * S, cY + 44 * S, 9, CYAN, fA1, 'left');
+  var fA2 = sm(PS[2] + .9, PS[2] + 1.5, sk) * a;
+  drM('PASS:', cX + 12 * S, cY + 68 * S, 9, DIM, fA2, 'left');
+  drM('••••••••••', cX + 55 * S, cY + 68 * S, 9, DIM, fA2, 'left');
+
+  var btnA = sm(PS[2] + 1.8, PS[2] + 2.4, sk) * a;
+  drBox(cX + 12 * S, cY + 94 * S, 72 * S, 24 * S, 3 * S, ha(GREEN, .12), ha(GREEN, .5 * btnA), btnA);
+  drT('LOGIN', cX + 48 * S, cY + 106 * S, 9, GREEN, btnA, 'center');
+
+  drBox(cX + 94 * S, cY + 94 * S, 72 * S, 24 * S, 3 * S, ha(RED, .08), ha(RED, .3 * btnA), btnA);
+  drT('EXIT', cX + 130 * S, cY + 106 * S, 9, RED, btnA, 'center');
+
+  /* session indicator */
+  var sesA = sm(PS[2] + 2.6, PS[2] + 3.2, sk) * a;
+  drGlow(cX + cW + 30 * S, cY + 60 * S, 18 * S, GREEN, .35 * sesA);
+  ctx.save(); ctx.globalAlpha = sesA;
+  ctx.beginPath(); ctx.arc(cX + cW + 30 * S, cY + 60 * S, 5 * S, 0, 6.2832);
+  ctx.fillStyle = GREEN; ctx.fill(); ctx.restore();
+  drM('SESSION ACTIVE', cX + cW + 30 * S, cY + 80 * S, 7.5, GREEN, sesA, 'center');
+}
+
+/* ══════════════════════════════════════
+   PHASE 3 — SERVICE DIRECTORY (ALL 9)
+   ══════════════════════════════════════ */
+function drServices(p) {
+  var a = phA(3);
+  if (a < .01) return;
+
+  var cols = mob ? 3 : (W > 900 ? 5 : 3);
+  var rows = Math.ceil(SERVICES.length / cols);
+  var bw = mob ? 82 * S : 110 * S;
+  var bh = mob ? 52 * S : 62 * S;
+  var gapX = mob ? 8 * S : 14 * S;
+  var gapY = mob ? 8 * S : 12 * S;
+  var totalW = cols * bw + (cols - 1) * gapX;
+  var totalH = rows * bh + (rows - 1) * gapY;
+  var ox = W / 2 - totalW / 2;
+  var oy = H / 2 - totalH / 2 - 10 * S;
+
+  drT('EMERGENCY SERVICE DIRECTORY', W / 2, oy - 22 * S, 10, DIMMER, a, 'center');
+
+  for (var si = 0; si < SERVICES.length; si++) {
+    var sA = sm(PS[3] + .3 + si * .28, PS[3] + 1 + si * .28, sk) * a;
+    if (sA < .01) continue;
+    var s = SERVICES[si];
+    var r = Math.floor(si / cols);
+    var cc = si % cols;
+    var sx = ox + cc * (bw + gapX);
+    var sy = oy + r * (bh + gapY);
+
+    drBox(sx, sy, bw, bh, 4 * S, ha(PANEL, .85), ha(s.col, .3 * sA), sA);
+    drGlow(sx + bw / 2, sy + bh / 2, bw * .5, s.col, .08 * sA);
+
+    drT(s.ico, sx + bw / 2, sy + bh * .34, 14, WHITE, sA, 'center');
+    drT(s.name, sx + bw / 2, sy + bh * .62, mob ? 7 : 8, s.col, sA, 'center');
+    if (!mob) drM(s.sub, sx + bw / 2, sy + bh * .82, 6.5, DIM, sA * .6, 'center');
+  }
+}
+
+/* ══════════════════════════════════════
+   PHASE 4 — DISPATCH REQUEST
+   ══════════════════════════════════════ */
+function drDispatch(p) {
+  var a = phA(4);
+  if (a < .01) return;
+
+  var cW = Math.min(360 * S, W * .85);
+  var cX = W / 2 - cW / 2;
+  var cY = H * .18;
+
+  drBox(cX, cY, cW, 160 * S, 5 * S, PANEL, ha(RED, .3 * a), a);
+  drBox(cX, cY, cW, 28 * S, 5 * S, ha(RED, .1), null, a);
+  drT('SERVICE REQUEST — FIRE', cX + 12 * S, cY + 14 * S, 10, RED, a, 'left');
+
+  var fields = [
+    ['USER', 'Rahim Uddin (NID: 1998-7264-0031)'],
+    ['SERVICE', 'FIRE BRIGADE'],
+    ['LOCATION', 'Ward 12, Sector 5'],
+    ['DETAILS', 'Building fire reported — 3rd floor'],
+    ['STATUS', 'REQUEST SUBMITTED']
+  ];
+  for (var i = 0; i < fields.length; i++) {
+    var fA = sm(PS[4] + .5 + i * .5, PS[4] + 1.2 + i * .5, sk) * a;
+    var fy = cY + 42 * S + i * 24 * S;
+    drM(fields[i][0] + ':', cX + 12 * S, fy, 8.5, DIM, fA, 'left');
+    var vc = fields[i][0] === 'STATUS' ? GREEN : WHITE;
+    drM(fields[i][1], cX + 80 * S, fy, 8.5, vc, fA, 'left');
+  }
+
+  /* send animation: pulse ring */
+  var pulseA = sm(PS[4] + 3, PS[4] + 4, sk) * a;
+  if (pulseA > .01) {
+    var px = cX + cW / 2, py = cY + 160 * S + 36 * S;
+    var pr = 20 * S * eo(pulseA) + 6 * S * Math.sin(t * 4);
+    drGlow(px, py, pr + 14 * S, RED, .3 * pulseA);
+    ctx.save(); ctx.globalAlpha = pulseA;
+    ctx.beginPath(); ctx.arc(px, py, pr, 0, 6.2832);
+    ctx.strokeStyle = ha(RED, .6); ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+    drT('DISPATCHING...', px, py + pr + 14 * S, 9, RED, pulseA * (.5 + .5 * Math.sin(t * 3)), 'center');
+  }
+}
+
+/* ══════════════════════════════════════
+   PHASE 5 — RATE LIMIT (one req per service)
+   ══════════════════════════════════════ */
+function drRate(p) {
+  var a = phA(5);
+  if (a < .01) return;
+
+  var cW = Math.min(300 * S, W * .8);
+  var cX = mob ? W * .1 : W * .58;
+  var cY = H * .35;
+
+  drBox(cX, cY, cW, 110 * S, 4 * S, PANEL, ha(AMBER, .25 * a), a);
+  drBox(cX, cY, cW, 26 * S, 4 * S, ha(AMBER, .08), null, a);
+  drT('REQUEST RATE CONTROL', cX + 10 * S, cY + 13 * S, 9, AMBER, a, 'left');
+
+  var rules = [
+    { txt: 'FIRE — request sent', status: 'LOCKED', col: RED },
+    { txt: 'POLICE — available', status: 'OPEN', col: GREEN },
+    { txt: 'AMBULANCE — available', status: 'OPEN', col: GREEN },
+    { txt: 'COVID — available', status: 'OPEN', col: GREEN }
+  ];
+  for (var i = 0; i < rules.length; i++) {
+    var rA = sm(PS[5] + .4 + i * .5, PS[5] + 1 + i * .5, sk) * a;
+    var ry = cY + 38 * S + i * 18 * S;
+    drM(rules[i].txt, cX + 10 * S, ry, 8.5, DIM, rA, 'left');
+    drM(rules[i].status, cX + cW - 10 * S, ry, 8, rules[i].col, rA, 'right');
+    if (rules[i].status === 'LOCKED') {
+      ctx.save(); ctx.globalAlpha = rA * (.5 + .5 * Math.sin(t * 3));
+      ctx.beginPath(); ctx.arc(cX + cW - 52 * S, ry, 3 * S, 0, 6.2832);
+      ctx.fillStyle = RED; ctx.fill(); ctx.restore();
+    }
+  }
+
+  drM('One request per service until processed', cX + 10 * S, cY + 96 * S, 7.5, DIMMER, a * .7, 'left');
+}
+
+/* ══════════════════════════════════════
+   PHASE 6 — UPDATE PROFILE (NID immutable)
+   ══════════════════════════════════════ */
+function drUpdate(p) {
+  var a = phA(6);
+  if (a < .01) return;
+
+  var cW = Math.min(300 * S, W * .8);
+  var cX = mob ? W * .08 : W * .14;
+  var cY = H * .28;
+
+  drBox(cX, cY, cW, 120 * S, 4 * S, PANEL, ha(TEAL, .25 * a), a);
+  drBox(cX, cY, cW, 26 * S, 4 * S, ha(TEAL, .08), null, a);
+  drT('UPDATE PROFILE', cX + 10 * S, cY + 13 * S, 9.5, TEAL, a, 'left');
+
+  var fields = [
+    { lb: 'NID', val: '1998-7264-0031', ed: false },
+    { lb: 'NAME', val: 'Rahim Uddin ✎', ed: true },
+    { lb: 'PHONE', val: '+880-1XXXXXXXXX ✎', ed: true },
+    { lb: 'ADDRESS', val: 'Ward 12, Dhaka ✎', ed: true }
+  ];
+  for (var i = 0; i < fields.length; i++) {
+    var fA = sm(PS[6] + .4 + i * .4, PS[6] + 1 + i * .4, sk) * a;
+    var fy = cY + 40 * S + i * 22 * S;
+    drM(fields[i].lb + ':', cX + 10 * S, fy, 8.5, DIM, fA, 'left');
+    drM(fields[i].val, cX + 80 * S, fy, 8.5, fields[i].ed ? WHITE : ha(CYAN, .7), fA, 'left');
+    if (!fields[i].ed) {
+      drM('🔒 IMMUTABLE', cX + cW - 10 * S, fy, 7, RED, fA * (.5 + .5 * Math.sin(t * 2.5)), 'right');
+    }
+  }
+
+  var btnA = sm(PS[6] + 2.4, PS[6] + 3, sk) * a;
+  drBox(cX + cW / 2 - 50 * S, cY + 100 * S, 100 * S, 22 * S, 3 * S, ha(TEAL, .1), ha(TEAL, .45 * btnA), btnA);
+  drT('SAVE CHANGES', cX + cW / 2, cY + 111 * S, 8.5, TEAL, btnA, 'center');
+}
+
+/* ══════════════════════════════════════
+   PHASE 7 — ADMIN PANEL
+   ══════════════════════════════════════ */
+function drAdmin(p) {
+  var a = phA(7);
+  if (a < .01) return;
+
+  var cW = Math.min(480 * S, W * .88);
+  var cX = W / 2 - cW / 2;
+  var cY = H * .15;
+  var rH = 20 * S;
+  var tH = (USERS_DB.length + 1) * rH + 50 * S;
+
+  drBox(cX, cY, cW, tH, 5 * S, PANEL, ha(PURPLE, .25 * a), a);
+  drBox(cX, cY, cW, 28 * S, 5 * S, ha(PURPLE, .06), null, a);
+  drT('ADMIN MONITORING PANEL', cX + 12 * S, cY + 14 * S, 10, PURPLE, a, 'left');
+  drM('All users & requests', cX + cW - 12 * S, cY + 14 * S, 8, DIMMER, a * .6, 'right');
+
+  var hdr = ['NID', 'NAME', 'SERVICE', 'STATUS', 'ACTION'];
+  var cWidths = [.24, .24, .18, .16, .18];
+  var hA = sm(PS[7] + .4, PS[7] + 1, sk) * a;
+  var hy = cY + 40 * S;
+  for (var hi = 0; hi < hdr.length; hi++) {
+    var hx = cX + 8 * S;
+    for (var hj = 0; hj < hi; hj++) hx += cW * cWidths[hj];
+    drM(hdr[hi], hx, hy, 8, CYAN, hA, 'left');
+  }
+
+  ctx.save(); ctx.globalAlpha = hA * .3;
+  ctx.strokeStyle = CYAN; ctx.lineWidth = .5;
+  ctx.beginPath(); ctx.moveTo(cX + 6 * S, hy + 10 * S); ctx.lineTo(cX + cW - 6 * S, hy + 10 * S); ctx.stroke();
+  ctx.restore();
+
+  for (var ri = 0; ri < USERS_DB.length; ri++) {
+    var rA = sm(PS[7] + .7 + ri * .4, PS[7] + 1.3 + ri * .4, sk) * a;
+    var ry = hy + (ri + 1) * rH;
+    var u = USERS_DB[ri];
+    var vals = [u.nid, u.name, u.req, u.status, 'MODIFY'];
+    for (var ci = 0; ci < vals.length; ci++) {
+      var cx = cX + 8 * S;
+      for (var cj = 0; cj < ci; cj++) cx += cW * cWidths[cj];
+      var cc = WHITE;
+      if (ci === 3) cc = vals[ci] === 'PROCESSED' ? GREEN : AMBER;
+      if (ci === 4) cc = PURPLE;
+      drM(vals[ci], cx, ry, 8, cc, rA, 'left');
+    }
+  }
+}
+
+/* ══════════════════════════════════════
+   PHASE 8 — LOGIN SESSION TABLE
+   ══════════════════════════════════════ */
+function drSession(p) {
+  var a = phA(8);
+  if (a < .01) return;
+
+  var cW = Math.min(380 * S, W * .85);
+  var cX = mob ? W * .08 : W * .55;
+  var cY = H * .58;
+  var rH = 20 * S;
+  var tH = (LOGIN_TABLE.length + 1) * rH + 50 * S;
+
+  drBox(cX, cY, cW, tH, 4 * S, PANEL, ha(GREEN, .2 * a), a);
+  drBox(cX, cY, cW, 26 * S, 4 * S, ha(GREEN, .06), null, a);
+  drT('LOGIN SESSION TABLE', cX + 10 * S, cY + 13 * S, 9.5, GREEN, a, 'left');
+  drM('Active sessions — tracked in real time', cX + cW - 10 * S, cY + 13 * S, 7, DIMMER, a * .5, 'right');
+
+  var hdr2 = ['NID', 'NAME', 'LOGIN TIME', 'STATUS'];
+  var cW2 = [.28, .3, .22, .2];
+  var hA2 = sm(PS[8] + .3, PS[8] + .9, sk) * a;
+  var hy2 = cY + 36 * S;
+  for (var i = 0; i < hdr2.length; i++) {
+    var hx2 = cX + 8 * S;
+    for (var j = 0; j < i; j++) hx2 += cW * cW2[j];
+    drM(hdr2[i], hx2, hy2, 8, CYAN, hA2, 'left');
+  }
+
+  for (var ri = 0; ri < LOGIN_TABLE.length; ri++) {
+    var rA2 = sm(PS[8] + .6 + ri * .5, PS[8] + 1.2 + ri * .5, sk) * a;
+    var ry2 = hy2 + (ri + 1) * rH;
+    var l = LOGIN_TABLE[ri];
+    var vals2 = [l.nid, l.name, l.time, l.status];
+    for (var ci = 0; ci < vals2.length; ci++) {
+      var cx2 = cX + 8 * S;
+      for (var cj2 = 0; cj2 < ci; cj2++) cx2 += cW * cW2[cj2];
+      var cc2 = ci === 3 ? GREEN : WHITE;
+      drM(vals2[ci], cx2, ry2, 8, cc2, rA2, 'left');
+    }
+    /* green pulse dot for active */
+    if (rA2 > .3) {
+      var dotX = cX + cW - 18 * S;
+      ctx.save(); ctx.globalAlpha = rA2 * (.5 + .5 * Math.sin(t * 2.5 + ri));
+      ctx.beginPath(); ctx.arc(dotX, ry2, 3 * S, 0, 6.2832);
+      ctx.fillStyle = GREEN; ctx.fill(); ctx.restore();
+    }
+  }
+
+  /* logout concept */
+  var loA = sm(PS[8] + 3, PS[8] + 3.8, sk) * a;
+  drM('On logout → user row deleted from this table', cX + 10 * S, cY + tH + 10 * S, 7.5, DIMMER, loA, 'left');
+}
+
+/* ══════════════════════════════════════
+   MAIN RENDER
+   ══════════════════════════════════════ */
+function render(dt) {
+  var ph = gp(sk);
+
+  ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+  drGrid(sm(0, 1.8, sk));
+  drPts(dt, sm(0.5, 2.5, sk));
+
+  if (ph.i === 0) drBoot(ph.p);
+  if (ph.i >= 1) drReg(ph.i === 1 ? ph.p : 1);
+  if (ph.i >= 2) drLogin(ph.i === 2 ? ph.p : 1);
+  if (ph.i >= 3) drServices(ph.i === 3 ? ph.p : 1);
+  if (ph.i >= 4) drDispatch(ph.i === 4 ? ph.p : 1);
+  if (ph.i >= 5) drRate(ph.i === 5 ? ph.p : 1);
+  if (ph.i >= 6) drUpdate(ph.i === 6 ? ph.p : 1);
+  if (ph.i >= 7) drAdmin(ph.i === 7 ? ph.p : 1);
+  if (ph.i >= 8) drSession(ph.i === 8 ? ph.p : 1);
+  if (ph.i >= 9) showT();
+
+  drFilm();
+
+  var phEl = document.getElementById('phL');
+  var prEl = document.getElementById('progF');
+  if (phEl) phEl.textContent = PL[ph.i] || '';
+  if (prEl) prEl.style.width = (sk / TOT * 100).toFixed(1) + '%';
+  document.getElementById('dbg').textContent = 'F:' + fc + ' T:' + t.toFixed(1) + 's PH:' + ph.i + ' ' + W + 'x' + H;
+}
+
+/* ── title ── */
+var titleOn = false;
+function showT() { if (titleOn) return; titleOn = true; document.getElementById('title').className = 'on'; }
+
+/* ── boot & loop ── */
+var fc = 0, t = 0, sk = 0, paused = false, ended = false;
+initPts();
+var prevNow = performance.now();
+
+function loop(now) {
+  requestAnimationFrame(loop);
+  var dt = (now - prevNow) / 1000;
+  if (dt > .1) dt = .016;
+  prevNow = now; fc++;
+  if (paused) return;
+  t += dt;
+  if (!ended) sk += dt;
+  if (sk > TOT) { sk = TOT; ended = true; }
+  render(dt);
+}
+requestAnimationFrame(loop);
+
+/* ── controls ── */
+document.getElementById('bR').addEventListener('click', function () {
+  sk = 0; t = 0; fc = 0; ended = false; paused = false; titleOn = false;
+  document.getElementById('title').className = '';
+  document.getElementById('bP').textContent = 'Pause';
+});
+document.getElementById('bP').addEventListener('click', function () {
+  paused = !paused; this.textContent = paused ? 'Play' : 'Pause';
+});
+document.getElementById('skip').addEventListener('click', function () {
+  sk = TOT; ended = true; render(.016); showT();
+});
+document.addEventListener('keydown', function (e) {
+  if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+  if (e.code === 'Space') { e.preventDefault(); paused = !paused; document.getElementById('bP').textContent = paused ? 'Play' : 'Pause'; }
+  if (e.key === 'r') { sk = 0; t = 0; fc = 0; ended = false; paused = false; titleOn = false; document.getElementById('title').className = ''; }
+  if (e.key === 's' || e.key === 'Escape') { sk = TOT; ended = true; render(.016); showT(); }
+});
+
+/* ── reduced motion ── */
+if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+  sk = TOT; ended = true; paused = true; render(.016); showT();
+}
+</script>
+</body>
+</html>

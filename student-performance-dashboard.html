@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Performance Dashboard — Academic Analytics</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#07080a}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
+#title{
+  position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none;opacity:0;
+  transition:opacity 1s ease;
+}
+#title.on{opacity:1}
+#title h1{
+  font-family:system-ui,-apple-system,sans-serif;
+  font-size:clamp(1.2rem,3.8vw,3rem);font-weight:300;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(220,234,240,0);text-align:center;line-height:1.2;
+  transition:color 1.4s ease,transform 1.4s ease;
+  transform:translateY(14px);max-width:90vw;
+}
+#title h1.on{color:#e2eef2;transform:translateY(0)}
+#title h1 b{font-weight:600}
+#title .rule{
+  width:0;height:1px;margin-top:12px;
+  background:linear-gradient(90deg,transparent,rgba(77,212,216,.45),transparent);
+  transition:width 2s ease .2s;
+}
+#title .rule.on{width:clamp(100px,22vw,280px)}
+#title p{
+  margin-top:12px;font-family:system-ui,sans-serif;
+  font-size:clamp(.48rem,1vw,.8rem);font-weight:400;
+  letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(100,180,190,0);text-align:center;
+  transition:color 1s ease .4s;
+}
+#title p.on{color:rgba(100,180,190,.5)}
+#dbg{position:fixed;top:8px;left:8px;z-index:99;color:rgba(77,212,216,.2);font:10px/1.4 monospace;pointer-events:none}
+#ctrls{position:fixed;top:8px;right:8px;z-index:50;display:flex;gap:5px;opacity:.12;transition:opacity .3s}
+#ctrls:hover{opacity:1}
+#ctrls button{
+  background:rgba(10,14,18,.85);border:1px solid rgba(77,212,216,.25);
+  color:rgba(140,210,215,.7);font:9px/1 system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;padding:7px 10px;
+  border-radius:3px;cursor:pointer;min-height:34px;
+}
+#ctrls button:hover{background:rgba(30,60,70,.3);color:#dff4f6;border-color:rgba(77,212,216,.5)}
+#skip{
+  position:fixed;bottom:18px;right:18px;z-index:50;
+  background:rgba(10,14,18,.78);border:1px solid rgba(77,212,216,.2);
+  color:rgba(140,210,215,.5);font:10px/1 system-ui,sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;
+  border-radius:3px;cursor:pointer;min-height:40px;transition:opacity .4s;
+}
+#skip:hover{background:rgba(30,60,70,.3);color:#dff4f6}
+#skip.off{opacity:0;pointer-events:none}
+#hud{
+  position:fixed;left:14px;bottom:14px;z-index:50;pointer-events:none;
+  font:8px/1.4 system-ui,sans-serif;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(77,212,216,.22);
+}
+#prog{width:clamp(70px,13vw,160px);height:1px;margin-top:5px;background:rgba(77,212,216,.1)}
+#progF{height:100%;width:0%;background:rgba(77,212,216,.4)}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="title">
+  <h1 id="tN">Student Performance<br><b>Analytics Dashboard</b></h1>
+  <div class="rule" id="tR"></div>
+  <p id="tP">Grades · Attendance · Assessment · Distribution</p>
+</div>
+<div id="dbg"></div>
+<div id="ctrls">
+  <button id="bR">Replay</button>
+  <button id="bP">Pause</button>
+  <button id="bE">Export</button>
+</div>
+<button id="skip">Skip ↗</button>
+<div id="hud"><span id="phL"></span><div id="prog"><div id="progF"></div></div></div>
+<script>
+var c = document.getElementById('c');
+var ctx = c.getContext('2d');
+var dbg = document.getElementById('dbg');
+var W, H, S, mob, dpr;
+
+function resize(){
+  dpr = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  S = Math.max(.42, Math.min(1.5, W/1400));
+  mob = W < 640;
+  c.width = W*dpr; c.height = H*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize', resize);
+resize();
+
+/* ── Helpers ─────────────────────────────── */
+var sd = 42;
+function rn(){sd=(sd*16807)%2147483647;return sd/2147483647}
+function lr(a,b,k){return a+(b-a)*k}
+function cl(v,a,b){return v<a?a:v>b?b:v}
+function eo(k){return 1-Math.pow(1-k,3)}
+function eio(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
+function sm(a,b,k){k=cl((k-a)/(b-a),0,1);return k*k*(3-2*k)}
+function ha(hex,a){var n=parseInt(hex.slice(1),16);return'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'}
+
+/* ── Palette ─────────────────────────────── */
+var BG='#07080a';
+var NAVY='#0c1018';
+var CYAN='#4dd4d8';
+var TEAL='#2b9ea0';
+var BLUE='#3f8bea';
+var AMBER='#d9a84a';
+var GREEN='#4dcb8a';
+var RED='#e05555';
+var WHITE='#e2eef2';
+var DIM='rgba(176,206,214,0.42)';
+var GRID1='rgba(46,66,76,0.13)';
+var GRID2='rgba(58,84,96,0.22)';
+
+/* ── Timeline ────────────────────────────── */
+var PD=[2.6, 3.8, 3.4, 3.6, 3.2, 4.2, 3.5];
+var PL=[
+  'initializing academic engine',
+  'loading student records',
+  'analyzing performance data',
+  'computing grade distribution',
+  'generating insights',
+  'student performance dashboard',
+  'student performance dashboard'
+];
+var TOT=0,PS=[];
+for(var i=0;i<PD.length;i++){PS.push(TOT);TOT+=PD[i]}
+function gp(sk){
+  for(var i=PD.length-1;i>=0;i--)if(sk>=PS[i])return{i:i,p:cl((sk-PS[i])/PD[i],0,1)};
+  return{i:0,p:0};
+}
+
+/* ── State ───────────────────────────────── */
+var fc=0,t=0,sk=0,prevNow=0,paused=false,ended=false,titled=false;
+
+/* ═══════════ PARTICLES ═══════════ */
+var pts=[];
+function mkPts(){
+  pts=[];sd=101;
+  var n=mob?20:45;
+  for(var i=0;i<n;i++)pts.push({
+    x:rn()*W,y:rn()*H,vx:-1+rn()*2,vy:-2-rn()*5,
+    r:(.3+rn()*1)*S,a:.02+rn()*.08,
+    col:[CYAN,TEAL,BLUE,GREEN,AMBER][Math.floor(rn()*5)],ph:rn()*6.283
+  });
+}
+function drPts(dt,f){
+  for(var i=0;i<pts.length;i++){
+    var p=pts[i];
+    p.x+=p.vx*dt;p.y+=p.vy*dt*.2;
+    p.x+=Math.sin(t*.4+p.ph)*.08;
+    if(p.y<-10){p.y=H+10;p.x=rn()*W}
+    if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;
+    ctx.globalAlpha=p.a*f*(.5+.5*Math.sin(t*1+p.ph));
+    ctx.fillStyle=p.col;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ GRID ═══════════ */
+function drGrid(f){
+  if(f<.005)return;
+  var fn=20*S,mj=120*S,gx,gy;
+  ctx.globalAlpha=f*.35;ctx.strokeStyle=GRID1;ctx.lineWidth=.3;
+  ctx.beginPath();
+  for(gx=0;gx<=W;gx+=fn){ctx.moveTo(gx|0,0);ctx.lineTo(gx|0,H)}
+  for(gy=0;gy<=H;gy+=fn){ctx.moveTo(0,gy|0);ctx.lineTo(W,gy|0)}
+  ctx.stroke();
+  ctx.globalAlpha=f*.55;ctx.strokeStyle=GRID2;ctx.lineWidth=.4;
+  ctx.beginPath();
+  for(gx=0;gx<=W;gx+=mj){ctx.moveTo(gx|0,0);ctx.lineTo(gx|0,H)}
+  for(gy=0;gy<=H;gy+=mj){ctx.moveTo(0,gy|0);ctx.lineTo(W,gy|0)}
+  ctx.stroke();ctx.globalAlpha=1;
+}
+
+/* ═══════════ SPREADSHEET GRID (Phase 1) ═══════════ */
+var STUDENTS = [
+  {id:'STU-001',name:'A. Rahman',g:5,att:92,q1:78,q2:85,q3:82,mid:81,fin:84,gpa:3.42},
+  {id:'STU-002',name:'S. Chen',g:4,att:97,q1:92,q2:88,q3:94,mid:90,fin:93,gpa:3.85},
+  {id:'STU-003',name:'M. Okafor',g:7,att:85,q1:65,q2:72,q3:68,mid:70,fin:74,gpa:2.88},
+  {id:'STU-004',name:'L. Garcia',g:3,att:94,q1:88,q2:91,q3:86,mid:89,fin:87,gpa:3.62},
+  {id:'STU-005',name:'K. Tanaka',g:6,att:78,q1:55,q2:62,q3:58,mid:60,fin:65,gpa:2.45},
+  {id:'STU-006',name:'P. Novak',g:5,att:96,q1:95,q2:97,q3:93,mid:96,fin:94,gpa:3.95},
+  {id:'STU-007',name:'D. Smith',g:7,att:88,q1:72,q2:76,q3:80,mid:75,fin:78,gpa:3.10},
+  {id:'STU-008',name:'R. Patel',g:4,att:91,q1:82,q2:79,q3:85,mid:83,fin:81,gpa:3.35}
+];
+var COLS = ['ID','STUDENT','GR','ATT%','Q1','Q2','Q3','MID','FIN','GPA'];
+
+function drSpreadsheet(ph){
+  if(ph.i<1)return;
+  var ap=ph.i===1?eio(cl(ph.p*1.3,0,1)):1;
+  var fd=ph.i>=4?cl(1-ph.p*1.2,0,1):1;
+  var v=ap*fd;
+  if(v<.01)return;
+
+  var ox=W*(mob?.04:.12);
+  var oy=H*(mob?.12:.15);
+  var cw=(mob?42:62)*S;
+  var rh=(mob?14:18)*S;
+  var numCols=mob?6:COLS.length;
+  var numRows=mob?5:STUDENTS.length;
+
+  /* header row */
+  ctx.globalAlpha=v*.5;
+  ctx.font='600 '+(7*S)+'px system-ui,sans-serif';
+  ctx.textBaseline='middle';
+  for(var ci=0;ci<numCols;ci++){
+    var hx=ox+ci*cw;
+    var revealed=cl(ap*numCols-ci,0,1);
+    ctx.globalAlpha=v*.5*revealed;
+    ctx.fillStyle=CYAN;ctx.textAlign='center';
+    ctx.fillText(COLS[ci],hx+cw*.5,oy);
+  }
+
+  /* header line */
+  ctx.globalAlpha=v*.3;ctx.strokeStyle=ha(CYAN,.4);ctx.lineWidth=.5;
+  ctx.beginPath();ctx.moveTo(ox,oy+rh*.5);
+  ctx.lineTo(ox+numCols*cw*cl(ap*1.5,0,1),oy+rh*.5);ctx.stroke();
+
+  /* data rows */
+  for(var ri=0;ri<numRows;ri++){
+    var s=STUDENTS[ri];
+    var rowY=oy+rh*(ri+1.2);
+    var rowReveal=cl(ap*(numRows+2)-ri*1.2,0,1);
+    if(rowReveal<.01)continue;
+
+    var vals=[s.id,s.name,'G'+s.g,s.att+'%',s.q1,s.q2,s.q3,s.mid,s.fin,s.gpa.toFixed(2)];
+
+    for(var cj=0;cj<numCols;cj++){
+      var cx2=ox+cj*cw;
+      var cellReveal=cl(rowReveal*numCols-cj*.8,0,1);
+      if(cellReveal<.01)continue;
+
+      ctx.globalAlpha=v*.55*eo(cellReveal);
+
+      /* color-code scores */
+      var val=vals[cj];
+      var numVal=parseFloat(val);
+      if(cj>=4&&cj<=8){
+        if(numVal>=85)ctx.fillStyle=GREEN;
+        else if(numVal>=70)ctx.fillStyle=CYAN;
+        else if(numVal>=55)ctx.fillStyle=AMBER;
+        else ctx.fillStyle=RED;
+      } else if(cj===3){
+        if(numVal>=90)ctx.fillStyle=GREEN;
+        else if(numVal>=80)ctx.fillStyle=TEAL;
+        else ctx.fillStyle=AMBER;
+      } else if(cj===9){
+        if(numVal>=3.5)ctx.fillStyle=GREEN;
+        else if(numVal>=3.0)ctx.fillStyle=CYAN;
+        else if(numVal>=2.5)ctx.fillStyle=AMBER;
+        else ctx.fillStyle=RED;
+      } else {
+        ctx.fillStyle=DIM;
+      }
+
+      ctx.font=(cj<=1?'400':'500')+' '+(6.5*S)+'px system-ui,sans-serif';
+      ctx.textAlign='center';
+      ctx.fillText(val.toString(),cx2+cw*.5,rowY);
+    }
+
+    /* row separator */
+    ctx.globalAlpha=v*.06*rowReveal;ctx.strokeStyle=TEAL;ctx.lineWidth=.3;
+    ctx.beginPath();ctx.moveTo(ox,rowY+rh*.45);
+    ctx.lineTo(ox+numCols*cw,rowY+rh*.45);ctx.stroke();
+  }
+
+  /* table border */
+  ctx.globalAlpha=v*.15;ctx.strokeStyle=ha(CYAN,.4);ctx.lineWidth=.4;
+  var tw=numCols*cw,th=rh*(numRows+1.5);
+  ctx.strokeRect(ox-4*S,oy-rh*.5,tw+8*S,th);
+
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ GRADE DISTRIBUTION BARS (Phase 3) ═══════════ */
+var GRADES = [
+  {label:'Grade 3',avg:82,att:93,col:CYAN},
+  {label:'Grade 4',avg:85,att:91,col:TEAL},
+  {label:'Grade 5',avg:78,att:94,col:BLUE},
+  {label:'Grade 6',avg:71,att:82,col:AMBER},
+  {label:'Grade 7',avg:74,att:87,col:GREEN}
+];
+
+function drBars(ph){
+  if(ph.i<3)return;
+  var ap=ph.i===3?eio(cl(ph.p*1.4,0,1)):1;
+  var fd=ph.i>=5?cl(1-ph.p*1.5,0,1):1;
+  var v=ap*fd;
+  if(v<.01)return;
+
+  var bx=W*(mob?.55:.6);
+  var by=H*(mob?.15:.18);
+  var bw=(mob?28:40)*S;
+  var maxH=(mob?80:120)*S;
+  var gap=(mob?10:16)*S;
+
+  /* section label */
+  ctx.globalAlpha=v*.45;
+  ctx.font='500 '+(8*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=TEAL;ctx.textAlign='left';
+  ctx.fillText('GRADE DISTRIBUTION — AVG SCORE',bx,by-12*S);
+
+  /* baseline */
+  ctx.globalAlpha=v*.2;ctx.strokeStyle=ha(TEAL,.4);ctx.lineWidth=.5;
+  ctx.beginPath();ctx.moveTo(bx,by+maxH);
+  ctx.lineTo(bx+GRADES.length*(bw+gap),by+maxH);ctx.stroke();
+
+  for(var i=0;i<GRADES.length;i++){
+    var g=GRADES[i];
+    var barX=bx+i*(bw+gap);
+    var barH=maxH*(g.avg/100)*cl(ap*(GRADES.length+1)-i,0,1);
+
+    /* bar */
+    ctx.globalAlpha=v*.55;
+    ctx.fillStyle=g.col;
+    ctx.beginPath();
+    ctx.roundRect(barX,by+maxH-barH,bw,barH,3*S);
+    ctx.fill();
+
+    /* bar glow */
+    ctx.globalAlpha=v*.08;
+    var bg=ctx.createLinearGradient(barX,by+maxH-barH,barX,by+maxH);
+    bg.addColorStop(0,g.col);bg.addColorStop(1,ha(g.col,0));
+    ctx.fillStyle=bg;
+    ctx.fillRect(barX-2*S,by+maxH-barH-10*S,bw+4*S,barH+10*S);
+
+    /* value */
+    ctx.globalAlpha=v*.7;ctx.fillStyle=g.col;
+    ctx.font='600 '+(8*S)+'px system-ui,sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText(g.avg+'%',barX+bw*.5,by+maxH-barH-6*S);
+
+    /* label */
+    ctx.globalAlpha=v*.35;ctx.fillStyle=DIM;
+    ctx.font='400 '+(6.5*S)+'px system-ui,sans-serif';
+    ctx.fillText(g.label,barX+bw*.5,by+maxH+14*S);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ ATTENDANCE RING (Phase 2–3) ═══════════ */
+function drAttendance(ph){
+  if(ph.i<2)return;
+  var ap=ph.i===2?eio(cl(ph.p*1.5,0,1)):1;
+  var fd=ph.i>=5?cl(1-ph.p*1.5,0,1):1;
+  var v=ap*fd;
+  if(v<.01)return;
+
+  var cx=W*(mob?.75:.78);
+  var cy=H*(mob?.62:.58);
+  var r=(mob?35:52)*S;
+  var attVal=89;
+  var sweep=6.283*(attVal/100)*cl(ap*1.3,0,1);
+
+  /* background ring */
+  ctx.globalAlpha=v*.12;ctx.strokeStyle=ha(TEAL,.5);ctx.lineWidth=4*S;
+  ctx.beginPath();ctx.arc(cx,cy,r,0,6.283);ctx.stroke();
+
+  /* attendance arc */
+  ctx.globalAlpha=v*.6;ctx.strokeStyle=GREEN;ctx.lineWidth=4*S;ctx.lineCap='round';
+  ctx.beginPath();ctx.arc(cx,cy,r,-1.5708,-1.5708+sweep);ctx.stroke();
+
+  /* center value */
+  ctx.globalAlpha=v*.75;
+  ctx.font='600 '+(18*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=GREEN;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(Math.round(attVal*cl(ap*1.3,0,1))+'%',cx,cy-2*S);
+
+  /* label */
+  ctx.globalAlpha=v*.4;
+  ctx.font='400 '+(7*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=DIM;ctx.textBaseline='alphabetic';
+  ctx.fillText('AVG ATTENDANCE',cx,cy+r+16*S);
+
+  /* section label */
+  ctx.globalAlpha=v*.35;ctx.fillStyle=TEAL;
+  ctx.font='500 '+(7*S)+'px system-ui,sans-serif';
+  ctx.fillText('ALL GRADES',cx,cy-r-10*S);
+
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ ASSESSMENT COMPARISON (Phase 2) ═══════════ */
+function drAssessment(ph){
+  if(ph.i<2)return;
+  var ap=ph.i===2?eio(cl(ph.p*1.2,0,1)):1;
+  var fd=ph.i>=4?cl(1-ph.p*1.3,0,1):1;
+  var v=ap*fd;
+  if(v<.01)return;
+
+  var ox=W*(mob?.06:.14);
+  var oy=H*(mob?.65:.68);
+  var labels=['Quiz 1','Quiz 2','Quiz 3','Midterm','Final'];
+  var avgs=[76,79,78,80,82];
+  var w=(mob?35:52)*S;
+  var maxH=(mob?45:65)*S;
+  var gap=(mob?6:10)*S;
+
+  ctx.globalAlpha=v*.4;ctx.fillStyle=TEAL;
+  ctx.font='500 '+(7.5*S)+'px system-ui,sans-serif';ctx.textAlign='left';
+  ctx.fillText('ASSESSMENT AVERAGES — ALL GRADES',ox,oy-10*S);
+
+  for(var i=0;i<labels.length;i++){
+    var bx2=ox+i*(w+gap);
+    var bh=maxH*(avgs[i]/100)*cl(ap*(labels.length+1)-i*.8,0,1);
+    var col=[CYAN,TEAL,BLUE,AMBER,GREEN][i];
+
+    /* bar */
+    ctx.globalAlpha=v*.45;ctx.fillStyle=col;
+    ctx.beginPath();ctx.roundRect(bx2,oy+maxH-bh,w,bh,2*S);ctx.fill();
+
+    /* value */
+    ctx.globalAlpha=v*.6;ctx.fillStyle=col;
+    ctx.font='500 '+(7*S)+'px system-ui,sans-serif';ctx.textAlign='center';
+    ctx.fillText(Math.round(avgs[i]*cl(ap*1.3,0,1)),bx2+w*.5,oy+maxH-bh-5*S);
+
+    /* label */
+    ctx.globalAlpha=v*.3;ctx.fillStyle=DIM;
+    ctx.font='400 '+(6*S)+'px system-ui,sans-serif';
+    ctx.fillText(labels[i],bx2+w*.5,oy+maxH+12*S);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ METRIC NODES (Phase 2–4) ═══════════ */
+var METRICS = [
+  {label:'STUDENTS',val:'247',col:CYAN,rx:.18,ry:.42},
+  {label:'CLASSES',val:'12',col:TEAL,rx:.38,ry:.35},
+  {label:'AVG GPA',val:'3.24',col:GREEN,rx:.58,ry:.42},
+  {label:'PASS RATE',val:'91%',col:BLUE,rx:.78,ry:.35},
+  {label:'TOP SCORE',val:'98',col:AMBER,rx:.48,ry:.50}
+];
+var MEDGES=[[0,1],[1,2],[2,3],[3,4],[4,0],[0,2],[1,3],[2,4]];
+
+var mNodes=[];
+function mkMetrics(){
+  mNodes=[];sd=55;
+  for(var i=0;i<METRICS.length;i++){
+    var m=METRICS[i];
+    mNodes.push({
+      hx:W*m.rx,hy:H*m.ry,
+      x:W*.48,y:H*.42,
+      a:0,r:(mob?22:32)*S,ph:rn()*6.283,
+      m:m
+    });
+  }
+}
+
+function drMetrics(ph){
+  var i,nd;
+
+  /* update */
+  for(i=0;i<mNodes.length;i++){
+    nd=mNodes[i];
+    var em=ph.i>=2?cl((ph.i===2?ph.p:1)-.06*i,0,1):0;
+    nd.a=eo(cl(em*2.5,0,1));
+    if(ph.i>=5)nd.a=cl(nd.a*(1-ph.p*.85),0,1);
+    nd.x=lr(W*.48,nd.hx,nd.a)+Math.sin(t*.35+nd.ph)*2*S;
+    nd.y=lr(H*.42,nd.hy,nd.a)+Math.cos(t*.3+nd.ph)*1.5*S;
+  }
+
+  /* connections */
+  if(ph.i>=2){
+    ctx.lineWidth=.35;
+    for(i=0;i<MEDGES.length;i++){
+      var a=mNodes[MEDGES[i][0]],b=mNodes[MEDGES[i][1]];
+      if(a.a<.03||b.a<.03)continue;
+      var ca=cl((ph.i===2?ph.p:1)*a.a*b.a*.4,0,.16);
+      if(ph.i>=5)ca*=cl(1-ph.p*2,0,1);
+      if(ca<.003)continue;
+      ctx.globalAlpha=ca;ctx.strokeStyle=ha(TEAL,.4);
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      /* traveling particle */
+      if(ph.i<5){
+        var tp=(t*.25+i*.1)%1;
+        ctx.globalAlpha=ca*2;ctx.fillStyle=CYAN;
+        ctx.beginPath();ctx.arc(lr(a.x,b.x,tp),lr(a.y,b.y,tp),1.1*S,0,6.283);ctx.fill();
+      }
+    }
+  }
+
+  /* nodes */
+  for(i=0;i<mNodes.length;i++){
+    nd=mNodes[i];if(nd.a<.02)continue;
+    var m=nd.m;
+
+    /* ring */
+    ctx.globalAlpha=nd.a*.35;ctx.strokeStyle=m.col;ctx.lineWidth=.7;
+    ctx.beginPath();ctx.arc(nd.x,nd.y,nd.r,0,6.283);ctx.stroke();
+
+    /* inner ring */
+    ctx.globalAlpha=nd.a*.12;
+    ctx.beginPath();ctx.arc(nd.x,nd.y,nd.r*.55,0,6.283);ctx.stroke();
+
+    /* glow */
+    ctx.globalAlpha=nd.a*.06;
+    var g=ctx.createRadialGradient(nd.x,nd.y,0,nd.x,nd.y,nd.r*2);
+    g.addColorStop(0,m.col);g.addColorStop(1,ha(m.col,0));
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(nd.x,nd.y,nd.r*2,0,6.283);ctx.fill();
+
+    /* center dot */
+    ctx.globalAlpha=nd.a*.8;ctx.fillStyle=m.col;
+    ctx.beginPath();ctx.arc(nd.x,nd.y,2*S,0,6.283);ctx.fill();
+
+    /* value */
+    ctx.globalAlpha=nd.a*.75;
+    ctx.font='600 '+(10*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=m.col;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(m.val,nd.x,nd.y);
+
+    /* label */
+    ctx.globalAlpha=nd.a*.4;
+    ctx.font='500 '+(6.5*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=DIM;ctx.textBaseline='alphabetic';
+    ctx.fillText(m.label,nd.x,nd.y+nd.r+10*S);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ DATA STREAMS ═══════════ */
+var streams=[];
+function mkStreams(){
+  streams=[];sd=200;
+  var n=mob?5:8;
+  for(var i=0;i<n;i++)streams.push({
+    y:H*(.08+(i/n)*.84),sp:25+rn()*60,off:rn()*400,
+    col:[CYAN,TEAL,BLUE,GREEN,AMBER][i%5],a:.05+rn()*.08,
+    lb:['STU-'+Math.floor(rn()*999),'GPA:'+((2+rn()*2).toFixed(2)),
+        'ATT:'+(75+Math.floor(rn()*25))+'%','GRADE '+(3+Math.floor(rn()*5)),
+        'Q'+(1+Math.floor(rn()*3))+':'+Math.floor(60+rn()*40),
+        'MID:'+Math.floor(65+rn()*35),'PASS','ENROLLED'][Math.floor(rn()*8)]
+  });
+}
+function drStreams(f){
+  if(f<.005)return;
+  ctx.setLineDash([3*S,10*S]);
+  for(var i=0;i<streams.length;i++){
+    var s=streams[i];
+    ctx.globalAlpha=f*s.a;ctx.strokeStyle=ha(s.col,.45);ctx.lineWidth=.4;
+    ctx.lineDashOffset=-(t*s.sp+s.off);
+    ctx.beginPath();ctx.moveTo(0,s.y|0);ctx.lineTo(W,s.y|0);ctx.stroke();
+    ctx.globalAlpha=f*s.a*.5;ctx.font=(6.5*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=s.col;ctx.textAlign='left';
+    ctx.fillText(s.lb,((t*s.sp*.25+s.off)%W),s.y-3*S);
+  }
+  ctx.setLineDash([]);ctx.globalAlpha=1;
+}
+
+/* ═══════════ BRAND (Phase 0) ═══════════ */
+function drBrand(ph){
+  if(ph.i>1)return;
+  var v=ph.i===0?eio(cl(ph.p*2,0,1)):cl(1-ph.p*2.5,0,1);
+  if(v<.01)return;
+  var cx=W*.5,cy=H*.44;
+
+  ctx.globalAlpha=v*.07;
+  var g=ctx.createRadialGradient(cx,cy,0,cx,cy,100*S);
+  g.addColorStop(0,CYAN);g.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,100*S,0,6.283);ctx.fill();
+
+  ctx.globalAlpha=v*.75;
+  ctx.font='200 '+(28*S)+'px system-ui,sans-serif';
+  ctx.fillStyle=WHITE;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('STUDENT PERFORMANCE',cx,cy-12*S);
+
+  ctx.globalAlpha=v*.6;
+  ctx.font='600 '+(28*S)+'px system-ui,sans-serif';
+  ctx.fillText('ANALYTICS',cx,cy+22*S);
+
+  ctx.globalAlpha=v*.35;ctx.font=(9*S)+'px system-ui,sans-serif';ctx.fillStyle=TEAL;
+  ctx.fillText('GRADES 3–7 · EXCEL DASHBOARD',cx,cy+50*S);
+
+  ctx.globalAlpha=v*.25;ctx.strokeStyle=ha(CYAN,.35);ctx.lineWidth=.5;
+  var lw=90*S*v;
+  ctx.beginPath();ctx.moveTo(cx-lw,cy-32*S);ctx.lineTo(cx+lw,cy-32*S);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-lw,cy+62*S);ctx.lineTo(cx+lw,cy+62*S);ctx.stroke();
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ INSIGHT GENERATION EFFECT (Phase 4) ═══════════ */
+function drInsight(ph){
+  if(ph.i!==4)return;
+  var k=eio(ph.p);
+
+  /* converging data lines to center */
+  var cx=W*.5,cy=H*.48;
+  var N=14;
+  for(var i=0;i<N;i++){
+    var ang=i/N*6.283+t*.05;
+    var r0=lr(W*.35,20*S,k);
+    var r1=r0+lr(50*S,0,k);
+    ctx.globalAlpha=.14*(1-k);
+    ctx.strokeStyle=ha([CYAN,TEAL,GREEN,BLUE,AMBER][i%5],.7);ctx.lineWidth=.5;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(ang)*r1,cy+Math.sin(ang)*r1);
+    ctx.lineTo(cx+Math.cos(ang)*r0,cy+Math.sin(ang)*r0);
+    ctx.stroke();
+  }
+
+  /* expanding ring */
+  var rr=sm(.5,1,ph.p);
+  if(rr>0){
+    ctx.globalAlpha=.25*(1-rr);ctx.strokeStyle=CYAN;ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(cx,cy,lr(15*S,W*.22,eo(rr)),0,6.283);ctx.stroke();
+  }
+
+  /* center glow */
+  ctx.globalAlpha=.08*k;
+  var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,W*.15*k);
+  cg.addColorStop(0,CYAN);cg.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cx,cy,W*.15*k,0,6.283);ctx.fill();
+
+  /* insight text */
+  if(k>.4){
+    var tk=cl((k-.4)*2.5,0,1);
+    ctx.globalAlpha=eo(tk)*(1-cl((k-.8)*5,0,1))*.6;
+    ctx.font='600 '+(10*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=GREEN;ctx.textAlign='center';
+    ctx.fillText('INSIGHTS GENERATED',cx,cy-8*S);
+    ctx.globalAlpha=eo(tk)*(1-cl((k-.8)*5,0,1))*.35;
+    ctx.font='400 '+(7.5*S)+'px system-ui,sans-serif';
+    ctx.fillStyle=DIM;
+    ctx.fillText('247 STUDENTS · 12 CLASSES · 5 GRADES',cx,cy+8*S);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ LIGHT SWEEP ═══════════ */
+function drSweep(ph){
+  if(ph.i!==5)return;
+  var sp=eio(ph.p);if(sp<.01)return;
+  var sx=lr(-W*.3,W*1.3,sp),sw=W*.18;
+  ctx.globalAlpha=.05;
+  var g=ctx.createLinearGradient(sx-sw,0,sx+sw,0);
+  g.addColorStop(0,ha(CYAN,0));g.addColorStop(.5,ha(CYAN,.22));g.addColorStop(1,ha(CYAN,0));
+  ctx.fillStyle=g;ctx.fillRect(sx-sw,0,sw*2,H);ctx.globalAlpha=1;
+}
+
+/* ═══════════ FILM ═══════════ */
+function drFilm(){
+  ctx.globalAlpha=1;
+  var g=ctx.createRadialGradient(W*.5,H*.47,Math.min(W,H)*.2,W*.5,H*.47,W*.7);
+  g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.55)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  var g2=ctx.createLinearGradient(0,0,0,H);
+  g2.addColorStop(0,'rgba(0,0,0,.25)');g2.addColorStop(.18,'rgba(0,0,0,0)');
+  g2.addColorStop(.82,'rgba(0,0,0,0)');g2.addColorStop(1,'rgba(0,0,0,.25)');
+  ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+  ctx.globalAlpha=.025;ctx.fillStyle='#000';
+  for(var y=0;y<H;y+=3)ctx.fillRect(0,y,W,1);
+  ctx.globalAlpha=1;
+}
+
+/* ═══════════ INIT ═══════════ */
+function init(){
+  sd=42;mkPts();mkMetrics();mkStreams();
+  titled=false;ended=false;
+  document.getElementById('title').classList.remove('on');
+  document.getElementById('tN').classList.remove('on');
+  document.getElementById('tR').classList.remove('on');
+  document.getElementById('tP').classList.remove('on');
+  document.getElementById('skip').classList.remove('off');
+}
+function showT(){
+  if(titled)return;titled=true;
+  document.getElementById('title').classList.add('on');
+  setTimeout(function(){
+    document.getElementById('tN').classList.add('on');
+    document.getElementById('tR').classList.add('on');
+    document.getElementById('tP').classList.add('on');
+  },80);
+}
+
+/* ═══════════ MAIN LOOP ═══════════ */
+init();
+prevNow=performance.now();
+
+function loop(now){
+  requestAnimationFrame(loop);
+  var dt=(now-prevNow)/1000;if(dt>.1)dt=.016;prevNow=now;fc++;
+  if(paused)return;
+  t+=dt;if(!ended)sk+=dt;
+  if(sk>TOT){sk=TOT;ended=true;}
+
+  var ph=gp(sk);
+  var fade=sm(0,1.2,sk);
+
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  var bg=ctx.createRadialGradient(W*.5,H*.46,0,W*.5,H*.46,W*.55);
+  bg.addColorStop(0,ha(NAVY,.6));bg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  drGrid(fade*(ph.i>=6?lr(1,.3,ph.p):1));
+  drStreams(fade*(ph.i>=1?.7:0)*(ph.i>=5?cl(1-ph.p*1.5,0,1):1));
+  drPts(dt,fade*.6);
+  drBrand(ph);
+  drSpreadsheet(ph);
+  drMetrics(ph);
+  drAssessment(ph);
+  drBars(ph);
+  drAttendance(ph);
+  drInsight(ph);
+  drSweep(ph);
+  drFilm();
+
+  if(ph.i>=5&&ph.p>.18)showT();
+  if(ph.i>=6)document.getElementById('skip').classList.add('off');
+  document.getElementById('phL').textContent=PL[ph.i];
+  document.getElementById('progF').style.width=(sk/TOT*100)+'%';
+  dbg.textContent='F:'+fc+' T:'+t.toFixed(1)+'s PH:'+ph.i+' '+W+'x'+H;
+}
+requestAnimationFrame(loop);
+
+/* ═══════════ CONTROLS ═══════════ */
+document.getElementById('bR').onclick=function(){
+  sk=0;t=0;fc=0;ended=false;paused=false;init();prevNow=performance.now();
+  document.getElementById('bP').textContent='Pause';
+};
+document.getElementById('bP').onclick=function(){
+  if(ended&&paused){document.getElementById('bR').onclick();return}
+  paused=!paused;if(!paused)prevNow=performance.now();
+  this.textContent=paused?'Play':'Pause';
+};
+document.getElementById('skip').onclick=function(){
+  sk=PS[5]+.5;if(paused){paused=false;prevNow=performance.now()}
+  document.getElementById('bP').textContent='Pause';
+};
+document.getElementById('bE').onclick=function(){
+  var ow=c.width,oh=c.height,sc=2;
+  c.width=Math.round(W*sc);c.height=Math.round(H*sc);
+  ctx.setTransform(sc,0,0,sc,0,0);
+  var ph=gp(sk);var fade=sm(0,1.2,sk);
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  drGrid(fade);drStreams(fade*.7);drPts(0,fade*.6);drBrand(ph);
+  drSpreadsheet(ph);drMetrics(ph);drAssessment(ph);drBars(ph);
+  drAttendance(ph);drInsight(ph);drSweep(ph);drFilm();
+  var url=c.toDataURL('image/jpeg',.95);
+  c.width=ow;c.height=oh;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  var a=document.createElement('a');a.href=url;
+  a.download='student-dashboard.jpg';a.click();
+};
+document.addEventListener('keydown',function(e){
+  if(e.key===' '){e.preventDefault();document.getElementById('bP').onclick()}
+  else if(e.key==='r')document.getElementById('bR').onclick();
+  else if(e.key==='s'||e.key==='Escape')document.getElementById('skip').onclick();
+});
+</script>
+</body>
+</html>
