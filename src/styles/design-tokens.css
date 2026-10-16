@@ -1,73 +1,65 @@
 /* ============================================================
-   Design tokens — Barshan Ghosh portfolio
-   Single source of truth for colors, spacing, typography, motion.
+   Canonical design tokens — Barshan Ghosh portfolio
+   Keep palette, typography, spacing, and motion values here.
    ============================================================ */
 
 :root {
-  /* ---- Palette: cinematic dark base, restrained electric-blue accents ---- */
-  --bg: #07080c;
-  --bg-soft: #0c0e16;
-  --surface: #11131c;
-  --surface-2: #181b26;
+  color-scheme: dark;
 
-  --ink: #eef0f5;
-  --ink-2: #b9bccb;
-  --ink-muted: #7d8090;
-  --ink-faint: #4a4c5c;
+  /* Palette */
+  --bg: #07090d;
+  --bg-soft: #0b0f15;
+  --surface: #0e131b;
+  --surface-2: #131b26;
+  --ink: #f1f5fa;
+  --ink-2: #c3cedb;
+  --ink-muted: #8493a5;
+  --ink-faint: #5d6b7d;
+  --line: #202b39;
+  --line-strong: #334357;
+  --accent: #83b9ff;
+  --accent-ink: #a8ceff;
+  --accent-soft: #14263b;
+  --accent-grad: linear-gradient(120deg, #83b9ff, #b3d7ff);
+  --accent-2: #7ce3c1;
+  --accent-2-ink: #a0f0d5;
+  --accent-2-soft: #102820;
+  --accent-2-grad: linear-gradient(120deg, #7ce3c1, #83b9ff);
+  --warn: #f2c879;
+  --warn-soft: #2a2112;
 
-  --line: #1c1e2a;
-  --line-strong: #2a2d3a;
+  /* Shadows and corners */
+  --shadow-sm: 0 2px 8px rgb(0 0 0 / 20%);
+  --shadow-md: 0 12px 32px rgb(0 0 0 / 28%);
+  --shadow-lg: 0 24px 64px rgb(0 0 0 / 36%);
+  --shadow-xl: 0 32px 90px rgb(0 0 0 / 42%);
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 24px;
 
-  --accent: #3b82f6;
-  --accent-ink: #6ea0ff;
-  --accent-soft: #0a1a3a;
-  --accent-grad: linear-gradient(135deg, #3b82f6 0%, #6d5efc 100%);
-  --accent-glow: 0 0 60px -12px rgba(59, 130, 246, 0.65);
-
-  --accent-2: #22d3ee;
-  --accent-2-ink: #67e8f9;
-  --accent-2-soft: #062a33;
-  --accent-2-grad: linear-gradient(135deg, #22d3ee 0%, #818cf8 100%);
-
-  --warn: #f59e0b;
-  --warn-soft: #2a2108;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 30px 70px rgba(0, 0, 0, 0.7);
-  --shadow-xl: 0 50px 100px rgba(0, 0, 0, 0.8);
-
-  --radius-sm: 8px;
-  --radius: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-
-  /* ---- Typography ---- */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
-  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-
-  --step-0: clamp(0.8rem, 0.74rem + 0.3vw, 1rem);
-  --step-1: clamp(0.92rem, 0.86rem + 0.3vw, 1.05rem);
-  --step-2: clamp(1.05rem, 0.98rem + 0.35vw, 1.18rem);
-  --step-3: clamp(1.2rem, 1.12rem + 0.4vw, 1.35rem);
-  --step-4: clamp(1.4rem, 1.3rem + 0.5vw, 1.6rem);
-  --step-5: clamp(1.7rem, 1.55rem + 0.75vw, 2rem);
-  --step-6: clamp(2.1rem, 1.9rem + 1vw, 2.5rem);
-  --step-7: clamp(2.6rem, 2.3rem + 1.25vw, 3.2rem);
-  --step-8: clamp(3.2rem, 2.8rem + 1.6vw, 4rem);
-  --step-9: clamp(4rem, 3.4rem + 2vw, 5.5rem);
-
+  /* Typography */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", monospace;
+  --step-0: clamp(0.8125rem, 0.75rem + 0.3125vw, 1rem);
+  --step-1: clamp(0.9375rem, 0.875rem + 0.3125vw, 1.0625rem);
+  --step-2: clamp(1.0625rem, 1rem + 0.3125vw, 1.1875rem);
+  --step-3: clamp(1.25rem, 1.1875rem + 0.3125vw, 1.375rem);
+  --step-4: clamp(1.5rem, 1.375rem + 0.625vw, 1.625rem);
+  --step-5: clamp(1.875rem, 1.6875rem + 0.9375vw, 2rem);
+  --step-6: clamp(2.25rem, 2rem + 1.25vw, 2.5rem);
+  --step-7: clamp(2.8125rem, 2.5rem + 1.5625vw, 3rem);
+  --step-8: clamp(3.5rem, 3rem + 2.5vw, 4rem);
+  --step-9: clamp(4.5rem, 3.5rem + 3.5vw, 6rem);
   --measure: 68ch;
 
-  /* ---- Layout ---- */
-  --header-h: 72px;
+  /* Layout */
+  --header-h: 76px;
   --nav-w: min(1180px, calc(100% - 2.5rem));
   --content-w: min(1180px, calc(100% - 2.5rem));
 
-  /* ---- Motion ---- */
+  /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -76,39 +68,4 @@
   --dur-slow: 520ms;
   --dur-xslow: 800ms;
   --dur-xxslow: 1200ms;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f4f4f2;
-    --bg-soft: #eaeae6;
-    --surface: #ffffff;
-    --surface-2: #f1f1ec;
-
-    --ink: #0d0d0f;
-    --ink-2: #2a2a2e;
-    --ink-muted: #5c5c55;
-    --ink-faint: #8c8c86;
-
-    --line: #e4e4de;
-    --line-strong: #d4d4cd;
-
-    --accent: #2f6bff;
-    --accent-ink: #1f54d6;
-    --accent-soft: #e8f0fe;
-    --accent-grad: linear-gradient(135deg, #2f6bff 0%, #7b4bff 100%);
-
-    --accent-2: #0f9d6b;
-    --accent-2-ink: #0b7d54;
-    --accent-2-soft: #e3f4ec;
-    --accent-2-grad: linear-gradient(135deg, #0f9d6b 0%, #2fb8c4 100%);
-
-    --warn: #b5770f;
-    --warn-soft: #fdf3e0;
-
-    --shadow-sm: 0 1px 2px rgba(15, 15, 15, 0.06);
-    --shadow-md: 0 8px 24px rgba(15, 15, 15, 0.08);
-    --shadow-lg: 0 24px 56px rgba(15, 15, 15, 0.10);
-    --shadow-xl: 0 40px 80px rgba(15, 15, 15, 0.14);
-  }
 }
