@@ -5,6 +5,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2026-10-16] — Clarity and content hierarchy audit
+
+### Changed
+- Reordered the homepage so selected project cards appear before the longer animated walkthroughs.
+- Added an explicit Interactive Walkthroughs heading to distinguish demonstrations from the project index.
+- Removed the forced startup overlay and its timer/script; content is visible immediately.
+- Reduced the background grid and radial glow, and removed blur from the fixed navigation dock.
+- Corrected stylesheet order so the base styles load before the portfolio-specific system styles.
+- Fixed common UTF-8 mojibake in homepage labels and symbols.
+- Marked Money Calculator as in progress to reflect ongoing development.
+
+### Fixed
+- Removed duplicate language and lastUpdated declarations from the project content schema.
+- Replaced the stale homepage ordering that placed four long demonstrations before the selected project index.
+
+### Verification
+- Source changes are committed to main.
+- Vercel deployment is pending; the live result and production build still need confirmation.
+- Follow-up maintainability work: extract index.astro sections into components and consolidate overlapping CSS tokens.
+
+---
+
 ## [2026-10-13] — Full redesign: ranak.bio-inspired terminal aesthetic
 
 ### Changed
