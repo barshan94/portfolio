@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Corrected stylesheet order so the base styles load before the portfolio-specific system styles.
 - Fixed common UTF-8 mojibake in homepage labels and symbols.
 - Marked Money Calculator as in progress to reflect ongoing development.
+- Added a responsive, scannable grid of all 12 original digital marketing GitHub repositories directly below the animation, outside the selected-project index.
 
 ### Fixed
 - Removed duplicate language and lastUpdated declarations from the project content schema.
@@ -22,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Verification
 - Source changes are committed to main.
-- Vercel deployment is pending; the live result and production build still need confirmation.
+- The base clarity/hierarchy changes passed Vercel. The follow-up 12-repository card update is awaiting its own deployment check.
 - Follow-up maintainability work: extract index.astro sections into components and consolidate overlapping CSS tokens.
 
 ---
