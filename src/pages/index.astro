@@ -578,39 +578,21 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 
       {otherProjects.length > 0 ? (
         <div class="project-grid">
-          <article class="project-card project-card-digital-marketing" data-reveal>
-            <div class="project-card-top">
-              <span class="project-number">01</span>
-              <span class="project-category">Digital Marketing</span>
-            </div>
-            <div class="project-art art-marketing-system" aria-hidden="true">
-              <div class="marketing-art-orbit orbit-a"></div>
-              <div class="marketing-art-orbit orbit-b"></div>
-              <div class="marketing-art-core">GROWTH</div>
-              <span class="marketing-art-node node-search">SEARCH</span>
-              <span class="marketing-art-node node-local">GBP</span>
-              <span class="marketing-art-node node-video">YOUTUBE</span>
-              <span class="marketing-art-node node-ads">PAID ADS</span>
-              <span class="marketing-art-node node-content">CONTENT</span>
-              <span class="marketing-art-node node-automation">AUTOMATION</span>
-            </div>
-            <div class="project-card-body">
-              <h3>Digital Marketing &amp; Growth Systems</h3>
-              <p class="project-description">
-                One connected marketing project combining keyword research, Google Business Profile (GBP),
-                YouTube SEO, Facebook ad campaigns, content, website audits, WordPress, design, and Manychat automation.
-                See the complete workflow in the interactive showcase above.
-              </p>
-              <div class="tag-list project-tags">
-                <span>SEO</span><span>Google Business Profile</span><span>YouTube SEO</span>
-                <span>Facebook Ads</span><span>WordPress</span><span>Automation</span>
+          {digitalMarketingRepos.map((repo, index) => (
+            <article class="project-card project-card-digital-marketing" data-reveal>
+              <div class="project-card-top">
+                <span class="project-number">{String(index + 1).padStart(2, "0")}</span>
+                <span class="project-category">{repo.category}</span>
               </div>
-              <div class="project-card-links">
-                <a href="#digital-growth-showcase">View animation <span aria-hidden="true">↗</span></a>
-                <a href="https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html" target="_blank" rel="noopener noreferrer">GitHub source <span aria-hidden="true">↗</span></a>
+              <div class="project-card-body">
+                <h3>{repo.name}</h3>
+                <p class="project-description">{repo.description}</p>
+                <div class="project-card-links">
+                  <a href={repo.url} target="_blank" rel="noopener noreferrer">GitHub repository <span aria-hidden="true">↗</span></a>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          ))}
           {otherProjects.map((project, index) => (
             <article
               class:list={[
@@ -3208,6 +3190,11 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     .digital-growth-source-link .button { width: fit-content; }
   }
 
+  /* Individual repositories in the unified digital marketing project */
+  .project-card-digital-marketing .project-card-body { min-height: 190px; }
+  .project-card-digital-marketing .project-card-body h3 { font-size: 1.22rem; line-height: 1.35; }
+  .project-card-digital-marketing .project-description { min-height: 3.2em; }
+  .project-card-digital-marketing .project-card-links { margin-top: auto; }
   /* Unified digital marketing card art */
   .art-marketing-system {
     position: relative; min-height: 210px; overflow: hidden;
