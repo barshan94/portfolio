@@ -38,20 +38,20 @@ This portfolio is a single-page static site. Before making changes:
 src/
   pages/index.astro     ← the only page; all content comes from collections
   content/
-    config.ts           ← collection schemas (projects, cv)
+    content.config.ts   ← collection schemas (projects, cv)
     projects/*.md       ← one file per project
     cv/profile.md       ← bio, experience, skills, contact
   layouts/
     Layout.astro        ← HTML shell, fonts, meta
-    Header.astro        ← sticky nav (mobile toggle included)
+    Header.astro        ← fixed numbered navigation dock
     Footer.astro         ← brand, nav, year
   components/
     SectionHeading.astro ← section header (eyebrow, title, subtitle)
     ProjectCard.astro    ← project card with tags + GitHub/Live links
     TimelineEntry.astro  ← experience timeline entry
   styles/
-    design-tokens.css    ← palette, typography, spacing, dark mode
-    global.css           ← reset, utilities, scroll-reveal
+    global.css           ← base tokens, reset, utilities, scroll-reveal
+    system-ui.css        ← portfolio-specific visual overrides
 ```
 
 The site is **static** (output: `static`). No server, no database, no auth. Everything is plain HTML/CSS/JS built by Astro.
@@ -70,8 +70,8 @@ Frontmatter schemas are in `src/content/config.ts`. If you change a schema, upda
 
 ## Styling rules
 
-- **Design tokens only.** All colors, spacing, and typography come from `src/styles/design-tokens.css`. No hardcoded hex values in components.
-- **Dark mode** is handled via `@media (prefers-color-scheme: dark)` in the token file — automatic, no JS.
+- **CSS load order matters.** `Layout.astro` imports `global.css` first and `system-ui.css` second so the portfolio-specific styles override the base layer.
+- **Known cleanup item:** token definitions still overlap between these files; consolidate them into one canonical source in a dedicated follow-up, without changing the visual system unintentionally.
 - **Fonts** load from Google Fonts (Inter + JetBrains Mono). No local font files.
 - **Animations** use the `.reveal` class + IntersectionObserver. Respect `prefers-reduced-motion`.
 
@@ -80,4 +80,4 @@ Frontmatter schemas are in `src/content/config.ts`. If you change a schema, upda
 - Distinguish **employment**, **internships**, **freelance**, and **personal projects** in the timeline (`type` prop: `work` | `internship` | `project`).
 - Distinguish **completed** work from **work in progress** (`status` field in project frontmatter).
 - Keep the tone professional, direct, and natural. No buzzwords, no invented achievements.
-- Contact details are placeholders — update them before going live.
+- Contact details are verified in `MEMORY.md`; do not replace them with placeholders or invent alternate contact information.
