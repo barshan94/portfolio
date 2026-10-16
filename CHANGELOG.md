@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Added an explicit Interactive Walkthroughs heading to distinguish demonstrations from the project index.
 - Removed the forced startup overlay and its timer/script; content is visible immediately.
 - Reduced the background grid and radial glow, and removed blur from the fixed navigation dock.
+- Consolidated palette, typography, spacing, and motion tokens into `design-tokens.css`.
+- Increased muted-text contrast and moved tablet navigation into the normal document flow to prevent it overlapping content.
 - Corrected stylesheet order so the base styles load before the portfolio-specific system styles.
 - Fixed common UTF-8 mojibake in homepage labels and symbols.
 - Marked Money Calculator as in progress to reflect ongoing development.
@@ -24,7 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Verification
 - Source changes are committed to main.
 - Vercel checks succeeded for the clarity/hierarchy changes and the 12-repository card grid. A screenshot-based visual review remains useful.
-- Follow-up maintainability work: extract index.astro sections into components and consolidate overlapping CSS tokens.
+- Follow-up maintainability work: extract index.astro sections into components and replace remaining hardcoded style values with design tokens where practical.
 
 ---
 
