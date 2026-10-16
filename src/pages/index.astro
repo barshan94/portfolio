@@ -57,7 +57,7 @@ const getProjectUpdatedDate = (
     : "";
 
 const getExperienceDate = (experience: any) =>
-  [experience.start, experience.end].filter(Boolean).join(" â€” ");
+  [experience.start, experience.end].filter(Boolean).join(" — ");
 
 const getWritingLink = (entry: (typeof writing)[number]) =>
   entry.data.url || `/writing/${entry.id}/`;
@@ -96,27 +96,10 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 </script>
 
 <Layout
-  title="Barshan Ghosh â€” Software Developer"
+  title="Barshan Ghosh — Software Developer"
   description="Barshan Ghosh is a computer science graduate and software developer interested in practical web applications, financial systems, and AI engineering."
 >
   
-<div id="systemBoot" class="system-boot" role="status" aria-live="polite">
-  <div class="boot-panel">
-    <div class="boot-brand"><span>BG</span> / SYSTEM INITIALIZER</div>
-    <div class="boot-rule"></div>
-    <p class="boot-kicker">INITIALIZING SYSTEM â€” B.G / 2026</p>
-    <h2>Building systems<span class="boot-cursor">_</span></h2>
-    <div class="boot-log" aria-hidden="true">
-      <p><span>[ OK ]</span> INTERFACE KERNEL</p>
-      <p><span>[ OK ]</span> FINANCIAL SYSTEMS</p>
-      <p><span>[ OK ]</span> ENGINEERING PORTFOLIO</p>
-    </div>
-    <div class="boot-progress"><span></span></div>
-    <div class="boot-bottom"><span>STARTUP SEQUENCE</span><span>2026 / READY</span></div>
-    <button class="boot-skip" id="skipBoot" type="button">SKIP INTRO â†—</button>
-  </div>
-</div>
-
 <main class="portfolio-shell">
     <!-- HERO -->
     <section class="hero section-wrap" id="about" aria-labelledby="hero-title">
@@ -141,10 +124,10 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         <div class="hero-actions">
           <a class="button button-primary" href="#flagship">
             Explore my work
-            <span aria-hidden="true">â†˜</span>
+            <span aria-hidden="true">↘</span>
           </a>
           <a class="button button-quiet" href="#contact">
-            Get in touch <span aria-hidden="true">â†—</span>
+            Get in touch <span aria-hidden="true">↗</span>
           </a>
         </div>
 
@@ -196,7 +179,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           <span class="console-state">PASSING*</span>
         </div>
         <p class="console-footnote">*Previously recorded unit and integration test baseline; not a live CI status.</p>
-        <div class="console-bottomline"><span>FINANCIAL SYSTEMS</span><span>BUILD / WITH PURPOSE â†—</span></div>
+        <div class="console-bottomline"><span>FINANCIAL SYSTEMS</span><span>BUILD / WITH PURPOSE ↗</span></div>
       </div>
     </section>
 
@@ -209,7 +192,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">01 â€” FEATURED PROJECT</p>
+            <p class="section-kicker">01 — FEATURED PROJECT</p>
             <h2 id="flagship-title">
               Money, made <span class="accent-text">understandable.</span>
             </h2>
@@ -311,7 +294,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  View source <span aria-hidden="true">â†—</span>
+                  View source <span aria-hidden="true">↗</span>
                 </a>
               )}
 
@@ -322,7 +305,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Open project <span aria-hidden="true">â†—</span>
+                  Open project <span aria-hidden="true">↗</span>
                 </a>
               )}
             </div>
@@ -413,13 +396,176 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             </div>
 
             <p class="concept-note">
-              <span aria-hidden="true">â†³</span>
-              Concept visualization â€” illustrative shapes, not live financial data.
+              <span aria-hidden="true">↳</span>
+              Concept visualization — illustrative shapes, not live financial data.
             </p>
           </div>
         </div>
       </section>
     )}
+
+    <!-- PROJECTS -->
+    <section
+      class="projects section-wrap section-block"
+      id="projects"
+      aria-labelledby="projects-title"
+    >
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">02 — SELECTED WORK</p>
+          <h2 id="projects-title">
+            Different problems.<br />
+            <span class="accent-text">Different approaches.</span>
+          </h2>
+        </div>
+        <p class="section-sub">
+          A focused selection of software, education, research, and product projects.
+        </p>
+      </div>
+
+      {otherProjects.length > 0 ? (
+        <div class="project-grid">
+          {otherProjects.map((project, index) => (
+            <article
+              class:list={[
+                "project-card",
+                `project-card-${projectId(project)}`,
+              ]}
+              data-reveal
+            >
+              <div class="project-card-top">
+                <span class="project-number">{projectNumber(index + 2)}</span>
+                <span class="project-category">
+                  {projectId(project) === "asta-store"
+                    ? "E-commerce"
+                    : projectId(project) === "mount-royal-academy"
+                      ? "Education"
+                      : projectId(project) === "biot-thesis"
+                        ? "Research"
+                        : "Selected project"}
+                </span>
+              </div>
+
+              <div class="project-art" aria-hidden="true">
+                                {projectId(project) === "asta-store" ? (
+                  <div class="art-asta-animation">
+                    <iframe
+                      src="/asta-store-animation.html"
+                      title="Asta Store e-commerce animation"
+                      loading="lazy"
+                      tabindex="-1"
+                    ></iframe>
+                  </div>
+                ) : projectId(project) === "mount-royal-academy" ? (
+                  <div class="art-academy-animation">
+                    <iframe
+                      src="/mount-royal-academy-animation.html"
+                      title="Mount Royal Academy animation"
+                      loading="lazy"
+                      tabindex="-1"
+                    ></iframe>
+                  </div>
+                ) : projectId(project) === "biot-thesis" ? (  
+                
+
+                  <div class="art-research">
+                    <div class="research-node node-one">DATA</div>
+                    <div class="research-node node-two">MODEL</div>
+                    <div class="research-node node-three">RESULT</div>
+                    <div class="research-line line-one"></div>
+                    <div class="research-line line-two"></div>
+                    <div class="research-line line-three"></div>
+                  </div>
+                ) : (
+                  <div class="art-generic">
+                    <span class="generic-orbit"></span>
+                    <span class="generic-core">✳</span>
+                    <span class="generic-line generic-line-one"></span>
+                    <span class="generic-line generic-line-two"></span>
+                  </div>
+                )}
+              </div>
+
+              <div class="project-card-body">
+                <h3>{project.data.title}</h3>
+                <p class="project-description">
+                  {project.data.description}
+                </p>
+
+{(project.data.language || getProjectUpdatedDate(project)) && (
+  <div class="project-meta">
+    {project.data.language && (
+      <span class="project-language">
+        <i aria-hidden="true"></i>
+        {project.data.language}
+      </span>
+    )}
+    {getProjectUpdatedDate(project) && (
+      <span>Updated {getProjectUpdatedDate(project)}</span>
+    )}
+  </div>
+)}
+
+
+                {getProjectTags(project).length > 0 && (
+                  <div class="tag-list project-tags">
+                    {getProjectTags(project).slice(0, 5).map((tag) => (
+                      <span>{tag}</span>
+                    ))}
+                  </div>
+                )}
+
+                <div class="project-card-links">
+                  {getProjectLink(project) && (
+                    <a
+                      href={getProjectLink(project)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View project <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+
+                  {getProjectRepo(project) && (
+                    <a
+                      href={getProjectRepo(project)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Source code <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state" data-reveal>
+          <span class="empty-mark">✳</span>
+          <p>More projects will appear here as they are added to the portfolio.</p>
+        </div>
+      )}
+    </section>
+
+    <section
+      class="walkthrough-intro section-wrap section-block"
+      id="project-walkthroughs"
+      aria-labelledby="walkthroughs-title"
+    >
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">INTERACTIVE WALKTHROUGHS</p>
+          <h2 id="walkthroughs-title">
+            See the work <span class="accent-text">in motion.</span>
+          </h2>
+        </div>
+        <p class="section-sub">
+          Selected demonstrations show how the applications and workflows are organized.
+          Sample-data simulations are clearly labelled; they are not live production systems.
+        </p>
+      </div>
+    </section>
 
     <!-- STUDENT PERFORMANCE DASHBOARD -->
     <section
@@ -558,150 +704,6 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section
-      class="projects section-wrap section-block"
-      id="projects"
-      aria-labelledby="projects-title"
-    >
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="section-kicker">02 â€” SELECTED WORK</p>
-          <h2 id="projects-title">
-            Different problems.<br />
-            <span class="accent-text">Different approaches.</span>
-          </h2>
-        </div>
-        <p class="section-sub">
-          A focused selection of software, education, research, and product projects.
-        </p>
-      </div>
-
-      {otherProjects.length > 0 ? (
-        <div class="project-grid">
-          {otherProjects.map((project, index) => (
-            <article
-              class:list={[
-                "project-card",
-                `project-card-${projectId(project)}`,
-              ]}
-              data-reveal
-            >
-              <div class="project-card-top">
-                <span class="project-number">{projectNumber(index + 2)}</span>
-                <span class="project-category">
-                  {projectId(project) === "asta-store"
-                    ? "E-commerce"
-                    : projectId(project) === "mount-royal-academy"
-                      ? "Education"
-                      : projectId(project) === "biot-thesis"
-                        ? "Research"
-                        : "Selected project"}
-                </span>
-              </div>
-
-              <div class="project-art" aria-hidden="true">
-                                {projectId(project) === "asta-store" ? (
-                  <div class="art-asta-animation">
-                    <iframe
-                      src="/asta-store-animation.html"
-                      title="Asta Store e-commerce animation"
-                      loading="lazy"
-                      tabindex="-1"
-                    ></iframe>
-                  </div>
-                ) : projectId(project) === "mount-royal-academy" ? (
-                  <div class="art-academy-animation">
-                    <iframe
-                      src="/mount-royal-academy-animation.html"
-                      title="Mount Royal Academy animation"
-                      loading="lazy"
-                      tabindex="-1"
-                    ></iframe>
-                  </div>
-                ) : projectId(project) === "biot-thesis" ? (  
-                
-
-                  <div class="art-research">
-                    <div class="research-node node-one">DATA</div>
-                    <div class="research-node node-two">MODEL</div>
-                    <div class="research-node node-three">RESULT</div>
-                    <div class="research-line line-one"></div>
-                    <div class="research-line line-two"></div>
-                    <div class="research-line line-three"></div>
-                  </div>
-                ) : (
-                  <div class="art-generic">
-                    <span class="generic-orbit"></span>
-                    <span class="generic-core">âœ³</span>
-                    <span class="generic-line generic-line-one"></span>
-                    <span class="generic-line generic-line-two"></span>
-                  </div>
-                )}
-              </div>
-
-              <div class="project-card-body">
-                <h3>{project.data.title}</h3>
-                <p class="project-description">
-                  {project.data.description}
-                </p>
-
-{(project.data.language || getProjectUpdatedDate(project)) && (
-  <div class="project-meta">
-    {project.data.language && (
-      <span class="project-language">
-        <i aria-hidden="true"></i>
-        {project.data.language}
-      </span>
-    )}
-    {getProjectUpdatedDate(project) && (
-      <span>Updated {getProjectUpdatedDate(project)}</span>
-    )}
-  </div>
-)}
-
-
-                {getProjectTags(project).length > 0 && (
-                  <div class="tag-list project-tags">
-                    {getProjectTags(project).slice(0, 5).map((tag) => (
-                      <span>{tag}</span>
-                    ))}
-                  </div>
-                )}
-
-                <div class="project-card-links">
-                  {getProjectLink(project) && (
-                    <a
-                      href={getProjectLink(project)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View project <span aria-hidden="true">â†—</span>
-                    </a>
-                  )}
-
-                  {getProjectRepo(project) && (
-                    <a
-                      href={getProjectRepo(project)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Source code <span aria-hidden="true">â†—</span>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div class="empty-state" data-reveal>
-          <span class="empty-mark">âœ³</span>
-          <p>More projects will appear here as they are added to the portfolio.</p>
-        </div>
-      )}
-    </section>
-
     <!-- EXPERIENCE -->
     {cv?.experience?.length && (
       <section
@@ -711,7 +713,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">03 â€” EXPERIENCE</p>
+            <p class="section-kicker">03 — EXPERIENCE</p>
             <h2 id="experience-title">
               Learning by <span class="accent-text">doing.</span>
             </h2>
@@ -767,7 +769,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">04 â€” TOOLKIT</p>
+            <p class="section-kicker">04 — TOOLKIT</p>
             <h2 id="skills-title">
               Tools for <span class="accent-text">the work.</span>
             </h2>
@@ -802,7 +804,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   <p>{skill.description}</p>
                 ) : null}
               </div>
-              <span class="skill-arrow" aria-hidden="true">â†—</span>
+              <span class="skill-arrow" aria-hidden="true">↗</span>
             </article>
           ))}
         </div>
@@ -818,7 +820,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       >
         <div class="section-heading" data-reveal>
           <div>
-            <p class="section-kicker">05 â€” NOTES & IDEAS</p>
+            <p class="section-kicker">05 — NOTES & IDEAS</p>
             <h2 id="writing-title">
               Thinking in <span class="accent-text">public.</span>
             </h2>
@@ -845,7 +847,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                   <p>{entry.data.excerpt || entry.data.description}</p>
                 )}
               </div>
-              <span class="writing-arrow" aria-hidden="true">â†—</span>
+              <span class="writing-arrow" aria-hidden="true">↗</span>
             </a>
           ))}
         </div>
@@ -860,7 +862,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     >
       <div class="contact-wrap" data-reveal>
         <div class="contact-copy">
-          <p class="section-kicker">06 â€” CONTACT</p>
+          <p class="section-kicker">06 — CONTACT</p>
           <h2 id="contact-title">
             Have a good<br />
             <span class="accent-text">problem to solve?</span>
@@ -878,7 +880,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 href={`mailto:${contact.email}`}
               >
                 <span>{contact.email}</span>
-                <span aria-hidden="true">â†—</span>
+                <span aria-hidden="true">↗</span>
               </a>
             )}
 
@@ -892,7 +894,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 rel="noopener noreferrer"
               >
                 <span>GitHub</span>
-                <span aria-hidden="true">â†—</span>
+                <span aria-hidden="true">↗</span>
               </a>
             )}
 
@@ -906,7 +908,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 rel="noopener noreferrer"
               >
                 <span>LinkedIn</span>
-                <span aria-hidden="true">â†—</span>
+                <span aria-hidden="true">↗</span>
               </a>
             )}
           </div>
@@ -930,80 +932,13 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       </a>
       <p>Built with care, curiosity, and Astro.</p>
       <a class="back-to-top" href="#about">
-        Back to top <span aria-hidden="true">â†‘</span>
+        Back to top <span aria-hidden="true">↑</span>
       </a>
-      <span class="footer-year">Â© <span id="year">{currentYear}</span></span>
+      <span class="footer-year">© <span id="year">{currentYear}</span></span>
     </footer>
   </main>
 
 <style>
-.system-boot {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
-  color: #ededdf;
-  background: #090a09;
-  font-family: "JetBrains Mono", monospace;
-  animation: boot-screen-out 0.45s ease 1.65s forwards;
-}
-.boot-panel { width: min(100%, 540px); }
-.boot-brand, .boot-bottom {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  color: #888b80;
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-}
-.boot-brand span { color: #c6ff4d; font-weight: 700; }
-.boot-rule { height: 1px; margin: 1.3rem 0 2.3rem; background: #30332b; }
-.boot-kicker { color: #c6ff4d; font-size: 0.7rem; letter-spacing: 0.08em; }
-.boot-panel h2 {
-  margin: 0.8rem 0 1.7rem;
-  font-size: clamp(1.8rem, 6vw, 3.2rem);
-  letter-spacing: -0.07em;
-  line-height: 1.1;
-}
-.boot-cursor { color: #c6ff4d; animation: boot-blink 0.7s steps(2) infinite; }
-.boot-log { margin: 0 0 1.8rem; }
-.boot-log p { margin: 0.65rem 0; color: #92958b; font-size: 0.72rem; }
-.boot-log p span { margin-right: 0.6rem; color: #c6ff4d; }
-.boot-progress { height: 2px; overflow: hidden; background: #30332b; }
-.boot-progress span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: #c6ff4d;
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: boot-progress 1.35s ease forwards;
-}
-.boot-bottom { margin-top: 0.8rem; font-size: 0.58rem; }
-.boot-skip {
-  display: block;
-  margin: 2rem 0 0 auto;
-  padding: 0.6rem 0;
-  border: 0;
-  color: #a4a79d;
-  background: transparent;
-  font: inherit;
-  font-size: 0.65rem;
-  cursor: pointer;
-}
-.boot-skip:hover { color: #c6ff4d; }
-@keyframes boot-progress { to { transform: scaleX(1); } }
-@keyframes boot-blink { 50% { opacity: 0; } }
-@keyframes boot-screen-out {
-  to { opacity: 0; visibility: hidden; pointer-events: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .system-boot { animation: none; }
-  .boot-progress span, .boot-cursor { animation: none; }
-}
-
   /* Student Performance Dashboard showcase */
   .dashboard-showcase .section-heading {
     margin-bottom: 34px;
@@ -1052,30 +987,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 </style>
 
 
-<script>
-  const bootScreen = document.getElementById("systemBoot");
-  const skipBoot = document.getElementById("skipBoot");
-  const reduceBootMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function finishBoot() {
-    if (!bootScreen) return;
-    bootScreen.classList.add("boot-finished");
-    bootScreen.style.animation = "none";
-    bootScreen.remove();
-  }
-
-  if (bootScreen) {
-    if (reduceBootMotion) {
-      finishBoot();
-    } else {
-      const bootTimer = window.setTimeout(finishBoot, 2200);
-      skipBoot?.addEventListener("click", () => {
-        window.clearTimeout(bootTimer);
-        finishBoot();
-      });
-    }
-  }
-</script>
 
 </Layout>
 
