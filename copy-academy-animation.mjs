@@ -20,6 +20,11 @@ const animations = [
     destination: 'asta-store-animation.html',
     label: 'Asta Store',
   },
+  {
+    source: 'digital-growth-marketing-animation.html',
+    destination: 'digital-growth-marketing-animation.html',
+    label: 'Digital Growth & Marketing Systems',
+  },
 ];
   
  
