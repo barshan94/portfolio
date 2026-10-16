@@ -50,7 +50,8 @@ src/
     ProjectCard.astro    ← project card with tags + GitHub/Live links
     TimelineEntry.astro  ← experience timeline entry
   styles/
-    global.css           ← base tokens, reset, utilities, scroll-reveal
+    design-tokens.css   ← canonical palette, typography, spacing, and motion tokens
+    global.css           ← reset, utilities, scroll-reveal
     system-ui.css        ← portfolio-specific visual overrides
 ```
 
@@ -66,12 +67,12 @@ Projects and CV data live in **Astro content collections**:
 - **Update CV / bio / skills / contact** → edit `src/content/cv/profile.md`.
 - **Reorder projects** → the `featured` flag separates featured cards from the rest; within each group, order is by filename.
 
-Frontmatter schemas are in `src/content/config.ts`. If you change a schema, update the existing `.md` files to match or the build will fail.
+Frontmatter schemas are in `src/content.config.ts`. If you change a schema, update the existing `.md` files to match or the build will fail.
 
 ## Styling rules
 
-- **CSS load order matters.** `Layout.astro` imports `global.css` first and `system-ui.css` second so the portfolio-specific styles override the base layer.
-- **Known cleanup item:** token definitions still overlap between these files; consolidate them into one canonical source in a dedicated follow-up, without changing the visual system unintentionally.
+- **CSS load order matters.** `Layout.astro` imports `design-tokens.css`, then `global.css`, then `system-ui.css`.
+- **Token source:** `design-tokens.css` is canonical. Keep future colors, spacing, typography, and motion values there; avoid duplicate root token blocks.
 - **Fonts** load from Google Fonts (Inter + JetBrains Mono). No local font files.
 - **Animations** use the `.reveal` class + IntersectionObserver. Respect `prefers-reduced-motion`.
 
