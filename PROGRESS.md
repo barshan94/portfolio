@@ -2,9 +2,29 @@
 
 Tracks what has been done, what is in progress, and what remains.
 
-**Last updated:** 2026-10-12
+**Last updated:** 2026-10-16
 
 ---
+
+## Portfolio clarity and hierarchy audit (2026-10-16)
+
+- Reordered homepage content: selected project cards now appear before the long animated walkthroughs.
+- Added an Interactive Walkthroughs heading to separate demonstrations from the project index.
+- Removed the timed startup overlay so content appears immediately.
+- Reduced background grid/glow and removed blur from the fixed navigation dock.
+- Corrected stylesheet load order: base CSS first, portfolio-specific CSS second.
+- Repaired common mojibake in homepage text and symbols.
+- Marked Money Calculator as in progress.
+- Removed duplicate project schema fields.
+- Updated README, MEMORY, CHANGELOG, and CHECKPOINT to reflect the current structure.
+- **Verification pending:** Vercel must report a successful build/deployment before the changes are considered complete.
+
+### Next
+
+1. Verify production deployment.
+2. Split the oversized homepage into maintainable Astro components.
+3. Consolidate overlapping CSS tokens.
+4. Inspect mobile and desktop rendering after deployment.
 
 ## ✅ Completed
 
@@ -55,12 +75,13 @@ Tracks what has been done, what is in progress, and what remains.
 
 ## ⬜ Remaining
 
-1. Add a photo or custom mark — no images on the site yet.
-2. Deploy target — not yet decided. Static output is Vercel/Netlify-ready.
-3. Automate rebuilds (optional) — wire GitHub → Netlify/Vercel build hook so content changes redeploys without a manual `npm run build`.
+1. Confirm latest Vercel build and live rendering.
+2. Refactor the 3,000+ line homepage into components.
+3. Consolidate CSS tokens and remove obsolete style rules.
+4. Consider a personal photo if a suitable image is supplied.
 
 ---
 
 ## 🔧 In progress
 
-None.
+- Production verification of the clarity/hierarchy changes.
