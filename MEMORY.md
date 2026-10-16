@@ -14,7 +14,8 @@ Last updated: 2026-10-16 (portfolio audit: corrected CSS load order, reduced haz
 - Money Calculator is marked in progress, matching the active development state.
 - Cleaned duplicate language and lastUpdated declarations from the project collection schema.
 - Common mojibake in homepage text and symbols was corrected.
-- Latest changes are committed to main; the Vercel build/deployment must be checked before calling this audit pass verified.
+- The Digital Marketing & Growth Systems section now renders the 12 actual repositories as individual responsive cards below the animation; they remain separate from the "Different problems. Different approaches." project index.
+- The clarity/hierarchy changes passed Vercel; the latest 12-repository card update is awaiting its deployment check.
 
 ## Architecture
 
