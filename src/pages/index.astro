@@ -516,34 +516,6 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
 
 
 
-    <!-- DIGITAL GROWTH & MARKETING SYSTEMS -->
-    <section class="marketing-showcase section-wrap section-block" id="digital-growth-marketing" aria-labelledby="marketing-title">
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="section-kicker">DIGITAL MARKETING / CONNECTED WORKFLOW</p>
-          <h2 id="marketing-title">Digital Marketing &amp;<br /><span class="accent-text">Growth Systems.</span></h2>
-        </div>
-        <p class="section-sub">
-          One unified digital marketing project combining keyword research, Google Business Profile (GBP), content,
-          YouTube SEO, Facebook ad campaigns, website optimization, WordPress implementation, creative, and automation.
-        </p>
-      </div>
-      <div class="marketing-animation-frame">
-        <iframe src="/digital-growth-marketing-animation.html" title="Interactive Digital Growth and Marketing Systems showcase" loading="lazy" allow="fullscreen"></iframe>
-      </div>
-      <p class="marketing-demo-note">
-        One unified portfolio project connecting 12 supporting repositories into a single marketing workflow.
-        Google Business Profile (GBP) is shown as a distinct local-search capability. No live analytics,
-        advertising accounts, or business profiles are connected.
-      </p>
-      <div class="marketing-showcase-links">
-        <a href="https://github.com/barshan94/KeywordResearch" target="_blank" rel="noopener noreferrer">Keyword research ↗</a>
-        <a href="https://github.com/barshan94/Google-Business-Profile" target="_blank" rel="noopener noreferrer">Google Business Profile (GBP) ↗</a>
-        <a href="https://github.com/barshan94/WebsiteAudit" target="_blank" rel="noopener noreferrer">Website audit ↗</a>
-        <a href="https://github.com/barshan94/AutomationsUsingManychat" target="_blank" rel="noopener noreferrer">Manychat automation ↗</a>
-      </div>
-    </section>
-
     <!-- PROJECTS -->
     <section
       class="projects section-wrap section-block"
@@ -559,24 +531,56 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           </h2>
         </div>
         <p class="section-sub">
-          A selection of applications, web projects, and research work.
-          Each project starts with a different problem to solve.
+          A focused selection of projects. Digital marketing work is presented as one connected system,
+          with its individual repositories grouped inside a single showcase.
         </p>
       </div>
 
       {otherProjects.length > 0 ? (
         <div class="project-grid">
+          <article class="project-card project-card-digital-marketing" data-reveal>
+            <div class="project-card-top">
+              <span class="project-number">01</span>
+              <span class="project-category">Digital Marketing</span>
+            </div>
+            <div class="project-art art-marketing-system" aria-hidden="true">
+              <div class="marketing-art-orbit orbit-a"></div>
+              <div class="marketing-art-orbit orbit-b"></div>
+              <div class="marketing-art-core">GROWTH</div>
+              <span class="marketing-art-node node-search">SEARCH</span>
+              <span class="marketing-art-node node-local">GBP</span>
+              <span class="marketing-art-node node-video">YOUTUBE</span>
+              <span class="marketing-art-node node-ads">PAID ADS</span>
+              <span class="marketing-art-node node-content">CONTENT</span>
+              <span class="marketing-art-node node-automation">AUTOMATION</span>
+            </div>
+            <div class="project-card-body">
+              <h3>Digital Marketing &amp; Growth Systems</h3>
+              <p class="project-description">
+                One connected marketing project combining keyword research, Google Business Profile (GBP),
+                YouTube SEO, Facebook ad campaigns, content, website audits, WordPress, design, and Manychat automation.
+                Explore all 12 supporting repositories in one interactive workflow.
+              </p>
+              <div class="tag-list project-tags">
+                <span>SEO</span><span>Google Business Profile</span><span>YouTube SEO</span>
+                <span>Facebook Ads</span><span>WordPress</span><span>Automation</span>
+              </div>
+              <div class="project-card-links">
+                <a href="/digital-growth-marketing-animation.html">Explore showcase <span aria-hidden="true">↗</span></a>
+                <a href="https://github.com/barshan94/KeywordResearch" target="_blank" rel="noopener noreferrer">Project repository <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
           {otherProjects.map((project, index) => (
             <article
               class:list={[
                 "project-card",
                 `project-card-${projectId(project)}`,
-                index === 0 ? "project-card-featured" : ""
               ]}
               data-reveal
             >
               <div class="project-card-top">
-                <span class="project-number">{projectNumber(index)}</span>
+                <span class="project-number">{projectNumber(index + 1)}</span>
                 <span class="project-category">
                   {projectId(project) === "asta-store"
                     ? "E-commerce"
@@ -3144,22 +3148,37 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 
 
 
-  /* Digital Growth & Marketing Systems showcase */
-  .marketing-showcase .section-heading { margin-bottom: 30px; }
-  .marketing-animation-frame {
-    position: relative; width: 100%; height: clamp(680px, 76vw, 1050px);
-    overflow: hidden; border: 1px solid rgba(117, 240, 197, .22);
-    border-radius: 16px; background: #07100f; box-shadow: 0 24px 70px rgba(0, 0, 0, .24);
+  /* Unified digital marketing card art */
+  .art-marketing-system {
+    position: relative; min-height: 210px; overflow: hidden;
+    display: grid; place-items: center;
+    background: radial-gradient(ellipse at center, rgba(80, 220, 185, .14), transparent 58%), #0a1715;
+    isolation: isolate;
   }
-  .marketing-animation-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
-  .marketing-demo-note { margin: 14px 0 18px; color: var(--muted, #94a3b8); font-size: .84rem; line-height: 1.7; }
-  .marketing-showcase-links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
-  .marketing-showcase-links a { color: var(--accent, #70e1d0); font-size: .88rem; font-weight: 600; text-decoration: none; }
-  .marketing-showcase-links a:hover { text-decoration: underline; }
-  @media (max-width: 900px) { .marketing-animation-frame { height: 820px; } }
+  .marketing-art-orbit { position: absolute; border: 1px solid rgba(117, 240, 197, .25); border-radius: 50%; }
+  .orbit-a { width: 170px; height: 170px; }
+  .orbit-b { width: 245px; height: 245px; border-style: dashed; }
+  .marketing-art-core {
+    z-index: 2; display: grid; place-items: center; width: 82px; height: 82px; border-radius: 50%;
+    background: #12362c; border: 1px solid #75f0c5; color: #c7ffea;
+    font: 700 11px ui-monospace, monospace; letter-spacing: .08em;
+    box-shadow: 0 0 34px rgba(117, 240, 197, .15);
+  }
+  .marketing-art-node {
+    position: absolute; z-index: 3; padding: 6px 8px; border: 1px solid #2c5549; border-radius: 4px;
+    background: #0d211c; color: #b9dfd1; font: 9px ui-monospace, monospace; letter-spacing: .06em;
+  }
+  .node-search { top: 18%; left: 13%; } .node-local { top: 15%; right: 15%; color: #e9d49a; border-color: #76653b; }
+  .node-video { right: 7%; top: 48%; } .node-ads { right: 18%; bottom: 12%; }
+  .node-content { left: 13%; bottom: 17%; } .node-automation { left: 5%; top: 49%; }
+  .project-card-digital-marketing .project-card-links a:first-child { color: var(--accent, #70e1d0); }
+  .project-card-digital-marketing .project-tags { gap: 6px; }
+  .project-card-digital-marketing .project-tags span { font-size: .72rem; }
   @media (max-width: 600px) {
-    .marketing-animation-frame { height: 980px; border-radius: 12px; }
-    .marketing-showcase-links { flex-direction: column; gap: 12px; }
+    .art-marketing-system { min-height: 185px; }
+    .orbit-b { width: 215px; height: 215px; }
+    .node-search { left: 5%; } .node-local { right: 5%; }
+    .node-video { right: 2%; } .node-automation { left: 2%; }
   }
 
 </style>
