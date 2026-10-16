@@ -3,7 +3,7 @@
 Use this file to resume work quickly. It answers: "What is the state of the project right now, and what should I do next?"
 
 **Last checkpoint:** 2026-10-16
-**Build status:** ⏳ Not verified for the latest audit commits; Vercel check is pending.
+**Build status:** ✅ Vercel checks succeeded for the homepage/style changes and 12-repository grid; latest documentation-only commits may trigger a fresh deployment.
 **Live site:** `https://portfolio-beta-eight-b4vx6dfs83.vercel.app/`
 **Local preview:** `npm run preview` → `http://localhost:4321`
 
