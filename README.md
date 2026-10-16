@@ -11,7 +11,7 @@ The homepage is organized in this order so visitors see project evidence before 
 1. **Hero** — engineering focus and a direct path to the work.
 2. **Featured project** — Money Calculator, marked in progress.
 3. **Selected projects** — curated cards from the Astro project collection.
-4. **Interactive walkthroughs** — Student Performance Dashboard, Digital Coaching Management System, 999 National Emergency Service, and Digital Marketing & Growth Systems. These are visual demonstrations; any sample data is illustrative, not live production data.
+4. **Interactive walkthroughs** — Student Performance Dashboard, Digital Coaching Management System, 999 National Emergency Service, and Digital Marketing & Growth Systems. These are visual demonstrations; any sample data is illustrative, not live production data. The digital marketing animation is followed by 12 separate repository cards linking to the original GitHub projects.
 5. **Experience** — employment, internship, and freelance experience distinguished by type.
 6. **Skills** — grouped by domain.
 7. **Writing & Research** — research and project write-ups.
