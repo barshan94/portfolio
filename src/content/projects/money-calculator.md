@@ -3,7 +3,7 @@ title: "Money Calculator"
 description: "A personal finance application built around ledger-connected transactions, account balances, loan lifecycles, tuition payments, and traceable financial corrections."
 tags: ["Next.js 16", "TypeScript", "Supabase", "PostgreSQL", "React 19", "Tailwind", "Recharts"]
 repo: "https://github.com/barshan94/money-calculator"
-status: "completed"
+status: "in-progress"
 featured: true
 accent: "accent"
 ---
