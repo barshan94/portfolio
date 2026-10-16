@@ -38,10 +38,10 @@ body {
   color: var(--ink);
   background-color: var(--bg);
   background-image:
-    linear-gradient(rgb(131 185 255 / 3.5%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(131 185 255 / 3.5%) 1px, transparent 1px),
-    radial-gradient(ellipse at 75% 0%, rgb(43 87 137 / 14%), transparent 55%);
-  background-size: 48px 48px, 48px 48px, auto;
+    linear-gradient(rgb(131 185 255 / 1.5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(131 185 255 / 1.5%) 1px, transparent 1px),
+    radial-gradient(ellipse at 75% 0%, rgb(43 87 137 / 5%), transparent 55%);
+  background-size: 56px 56px, 56px 56px, auto;
   background-attachment: fixed;
 }
 
