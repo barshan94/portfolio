@@ -24,9 +24,9 @@ Tracks what has been done, what is in progress, and what remains.
 
 ### Next
 
-1. Verify production deployment.
-2. Split the oversized homepage into maintainable Astro components.
-3. Inspect mobile and desktop rendering after deployment.
+1. Split the oversized homepage into maintainable Astro components.
+2. Inspect mobile and desktop rendering at common viewport sizes.
+3. Replace generic profile-root project links with direct repositories where verified.
 
 ## ✅ Completed
 
@@ -77,9 +77,9 @@ Tracks what has been done, what is in progress, and what remains.
 
 ## ⬜ Remaining
 
-1. Confirm latest Vercel build and live rendering.
-2. Refactor the 3,000+ line homepage into components.
-3. Inspect mobile and desktop rendering after deployment.
+1. Refactor the 3,000+ line homepage into components.
+2. Inspect mobile and desktop rendering after deployment.
+3. Replace generic profile-root project links where exact repositories can be verified.
 4. Consider a personal photo if a suitable image is supplied.
 
 ---
