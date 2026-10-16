@@ -6,13 +6,18 @@ Built with [Astro](https://astro.build) 7.3.8 as a static site. Single page, no 
 
 ## What's here
 
-- **Hero** — professional headline, biography, key stats.
-- **About** — what I do, where I'm heading, how I work, background.
-- **Experience** — employment, internship, freelance, and personal projects, distinguished by type.
-- **Projects** — six verified projects with live GitHub links.
-- **Skills** — grouped by domain (frontend, backend, AI/ML, devops, marketing, languages).
-- **Writing & Research** — published research and project write-ups.
-- **Contact** — email, GitHub, LinkedIn.
+The homepage is organized in this order so visitors see project evidence before longer demonstrations:
+
+1. **Hero** — engineering focus and a direct path to the work.
+2. **Featured project** — Money Calculator, marked in progress.
+3. **Selected projects** — curated cards from the Astro project collection.
+4. **Interactive walkthroughs** — Student Performance Dashboard, Digital Coaching Management System, 999 National Emergency Service, and Digital Marketing & Growth Systems. These are visual demonstrations; any sample data is illustrative, not live production data.
+5. **Experience** — employment, internship, and freelance experience distinguished by type.
+6. **Skills** — grouped by domain.
+7. **Writing & Research** — research and project write-ups.
+8. **Contact** — email, GitHub, LinkedIn.
+
+Project facts live in content files rather than being duplicated across page markup. Animation HTML is copied into the static build by copy-academy-animation.mjs.
 
 ## Project intelligence
 
