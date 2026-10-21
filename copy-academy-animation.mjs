@@ -21,6 +21,11 @@ const animations = [
     label: 'Asta Store',
   },
   {
+    source: 'student-performance-dashboard.html',
+    destination: 'student-performance-dashboard.html',
+    label: 'Student Performance Dashboard',
+  },
+  {
     source: 'digital-growth-marketing-animation.html',
     destination: 'digital-growth-marketing-animation.html',
     label: 'Digital Growth & Marketing Systems',
