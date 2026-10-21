@@ -11,13 +11,13 @@ The homepage is organized in this order so visitors see project evidence before 
 1. **Hero** — engineering focus and a direct path to the work.
 2. **Featured project** — Money Calculator, marked in progress.
 3. **Selected projects** — curated cards from the Astro project collection.
-4. **Interactive walkthroughs** — Student Performance Dashboard, Digital Coaching Management System, 999 National Emergency Service, and Digital Marketing & Growth Systems. These are visual demonstrations; any sample data is illustrative, not live production data. The digital marketing animation is followed by 12 separate repository cards linking to the original GitHub projects.
+4. **Interactive walkthroughs** — six animation demos on `/walkthroughs/`: Money Calculator, ASTA Store, Student Performance Dashboard, Mount Royal Academy, 999 Emergency Service, and Digital Growth & Marketing Systems. The Digital Coaching Management System is linked as a repository in the homepage archive; it is not presented as an animation demo. Sample dashboard data is illustrative, and the 999 concept does not contact real responders.
 5. **Experience** — employment, internship, and freelance experience distinguished by type.
 6. **Skills** — grouped by domain.
 7. **Writing & Research** — research and project write-ups.
 8. **Contact** — email, GitHub, LinkedIn.
 
-Project facts live in content files rather than being duplicated across page markup. Animation HTML is copied into the static build by copy-academy-animation.mjs.
+Project facts live in content files rather than being duplicated across page markup. Standalone animation HTML files are copied into the static build by `copy-academy-animation.mjs`; the Money Calculator animation is served from `public/`. The homepage keeps the selected work concise, while the archive contains the additional demos, writing links, and 12 digital-marketing repositories.
 
 ## Project intelligence
 
