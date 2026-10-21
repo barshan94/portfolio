@@ -158,36 +158,33 @@ const repositorySections = githubRepositoryGroups.map((group) => ({
       </div>
 
       <div id="repository-groups">
-        {githubRepositoryGroups.map((group, groupIndex) => {
-          const items = githubRepositories.filter((repository) => repository.group === group);
-          return (
-            <section class="repository-group" data-repository-group={group} aria-labelledby={`repo-group-${groupIndex}`}>
-              <div class="repository-group-heading">
-                <div>
-                  <h3 id={`repo-group-${groupIndex}`}>{group}</h3>
-                  <p>{groupDescriptions[group]}</p>
-                </div>
-                <span>{String(items.length).padStart(2, "0")}</span>
+        {repositorySections.map((section, groupIndex) => (
+          <section class="repository-group" data-repository-group={section.group} aria-labelledby={"repo-group-" + groupIndex}>
+            <div class="repository-group-heading">
+              <div>
+                <h3 id={"repo-group-" + groupIndex}>{section.group}</h3>
+                <p>{section.description}</p>
               </div>
-              <div class="repository-grid">
-                {items.map((repository) => (
-                  <article class="repository-card" data-repository={`${repository.name} ${repository.repo} ${repository.group} ${repository.description}`.toLowerCase()}>
-                    <div class="repository-card-top">
-                      <span class="repository-mark" aria-hidden="true">GH</span>
-                      {repository.featured && <span class="repository-featured">PROJECT</span>}
-                    </div>
-                    <h4>{repository.name}</h4>
-                    <p>{repository.description}</p>
-                    <div class="repository-card-footer">
-                      <code>{repository.repo}</code>
-                      <a href={`https://github.com/barshan94/${repository.repo}`} target="_blank" rel="noopener noreferrer" aria-label={`Open ${repository.name} on GitHub}>Open GitHub <span aria-hidden="true">↗</span></a>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          );
-        })}
+              <span>{String(section.items.length).padStart(2, "0")}</span>
+            </div>
+            <div class="repository-grid">
+              {section.items.map((repository) => (
+                <article class="repository-card" data-repository={(repository.name + " " + repository.repo + " " + repository.group + " " + repository.description).toLowerCase()}>
+                  <div class="repository-card-top">
+                    <span class="repository-mark" aria-hidden="true">GH</span>
+                    {repository.featured && <span class="repository-featured">PROJECT</span>}
+                  </div>
+                  <h4>{repository.name}</h4>
+                  <p>{repository.description}</p>
+                  <div class="repository-card-footer">
+                    <code>{repository.repo}</code>
+                    <a href={"https://github.com/barshan94/" + repository.repo} target="_blank" rel="noopener noreferrer" aria-label={"Open " + repository.name + " on GitHub"}>Open GitHub <span aria-hidden="true">↗</span></a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
       <p id="repository-empty" class="repository-empty" hidden>No repositories match that search. Try a shorter term or another spelling.</p>
       <p class="repository-footnote">Repository names are kept as they appear on GitHub. For older coursework and experiment repositories, the descriptions are intentionally brief rather than guessing what the source code contains.</p>
