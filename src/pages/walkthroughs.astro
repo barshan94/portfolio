@@ -1,210 +1,853 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { githubRepositories, githubRepositoryGroups } from "../data/github-repositories";
 
 const demos = [
   {
     title: "Money Calculator",
     category: "Financial systems · Full-stack",
-    description: "The flagship personal-finance application, with ledger-connected transactions, account balances, loans, repayments, and traceable corrections.",
+    description: "A personal-finance system with ledger-connected transactions, accounts, loans, repayments, and traceable corrections.",
     src: "/money-calculator.html",
     repo: "https://github.com/barshan94/money-calculator",
-    tone: "finance",
   },
   {
-    title: "Asta Store",
+    title: "ASTA Store",
     category: "E-commerce · Full-stack",
-    description: "A storefront concept covering product discovery, cart flow, checkout, and an admin experience.",
+    description: "An e-commerce storefront concept covering product discovery, cart flow, checkout, and administration.",
     src: "/asta-store-animation.html",
     repo: "https://github.com/barshan94/asta-store",
-    tone: "store",
   },
   {
     title: "Student Performance Dashboard",
     category: "Analytics · Education",
-    description: "An animated academic analytics experience exploring student results, attendance, and classroom performance using fictional sample data.",
+    description: "An academic analytics experience exploring results, attendance, and classroom performance using fictional sample data.",
     src: "/student-performance-dashboard.html",
     repo: "https://github.com/barshan94/student-performance-dashboard",
-    tone: "analytics",
   },
   {
     title: "Mount Royal Academy",
     category: "Education · Web platform",
-    description: "A school website and administration workflow concept for admissions, notices, calendar, and content management.",
+    description: "A school website and administration workflow concept for admissions, notices, calendars, and content management.",
     src: "/mount-royal-academy-animation.html",
     repo: "https://github.com/barshan94/MountRoyalAcademy-website",
-    tone: "academy",
   },
   {
     title: "999 Emergency Service",
     category: "Public-service concept",
-    description: "A walkthrough of citizen access, service categories, request records, and administrative workflows. Not a live emergency service.",
+    description: "A walkthrough of citizen access, service categories, request records, and administration. It is not a live emergency service.",
     src: "/999-emergency-service-animation.html",
     repo: "https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE",
-    tone: "emergency",
   },
   {
-    title: "Digital Marketing & Growth Systems",
+    title: "Digital Growth & Marketing Systems",
     category: "SEO · Campaigns · Automation",
-    description: "One connected visual workflow spanning search research, content, local SEO, WordPress, campaigns, creative work, and automation.",
+    description: "One connected workflow spanning search research, content, local SEO, WordPress, campaigns, creative work, and automation.",
     src: "/digital-growth-marketing-animation.html",
     repo: "https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html",
-    tone: "growth",
   },
 ];
+
+const groupDescriptions: Record<string, string> = {
+  "Core projects": "The main applications, platforms, and larger project work.",
+  "Digital marketing & growth": "SEO, content, websites, campaigns, creative work, and automation.",
+  "Academic & early experiments": "Coursework, earlier systems, programming exercises, research, and experiments. Open the repositories for their exact contents.",
+  "Portfolio": "The source code for this portfolio itself.",
+};
 ---
 
 <Layout
-  title="Interactive Project Gallery — Barshan Ghosh"
-  description="Explore interactive walkthroughs and animated demonstrations of software projects, dashboards, education systems, and growth workflows."
+  title="Project Studio & GitHub Archive — Barshan Ghosh"
+  description="Explore six interactive project walkthroughs and browse all 38 repositories in Barshan Ghosh's GitHub archive."
 >
-  <main class="gallery-shell">
-    <header class="gallery-header">
+  <main class="studio-shell">
+    <header class="studio-header">
       <a class="back-link" href="/">← Back to portfolio</a>
-      <p class="eyebrow"><span></span> PROJECT WALKTHROUGHS</p>
-      <h1>Built to be <em>explored.</em></h1>
-      <p class="intro">The homepage is the short version. This is where the demonstrations live. Open any walkthrough when you want to see the details—without stacking every animation into one long scroll.</p>
-      <div class="gallery-stats">
-        <span><strong>06</strong> interactive demos</span>
-        <span><strong>01</strong> at a time</span>
-        <span>Sample data is labelled where applicable</span>
+      <p class="eyebrow"><span></span> PROJECT STUDIO / REPOSITORY ARCHIVE</p>
+      <h1>My work, <em>in one place.</em></h1>
+      <p class="intro">Explore the existing animations below, then browse the complete GitHub repository list. This page keeps the demonstrations together without stacking six running animations down the page.</p>
+      <div class="studio-stats" aria-label="Project archive summary">
+        <span><strong>{demos.length}</strong> interactive demos</span>
+        <span><strong>{githubRepositories.length}</strong> GitHub repositories</span>
+        <span><strong>1</strong> animation runs at a time</span>
       </div>
     </header>
 
-    <section class="gallery-grid" aria-label="Interactive project demonstrations">
-      {demos.map((demo, index) => (
-        <article class:list={["demo-card", `tone-${demo.tone}`]}>
-          <div class="demo-art" aria-hidden="true">
-            <span class="art-index">{String(index + 1).padStart(2, "0")}</span>
-            <span class="art-orbit orbit-one"></span>
-            <span class="art-orbit orbit-two"></span>
-            <span class="art-core">{["₿", "A", "▥", "M", "999", "↗"][index]}</span>
-            <span class="art-lines"></span>
-            <span class="art-label">{demo.category}</span>
+    <section class="studio-section" id="project-studio" aria-labelledby="studio-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">01 / INTERACTIVE WALKTHROUGHS</p>
+          <h2 id="studio-title">Choose a project. <em>Explore it.</em></h2>
+        </div>
+        <p>Choose any project to load its original HTML animation in the shared preview. Switching projects replaces the previous animation.</p>
+      </div>
+
+      <div class="preview-panel">
+        <div class="preview-topbar">
+          <div class="preview-status"><span class="live-dot"></span><span>SELECTED WALKTHROUGH</span></div>
+          <span id="preview-count">01 / 06</span>
+        </div>
+        <div class="preview-copy">
+          <div>
+            <p id="preview-category" class="preview-category">{demos[0].category}</p>
+            <h3 id="preview-title">{demos[0].title}</h3>
           </div>
-          <div class="demo-body">
-            <p class="demo-category">{demo.category}</p>
-            <h2>{demo.title}</h2>
-            <p class="demo-description">{demo.description}</p>
-            <div class="demo-actions">
-              <button class="play-demo" type="button" data-src={demo.src} data-title={demo.title}>
-                Play walkthrough <span aria-hidden="true">↗</span>
-              </button>
-              <a href={demo.repo} target="_blank" rel="noopener noreferrer">Source ↗</a>
-            </div>
-          </div>
-        </article>
-      ))}
+          <p id="preview-description">{demos[0].description}</p>
+        </div>
+        <div class="preview-frame-wrap">
+          <iframe
+            id="project-preview"
+            src={demos[0].src}
+            title={`${demos[0].title} animated project preview`}
+            loading="eager"
+            allow="fullscreen"
+          ></iframe>
+        </div>
+        <div class="preview-footer">
+          <span>Demo content may be illustrative; see each project note.</span>
+          <a id="preview-source" href={demos[0].repo} target="_blank" rel="noopener noreferrer">View source repository ↗</a>
+        </div>
+      </div>
+
+      <div class="project-selectors" role="group" aria-label="Select an interactive project">
+        {demos.map((demo, index) => (
+          <button
+            class:list={["project-selector", { "is-active": index === 0 }]}
+            type="button"
+            data-src={demo.src}
+            data-title={demo.title}
+            data-category={demo.category}
+            data-description={demo.description}
+            data-repo={demo.repo}
+            data-index={index + 1}
+            aria-pressed={index === 0 ? "true" : "false"}
+          >
+            <span class="selector-index">{String(index + 1).padStart(2, "0")}</span>
+            <span class="selector-copy">
+              <strong>{demo.title}</strong>
+              <small>{demo.category}</small>
+            </span>
+            <span class="selector-arrow" aria-hidden="true">↗</span>
+          </button>
+        ))}
+      </div>
+      <p class="demo-disclaimer">These are portfolio demonstrations, not necessarily live production systems. The emergency-service concept does not submit real requests or contact responders. Dashboard visuals use fictional sample data.</p>
     </section>
 
-    <section class="gallery-note">
-      <span class="note-mark">i</span>
-      <p>These are portfolio demonstrations, not necessarily live production systems. The emergency-service concept does not submit real requests or contact responders. Dashboard visuals use fictional sample data.</p>
+    <section class="repository-section" id="repositories" aria-labelledby="repositories-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">02 / COMPLETE GITHUB ARCHIVE</p>
+          <h2 id="repositories-title">All my repositories. <em>Nothing hidden.</em></h2>
+        </div>
+        <p>This list is based on the 38 repositories returned for your GitHub account. Use search to find a project by name or topic.</p>
+      </div>
+
+      <div class="repository-tools">
+        <label class="repository-search">
+          <span class="sr-only">Search GitHub repositories</span>
+          <span aria-hidden="true">⌕</span>
+          <input id="repository-search" type="search" placeholder="Search all repositories…" autocomplete="off" />
+        </label>
+        <p class="repository-count" aria-live="polite"><strong id="visible-repository-count">{githubRepositories.length}</strong> of {githubRepositories.length} repositories</p>
+      </div>
+
+      <div id="repository-groups">
+        {githubRepositoryGroups.map((group, groupIndex) => {
+          const items = githubRepositories.filter((repository) => repository.group === group);
+          return (
+            <section class="repository-group" data-repository-group={group} aria-labelledby={`repo-group-${groupIndex}`}>
+              <div class="repository-group-heading">
+                <div>
+                  <h3 id={`repo-group-${groupIndex}`}>{group}</h3>
+                  <p>{groupDescriptions[group]}</p>
+                </div>
+                <span>{String(items.length).padStart(2, "0")}</span>
+              </div>
+              <div class="repository-grid">
+                {items.map((repository) => (
+                  <article class="repository-card" data-repository={`${repository.name} ${repository.repo} ${repository.group} ${repository.description}`.toLowerCase()}>
+                    <div class="repository-card-top">
+                      <span class="repository-mark" aria-hidden="true">GH</span>
+                      {repository.featured && <span class="repository-featured">PROJECT</span>}
+                    </div>
+                    <h4>{repository.name}</h4>
+                    <p>{repository.description}</p>
+                    <div class="repository-card-footer">
+                      <code>{repository.repo}</code>
+                      <a href={`https://github.com/barshan94/${repository.repo}`} target="_blank" rel="noopener noreferrer" aria-label={`Open ${repository.name} on GitHub}>Open GitHub <span aria-hidden="true">↗</span></a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+      <p id="repository-empty" class="repository-empty" hidden>No repositories match that search. Try a shorter term or another spelling.</p>
+      <p class="repository-footnote">Repository names are kept as they appear on GitHub. For older coursework and experiment repositories, the descriptions are intentionally brief rather than guessing what the source code contains.</p>
     </section>
+
+    <footer class="studio-footer">
+      <a class="back-link" href="/">← Back to homepage</a>
+      <a class="profile-link" href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">Open GitHub profile ↗</a>
+    </footer>
   </main>
-
-  <dialog class="demo-dialog" aria-labelledby="dialog-title">
-    <div class="dialog-topbar">
-      <div><span class="live-dot"></span><strong id="dialog-title">Project walkthrough</strong></div>
-      <button class="close-demo" type="button" aria-label="Close walkthrough">Close <span aria-hidden="true">×</span></button>
-    </div>
-    <div class="dialog-stage">
-      <iframe title="Selected project walkthrough" loading="lazy" allow="fullscreen"></iframe>
-    </div>
-  </dialog>
 </Layout>
 
 <script>
-  const dialog = document.querySelector<HTMLDialogElement>(".demo-dialog");
-  const frame = dialog?.querySelector("iframe");
-  const title = dialog?.querySelector<HTMLElement>("#dialog-title");
-  const closeButton = dialog?.querySelector<HTMLButtonElement>(".close-demo");
+  const preview = document.querySelector<HTMLIFrameElement>("#project-preview");
+  const previewTitle = document.querySelector<HTMLElement>("#preview-title");
+  const previewCategory = document.querySelector<HTMLElement>("#preview-category");
+  const previewDescription = document.querySelector<HTMLElement>("#preview-description");
+  const previewSource = document.querySelector<HTMLAnchorElement>("#preview-source");
+  const previewCount = document.querySelector<HTMLElement>("#preview-count");
+  const selectors = Array.from(document.querySelectorAll<HTMLButtonElement>(".project-selector"));
 
-  document.querySelectorAll<HTMLButtonElement>(".play-demo").forEach((button) => {
-    button.addEventListener("click", () => {
-      if (!dialog || !frame) return;
-      const src = button.dataset.src;
-      if (!src) return;
-      if (title) title.textContent = button.dataset.title || "Project walkthrough";
-      frame.src = src;
-      dialog.showModal();
+  selectors.forEach((selector) => {
+    selector.addEventListener("click", () => {
+      if (!preview) return;
+
+      const src = selector.dataset.src;
+      const title = selector.dataset.title || "Project walkthrough";
+      const category = selector.dataset.category || "Project demo";
+      const description = selector.dataset.description || "";
+      const repo = selector.dataset.repo || "https://github.com/barshan94";
+      const index = Number(selector.dataset.index || 1);
+
+      if (src && preview.getAttribute("src") !== src) preview.setAttribute("src", src);
+      preview.title = `${title} animated project preview`;
+      if (previewTitle) previewTitle.textContent = title;
+      if (previewCategory) previewCategory.textContent = category;
+      if (previewDescription) previewDescription.textContent = description;
+      if (previewSource) previewSource.href = repo;
+      if (previewCount) previewCount.textContent = `${String(index).padStart(2, "0")} / ${String(selectors.length).padStart(2, "0")}`;
+
+      selectors.forEach((item) => {
+        const active = item === selector;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-pressed", String(active));
+      });
     });
   });
 
-  const closeDialog = () => {
-    if (!dialog || !frame) return;
-    dialog.close();
-    frame.src = "about:blank";
-  };
+  const repositorySearch = document.querySelector<HTMLInputElement>("#repository-search");
+  const repositoryCards = Array.from(document.querySelectorAll<HTMLElement>(".repository-card"));
+  const repositoryGroups = Array.from(document.querySelectorAll<HTMLElement>(".repository-group"));
+  const visibleCount = document.querySelector<HTMLElement>("#visible-repository-count");
+  const emptyMessage = document.querySelector<HTMLElement>("#repository-empty");
 
-  closeButton?.addEventListener("click", closeDialog);
-  dialog?.addEventListener("click", (event) => {
-    if (event.target === dialog) closeDialog();
-  });
-  dialog?.addEventListener("close", () => {
-    if (frame) frame.src = "about:blank";
+  repositorySearch?.addEventListener("input", () => {
+    const query = repositorySearch.value.trim().toLowerCase();
+    let visible = 0;
+
+    repositoryCards.forEach((card) => {
+      const match = !query || (card.dataset.repository || "").includes(query);
+      card.hidden = !match;
+      if (match) visible += 1;
+    });
+
+    repositoryGroups.forEach((group) => {
+      group.hidden = !group.querySelector(".repository-card:not([hidden])");
+    });
+
+    if (visibleCount) visibleCount.textContent = String(visible);
+    if (emptyMessage) emptyMessage.hidden = visible > 0;
   });
 </script>
 
 <style>
-  :global(body) { background: #080a0d; }
-  .gallery-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 28px 0 80px; color: #f4f4f5; }
-  .gallery-header { max-width: 760px; padding: clamp(30px, 7vw, 86px) 0 42px; }
-  .back-link { display: inline-block; color: #a1a1aa; font-size: .86rem; text-decoration: none; margin-bottom: 48px; }
-  .back-link:hover { color: #34d399; }
-  .eyebrow { display: flex; align-items: center; gap: 10px; color: #a1a1aa; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; }
-  .eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 16px #34d39966; }
-  h1 { margin: 18px 0; font-size: clamp(2.6rem, 7vw, 5.6rem); line-height: .98; letter-spacing: -.065em; font-weight: 560; }
-  h1 em { color: #34d399; font-style: normal; }
-  .intro { max-width: 620px; color: #a1a1aa; font-size: clamp(.98rem, 1.4vw, 1.1rem); line-height: 1.8; }
-  .gallery-stats { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 24px; margin-top: 26px; border-top: 1px solid #27272a; color: #a1a1aa; font-size: .78rem; }
-  .gallery-stats strong { color: #f4f4f5; margin-right: 5px; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-  .demo-card { min-width: 0; overflow: hidden; border: 1px solid #27272a; border-radius: 14px; background: #0c0f13; transition: border-color .2s ease, transform .2s ease; }
-  .demo-card:hover { border-color: #278566; transform: translateY(-2px); }
-  .demo-art { position: relative; height: clamp(150px, 22vw, 230px); overflow: hidden; display: grid; place-items: center; isolation: isolate; background: radial-gradient(ellipse at 50% 50%, #16362e, #0b1114 68%); }
-  .tone-finance .demo-art { background: radial-gradient(ellipse at 50% 50%, #173b30, #0b1114 68%); }
-  .tone-analytics .demo-art { background: radial-gradient(ellipse at 50% 50%, #15343d, #0b1114 68%); }
-  .tone-academy .demo-art { background: radial-gradient(ellipse at 50% 50%, #242e48, #0b1114 68%); }
-  .tone-emergency .demo-art { background: radial-gradient(ellipse at 50% 50%, #3c2028, #0b1114 68%); }
-  .tone-growth .demo-art { background: radial-gradient(ellipse at 50% 50%, #33284c, #0b1114 68%); }
-  .art-index { position: absolute; top: 16px; left: 18px; color: #a1a1aa; font: .72rem ui-monospace, monospace; }
-  .art-orbit { position: absolute; width: 150px; height: 150px; border: 1px solid #ffffff1c; border-radius: 50%; }
-  .orbit-one { width: 112px; height: 112px; }
-  .orbit-two { width: 190px; height: 190px; border-style: dashed; }
-  .art-core { display: grid; place-items: center; width: 66px; height: 66px; border: 1px solid #6ee7b788; border-radius: 18px; background: #0a1615cc; color: #a7f3d0; font-size: 1.3rem; font-weight: 650; box-shadow: 0 0 42px #34d39920; }
-  .tone-emergency .art-core { color: #fecdd3; border-color: #fb718577; }
-  .tone-growth .art-core { color: #ddd6fe; border-color: #a78bfa77; }
-  .art-lines { position: absolute; inset: 0; opacity: .35; background: repeating-linear-gradient(0deg, transparent 0 24px, #ffffff09 25px), repeating-linear-gradient(90deg, transparent 0 24px, #ffffff09 25px); mask-image: linear-gradient(transparent, black, transparent); z-index: -1; }
-  .art-label { position: absolute; right: 16px; bottom: 14px; color: #a1a1aa; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; }
-  .demo-body { padding: 20px; }
-  .demo-category { color: #6ee7b7; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
-  .demo-body h2 { margin: 8px 0 10px; font-size: 1.2rem; letter-spacing: -.025em; }
-  .demo-description { min-height: 4.6em; color: #a1a1aa; font-size: .88rem; line-height: 1.7; }
-  .demo-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 20px; }
-  .play-demo { display: inline-flex; gap: 12px; align-items: center; border: 1px solid #34d39955; border-radius: 8px; padding: 10px 13px; background: #10312666; color: #a7f3d0; font: inherit; font-size: .82rem; cursor: pointer; }
-  .play-demo:hover { border-color: #34d399; background: #103126; }
-  .demo-actions a { color: #a1a1aa; font-size: .82rem; text-decoration: none; }
-  .demo-actions a:hover { color: #34d399; }
-  .gallery-note { display: flex; align-items: start; gap: 12px; margin-top: 28px; padding: 18px; border: 1px solid #27272a; border-radius: 10px; color: #a1a1aa; font-size: .82rem; line-height: 1.7; }
-  .note-mark { display: grid; place-items: center; flex: 0 0 22px; height: 22px; border: 1px solid #52525b; border-radius: 50%; font-size: .75rem; }
-  .demo-dialog { width: min(1200px, calc(100% - 28px)); max-width: none; height: min(86dvh, 850px); max-height: none; padding: 0; border: 1px solid #3f3f46; border-radius: 14px; background: #07080a; color: #f4f4f5; overflow: hidden; }
-  .demo-dialog::backdrop { background: #030506d9; backdrop-filter: blur(8px); }
-  .dialog-topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 54px; padding: 0 16px; border-bottom: 1px solid #27272a; }
-  .dialog-topbar > div { display: flex; align-items: center; gap: 10px; min-width: 0; }
-  .dialog-topbar strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .84rem; }
-  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; }
-  .close-demo { border: 1px solid #3f3f46; border-radius: 7px; padding: 7px 10px; background: transparent; color: #e4e4e7; font: inherit; font-size: .8rem; cursor: pointer; }
-  .close-demo span { margin-left: 6px; font-size: 1rem; }
-  .dialog-stage { height: calc(100% - 54px); }
-  .dialog-stage iframe { display: block; width: 100%; height: 100%; border: 0; background: #07080a; }
-  @media (max-width: 700px) {
-    .gallery-shell { width: calc(100% - 32px); }
-    .gallery-header { padding-top: 30px; }
-    .back-link { margin-bottom: 36px; }
-    .gallery-grid { grid-template-columns: 1fr; gap: 12px; }
-    .demo-art { height: 180px; }
-    .demo-description { min-height: 0; }
-    .demo-dialog { width: calc(100% - 12px); height: 90dvh; border-radius: 10px; }
+  :global(html) {
+    scroll-behavior: smooth;
+    background: #090b0d;
   }
-  @media (prefers-reduced-motion: reduce) { .demo-card { transition: none; } .demo-card:hover { transform: none; } }
+
+  :global(body) {
+    background: #090b0d;
+  }
+
+  .studio-shell {
+    --studio-bg: #090b0d;
+    --studio-panel: #101417;
+    --studio-panel-raised: #151b1e;
+    --studio-line: #283238;
+    --studio-muted: #9ba9ae;
+    --studio-text: #edf3f2;
+    --studio-accent: #8ce2c2;
+    max-width: 1220px;
+    width: min(100% - 40px, 1220px);
+    margin: 0 auto;
+    padding: 26px 0 64px;
+    color: var(--studio-text);
+  }
+
+  .back-link,
+  .profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--studio-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+  }
+
+  .back-link:hover,
+  .profile-link:hover {
+    color: var(--studio-accent);
+  }
+
+  .studio-header {
+    padding: 22px 0 48px;
+    max-width: 900px;
+  }
+
+  .eyebrow,
+  .section-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 14px;
+    color: var(--studio-accent);
+    font: 600 0.72rem/1.4 "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow span,
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--studio-accent);
+    box-shadow: 0 0 16px #8ce2c255;
+  }
+
+  .studio-header h1 {
+    max-width: 850px;
+    margin: 0;
+    font-size: clamp(2.8rem, 7.5vw, 6.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.065em;
+    font-weight: 600;
+  }
+
+  .studio-header h1 em,
+  .section-heading h2 em {
+    color: var(--studio-accent);
+    font-style: normal;
+  }
+
+  .intro {
+    max-width: 690px;
+    margin: 24px 0 0;
+    color: #b6c1c4;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .studio-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+  }
+
+  .studio-stats span {
+    padding: 10px 13px;
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    color: #b7c4c7;
+    background: #0d1113;
+    font-size: 0.82rem;
+  }
+
+  .studio-stats strong {
+    color: var(--studio-text);
+    font: 600 1rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    margin-right: 4px;
+  }
+
+  .studio-section,
+  .repository-section {
+    padding: 34px 0 52px;
+    border-top: 1px solid var(--studio-line);
+    scroll-margin-top: 24px;
+  }
+
+  .section-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 420px);
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .section-heading .section-kicker {
+    margin: 0 0 12px;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 4.3vw, 3.3rem);
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+  }
+
+  .section-heading > p {
+    margin: 0;
+    color: var(--studio-muted);
+    line-height: 1.7;
+    font-size: 0.93rem;
+  }
+
+  .preview-panel {
+    overflow: hidden;
+    border: 1px solid #344047;
+    border-radius: 14px;
+    background: var(--studio-panel);
+    box-shadow: 0 24px 70px #00000030;
+  }
+
+  .preview-topbar,
+  .preview-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 18px;
+    color: var(--studio-muted);
+    font: 500 0.72rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  .preview-topbar {
+    border-bottom: 1px solid var(--studio-line);
+  }
+
+  .preview-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .preview-status .live-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .preview-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: 22px;
+    padding: 22px 22px 20px;
+    align-items: end;
+  }
+
+  .preview-category {
+    margin: 0 0 8px;
+    color: var(--studio-accent);
+    font: 500 0.7rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+  }
+
+  .preview-copy h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    letter-spacing: -0.04em;
+  }
+
+  .preview-copy > p {
+    margin: 0;
+    color: #aab7bb;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .preview-frame-wrap {
+    height: clamp(340px, 55vw, 650px);
+    min-height: 300px;
+    background: #07090a;
+    border-top: 1px solid var(--studio-line);
+  }
+
+  .preview-frame-wrap iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #07090a;
+  }
+
+  .preview-footer {
+    border-top: 1px solid var(--studio-line);
+    font-family: inherit;
+    font-size: 0.78rem;
+  }
+
+  .preview-footer a {
+    color: var(--studio-accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .project-selectors {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .project-selector {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 15px;
+    text-align: left;
+    border: 1px solid var(--studio-line);
+    border-radius: 10px;
+    color: var(--studio-text);
+    background: #0e1214;
+    cursor: pointer;
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+
+  .project-selector:hover,
+  .project-selector:focus-visible {
+    border-color: #6a9c8a;
+    outline: none;
+  }
+
+  .project-selector.is-active {
+    border-color: var(--studio-accent);
+    background: #14211d;
+  }
+
+  .selector-index {
+    flex: 0 0 auto;
+    color: var(--studio-accent);
+    font: 500 0.78rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  .selector-copy {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .selector-copy strong {
+    font-size: 0.87rem;
+    line-height: 1.35;
+  }
+
+  .selector-copy small {
+    color: var(--studio-muted);
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .selector-arrow {
+    margin-left: auto;
+    color: var(--studio-muted);
+  }
+
+  .demo-disclaimer,
+  .repository-footnote {
+    margin: 18px 0 0;
+    color: #869499;
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .repository-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 30px;
+  }
+
+  .repository-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: min(100%, 520px);
+    padding: 0 14px;
+    border: 1px solid #354148;
+    border-radius: 9px;
+    color: var(--studio-muted);
+    background: var(--studio-panel);
+  }
+
+  .repository-search > span:not(.sr-only) {
+    font-size: 1.4rem;
+  }
+
+  .repository-search input {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 0;
+    border: 0;
+    outline: none;
+    color: var(--studio-text);
+    background: transparent;
+    font: inherit;
+  }
+
+  .repository-search input::placeholder {
+    color: #7f8d92;
+  }
+
+  .repository-count {
+    flex: 0 0 auto;
+    color: var(--studio-muted);
+    font-size: 0.82rem;
+  }
+
+  .repository-count strong {
+    color: var(--studio-text);
+    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  .repository-group {
+    margin: 0 0 34px;
+  }
+
+  .repository-group-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--studio-line);
+    margin-bottom: 14px;
+  }
+
+  .repository-group-heading h3 {
+    margin: 0;
+    font-size: 1.22rem;
+    letter-spacing: -0.025em;
+  }
+
+  .repository-group-heading p {
+    margin: 7px 0 0;
+    color: var(--studio-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .repository-group-heading > span {
+    color: var(--studio-accent);
+    font: 500 0.8rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  .repository-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .repository-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 17px;
+    border: 1px solid var(--studio-line);
+    border-radius: 10px;
+    background: var(--studio-panel);
+  }
+
+  .repository-card[hidden],
+  .repository-group[hidden],
+  .repository-empty[hidden] {
+    display: none !important;
+  }
+
+  .repository-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .repository-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #3b4a50;
+    border-radius: 7px;
+    color: var(--studio-accent);
+    font: 600 0.66rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  .repository-featured {
+    color: var(--studio-accent);
+    font: 500 0.64rem "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    letter-spacing: 0.08em;
+  }
+
+  .repository-card h4 {
+    margin: 0;
+    font-size: 0.97rem;
+    line-height: 1.4;
+  }
+
+  .repository-card > p {
+    flex: 1;
+    margin: 8px 0 18px;
+    color: var(--studio-muted);
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+
+  .repository-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid #273136;
+  }
+
+  .repository-card-footer code {
+    overflow: hidden;
+    color: #8e9ca1;
+    font-size: 0.7rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .repository-card-footer a {
+    flex: 0 0 auto;
+    color: var(--studio-accent);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .repository-card-footer a:hover {
+    text-decoration: underline;
+  }
+
+  .repository-empty {
+    padding: 24px;
+    border: 1px dashed var(--studio-line);
+    border-radius: 10px;
+    color: var(--studio-muted);
+    text-align: center;
+  }
+
+  .studio-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--studio-line);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .studio-shell {
+      width: min(100% - 28px, 1220px);
+      padding-top: 18px;
+    }
+
+    .studio-header {
+      padding-bottom: 32px;
+    }
+
+    .section-heading {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .preview-copy {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .preview-frame-wrap {
+      height: 460px;
+    }
+
+    .project-selectors {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .repository-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .repository-tools {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .repository-count {
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .studio-shell {
+      width: calc(100% - 24px);
+    }
+
+    .studio-header h1 {
+      font-size: clamp(2.5rem, 14vw, 4rem);
+    }
+
+    .studio-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .project-selectors {
+      grid-template-columns: 1fr;
+    }
+
+    .preview-frame-wrap {
+      height: 420px;
+      min-height: 0;
+    }
+
+    .preview-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .repository-card-footer code {
+      max-width: 45%;
+    }
+
+    .studio-footer {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+
+    .project-selector {
+      transition: none;
+    }
+  }
 </style>
