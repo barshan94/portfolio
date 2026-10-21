@@ -34,6 +34,7 @@ const writing = await getCollection("writing");
 const linkedWriting = writing.filter((entry) => Boolean(entry.data.link));
 
 const contact = cv?.contact;
+const currentYear = new Date().getFullYear();
 const projectNumber = (index: number) =>
   String(index + 1).padStart(2, "0");
 
@@ -50,6 +51,16 @@ const getProjectTags = (project: (typeof allProjects)[number]) =>
           tag.toLowerCase() !== project.data.language?.toLowerCase()
       )
     : [];
+
+const getProjectUpdatedDate = (
+  project: (typeof allProjects)[number]
+) =>
+  project.data.lastUpdated
+    ? new Date(project.data.lastUpdated).toLocaleDateString("en-GB", {
+        month: "short",
+        year: "numeric",
+      })
+    : "";
 
 const getExperienceDate = (experience: any) =>
   experience.period || [experience.start, experience.end].filter(Boolean).join(" — ");
