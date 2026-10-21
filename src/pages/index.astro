@@ -101,6 +101,9 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
   }
 
   const writingArchive = document.querySelector<HTMLDetailsElement>("#writing");
+  if (writingArchive && window.location.hash === "#writing") {
+    writingArchive.open = true;
+  }
   document.querySelectorAll<HTMLAnchorElement>('a[href="/#writing"], a[href="#writing"]').forEach((link) => {
     link.addEventListener("click", () => {
       if (writingArchive) writingArchive.open = true;
