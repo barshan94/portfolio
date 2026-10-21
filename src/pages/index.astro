@@ -88,6 +88,13 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
   if (yearElement) {
     yearElement.textContent = String(new Date().getFullYear());
   }
+
+  const writingArchive = document.querySelector<HTMLDetailsElement>("#writing");
+  document.querySelectorAll<HTMLAnchorElement>('a[href="/#writing"], a[href="#writing"]').forEach((link) => {
+    link.addEventListener("click", () => {
+      if (writingArchive) writingArchive.open = true;
+    });
+  });
 </script>
 
 <Layout
