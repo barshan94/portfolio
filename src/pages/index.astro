@@ -698,7 +698,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           <p>Each entry opens its original GitHub repository.</p>
         </div>
         <div class="digital-growth-repo-grid">
-          {digitalMarketingRepos.map((repo, index) => (
+          {digitalMarketingRepos.slice(0, 4).map((repo, index) => (
             <article class="digital-growth-repo-card">
               <div class="digital-growth-repo-top">
                 <span class="digital-growth-repo-number">{String(index + 1).padStart(2, "0")}</span>
@@ -712,6 +712,29 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             </article>
           ))}
         </div>
+        {digitalMarketingRepos.length > 4 && (
+          <details class="digital-growth-more">
+            <summary>
+              <span>Show all {digitalMarketingRepos.length} repositories</span>
+              <span class="digital-growth-more-hint">Show 8 more projects</span>
+            </summary>
+            <div class="digital-growth-repo-grid digital-growth-repo-grid-more">
+              {digitalMarketingRepos.slice(4).map((repo, index) => (
+                <article class="digital-growth-repo-card">
+                  <div class="digital-growth-repo-top">
+                    <span class="digital-growth-repo-number">{String(index + 5).padStart(2, "0")}</span>
+                    <span class="digital-growth-repo-category">{repo.category}</span>
+                  </div>
+                  <h4>{repo.name}</h4>
+                  <p>{repo.description}</p>
+                  <a href={repo.url} target="_blank" rel="noopener noreferrer">
+                    Open repository <span aria-hidden="true">↗</span>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </details>
+        )}
       </div>
 
       <div class="digital-growth-source-link">
@@ -2954,7 +2977,7 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     }
   }
 
-  / Portfolio hero refinement */
+  /* Portfolio hero refinement */
   .hero { gap: clamp(2.75rem, 6vw, 6rem); }
   .hero-copy { position: relative; z-index: 1; }
   .hero h1 { font-size: clamp(3.3rem, 6.8vw, 6.25rem); line-height: .97; text-wrap: balance; }
@@ -3149,6 +3172,150 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     .digital-growth-animation-frame {
       scroll-behavior: auto;
     }
+  }
+
+  /* Cohesive, accessible polish for the engineering portfolio. */
+  .section-kicker,
+  .project-category,
+  .timeline-meta,
+  .fact-label {
+    color: #a1a1aa;
+  }
+
+  .section-wrap {
+    padding-inline: 0;
+  }
+
+  .project-grid {
+    align-items: stretch;
+  }
+
+  .project-card {
+    border-color: #27272a;
+    border-radius: 10px;
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  }
+
+  .project-card:hover,
+  .project-card:focus-within {
+    border-color: #10b981;
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.14), 0 12px 32px rgba(16, 185, 129, 0.07);
+  }
+
+  .skills-grid {
+    align-items: stretch;
+  }
+
+  .skill-card {
+    height: 100%;
+    align-content: start;
+  }
+
+  .skill-content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .skill-tags {
+    align-content: flex-start;
+  }
+
+  .digital-growth-repo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .digital-growth-repo-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    border: 1px solid #27272a;
+    border-radius: 10px;
+    padding: 18px;
+    background: rgba(17, 21, 31, 0.55);
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .digital-growth-repo-card:hover,
+  .digital-growth-repo-card:focus-within {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.045);
+    transform: translateY(-2px);
+  }
+
+  .digital-growth-repo-card h4 {
+    margin: 14px 0 8px;
+    color: #f4f4f5;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .digital-growth-repo-card p {
+    margin: 0 0 16px;
+    color: #a1a1aa;
+    font-size: 0.84rem;
+    line-height: 1.65;
+  }
+
+  .digital-growth-repo-card > a {
+    margin-top: auto;
+    color: #6ee7b7;
+    font-size: 0.82rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .digital-growth-repo-card > a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .digital-growth-more {
+    margin-top: 16px;
+    border: 1px solid #27272a;
+    border-radius: 10px;
+    background: rgba(17, 21, 31, 0.36);
+  }
+
+  .digital-growth-more summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 56px;
+    padding: 14px 18px;
+    color: #e4e4e7;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+
+  .digital-growth-more summary::-webkit-details-marker { display: none; }
+  .digital-growth-more summary::after { content: "+"; color: #6ee7b7; font-size: 1.2rem; }
+  .digital-growth-more[open] summary::after { content: "−"; }
+  .digital-growth-more-hint { color: #a1a1aa; font-size: 0.78rem; font-weight: 400; }
+  .digital-growth-repo-grid-more { padding: 0 14px 14px; }
+
+  @media (max-width: 600px) {
+    .section-wrap { width: calc(100% - 32px); }
+    .hero { gap: 30px; padding-top: 64px; }
+    .hero h1 { font-size: clamp(2.7rem, 11.5vw, 3.7rem); line-height: 1.02; }
+    .hero-actions { flex-wrap: wrap; }
+    .digital-growth-repo-grid { grid-template-columns: minmax(0, 1fr); }
+    .digital-growth-more summary { align-items: flex-start; flex-wrap: wrap; padding: 14px; }
+    .digital-growth-repo-grid-more { padding: 0 10px 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .digital-growth-repo-card { transition: none; }
   }
 
   /* Individual repositories in the unified digital marketing project */
