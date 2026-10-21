@@ -63,7 +63,7 @@ const getProjectUpdatedDate = (
     : "";
 
 const getExperienceDate = (experience: any) =>
-  [experience.start, experience.end].filter(Boolean).join(" — ");
+  [experience.period || [experience.start, experience.end].filter(Boolean).join(" — ");
 
 const getWritingLink = (entry: (typeof writing)[number]) =>
   entry.data.url || `/writing/${entry.id}/`;
@@ -137,9 +137,8 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           </a>
         </div>
         <nav class="hero-quick-links" aria-label="Professional links">
-          <a href={contact?.github ? (contact.github.startsWith("http") ? contact.github : `https://github.com/${contact.github.replace(/^@/, "")}`) : "https://github.com/barshan94"} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          {contact?.linkedin && <a href={contact.linkedin.startsWith("http") ? contact.linkedin : `https://www.linkedin.com/in/${contact.linkedin.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
-          {(cv?.resume || cv?.resumeUrl || cv?.resumePDF) && <a href={cv.resume || cv.resumeUrl || cv.resumePDF} target="_blank" rel="noopener noreferrer">Resume PDF ↗</a>}
+          <a href={contact?.github || "https://github.com/barshan94"} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          {contact?.linkedin && <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
         </nav>
 
         <div class="hero-facts" aria-label="Engineering focus">
@@ -562,7 +561,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             <span class="section-kicker">MORE IN THE ARCHIVE</span>
             <strong id="more-work-title">Other builds &amp; experiments</strong>
           </span>
-          <span class="more-work-count">3 systems · {digitalMarketingRepos.length} growth repositories <span aria-hidden="true">＋</span></span>
+          <span class="more-work-count">3 additional demos · {digitalMarketingRepos.length} growth repositories <span aria-hidden="true">＋</span></span>
         </summary>
         <div class="more-work-content">
           <p class="more-work-intro">A few additional demos and earlier projects. Open only what interests you.</p>
@@ -570,14 +569,11 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             <a href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener noreferrer">
               <span><strong>Digital Coaching Management</strong><small>Google Sheets + Apps Script · student records and payment tracking</small></span><span aria-hidden="true">↗</span>
             </a>
-            <a href="https://github.com/barshan94/MountRoyalAcademy-website" target="_blank" rel="noopener noreferrer">
-              <span><strong>Mount Royal Academy</strong><small>School website and admin workflows</small></span><span aria-hidden="true">↗</span>
+            <a href="/student-performance-dashboard.html" target="_blank" rel="noopener noreferrer">
+              <span><strong>Student Performance Dashboard</strong><small>Animated analytics demo with fictional sample data</small></span><span aria-hidden="true">↗</span>
             </a>
             <a href="https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE" target="_blank" rel="noopener noreferrer">
               <span><strong>999 Emergency Service concept</strong><small>Public-service workflow prototype · not a live dispatch service</small></span><span aria-hidden="true">↗</span>
-            </a>
-            <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">
-              <span><strong>Student Performance Dashboard</strong><small>Browse the source and related experiments on GitHub</small></span><span aria-hidden="true">↗</span>
             </a>
           </div>
           <div class="more-work-marketing">
@@ -630,14 +626,14 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
                 </div>
                 <h3>{experience.role || experience.title}</h3>
                 <p class="timeline-company">
-                  {experience.company || experience.organization}
+                  {experience.org || experience.company || experience.organization}
                 </p>
                 {experience.description && (
                   <p class="timeline-description">{experience.description}</p>
                 )}
-                {experience.highlights?.length && (
+                {(experience.bullets?.length || experience.highlights?.length) && (
                   <ul class="timeline-highlights">
-                    {experience.highlights.map((highlight) => (
+                    {(experience.bullets || experience.highlights || []).map((highlight) => (
                       <li>{highlight}</li>
                     ))}
                   </ul>
@@ -674,7 +670,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             <article class="skill-card" data-reveal>
               <span class="skill-index">{projectNumber(index)}</span>
               <div class="skill-content">
-                <h3>{skill.category || skill.name || skill.title}</h3>
+                <h3>{skill.group || skill.category || skill.name || skill.title}</h3>
                 {Array.isArray(skill.items) ? (
                   <div class="skill-tags">
                     {skill.items.map((item) => (
