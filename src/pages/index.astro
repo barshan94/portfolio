@@ -175,11 +175,6 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
           <span class="console-label">REVERSIBLE HISTORY</span>
           <span class="console-state">IMPLEMENTED</span>
         </div>
-        <div class="console-test">
-          <div><span class="console-kicker">RECORDED TEST BASELINE</span><strong>11 / 11</strong></div>
-          <span class="console-state">PASSING*</span>
-        </div>
-        <p class="console-footnote">*Previously recorded unit and integration test baseline; not a live CI status.</p>
         <div class="console-bottomline"><span>FINANCIAL SYSTEMS</span><span>BUILD / WITH PURPOSE ↗</span></div>
       </div>
     </section>
@@ -3111,6 +3106,49 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   @media (max-width: 600px) {
     .digital-growth-animation-frame { height: 620px; border-radius: 11px; }
     .digital-growth-source-link .button { width: fit-content; }
+  }
+
+  /* One consistent presentation system for full-width interactive demos. */
+  .dashboard-frame,
+  .coaching-animation-frame,
+  .emergency-animation-frame,
+  .digital-growth-animation-frame {
+    height: clamp(390px, 48vw, 600px);
+    min-height: 0;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 16px;
+    background: #080d14;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+  }
+
+  .dashboard-frame iframe,
+  .coaching-animation-frame iframe,
+  .emergency-animation-frame iframe,
+  .digital-growth-animation-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 700px) {
+    .dashboard-frame,
+    .coaching-animation-frame,
+    .emergency-animation-frame,
+    .digital-growth-animation-frame {
+      height: 420px;
+      border-radius: 12px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dashboard-frame,
+    .coaching-animation-frame,
+    .emergency-animation-frame,
+    .digital-growth-animation-frame {
+      scroll-behavior: auto;
+    }
   }
 
   /* Individual repositories in the unified digital marketing project */
