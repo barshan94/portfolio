@@ -227,57 +227,29 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               <div class="feature-item">
                 <span class="feature-number">01</span>
                 <div>
-                  <h4>Transactions &amp; financial ledger</h4>
-                  <p>Organize income, expenses, donations, transfers, and connected account balances.</p>
+                  <h4>Transactions &amp; connected ledger</h4>
+                  <p>Track income, expenses, transfers, donations, and account balances from linked records.</p>
                 </div>
               </div>
               <div class="feature-item">
                 <span class="feature-number">02</span>
                 <div>
-                  <h4>Budgets &amp; savings goals</h4>
-                  <p>Set spending limits, monitor budget usage, and track progress toward financial targets.</p>
+                  <h4>Loans, repayments &amp; tuition</h4>
+                  <p>Track lending and borrowing lifecycles, repayments, student payment history, and outstanding dues.</p>
                 </div>
               </div>
               <div class="feature-item">
                 <span class="feature-number">03</span>
                 <div>
-                  <h4>Financial assistant</h4>
-                  <p>Explore natural-language questions about finances, such as net worth, loans, and budgets.</p>
+                  <h4>Budgets, savings &amp; investments</h4>
+                  <p>Organize recurring transactions, savings goals, deposits, and investment activity.</p>
                 </div>
               </div>
               <div class="feature-item">
                 <span class="feature-number">04</span>
                 <div>
-                  <h4>Recurring transactions</h4>
-                  <p>Organize regular income and expenses to make recurring financial commitments easier to track.</p>
-                </div>
-              </div>
-              <div class="feature-item">
-                <span class="feature-number">05</span>
-                <div>
-                  <h4>Loans &amp; tuition tracking</h4>
-                  <p>Manage lending, borrowing, repayments, student payment history, and outstanding dues.</p>
-                </div>
-              </div>
-              <div class="feature-item">
-                <span class="feature-number">06</span>
-                <div>
-                  <h4>Deposits, FDRs &amp; investments</h4>
-                  <p>Organize deposit records, fixed-deposit details, and long-term investment activity.</p>
-                </div>
-              </div>
-              <div class="feature-item">
-                <span class="feature-number">07</span>
-                <div>
-                  <h4>Audit log &amp; reversible changes</h4>
-                  <p>Improve accountability with traceable financial changes and controlled reversals.</p>
-                </div>
-              </div>
-              <div class="feature-item">
-                <span class="feature-number">08</span>
-                <div>
-                  <h4>Financial reports &amp; exports</h4>
-                  <p>Review financial activity and export reports in Excel, CSV, and PDF formats.</p>
+                  <h4>Auditability &amp; reporting</h4>
+                  <p>Keep financial changes traceable and review or export activity reports.</p>
                 </div>
               </div>
             </div>
@@ -576,6 +548,16 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               <span><strong>999 Emergency Service concept</strong><small>Public-service workflow prototype · not a live dispatch service</small></span><span aria-hidden="true">↗</span>
             </a>
           </div>
+          {writing.length > 0 && (
+            <div class="more-work-marketing">
+              <h3>Notes &amp; writing</h3>
+              <div class="more-work-repo-list">
+                {writing.map((entry) => (
+                  <a href={getWritingLink(entry)}>{entry.data.title}<span aria-hidden="true">↗</span></a>
+                ))}
+              </div>
+            </div>
+          )}
           <div class="more-work-marketing">
             <h3>Digital Marketing &amp; Growth Experiments</h3>
             <p>12 supporting repositories covering SEO, content, WordPress, campaigns, design, and automation.</p>
@@ -691,49 +673,6 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               </div>
               <span class="skill-arrow" aria-hidden="true">↗</span>
             </article>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <!-- WRITING -->
-    {writing.length > 0 && (
-      <section
-        class="writing section-wrap section-block"
-        id="writing"
-        aria-labelledby="writing-title"
-      >
-        <div class="section-heading" data-reveal>
-          <div>
-            <p class="section-kicker">05 — NOTES & IDEAS</p>
-            <h2 id="writing-title">
-              Thinking in <span class="accent-text">public.</span>
-            </h2>
-          </div>
-          <p class="section-sub">
-            Notes, lessons, and ideas from the things I build and learn.
-          </p>
-        </div>
-
-        <div class="writing-list">
-          {writing.map((entry, index) => (
-            <a
-              class="writing-item"
-              href={getWritingLink(entry)}
-              data-reveal
-            >
-              <span class="writing-number">{projectNumber(index)}</span>
-              <div class="writing-main">
-                <span class="writing-type">
-                  {entry.data.type || "Article"}
-                </span>
-                <h3>{entry.data.title}</h3>
-                {entry.data.excerpt || entry.data.description && (
-                  <p>{entry.data.excerpt || entry.data.description}</p>
-                )}
-              </div>
-              <span class="writing-arrow" aria-hidden="true">↗</span>
-            </a>
           ))}
         </div>
       </section>
