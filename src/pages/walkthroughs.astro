@@ -3,6 +3,14 @@ import Layout from "../layouts/Layout.astro";
 
 const demos = [
   {
+    title: "Money Calculator",
+    category: "Financial systems · Full-stack",
+    description: "The flagship personal-finance application, with ledger-connected transactions, account balances, loans, repayments, and traceable corrections.",
+    src: "/money-calculator.html",
+    repo: "https://github.com/barshan94/money-calculator",
+    tone: "finance",
+  },
+  {
     title: "Asta Store",
     category: "E-commerce · Full-stack",
     description: "A storefront concept covering product discovery, cart flow, checkout, and an admin experience.",
@@ -56,7 +64,7 @@ const demos = [
       <h1>Built to be <em>explored.</em></h1>
       <p class="intro">The homepage is the short version. This is where the demonstrations live. Open any walkthrough when you want to see the details—without stacking every animation into one long scroll.</p>
       <div class="gallery-stats">
-        <span><strong>05</strong> interactive demos</span>
+        <span><strong>06</strong> interactive demos</span>
         <span><strong>01</strong> at a time</span>
         <span>Sample data is labelled where applicable</span>
       </div>
@@ -69,7 +77,7 @@ const demos = [
             <span class="art-index">{String(index + 1).padStart(2, "0")}</span>
             <span class="art-orbit orbit-one"></span>
             <span class="art-orbit orbit-two"></span>
-            <span class="art-core">{["A", "▥", "M", "999", "↗"][index]}</span>
+            <span class="art-core">{["₿", "A", "▥", "M", "999", "↗"][index]}</span>
             <span class="art-lines"></span>
             <span class="art-label">{demo.category}</span>
           </div>
@@ -154,7 +162,7 @@ const demos = [
   .demo-card { min-width: 0; overflow: hidden; border: 1px solid #27272a; border-radius: 14px; background: #0c0f13; transition: border-color .2s ease, transform .2s ease; }
   .demo-card:hover { border-color: #278566; transform: translateY(-2px); }
   .demo-art { position: relative; height: clamp(150px, 22vw, 230px); overflow: hidden; display: grid; place-items: center; isolation: isolate; background: radial-gradient(ellipse at 50% 50%, #16362e, #0b1114 68%); }
-  .tone-analytics .demo-art { background: radial-gradient(ellipse at 50% 50%, #15343d, #0b1114 68%); }
+  .tone-finance .demo-art { background: radial-gradient(ellipse at 50% 50%, #173b30, #0b1114 68%); }\n  .tone-analytics .demo-art { background: radial-gradient(ellipse at 50% 50%, #15343d, #0b1114 68%); }
   .tone-academy .demo-art { background: radial-gradient(ellipse at 50% 50%, #242e48, #0b1114 68%); }
   .tone-emergency .demo-art { background: radial-gradient(ellipse at 50% 50%, #3c2028, #0b1114 68%); }
   .tone-growth .demo-art { background: radial-gradient(ellipse at 50% 50%, #33284c, #0b1114 68%); }
