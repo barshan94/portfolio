@@ -14,26 +14,29 @@
 <style>
   .mc-transition {
     width: 100%;
+    height: clamp(360px, 52vw, 620px);
     margin: 0 0 28px;
     overflow: hidden;
     background: #07080a;
-    border: 1px solid #245047;
-    border-radius: 6px;
+    border: 1px solid #27272a;
+    border-radius: 12px;
+    contain: layout paint;
   }
 
   .mc-transition iframe {
     display: block;
     width: 100%;
-    height: min(100svh, 900px);
-    min-height: 560px;
+    height: 100%;
     padding: 0;
     border: 0;
     background: #07080a;
   }
 
   @media (max-width: 600px) {
-    .mc-transition iframe {
-      min-height: 620px;
+    .mc-transition {
+      height: 420px;
+      margin-bottom: 22px;
+      border-radius: 10px;
     }
   }
 </style>
