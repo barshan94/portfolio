@@ -63,7 +63,7 @@ const getProjectUpdatedDate = (
     : "";
 
 const getExperienceDate = (experience: any) =>
-  [experience.period || [experience.start, experience.end].filter(Boolean).join(" — ");
+  experience.period || [experience.start, experience.end].filter(Boolean).join(" — ");
 
 const getWritingLink = (entry: (typeof writing)[number]) =>
   entry.data.url || `/writing/${entry.id}/`;
@@ -524,6 +524,15 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
       )}
     </section>
+
+    <div class="project-gallery-cta section-wrap">
+      <div>
+        <p class="section-kicker">MORE THAN A STATIC PORTFOLIO</p>
+        <h2>See the projects <span class="accent-text">in motion.</span></h2>
+        <p>Explore the interactive demos in one place. Open only the walkthroughs you want to see.</p>
+      </div>
+      <a class="button button-primary" href="/walkthroughs/">Explore interactive gallery <span aria-hidden="true">↗</span></a>
+    </div>
 
     <!-- ADDITIONAL WORK: available without dominating the main story -->
     <section class="more-work section-wrap section-block" id="more-work" aria-labelledby="more-work-title">
@@ -3204,6 +3213,19 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     .more-work-content { padding: 0 17px 17px; }
   }
   @media (prefers-reduced-motion: reduce) { .hero-quick-links a { transition: none; } }
+
+
+  .project-gallery-cta {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    margin-top: 8px; margin-bottom: 24px; padding: 24px;
+    border: 1px solid rgba(52,211,153,.22); border-radius: 14px;
+    background: linear-gradient(115deg, rgba(16,185,129,.07), rgba(255,255,255,.012));
+  }
+  .project-gallery-cta > div { max-width: 560px; }
+  .project-gallery-cta h2 { margin: 6px 0; font-size: clamp(1.2rem,2.2vw,1.7rem); }
+  .project-gallery-cta p:not(.section-kicker) { margin: 0; color: #a1a1aa; font-size: .88rem; line-height: 1.65; }
+  .project-gallery-cta > a { flex-shrink: 0; }
+  @media (max-width: 650px) { .project-gallery-cta { align-items: flex-start; flex-direction: column; padding: 19px; } }
 
 </style>
 
