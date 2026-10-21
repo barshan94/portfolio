@@ -2,22 +2,23 @@
 
 A personal portfolio website for Barshan Ghosh, software developer building toward AI engineering.
 
-Built with [Astro](https://astro.build) 7.3.8 as a static site. Single page, no framework components, no build step beyond `npm run build`.
+Built with [Astro](https://astro.build) 7.3.8 as a static site, using shared layout components, content collections, and standalone HTML animation demos. Run `npm run build` to generate the static output and copy the animation assets.
 
 ## What's here
 
-The homepage is organized in this order so visitors see project evidence before longer demonstrations:
+The homepage keeps the main story concise, with the full demonstrations available separately:
 
-1. **Hero** — engineering focus and a direct path to the work.
-2. **Featured project** — Money Calculator, marked in progress.
-3. **Selected projects** — curated cards from the Astro project collection.
-4. **Interactive walkthroughs** — six animation demos on `/walkthroughs/`: Money Calculator, ASTA Store, Student Performance Dashboard, Mount Royal Academy, 999 Emergency Service, and Digital Growth & Marketing Systems. The Digital Coaching Management System is linked as a repository in the homepage archive; it is not presented as an animation demo. Sample dashboard data is illustrative, and the 999 concept does not contact real responders.
-5. **Experience** — employment, internship, and freelance experience distinguished by type.
-6. **Skills** — grouped by domain.
-7. **Writing & Research** — research and project write-ups.
-8. **Contact** — email, GitHub, LinkedIn.
+1. **Hero** — engineering focus and direct professional links.
+2. **Featured project** — Money Calculator and its existing animation.
+3. **Selected projects** — ASTA Store, Mount Royal Academy, and the bIoT thesis.
+4. **Gallery entry point** — links to `/walkthroughs/`, where six existing animation demos can be opened one at a time.
+5. **Archive** — Digital Coaching Management repository, Student Performance Dashboard demo, 999 Emergency Service repository, linked writing, and 12 digital-marketing repositories.
+6. **Experience and skills** — information sourced from the CV content collection.
+7. **Contact** — email, GitHub, and LinkedIn.
 
-Project facts live in content files rather than being duplicated across page markup. Standalone animation HTML files are copied into the static build by `copy-academy-animation.mjs`; the Money Calculator animation is served from `public/`. The homepage keeps the selected work concise, while the archive contains the additional demos, writing links, and 12 digital-marketing repositories.
+The six gallery demos are Money Calculator, ASTA Store, Student Performance Dashboard, Mount Royal Academy, 999 Emergency Service, and Digital Growth & Marketing Systems. The Digital Coaching Management System is a repository link, not a separate animation demo. Dashboard sample data is illustrative, and the 999 concept does not contact real responders.
+
+Selected project facts live in content files. Standalone animation HTML files are copied into the static build by `copy-academy-animation.mjs`; the Money Calculator animation is served from `public/`. The Digital Growth & Marketing Systems animation is one unified showcase, followed by links to the 12 supporting repositories.
 
 ## Project intelligence
 
