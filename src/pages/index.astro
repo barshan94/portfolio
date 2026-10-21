@@ -15,11 +15,16 @@ const flagship =
   ) ||
   allProjects[0];
 
+const featuredProjectIds = new Set([
+  "asta-store",
+  "biot-thesis",
+  "mount-royal-academy",
+]);
+
+// Keep the homepage deliberately curated; the full archive lives below in a disclosure.
 const otherProjects = allProjects.filter(
   (project) =>
-    project !== flagship &&
-    // Keyword research is part of the unified Digital Marketing & Growth Systems project.
-    projectId(project) !== "keyword-research"
+    project !== flagship && featuredProjectIds.has(projectId(project))
 );
 
 const [cvEntry] = await getCollection("cv");
@@ -131,6 +136,11 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
             Get in touch <span aria-hidden="true">↗</span>
           </a>
         </div>
+        <nav class="hero-quick-links" aria-label="Professional links">
+          <a href={contact?.github ? (contact.github.startsWith("http") ? contact.github : `https://github.com/${contact.github.replace(/^@/, "")}`) : "https://github.com/barshan94"} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          {contact?.linkedin && <a href={contact.linkedin.startsWith("http") ? contact.linkedin : `https://www.linkedin.com/in/${contact.linkedin.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
+          {(cv?.resume || cv?.resumeUrl || cv?.resumePDF) && <a href={cv.resume || cv.resumeUrl || cv.resumePDF} target="_blank" rel="noopener noreferrer">Resume PDF ↗</a>}
+        </nav>
 
         <div class="hero-facts" aria-label="Engineering focus">
           <div class="hero-fact">
@@ -544,207 +554,43 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
       )}
     </section>
 
-    <section
-      class="walkthrough-intro section-wrap section-block"
-      id="project-walkthroughs"
-      aria-labelledby="walkthroughs-title"
-    >
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="section-kicker">INTERACTIVE WALKTHROUGHS</p>
-          <h2 id="walkthroughs-title">
-            See the work <span class="accent-text">in motion.</span>
-          </h2>
-        </div>
-        <p class="section-sub">
-          Selected demonstrations show how the applications and workflows are organized.
-          Sample-data simulations are clearly labelled; they are not live production systems.
-        </p>
-      </div>
-    </section>
-
-    <!-- STUDENT PERFORMANCE DASHBOARD -->
-    <section
-      class="dashboard-showcase section-wrap section-block"
-      id="student-dashboard"
-      aria-labelledby="student-dashboard-title"
-    >
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="section-kicker">INTERACTIVE DATA VISUALIZATION</p>
-          <h2 id="student-dashboard-title">
-            Student Performance<br />
-            <span class="accent-text">Dashboard.</span>
-          </h2>
-        </div>
-        <p class="section-sub">
-          An animated academic analytics experience exploring student results,
-          attendance, assessment averages, and classroom performance.
-        </p>
-      </div>
-
-      <div class="dashboard-frame">
-        <iframe
-          src="/student-performance-dashboard.html"
-          title="Interactive Student Performance Dashboard demonstration"
-          loading="lazy"
-        ></iframe>
-      </div>
-
-      <p class="dashboard-note">
-        Demonstration with illustrative sample data, not live student records.
-      </p>
-    </section>
-
-    <!-- DIGITAL COACHING MANAGEMENT SYSTEM -->
-    <section
-      class="coaching-showcase section-wrap section-block"
-      id="coaching-management"
-      aria-labelledby="coaching-management-title"
-    >
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="section-kicker">GOOGLE SHEETS + APPS SCRIPT AUTOMATION</p>
-          <h2 id="coaching-management-title">
-            Digital Coaching<br />
-            <span class="accent-text">Management System.</span>
-          </h2>
-        </div>
-        <p class="section-sub">
-          A spreadsheet-based workflow for student records, daily attendance,
-          academic tracking, payment monitoring, and individual progress reports.
-        </p>
-      </div>
-
-      <div class="coaching-animation-frame">
-        <iframe
-          src="/digital-coaching-management-animation.html"
-          title="Digital Coaching Management System animation demonstration"
-          loading="lazy"
-          allow="fullscreen"
-        ></iframe>
-      </div>
-
-      <p class="coaching-demo-note">
-        Illustrative animation using fictional sample data. The animation is a
-        visual walkthrough, not a live connection to the Google Sheets system.
-      </p>
-
-      <div class="coaching-showcase-links">
-        <a
-          href="https://docs.google.com/spreadsheets/d/1r7w7Nt0iDNzdSawHyljJQfACSe9cefNenKwu0_AkNQM/edit?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Explore spreadsheet demo ↗
-        </a>
-        <a
-          href="https://github.com/barshan94/digital-coaching-management-system"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View source on GitHub ↗
-        </a>
-      </div>
-    </section>
-
-    <section class="emergency-showcase section-wrap section-block" id="999-emergency-service" aria-labelledby="emergency-title">
-  <div class="section-heading" data-reveal>
-    <div><p class="section-kicker">PUBLIC-SERVICE WEB APPLICATION</p><h2 id="emergency-title">999 National Emergency<br /><span class="accent-text">Service.</span></h2></div>
-    <p class="section-sub">A portfolio walkthrough of citizen access, service categories, request records, and administrative workflows.</p>
-  </div>
-  <div class="emergency-animation-frame"><iframe src="/999-emergency-service-animation.html" title="999 National Emergency Service animated portfolio demonstration" loading="lazy" allow="fullscreen"></iframe></div>
-  <p class="emergency-demo-note">Illustrative portfolio simulation with fictional sample data. It does not submit real emergency requests, contact responders, or provide live dispatch.</p>
-  <div class="emergency-showcase-links"><a href="https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE" target="_blank" rel="noopener noreferrer">View original project on GitHub ↗</a></div>
-</section>
-
-
-
-    <!-- DIGITAL MARKETING ANIMATION: embedded on the homepage -->
-    <section
-      class="digital-growth-showcase section-wrap section-block"
-      id="digital-growth-showcase"
-      aria-labelledby="digital-growth-showcase-title"
-    >
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="section-kicker">INTERACTIVE PROJECT WALKTHROUGH</p>
-          <h2 id="digital-growth-showcase-title">
-            Digital Marketing<br />
-            <span class="accent-text">&amp; Growth Systems.</span>
-          </h2>
-        </div>
-        <p class="section-sub">
-          One connected workflow combining search research, local SEO, content,
-          YouTube, paid campaigns, WordPress, creative work, and automation.
-        </p>
-      </div>
-      <div class="digital-growth-animation-frame">
-        <iframe
-          src="/digital-growth-marketing-animation.html"
-          title="Digital Marketing and Growth Systems animated showcase"
-          loading="lazy"
-          allow="fullscreen"
-        ></iframe>
-      </div>
-      <p class="digital-growth-demo-note">
-        Interactive showcase with illustrative sample data. The animation brings together 12 supporting repositories.
-      </p>
-
-      <div class="digital-growth-repositories" aria-labelledby="digital-growth-repositories-title">
-        <div class="digital-growth-repositories-heading">
-          <p class="section-kicker">REPOSITORY INDEX / 12 PROJECTS</p>
-          <h3 id="digital-growth-repositories-title">Explore the work behind the system.</h3>
-          <p>Each entry opens its original GitHub repository.</p>
-        </div>
-        <div class="digital-growth-repo-grid">
-          {digitalMarketingRepos.slice(0, 4).map((repo, index) => (
-            <article class="digital-growth-repo-card">
-              <div class="digital-growth-repo-top">
-                <span class="digital-growth-repo-number">{String(index + 1).padStart(2, "0")}</span>
-                <span class="digital-growth-repo-category">{repo.category}</span>
-              </div>
-              <h4>{repo.name}</h4>
-              <p>{repo.description}</p>
-              <a href={repo.url} target="_blank" rel="noopener noreferrer">
-                Open repository <span aria-hidden="true">↗</span>
-              </a>
-            </article>
-          ))}
-        </div>
-        {digitalMarketingRepos.length > 4 && (
-          <details class="digital-growth-more">
-            <summary>
-              <span>Show all {digitalMarketingRepos.length} repositories</span>
-              <span class="digital-growth-more-hint">Show 8 more projects</span>
-            </summary>
-            <div class="digital-growth-repo-grid digital-growth-repo-grid-more">
-              {digitalMarketingRepos.slice(4).map((repo, index) => (
-                <article class="digital-growth-repo-card">
-                  <div class="digital-growth-repo-top">
-                    <span class="digital-growth-repo-number">{String(index + 5).padStart(2, "0")}</span>
-                    <span class="digital-growth-repo-category">{repo.category}</span>
-                  </div>
-                  <h4>{repo.name}</h4>
-                  <p>{repo.description}</p>
-                  <a href={repo.url} target="_blank" rel="noopener noreferrer">
-                    Open repository <span aria-hidden="true">↗</span>
-                  </a>
-                </article>
+    <!-- ADDITIONAL WORK: available without dominating the main story -->
+    <section class="more-work section-wrap section-block" id="more-work" aria-labelledby="more-work-title">
+      <details class="more-work-disclosure">
+        <summary>
+          <span>
+            <span class="section-kicker">MORE IN THE ARCHIVE</span>
+            <strong id="more-work-title">Other builds &amp; experiments</strong>
+          </span>
+          <span class="more-work-count">3 systems · {digitalMarketingRepos.length} growth repositories <span aria-hidden="true">＋</span></span>
+        </summary>
+        <div class="more-work-content">
+          <p class="more-work-intro">A few additional demos and earlier projects. Open only what interests you.</p>
+          <div class="more-work-links">
+            <a href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener noreferrer">
+              <span><strong>Digital Coaching Management</strong><small>Google Sheets + Apps Script · student records and payment tracking</small></span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://github.com/barshan94/MountRoyalAcademy-website" target="_blank" rel="noopener noreferrer">
+              <span><strong>Mount Royal Academy</strong><small>School website and admin workflows</small></span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE" target="_blank" rel="noopener noreferrer">
+              <span><strong>999 Emergency Service concept</strong><small>Public-service workflow prototype · not a live dispatch service</small></span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">
+              <span><strong>Student Performance Dashboard</strong><small>Browse the source and related experiments on GitHub</small></span><span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="more-work-marketing">
+            <h3>Digital Marketing &amp; Growth Experiments</h3>
+            <p>12 supporting repositories covering SEO, content, WordPress, campaigns, design, and automation.</p>
+            <div class="more-work-repo-list">
+              {digitalMarketingRepos.map((repo) => (
+                <a href={repo.url} target="_blank" rel="noopener noreferrer">{repo.name}<span aria-hidden="true">↗</span></a>
               ))}
             </div>
-          </details>
-        )}
-      </div>
-
-      <div class="digital-growth-source-link">
-        <a
-          class="button button-quiet"
-          href="https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >View GitHub source <span aria-hidden="true">↗</span></a>
-      </div>
+          </div>
+        </div>
+      </details>
     </section>
 
     <!-- EXPERIENCE -->
@@ -3355,6 +3201,74 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     .node-search { left: 5%; } .node-local { right: 5%; }
     .node-video { right: 2%; } .node-automation { left: 2%; }
   }
+
+
+
+  /* Interview-first homepage: keep secondary work out of the primary scroll. */
+  .hero-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 18px;
+    font-size: .82rem;
+  }
+  .hero-quick-links a { color: #a1a1aa; text-decoration: none; transition: color .18s ease; }
+  .hero-quick-links a:hover, .hero-quick-links a:focus-visible { color: #34d399; }
+  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .project-card { min-width: 0; }
+  .project-description { line-height: 1.65; }
+  .more-work { padding-top: clamp(8px, 1.5vw, 20px); }
+  .more-work-disclosure {
+    border: 1px solid rgba(148,163,184,.2);
+    border-radius: 14px;
+    background: rgba(255,255,255,.018);
+    overflow: hidden;
+  }
+  .more-work-disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 22px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .more-work-disclosure > summary::-webkit-details-marker { display: none; }
+  .more-work-disclosure > summary > span:first-child { display: grid; gap: 5px; }
+  .more-work-disclosure > summary strong { font-size: 1.08rem; font-weight: 600; }
+  .more-work-count { color: #a1a1aa; font-size: .8rem; text-align: right; }
+  .more-work-count span { color: #34d399; padding-left: 8px; }
+  .more-work-disclosure[open] .more-work-count span { display: inline-block; transform: rotate(45deg); }
+  .more-work-content { padding: 0 22px 22px; border-top: 1px solid rgba(148,163,184,.13); }
+  .more-work-intro { color: #a1a1aa; font-size: .9rem; margin: 18px 0; }
+  .more-work-links { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .more-work-links > a {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    padding: 14px; border: 1px solid rgba(148,163,184,.14); border-radius: 10px;
+    color: inherit; text-decoration: none;
+  }
+  .more-work-links > a:hover { border-color: rgba(52,211,153,.55); }
+  .more-work-links > a > span:first-child { display: grid; gap: 5px; }
+  .more-work-links strong { font-size: .88rem; font-weight: 600; }
+  .more-work-links small { color: #a1a1aa; font-size: .78rem; line-height: 1.45; }
+  .more-work-links > a > span:last-child { color: #34d399; }
+  .more-work-marketing { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(148,163,184,.14); }
+  .more-work-marketing h3 { margin: 0 0 6px; font-size: 1rem; }
+  .more-work-marketing > p { margin: 0 0 14px; color: #a1a1aa; font-size: .86rem; }
+  .more-work-repo-list { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px 16px; }
+  .more-work-repo-list a { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; color: #d4d4d8; font-size: .8rem; text-decoration: none; border-bottom: 1px solid rgba(148,163,184,.1); }
+  .more-work-repo-list a span { color: #34d399; }
+  @media (max-width: 800px) {
+    .project-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .more-work-repo-list { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+  @media (max-width: 600px) {
+    .project-grid, .more-work-links, .more-work-repo-list { grid-template-columns: minmax(0,1fr); }
+    .more-work-disclosure > summary { align-items: flex-start; padding: 17px; }
+    .more-work-count { max-width: 42%; line-height: 1.5; }
+    .more-work-content { padding: 0 17px 17px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-quick-links a { transition: none; } }
 
 </style>
 
