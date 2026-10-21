@@ -47,12 +47,18 @@ const demos = [
   },
 ];
 
-const groupDescriptions: Record<string, string> = {
+const groupDescriptions = {
   "Core projects": "The main applications, platforms, and larger project work.",
   "Digital marketing & growth": "SEO, content, websites, campaigns, creative work, and automation.",
   "Academic & early experiments": "Coursework, earlier systems, programming exercises, research, and experiments. Open the repositories for their exact contents.",
   "Portfolio": "The source code for this portfolio itself.",
 };
+
+const repositorySections = githubRepositoryGroups.map((group) => ({
+  group,
+  description: groupDescriptions[group],
+  items: githubRepositories.filter((repository) => repository.group === group),
+}));
 ---
 
 <Layout
