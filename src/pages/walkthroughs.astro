@@ -1,0 +1,201 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const demos = [
+  {
+    title: "Asta Store",
+    category: "E-commerce · Full-stack",
+    description: "A storefront concept covering product discovery, cart flow, checkout, and an admin experience.",
+    src: "/asta-store-animation.html",
+    repo: "https://github.com/barshan94/asta-store",
+    tone: "store",
+  },
+  {
+    title: "Student Performance Dashboard",
+    category: "Analytics · Education",
+    description: "An animated academic analytics experience exploring student results, attendance, and classroom performance using fictional sample data.",
+    src: "/student-performance-dashboard.html",
+    repo: "https://github.com/barshan94",
+    tone: "analytics",
+  },
+  {
+    title: "Mount Royal Academy",
+    category: "Education · Web platform",
+    description: "A school website and administration workflow concept for admissions, notices, calendar, and content management.",
+    src: "/mount-royal-academy-animation.html",
+    repo: "https://github.com/barshan94/MountRoyalAcademy-website",
+    tone: "academy",
+  },
+  {
+    title: "999 Emergency Service",
+    category: "Public-service concept",
+    description: "A walkthrough of citizen access, service categories, request records, and administrative workflows. Not a live emergency service.",
+    src: "/999-emergency-service-animation.html",
+    repo: "https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE",
+    tone: "emergency",
+  },
+  {
+    title: "Digital Marketing & Growth Systems",
+    category: "SEO · Campaigns · Automation",
+    description: "One connected visual workflow spanning search research, content, local SEO, WordPress, campaigns, creative work, and automation.",
+    src: "/digital-growth-marketing-animation.html",
+    repo: "https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html",
+    tone: "growth",
+  },
+];
+---
+
+<Layout
+  title="Interactive Project Gallery — Barshan Ghosh"
+  description="Explore interactive walkthroughs and animated demonstrations of software projects, dashboards, education systems, and growth workflows."
+>
+  <main class="gallery-shell">
+    <header class="gallery-header">
+      <a class="back-link" href="/">← Back to portfolio</a>
+      <p class="eyebrow"><span></span> PROJECT WALKTHROUGHS</p>
+      <h1>Built to be <em>explored.</em></h1>
+      <p class="intro">The homepage is the short version. This is where the demonstrations live. Open any walkthrough when you want to see the details—without stacking every animation into one long scroll.</p>
+      <div class="gallery-stats">
+        <span><strong>05</strong> interactive demos</span>
+        <span><strong>01</strong> at a time</span>
+        <span>Sample data is labelled where applicable</span>
+      </div>
+    </header>
+
+    <section class="gallery-grid" aria-label="Interactive project demonstrations">
+      {demos.map((demo, index) => (
+        <article class:list={["demo-card", `tone-${demo.tone}`]}>
+          <div class="demo-art" aria-hidden="true">
+            <span class="art-index">{String(index + 1).padStart(2, "0")}</span>
+            <span class="art-orbit orbit-one"></span>
+            <span class="art-orbit orbit-two"></span>
+            <span class="art-core">{["A", "▥", "M", "999", "↗"][index]}</span>
+            <span class="art-lines"></span>
+            <span class="art-label">{demo.category}</span>
+          </div>
+          <div class="demo-body">
+            <p class="demo-category">{demo.category}</p>
+            <h2>{demo.title}</h2>
+            <p class="demo-description">{demo.description}</p>
+            <div class="demo-actions">
+              <button class="play-demo" type="button" data-src={demo.src} data-title={demo.title}>
+                Play walkthrough <span aria-hidden="true">↗</span>
+              </button>
+              <a href={demo.repo} target="_blank" rel="noopener noreferrer">Source ↗</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="gallery-note">
+      <span class="note-mark">i</span>
+      <p>These are portfolio demonstrations, not necessarily live production systems. The emergency-service concept does not submit real requests or contact responders. Dashboard visuals use fictional sample data.</p>
+    </section>
+  </main>
+
+  <dialog class="demo-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-topbar">
+      <div><span class="live-dot"></span><strong id="dialog-title">Project walkthrough</strong></div>
+      <button class="close-demo" type="button" aria-label="Close walkthrough">Close <span aria-hidden="true">×</span></button>
+    </div>
+    <div class="dialog-stage">
+      <iframe title="Selected project walkthrough" loading="lazy" allow="fullscreen"></iframe>
+    </div>
+  </dialog>
+</Layout>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".demo-dialog");
+  const frame = dialog?.querySelector("iframe");
+  const title = dialog?.querySelector<HTMLElement>("#dialog-title");
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(".close-demo");
+
+  document.querySelectorAll<HTMLButtonElement>(".play-demo").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!dialog || !frame) return;
+      const src = button.dataset.src;
+      if (!src) return;
+      if (title) title.textContent = button.dataset.title || "Project walkthrough";
+      frame.src = src;
+      dialog.showModal();
+    });
+  });
+
+  const closeDialog = () => {
+    if (!dialog || !frame) return;
+    dialog.close();
+    frame.src = "about:blank";
+  };
+
+  closeButton?.addEventListener("click", closeDialog);
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) closeDialog();
+  });
+  dialog?.addEventListener("close", () => {
+    if (frame) frame.src = "about:blank";
+  });
+</script>
+
+<style>
+  :global(body) { background: #080a0d; }
+  .gallery-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 28px 0 80px; color: #f4f4f5; }
+  .gallery-header { max-width: 760px; padding: clamp(30px, 7vw, 86px) 0 42px; }
+  .back-link { display: inline-block; color: #a1a1aa; font-size: .86rem; text-decoration: none; margin-bottom: 48px; }
+  .back-link:hover { color: #34d399; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; color: #a1a1aa; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; }
+  .eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 16px #34d39966; }
+  h1 { margin: 18px 0; font-size: clamp(2.6rem, 7vw, 5.6rem); line-height: .98; letter-spacing: -.065em; font-weight: 560; }
+  h1 em { color: #34d399; font-style: normal; }
+  .intro { max-width: 620px; color: #a1a1aa; font-size: clamp(.98rem, 1.4vw, 1.1rem); line-height: 1.8; }
+  .gallery-stats { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 24px; margin-top: 26px; border-top: 1px solid #27272a; color: #a1a1aa; font-size: .78rem; }
+  .gallery-stats strong { color: #f4f4f5; margin-right: 5px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .demo-card { min-width: 0; overflow: hidden; border: 1px solid #27272a; border-radius: 14px; background: #0c0f13; transition: border-color .2s ease, transform .2s ease; }
+  .demo-card:hover { border-color: #278566; transform: translateY(-2px); }
+  .demo-art { position: relative; height: clamp(150px, 22vw, 230px); overflow: hidden; display: grid; place-items: center; isolation: isolate; background: radial-gradient(ellipse at 50% 50%, #16362e, #0b1114 68%); }
+  .tone-analytics .demo-art { background: radial-gradient(ellipse at 50% 50%, #15343d, #0b1114 68%); }
+  .tone-academy .demo-art { background: radial-gradient(ellipse at 50% 50%, #242e48, #0b1114 68%); }
+  .tone-emergency .demo-art { background: radial-gradient(ellipse at 50% 50%, #3c2028, #0b1114 68%); }
+  .tone-growth .demo-art { background: radial-gradient(ellipse at 50% 50%, #33284c, #0b1114 68%); }
+  .art-index { position: absolute; top: 16px; left: 18px; color: #a1a1aa; font: .72rem ui-monospace, monospace; }
+  .art-orbit { position: absolute; width: 150px; height: 150px; border: 1px solid #ffffff1c; border-radius: 50%; }
+  .orbit-one { width: 112px; height: 112px; }
+  .orbit-two { width: 190px; height: 190px; border-style: dashed; }
+  .art-core { display: grid; place-items: center; width: 66px; height: 66px; border: 1px solid #6ee7b788; border-radius: 18px; background: #0a1615cc; color: #a7f3d0; font-size: 1.3rem; font-weight: 650; box-shadow: 0 0 42px #34d39920; }
+  .tone-emergency .art-core { color: #fecdd3; border-color: #fb718577; }
+  .tone-growth .art-core { color: #ddd6fe; border-color: #a78bfa77; }
+  .art-lines { position: absolute; inset: 0; opacity: .35; background: repeating-linear-gradient(0deg, transparent 0 24px, #ffffff09 25px), repeating-linear-gradient(90deg, transparent 0 24px, #ffffff09 25px); mask-image: linear-gradient(transparent, black, transparent); z-index: -1; }
+  .art-label { position: absolute; right: 16px; bottom: 14px; color: #a1a1aa; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; }
+  .demo-body { padding: 20px; }
+  .demo-category { color: #6ee7b7; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+  .demo-body h2 { margin: 8px 0 10px; font-size: 1.2rem; letter-spacing: -.025em; }
+  .demo-description { min-height: 4.6em; color: #a1a1aa; font-size: .88rem; line-height: 1.7; }
+  .demo-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 20px; }
+  .play-demo { display: inline-flex; gap: 12px; align-items: center; border: 1px solid #34d39955; border-radius: 8px; padding: 10px 13px; background: #10312666; color: #a7f3d0; font: inherit; font-size: .82rem; cursor: pointer; }
+  .play-demo:hover { border-color: #34d399; background: #103126; }
+  .demo-actions a { color: #a1a1aa; font-size: .82rem; text-decoration: none; }
+  .demo-actions a:hover { color: #34d399; }
+  .gallery-note { display: flex; align-items: start; gap: 12px; margin-top: 28px; padding: 18px; border: 1px solid #27272a; border-radius: 10px; color: #a1a1aa; font-size: .82rem; line-height: 1.7; }
+  .note-mark { display: grid; place-items: center; flex: 0 0 22px; height: 22px; border: 1px solid #52525b; border-radius: 50%; font-size: .75rem; }
+  .demo-dialog { width: min(1200px, calc(100% - 28px)); max-width: none; height: min(86dvh, 850px); max-height: none; padding: 0; border: 1px solid #3f3f46; border-radius: 14px; background: #07080a; color: #f4f4f5; overflow: hidden; }
+  .demo-dialog::backdrop { background: #030506d9; backdrop-filter: blur(8px); }
+  .dialog-topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 54px; padding: 0 16px; border-bottom: 1px solid #27272a; }
+  .dialog-topbar > div { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .dialog-topbar strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .84rem; }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; }
+  .close-demo { border: 1px solid #3f3f46; border-radius: 7px; padding: 7px 10px; background: transparent; color: #e4e4e7; font: inherit; font-size: .8rem; cursor: pointer; }
+  .close-demo span { margin-left: 6px; font-size: 1rem; }
+  .dialog-stage { height: calc(100% - 54px); }
+  .dialog-stage iframe { display: block; width: 100%; height: 100%; border: 0; background: #07080a; }
+  @media (max-width: 700px) {
+    .gallery-shell { width: calc(100% - 32px); }
+    .gallery-header { padding-top: 30px; }
+    .back-link { margin-bottom: 36px; }
+    .gallery-grid { grid-template-columns: 1fr; gap: 12px; }
+    .demo-art { height: 180px; }
+    .demo-description { min-height: 0; }
+    .demo-dialog { width: calc(100% - 12px); height: 90dvh; border-radius: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .demo-card { transition: none; } .demo-card:hover { transform: none; } }
+</style>
