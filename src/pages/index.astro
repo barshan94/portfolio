@@ -541,7 +541,10 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         <h2>See the projects <span class="accent-text">in motion.</span></h2>
         <p>Explore the interactive demos in one place. Open only the walkthroughs you want to see.</p>
       </div>
-      <a class="button button-primary" href="/walkthroughs/">Explore interactive gallery <span aria-hidden="true">↗</span></a>
+      <div class="project-archive-actions">
+        <a class="button button-primary" href="/walkthroughs/#project-studio">Open Project Studio <span aria-hidden="true">↗</span></a>
+        <a class="button button-quiet" href="/walkthroughs/#repositories">Browse all 38 GitHub repositories <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
 
     <!-- ADDITIONAL WORK: available without dominating the main story -->
@@ -3174,6 +3177,20 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   .project-card { min-width: 0; }
   .project-description { line-height: 1.65; }
   .more-work { padding-top: clamp(8px, 1.5vw, 20px); }
+  .project-archive-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .project-archive-actions {
+      justify-content: flex-start;
+      width: 100%;
+    }
+  }
+
   .more-work-disclosure {
     border: 1px solid rgba(148,163,184,.2);
     border-radius: 14px;
