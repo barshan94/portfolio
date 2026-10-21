@@ -1,468 +1,210 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import MoneyCalculatorTransition from '../components/MoneyCalculatorTransition.astro';
+import Layout from "../layouts/Layout.astro";
+
+const demos = [
+  {
+    title: "Money Calculator",
+    category: "Financial systems · Full-stack",
+    description: "The flagship personal-finance application, with ledger-connected transactions, account balances, loans, repayments, and traceable corrections.",
+    src: "/money-calculator.html",
+    repo: "https://github.com/barshan94/money-calculator",
+    tone: "finance",
+  },
+  {
+    title: "Asta Store",
+    category: "E-commerce · Full-stack",
+    description: "A storefront concept covering product discovery, cart flow, checkout, and an admin experience.",
+    src: "/asta-store-animation.html",
+    repo: "https://github.com/barshan94/asta-store",
+    tone: "store",
+  },
+  {
+    title: "Student Performance Dashboard",
+    category: "Analytics · Education",
+    description: "An animated academic analytics experience exploring student results, attendance, and classroom performance using fictional sample data.",
+    src: "/student-performance-dashboard.html",
+    repo: "https://github.com/barshan94",
+    tone: "analytics",
+  },
+  {
+    title: "Mount Royal Academy",
+    category: "Education · Web platform",
+    description: "A school website and administration workflow concept for admissions, notices, calendar, and content management.",
+    src: "/mount-royal-academy-animation.html",
+    repo: "https://github.com/barshan94/MountRoyalAcademy-website",
+    tone: "academy",
+  },
+  {
+    title: "999 Emergency Service",
+    category: "Public-service concept",
+    description: "A walkthrough of citizen access, service categories, request records, and administrative workflows. Not a live emergency service.",
+    src: "/999-emergency-service-animation.html",
+    repo: "https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE",
+    tone: "emergency",
+  },
+  {
+    title: "Digital Marketing & Growth Systems",
+    category: "SEO · Campaigns · Automation",
+    description: "One connected visual workflow spanning search research, content, local SEO, WordPress, campaigns, creative work, and automation.",
+    src: "/digital-growth-marketing-animation.html",
+    repo: "https://github.com/barshan94/portfolio/blob/main/digital-growth-marketing-animation.html",
+    tone: "growth",
+  },
+];
 ---
 
-<Layout title="Barshan Ghosh — Software Engineering & Systems">
-  <header class="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
-    <div class="container mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="/" class="font-bold text-white flex items-center gap-2">
-        <span class="text-emerald-400">BG.</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-400 hidden sm:inline">Engineering Portfolio</span>
-      </a>
-      <div class="flex items-center gap-4 text-xs font-mono text-zinc-400">
-        <span class="flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          SYSTEM ONLINE
-        </span>
-        <span class="hidden sm:inline text-zinc-600">|</span>
-        <span class="hidden sm:inline">BD / 2026</span>
+<Layout
+  title="Interactive Project Gallery — Barshan Ghosh"
+  description="Explore interactive walkthroughs and animated demonstrations of software projects, dashboards, education systems, and growth workflows."
+>
+  <main class="gallery-shell">
+    <header class="gallery-header">
+      <a class="back-link" href="/">← Back to portfolio</a>
+      <p class="eyebrow"><span></span> PROJECT WALKTHROUGHS</p>
+      <h1>Built to be <em>explored.</em></h1>
+      <p class="intro">The homepage is the short version. This is where the demonstrations live. Open any walkthrough when you want to see the details—without stacking every animation into one long scroll.</p>
+      <div class="gallery-stats">
+        <span><strong>06</strong> interactive demos</span>
+        <span><strong>01</strong> at a time</span>
+        <span>Sample data is labelled where applicable</span>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="container mx-auto px-4 py-8 max-w-6xl space-y-24">
-    
-    <!-- HERO SECTION -->
-    <section class="py-12 md:py-20 grid md:grid-cols-2 gap-12 items-center">
-      <div class="space-y-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono font-medium text-emerald-400 bg-emerald-950/50 rounded-full border border-emerald-800/50">
-          <span>Software Engineering</span>
-          <span class="text-emerald-700">/</span>
-          <span>Financial Systems</span>
-          <span class="text-emerald-700">/</span>
-          <span>Applied AI</span>
-        </div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-          Engineering useful systems for <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">real-world problems.</span>
-        </h1>
-        <p class="text-zinc-300 text-lg leading-relaxed">
-          I'm Barshan Ghosh, a computer science graduate who enjoys turning complicated problems into useful software. I work across web development, financial applications, and technical research while building toward a career in AI engineering.
-        </p>
-        <div class="flex flex-wrap gap-4 pt-2">
-          <a href="#flagship" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg transition-colors flex items-center gap-2">
-            Explore my work <span>↓</span>
-          </a>
-          <a href="#contact" class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-medium rounded-lg transition-colors flex items-center gap-2">
-            Get in touch <span>↗</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- System Profile Card -->
-      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl font-mono text-sm space-y-4">
-        <div class="flex justify-between items-center text-xs text-zinc-500 border-b border-zinc-800 pb-3">
-          <span class="text-emerald-400 font-semibold">ENGINEERING / SYSTEM PROFILE</span>
-          <span>BG.SYS_01</span>
-        </div>
-        <div>
-          <span class="text-xs text-zinc-500 uppercase tracking-wider">Flagship Build</span>
-          <h2 class="text-xl font-bold text-white mt-1">Money Calculator</h2>
-          <p class="text-xs text-zinc-400 mt-1">Personal finance workflows built around connected ledger records.</p>
-        </div>
-        <div class="grid grid-cols-1 gap-2 pt-2 text-xs">
-          <div class="flex justify-between p-2 bg-zinc-950/60 rounded border border-zinc-800/60">
-            <span class="text-zinc-400">01 / FINANCIAL LEDGER</span>
-            <span class="text-emerald-400 font-semibold">IMPLEMENTED</span>
+    <section class="gallery-grid" aria-label="Interactive project demonstrations">
+      {demos.map((demo, index) => (
+        <article class:list={["demo-card", `tone-${demo.tone}`]}>
+          <div class="demo-art" aria-hidden="true">
+            <span class="art-index">{String(index + 1).padStart(2, "0")}</span>
+            <span class="art-orbit orbit-one"></span>
+            <span class="art-orbit orbit-two"></span>
+            <span class="art-core">{["₿", "A", "▥", "M", "999", "↗"][index]}</span>
+            <span class="art-lines"></span>
+            <span class="art-label">{demo.category}</span>
           </div>
-          <div class="flex justify-between p-2 bg-zinc-950/60 rounded border border-zinc-800/60">
-            <span class="text-zinc-400">02 / LOAN LIFECYCLE</span>
-            <span class="text-emerald-400 font-semibold">IMPLEMENTED</span>
-          </div>
-          <div class="flex justify-between p-2 bg-zinc-950/60 rounded border border-zinc-800/60">
-            <span class="text-zinc-400">03 / REVERSIBLE HISTORY</span>
-            <span class="text-emerald-400 font-semibold">IMPLEMENTED</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FLAGSHIP PROJECT: MONEY CALCULATOR -->
-    <section id="flagship" class="space-y-8">
-      <div class="space-y-2">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">01 — FEATURED PROJECT</span>
-        <h2 class="text-3xl font-bold text-white">Money, made <span class="text-emerald-400">understandable.</span></h2>
-        <p class="text-zinc-400 text-sm">Personal finance / Web application</p>
-      </div>
-
-      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8 shadow-2xl space-y-8">
-        <div>
-          <h3 class="text-2xl font-bold text-white mb-3">Money Calculator</h3>
-          <p class="text-zinc-300 leading-relaxed">
-            A personal finance application designed to bring everyday money activity into one place. Its development focuses on connected financial records, account balances, and tracking the lifecycle of loans and tuition payments.
-          </p>
-        </div>
-
-        <!-- Embedded Interactive Cinematic Animation -->
-        <div class="my-6">
-          <MoneyCalculatorTransition />
-        </div>
-
-        <!-- Features Grid -->
-        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-zinc-800">
-          <div class="p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/60">
-            <div class="text-xs font-mono text-emerald-400 font-bold mb-1">01</div>
-            <h4 class="text-sm font-semibold text-white mb-1">Financial Ledger</h4>
-            <p class="text-xs text-zinc-400">Organize income, expenses, donations, and account balances.</p>
-          </div>
-          <div class="p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/60">
-            <div class="text-xs font-mono text-emerald-400 font-bold mb-1">02</div>
-            <h4 class="text-sm font-semibold text-white mb-1">Budgets & Goals</h4>
-            <p class="text-xs text-zinc-400">Monitor spending limits and progress toward savings targets.</p>
-          </div>
-          <div class="p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/60">
-            <div class="text-xs font-mono text-emerald-400 font-bold mb-1">03</div>
-            <h4 class="text-sm font-semibold text-white mb-1">Loan Tracking</h4>
-            <p class="text-xs text-zinc-400">Manage lending, repayments, and student payment history.</p>
-          </div>
-          <div class="p-3 bg-zinc-950/50 rounded-lg border border-zinc-800/60">
-            <div class="text-xs font-mono text-emerald-400 font-bold mb-1">04</div>
-            <h4 class="text-sm font-semibold text-white mb-1">Audit Logs</h4>
-            <p class="text-xs text-zinc-400">Improve accountability with traceable and reversible changes.</p>
-          </div>
-        </div>
-
-        <!-- Tech Stack & Links -->
-        <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-zinc-800">
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Next.js</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">TypeScript</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">React</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Supabase</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">PostgreSQL</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded border border-zinc-700">Tailwind CSS</span>
-          </div>
-          <a href="https://github.com/barshan94/money-calculator" rel="noopener noreferrer" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2">
-            View Source <span>↗</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- SELECTED ENGINEERING WORKS -->
-    <section id="projects" class="space-y-8">
-      <div class="space-y-2">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">02 — SELECTED WORK</span>
-        <h2 class="text-3xl font-bold text-white">Different problems. <span class="text-emerald-400">Different approaches.</span></h2>
-        <p class="text-zinc-400 text-sm">A focused selection of software, education, research, and product projects.</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Project 1 -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-zinc-700 transition-colors">
-          <div class="space-y-3">
-            <span class="text-xs font-mono text-emerald-400 uppercase">E-Commerce System</span>
-            <h3 class="text-xl font-bold text-white">asta-store</h3>
-            <p class="text-zinc-300 text-sm leading-relaxed">
-              Astro-powered e-commerce storefront for ASTA (handmade leather bags). Features product browsing, cart management, checkout flow, and admin dashboard with Supabase auth.
-            </p>
-          </div>
-          <div class="space-y-4 pt-4 border-t border-zinc-800">
-            <div class="flex flex-wrap gap-2 text-xs font-mono">
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Astro</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">TypeScript</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Supabase</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Tailwind</span>
+          <div class="demo-body">
+            <p class="demo-category">{demo.category}</p>
+            <h2>{demo.title}</h2>
+            <p class="demo-description">{demo.description}</p>
+            <div class="demo-actions">
+              <button class="play-demo" type="button" data-src={demo.src} data-title={demo.title}>
+                Play walkthrough <span aria-hidden="true">↗</span>
+              </button>
+              <a href={demo.repo} target="_blank" rel="noopener noreferrer">Source ↗</a>
             </div>
-            <a href="https://github.com/barshan94/asta-store" rel="noopener noreferrer" target="_blank" class="text-sm font-medium text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">
-              Source code <span>↗</span>
-            </a>
           </div>
-        </div>
-
-        <!-- Project 2 -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-zinc-700 transition-colors">
-          <div class="space-y-3">
-            <span class="text-xs font-mono text-emerald-400 uppercase">Research Thesis</span>
-            <h3 class="text-xl font-bold text-white">Blockchain Internet of Things (bIoT)</h3>
-            <p class="text-zinc-300 text-sm leading-relaxed">
-              Research on blockchain healthcare security technologies and their applications and market opportunities. Explores decentralized identity, data integrity, and IoT security in clinical settings.
-            </p>
-          </div>
-          <div class="space-y-4 pt-4 border-t border-zinc-800">
-            <div class="flex flex-wrap gap-2 text-xs font-mono">
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Research</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Blockchain</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Healthcare Security</span>
-            </div>
-            <a href="https://github.com/barshan94/Thesis" rel="noopener noreferrer" target="_blank" class="text-sm font-medium text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">
-              Source code <span>↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-zinc-700 transition-colors">
-          <div class="space-y-3">
-            <span class="text-xs font-mono text-emerald-400 uppercase">Education Platform</span>
-            <h3 class="text-xl font-bold text-white">Mount Royal Academy Website</h3>
-            <p class="text-zinc-300 text-sm leading-relaxed">
-              School website with admission management, calendar, notices, gallery, and admin dashboard. Built with Astro and Supabase for content management.
-            </p>
-          </div>
-          <div class="space-y-4 pt-4 border-t border-zinc-800">
-            <div class="flex flex-wrap gap-2 text-xs font-mono">
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Astro</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Supabase</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">TypeScript</span>
-            </div>
-            <a href="https://github.com/barshan94/MountRoyalAcademy-website" rel="noopener noreferrer" target="_blank" class="text-sm font-medium text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">
-              Source code <span>↗</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between space-y-4 hover:border-zinc-700 transition-colors">
-          <div class="space-y-3">
-            <span class="text-xs font-mono text-emerald-400 uppercase">Core Systems</span>
-            <h3 class="text-xl font-bold text-white">Various System Implementations</h3>
-            <p class="text-zinc-300 text-sm leading-relaxed">
-              Doctor management system (C++), library management service (Java), bank account management (Java), ride sharing management, and automated testing suites.
-            </p>
-          </div>
-          <div class="space-y-4 pt-4 border-t border-zinc-800">
-            <div class="flex flex-wrap gap-2 text-xs font-mono">
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">C++</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Java</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">PHP</span>
-              <span class="px-2 py-0.5 bg-zinc-800 text-zinc-300 rounded">Testing</span>
-            </div>
-            <a href="https://github.com/barshan94" rel="noopener noreferrer" target="_blank" class="text-sm font-medium text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1">
-              View GitHub Profile <span>↗</span>
-            </a>
-          </div>
-        </div>
-      </div>
+        </article>
+      ))}
     </section>
 
-    <!-- DIGITAL GROWTH & MARKETING SYSTEMS (COLLAPSIBLE ACCORDION) -->
-    <section class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8 space-y-6">
-      <div class="space-y-2">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">DIGITAL AUTOMATIONS & GROWTH</span>
-        <h2 class="text-2xl font-bold text-white">Growth & Marketing Toolchain (12 Repositories)</h2>
-        <p class="text-zinc-400 text-sm">Supporting repositories covering SEO research, local optimization, WordPress builds, and conversational automation workflows.</p>
-      </div>
-
-      <details class="group bg-zinc-950/60 border border-zinc-800 rounded-xl overflow-hidden">
-        <summary class="p-4 cursor-pointer font-medium text-white flex justify-between items-center select-none hover:bg-zinc-800/50 transition-colors">
-          <span class="text-sm font-mono text-emerald-400">Expand Repository Index (SEO, WordPress, Ads & Automations)</span>
-          <span class="text-xs text-zinc-400 group-open:rotate-180 transition-transform">▼</span>
-        </summary>
-        <div class="p-4 border-t border-zinc-800 grid sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-          <a href="https://github.com/barshan94/KeywordResearch" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">01 / SEO</span>
-            <span class="font-medium text-white block">Keyword Research</span>
-          </a>
-          <a href="https://github.com/barshan94/KeywordRedearchforAmazonAffiliate" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">02 / AFFILIATE</span>
-            <span class="font-medium text-white block">Amazon Affiliate Research</span>
-          </a>
-          <a href="https://github.com/barshan94/Google-Business-Profile" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">03 / LOCAL SEO</span>
-            <span class="font-medium text-white block">Google Business Profile</span>
-          </a>
-          <a href="https://github.com/barshan94/ContentWriting" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">04 / CONTENT</span>
-            <span class="font-medium text-white block">Content Writing</span>
-          </a>
-          <a href="https://github.com/barshan94/WebsiteAudit" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">05 / AUDIT</span>
-            <span class="font-medium text-white block">Website Audit</span>
-          </a>
-          <a href="https://github.com/barshan94/OnPageOptimization" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">06 / ON-PAGE</span>
-            <span class="font-medium text-white block">On-Page Optimization</span>
-          </a>
-          <a href="https://github.com/barshan94/YoutubeSeo" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">07 / VIDEO SEO</span>
-            <span class="font-medium text-white block">YouTube SEO</span>
-          </a>
-          <a href="https://github.com/barshan94/CompleteWebsiteusingWordpress" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">08 / WORDPRESS</span>
-            <span class="font-medium text-white block">WordPress Site Build</span>
-          </a>
-          <a href="https://github.com/barshan94/WebsiteCustomizationusingwordpress" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">09 / CUSTOMIZATION</span>
-            <span class="font-medium text-white block">WordPress Customization</span>
-          </a>
-          <a href="https://github.com/barshan94/FacebookLiveAdCampaign" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">10 / ADS</span>
-            <span class="font-medium text-white block">Facebook Live Ad Campaign</span>
-          </a>
-          <a href="https://github.com/barshan94/Design" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">11 / CREATIVE</span>
-            <span class="font-medium text-white block">Design Assets</span>
-          </a>
-          <a href="https://github.com/barshan94/AutomationsUsingManychat" target="_blank" rel="noopener noreferrer" class="p-3 bg-zinc-900 hover:bg-zinc-800 rounded border border-zinc-800 transition-colors block">
-            <span class="text-emerald-400 font-mono block mb-1">12 / AUTOMATION</span>
-            <span class="font-medium text-white block">ManyChat Automations</span>
-          </a>
-        </div>
-      </details>
+    <section class="gallery-note">
+      <span class="note-mark">i</span>
+      <p>These are portfolio demonstrations, not necessarily live production systems. The emergency-service concept does not submit real requests or contact responders. Dashboard visuals use fictional sample data.</p>
     </section>
-
-    <!-- EXPERIENCE SECTION -->
-    <section id="experience" class="space-y-8">
-      <div class="space-y-2">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">03 — EXPERIENCE</span>
-        <h2 class="text-3xl font-bold text-white">Learning by <span class="text-emerald-400">doing.</span></h2>
-        <p class="text-zinc-400 text-sm">Roles and experiences that shaped my approach to software engineering and problem solving.</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-3">
-          <span class="text-xs font-mono text-emerald-400">ROLE 01</span>
-          <h3 class="text-lg font-bold text-white">Junior ICT Teacher / IT Coordinator</h3>
-          <p class="text-zinc-300 text-sm leading-relaxed">Managed technical lab environments, guided students through foundational computer science concepts, and maintained institutional IT infrastructure.</p>
-        </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-3">
-          <span class="text-xs font-mono text-emerald-400">ROLE 02</span>
-          <h3 class="text-lg font-bold text-white">Part-time IT Support Specialist</h3>
-          <p class="text-zinc-300 text-sm leading-relaxed">Provided hardware and software troubleshooting, resolved network configuration issues, and ensured operational uptime for digital systems.</p>
-        </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-3">
-          <span class="text-xs font-mono text-emerald-400">ROLE 03</span>
-          <h3 class="text-lg font-bold text-white">Remote AI Engineer Intern <span class="text-xs text-zinc-500 font-normal">(Bengaluru, India)</span></h3>
-          <p class="text-zinc-300 text-sm leading-relaxed">Explored prompt engineering workflows, assisted in testing AI-driven application components, and researched machine learning integration practices.</p>
-        </div>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-3">
-          <span class="text-xs font-mono text-emerald-400">ROLE 04</span>
-          <h3 class="text-lg font-bold text-white">Digital Marketing & Systems Specialist</h3>
-          <p class="text-zinc-300 text-sm leading-relaxed">Executed technical SEO campaigns, built conversion funnels, and automated customer engagement pipelines using WordPress and social advertising.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TOOLKIT SECTION -->
-    <section id="toolkit" class="space-y-8">
-      <div class="space-y-2">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">04 — TOOLKIT</span>
-        <h2 class="text-3xl font-bold text-white">Tools for <span class="text-emerald-400">the work.</span></h2>
-        <p class="text-zinc-400 text-sm">Technologies and technical proficiencies used across my projects.</p>
-      </div>
-
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h3 class="text-sm font-mono text-emerald-400 uppercase">Frontend Engineering</h3>
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Astro</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">React</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">TypeScript</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Tailwind CSS</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">HTML/CSS</span>
-          </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h3 class="text-sm font-mono text-emerald-400 uppercase">Backend & Database</h3>
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Node.js</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Supabase</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">PostgreSQL</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">REST APIs</span>
-          </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h3 class="text-sm font-mono text-emerald-400 uppercase">AI & Data Science</h3>
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Python</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">TensorFlow/Keras</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Weka</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">LLM Prompting</span>
-          </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h3 class="text-sm font-mono text-emerald-400 uppercase">DevOps & Testing</h3>
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Git / GitHub</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Vercel</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Playwright</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Docker basics</span>
-          </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h3 class="text-sm font-mono text-emerald-400 uppercase">Core Languages</h3>
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Java</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">C++</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">PHP</span>
-          </div>
-        </div>
-
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-4">
-          <h3 class="text-sm font-mono text-emerald-400 uppercase">Platforms & Growth</h3>
-          <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">SEO</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Google Analytics</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">WordPress</span>
-            <span class="px-2.5 py-1 bg-zinc-800 text-zinc-200 rounded">Shopify</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WRITING / RESEARCH SECTION -->
-    <section id="writing" class="space-y-8">
-      <div class="space-y-2">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">05 — NOTES & IDEAS</span>
-        <h2 class="text-3xl font-bold text-white">Thinking in <span class="text-emerald-400">public.</span></h2>
-        <p class="text-zinc-400 text-sm">Notes, lessons, and insights from my technical projects and research.</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <a href="https://github.com/barshan94/Thesis" target="_blank" rel="noopener noreferrer" class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 block hover:border-zinc-700 transition-colors space-y-3">
-          <span class="text-xs font-mono text-emerald-400">Research Paper</span>
-          <h3 class="text-lg font-bold text-white">Blockchain Internet of Things (bIoT) ↗</h3>
-          <p class="text-zinc-300 text-sm">A review of blockchain healthcare security technologies and their applications and market opportunities.</p>
-        </a>
-        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 space-y-3">
-          <span class="text-xs font-mono text-emerald-400">Project Guide</span>
-          <h3 class="text-lg font-bold text-white">Financial Intelligence Systems</h3>
-          <p class="text-zinc-300 text-sm">Cash-flow forecasting, net-worth trends, and AI-powered financial insights behind Money Calculator.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-3xl p-8 md:p-12 space-y-8">
-      <div class="max-w-xl space-y-4">
-        <span class="text-xs font-mono tracking-wider text-emerald-400 uppercase">06 — CONTACT</span>
-        <h2 class="text-3xl sm:text-4xl font-bold text-white">Have a good <br><span class="text-emerald-400">problem to solve?</span></h2>
-        <p class="text-zinc-300 text-base leading-relaxed">
-          I'm interested in thoughtful projects, opportunities to grow, and conversations about software and AI. If something comes to mind, let's talk.
-        </p>
-      </div>
-      <div class="flex flex-wrap gap-4 pt-2">
-        <a href="mailto:barshan.ghoshofficial@gmail.com" class="px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl transition-colors flex items-center gap-2">
-          barshan.ghoshofficial@gmail.com <span>↗</span>
-        </a>
-        <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer" class="px-5 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-medium rounded-xl transition-colors flex items-center gap-2">
-          GitHub <span>↗</span>
-        </a>
-        <a href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener noreferrer" class="px-5 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-medium rounded-xl transition-colors flex items-center gap-2">
-          LinkedIn <span>↗</span>
-        </a>
-      </div>
-    </section>
-
   </main>
 
-  <footer class="border-t border-zinc-800 mt-24 py-8 bg-zinc-950 text-zinc-500 text-xs font-mono">
-    <div class="container mx-auto px-4 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="font-bold text-white">Barshan Ghosh</span>
-        <span>·</span>
-        <span>Built with care, curiosity, and Astro.</span>
-      </div>
-      <div>
-        <span>© 2026 Barshan Ghosh. All rights reserved.</span>
-      </div>
+  <dialog class="demo-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-topbar">
+      <div><span class="live-dot"></span><strong id="dialog-title">Project walkthrough</strong></div>
+      <button class="close-demo" type="button" aria-label="Close walkthrough">Close <span aria-hidden="true">×</span></button>
     </div>
-  </footer>
+    <div class="dialog-stage">
+      <iframe title="Selected project walkthrough" loading="lazy" allow="fullscreen"></iframe>
+    </div>
+  </dialog>
 </Layout>
 
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".demo-dialog");
+  const frame = dialog?.querySelector("iframe");
+  const title = dialog?.querySelector<HTMLElement>("#dialog-title");
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(".close-demo");
+
+  document.querySelectorAll<HTMLButtonElement>(".play-demo").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!dialog || !frame) return;
+      const src = button.dataset.src;
+      if (!src) return;
+      if (title) title.textContent = button.dataset.title || "Project walkthrough";
+      frame.src = src;
+      dialog.showModal();
+    });
+  });
+
+  const closeDialog = () => {
+    if (!dialog || !frame) return;
+    dialog.close();
+    frame.src = "about:blank";
+  };
+
+  closeButton?.addEventListener("click", closeDialog);
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) closeDialog();
+  });
+  dialog?.addEventListener("close", () => {
+    if (frame) frame.src = "about:blank";
+  });
+</script>
+
+<style>
+  :global(body) { background: #080a0d; }
+  .gallery-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 28px 0 80px; color: #f4f4f5; }
+  .gallery-header { max-width: 760px; padding: clamp(30px, 7vw, 86px) 0 42px; }
+  .back-link { display: inline-block; color: #a1a1aa; font-size: .86rem; text-decoration: none; margin-bottom: 48px; }
+  .back-link:hover { color: #34d399; }
+  .eyebrow { display: flex; align-items: center; gap: 10px; color: #a1a1aa; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; }
+  .eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 16px #34d39966; }
+  h1 { margin: 18px 0; font-size: clamp(2.6rem, 7vw, 5.6rem); line-height: .98; letter-spacing: -.065em; font-weight: 560; }
+  h1 em { color: #34d399; font-style: normal; }
+  .intro { max-width: 620px; color: #a1a1aa; font-size: clamp(.98rem, 1.4vw, 1.1rem); line-height: 1.8; }
+  .gallery-stats { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 24px; margin-top: 26px; border-top: 1px solid #27272a; color: #a1a1aa; font-size: .78rem; }
+  .gallery-stats strong { color: #f4f4f5; margin-right: 5px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .demo-card { min-width: 0; overflow: hidden; border: 1px solid #27272a; border-radius: 14px; background: #0c0f13; transition: border-color .2s ease, transform .2s ease; }
+  .demo-card:hover { border-color: #278566; transform: translateY(-2px); }
+  .demo-art { position: relative; height: clamp(150px, 22vw, 230px); overflow: hidden; display: grid; place-items: center; isolation: isolate; background: radial-gradient(ellipse at 50% 50%, #16362e, #0b1114 68%); }
+  .tone-finance .demo-art { background: radial-gradient(ellipse at 50% 50%, #173b30, #0b1114 68%); }\n  .tone-analytics .demo-art { background: radial-gradient(ellipse at 50% 50%, #15343d, #0b1114 68%); }
+  .tone-academy .demo-art { background: radial-gradient(ellipse at 50% 50%, #242e48, #0b1114 68%); }
+  .tone-emergency .demo-art { background: radial-gradient(ellipse at 50% 50%, #3c2028, #0b1114 68%); }
+  .tone-growth .demo-art { background: radial-gradient(ellipse at 50% 50%, #33284c, #0b1114 68%); }
+  .art-index { position: absolute; top: 16px; left: 18px; color: #a1a1aa; font: .72rem ui-monospace, monospace; }
+  .art-orbit { position: absolute; width: 150px; height: 150px; border: 1px solid #ffffff1c; border-radius: 50%; }
+  .orbit-one { width: 112px; height: 112px; }
+  .orbit-two { width: 190px; height: 190px; border-style: dashed; }
+  .art-core { display: grid; place-items: center; width: 66px; height: 66px; border: 1px solid #6ee7b788; border-radius: 18px; background: #0a1615cc; color: #a7f3d0; font-size: 1.3rem; font-weight: 650; box-shadow: 0 0 42px #34d39920; }
+  .tone-emergency .art-core { color: #fecdd3; border-color: #fb718577; }
+  .tone-growth .art-core { color: #ddd6fe; border-color: #a78bfa77; }
+  .art-lines { position: absolute; inset: 0; opacity: .35; background: repeating-linear-gradient(0deg, transparent 0 24px, #ffffff09 25px), repeating-linear-gradient(90deg, transparent 0 24px, #ffffff09 25px); mask-image: linear-gradient(transparent, black, transparent); z-index: -1; }
+  .art-label { position: absolute; right: 16px; bottom: 14px; color: #a1a1aa; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; }
+  .demo-body { padding: 20px; }
+  .demo-category { color: #6ee7b7; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+  .demo-body h2 { margin: 8px 0 10px; font-size: 1.2rem; letter-spacing: -.025em; }
+  .demo-description { min-height: 4.6em; color: #a1a1aa; font-size: .88rem; line-height: 1.7; }
+  .demo-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 20px; }
+  .play-demo { display: inline-flex; gap: 12px; align-items: center; border: 1px solid #34d39955; border-radius: 8px; padding: 10px 13px; background: #10312666; color: #a7f3d0; font: inherit; font-size: .82rem; cursor: pointer; }
+  .play-demo:hover { border-color: #34d399; background: #103126; }
+  .demo-actions a { color: #a1a1aa; font-size: .82rem; text-decoration: none; }
+  .demo-actions a:hover { color: #34d399; }
+  .gallery-note { display: flex; align-items: start; gap: 12px; margin-top: 28px; padding: 18px; border: 1px solid #27272a; border-radius: 10px; color: #a1a1aa; font-size: .82rem; line-height: 1.7; }
+  .note-mark { display: grid; place-items: center; flex: 0 0 22px; height: 22px; border: 1px solid #52525b; border-radius: 50%; font-size: .75rem; }
+  .demo-dialog { width: min(1200px, calc(100% - 28px)); max-width: none; height: min(86dvh, 850px); max-height: none; padding: 0; border: 1px solid #3f3f46; border-radius: 14px; background: #07080a; color: #f4f4f5; overflow: hidden; }
+  .demo-dialog::backdrop { background: #030506d9; backdrop-filter: blur(8px); }
+  .dialog-topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; height: 54px; padding: 0 16px; border-bottom: 1px solid #27272a; }
+  .dialog-topbar > div { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .dialog-topbar strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .84rem; }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; }
+  .close-demo { border: 1px solid #3f3f46; border-radius: 7px; padding: 7px 10px; background: transparent; color: #e4e4e7; font: inherit; font-size: .8rem; cursor: pointer; }
+  .close-demo span { margin-left: 6px; font-size: 1rem; }
+  .dialog-stage { height: calc(100% - 54px); }
+  .dialog-stage iframe { display: block; width: 100%; height: 100%; border: 0; background: #07080a; }
+  @media (max-width: 700px) {
+    .gallery-shell { width: calc(100% - 32px); }
+    .gallery-header { padding-top: 30px; }
+    .back-link { margin-bottom: 36px; }
+    .gallery-grid { grid-template-columns: 1fr; gap: 12px; }
+    .demo-art { height: 180px; }
+    .demo-description { min-height: 0; }
+    .demo-dialog { width: calc(100% - 12px); height: 90dvh; border-radius: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .demo-card { transition: none; } .demo-card:hover { transform: none; } }
+</style>
 
