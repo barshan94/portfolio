@@ -499,13 +499,6 @@ const getExperienceDate = (experience: any) =>
               </a>
             )}
 
-            {contact?.phone && (
-              <a class="contact-link" href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}>
-                <span>{contact.phone}</span>
-                <span aria-hidden="true">↗</span>
-              </a>
-            )}
-
             {contact?.github && (
               <a
                 class="contact-link"
@@ -533,6 +526,15 @@ const getExperienceDate = (experience: any) =>
                 <span aria-hidden="true">↗</span>
               </a>
             )}
+
+
+            {contact?.phone && (
+              <a class="contact-link" href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}>
+                <span>{contact.phone}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
+
           </div>
         </div>
 
@@ -3280,6 +3282,59 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 
     .hero-editorial .hero-actions .button {
       justify-content: center;
+    }
+  }
+
+  /* Final spacing pass: keep sections visually connected on desktop. */
+  .portfolio-shell > .section-block {
+    padding-top: clamp(10px, 1.1vw, 16px) !important;
+    margin-top: 0 !important;
+  }
+
+  .portfolio-shell > .section-block .section-heading {
+    margin-bottom: clamp(16px, 1.5vw, 22px);
+  }
+
+  .portfolio-shell > .hero.hero-editorial {
+    padding-top: clamp(40px, 5vw, 64px);
+    padding-bottom: clamp(18px, 2.5vw, 30px);
+  }
+
+  .portfolio-shell > .cv-download.section-block {
+    padding-top: 0 !important;
+  }
+
+  .portfolio-shell .contact-wrap {
+    padding: clamp(24px, 3.5vw, 48px);
+  }
+
+  .portfolio-shell .contact-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @media (max-width: 760px) {
+    .portfolio-shell > .section-block {
+      padding-top: 16px !important;
+    }
+
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: 40px;
+      padding-bottom: 20px;
+    }
+
+    .portfolio-shell .contact-wrap {
+      padding: 24px 20px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .portfolio-shell .contact-links {
+      align-items: stretch;
+      flex-direction: column;
     }
   }
 </style>
