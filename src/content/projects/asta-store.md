@@ -1,5 +1,5 @@
 ---
-title: "asta-store"
+title: "ASTA Store"
 description: "Astro-powered e-commerce storefront for ASTA (handmade leather bags). Features product browsing, cart management, checkout flow, and admin dashboard with Supabase auth."
 tags: ["Astro 7", "TypeScript", "Supabase", "Tailwind"]
 repo: "https://github.com/barshan94/asta-store"
