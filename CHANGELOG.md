@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [2026-10-22] — One-click interactive walkthrough gallery
+
+### Changed
+- Replaced the large “EXPLORE THE FULL BODY OF WORK” homepage block with compact actions beside the Selected Projects heading: an interactive gallery link and a full repository archive link.
+- Reworked the walkthroughs page around a featured Money Calculator animation plus six on-demand demos.
+- Removed the extra modal step. Selecting a secondary demo now starts it inside its card; only one animation runs at a time.
+- Added reduced-motion behavior: visitors who prefer reduced motion see a static Money Calculator poster and must explicitly start the animation.
+- Refined walkthrough descriptions to distinguish what each animation actually demonstrates from broader features in its source repository.
+- Updated the coaching animation to focus on the two automations currently present in the linked Apps Script: adding a missing attendance date column and payment month column. Unsupported registry, report, and communication scenes are no longer rendered.
+
+### Verification
+- Confirmed the seven animation paths against the portfolio repository layout and build copy script.
+- Compared demo descriptions with the linked project metadata and inspected the current coaching Apps Script source.
+- Production build and live deployment verification remain pending.
+
+---
+
 ## [2026-10-16] — Clarity and content hierarchy audit
 
 ### Changed
