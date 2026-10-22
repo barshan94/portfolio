@@ -3,6 +3,7 @@
 import Layout from "../layouts/Layout.astro";
 import MoneyCalculatorTransition from "../components/MoneyCalculatorTransition.astro";
 import ProjectArchiveCTA from "../components/ProjectArchiveCTA.astro";
+import WritingSection from "../components/WritingSection.astro";
 import { digitalMarketingRepos } from "../data/digital-marketing-projects";
 import { getCollection } from "astro:content";
 
@@ -529,7 +530,7 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
     <ProjectArchiveCTA />
 
     <!-- ADDITIONAL WORK: available without dominating the main story -->
-    <section class="more-work section-wrap section-block" id="writing" aria-labelledby="more-work-title">
+    <section class="more-work section-wrap section-block" id="more-work" aria-labelledby="more-work-title">
       <details class="more-work-disclosure">
         <summary>
           <span>
@@ -551,16 +552,6 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
               <span><strong>999 Emergency Service concept</strong><small>Public-service workflow prototype · not a live dispatch service</small></span><span aria-hidden="true">↗</span>
             </a>
           </div>
-          {writing.length > 0 && (
-            <div class="more-work-marketing" aria-labelledby="writing-title">
-              <h3 id="writing-title">Notes &amp; writing</h3>
-              <div class="more-work-repo-list">
-                {writing.map((entry) => (
-                  <a href={getWritingLink(entry)}>{entry.data.title}<span aria-hidden="true">↗</span></a>
-                ))}
-              </div>
-            </div>
-          )}
           <div class="more-work-marketing">
             <h3>Digital Marketing &amp; Growth Experiments</h3>
             <p>12 supporting repositories covering SEO, content, WordPress, campaigns, design, and automation.</p>
@@ -680,6 +671,8 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
       </section>
     )}
+
+    <WritingSection />
 
     <!-- CONTACT -->
     <section
