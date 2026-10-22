@@ -35,7 +35,7 @@ for (const animation of animationPaths) {
 }
 
 const homepage = await readFile(resolve(dist, "index.html"), "utf8");
-if (!homepage.includes('id="writing"')) fail("homepage writing navigation target is missing");
+// The writing/research homepage section was intentionally removed; individual writing pages remain available.
 if (!homepage.includes("/projects/")) fail("homepage link to complete project archive is missing");
 
 const writingDirectory = resolve(root, "src/content/writing");
