@@ -18,7 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Verification
 - Confirmed the seven animation paths against the portfolio repository layout and build copy script.
 - Compared demo descriptions with the linked project metadata and inspected the current coaching Apps Script source.
-- Production build and live deployment verification remain pending.
+- The latest commit's Vercel status check reports success. Live visual confirmation could not be completed through the available browser and remains pending.
 
 ---
 
