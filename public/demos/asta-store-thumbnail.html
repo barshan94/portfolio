@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17130f">
+<title>ASTA Store — Portfolio Thumbnail</title>
+<style>
+:root{color-scheme:dark;--bg:#17130f;--panel:#282018;--line:#59412d;--cream:#fff5e8;--muted:#c9b59e;--copper:#c88b52}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% 0,#3a281b 0,transparent 42%),var(--bg);color:var(--cream);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{max-width:1120px;margin:auto;padding:26px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px}header strong{letter-spacing:.16em;color:#e8bc8a}header span{color:var(--muted);font-size:13px}
+main{max-width:1120px;margin:0 auto;padding:0 22px 34px}.stage{overflow:hidden;border:1px solid var(--line);border-radius:16px;box-shadow:0 28px 90px #0007;background:#211811}canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:16px 0}.toolbar button{border:1px solid #765336;border-radius:999px;padding:10px 16px;background:#322419;color:#f9e7d1;font:600 13px system-ui;cursor:pointer}.toolbar button.primary{background:#c88b52;border-color:#c88b52;color:#24170e}.toolbar button:focus-visible{outline:3px solid #f2d2ac;outline-offset:3px}.toolbar p{margin:0 auto 0 0;color:#c9b59e;font-size:12px}.note{color:#a9957f;font-size:12px;margin:0 0 18px}
+@media(max-width:620px){header{align-items:flex-start;flex-direction:column;gap:4px}.toolbar p{width:100%;order:2}.toolbar button{padding:9px 12px}}
+</style>
+</head>
+<body>
+<header><strong>ASTA / PORTFOLIO ARTWORK</strong><span>Handcrafted leather bags · Storefront + admin UI</span></header>
+<main>
+<div class="stage"><canvas id="preview" width="1600" height="900" aria-label="ASTA Store portfolio thumbnail showing an ecommerce storefront and product management dashboard"></canvas></div>
+<div class="toolbar"><p>1600 × 900 · 16:9 · Fictional demonstration data</p><button id="redraw">Redraw preview</button><button id="export" class="primary">Export PNG</button></div>
+<p class="note">Standalone artwork preview. Export creates a 1600 × 900 PNG using the same composition as the portfolio SVG thumbnail.</p>
+</main>
+<script>
+(() => {
+  "use strict";
+  const canvas = document.getElementById("preview");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) { document.querySelector(".note").textContent = "Canvas is not supported in this browser."; return; }
+  const C = {bg:"#17130f",cream:"#fff7eb",muted:"#d9c7b2",copper:"#c88b52",leather:"#9a623a",panel:"#fffdf8",ink:"#4d3424",dark:"#211e1a"};
+  function rounded(x,y,w,h,r,fill,stroke) {
+    ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fillStyle=fill; ctx.fill();
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}
+  }
+  function text(value,x,y,size,color,weight="400",align="left",spacing=0) {
+    ctx.save();ctx.fillStyle=color;ctx.font=weight+" "+size+"px Arial, sans-serif";ctx.textAlign=align;
+    if(spacing){let xx=x;for(const ch of value){ctx.fillText(ch,xx,y);xx+=ctx.measureText(ch).width+spacing;}}
+    else ctx.fillText(value,x,y);ctx.restore();
+  }
+  function line(x1,y1,x2,y2,color,width=1){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();}
+  function bag(x,y,w,h,color,handle=true){
+    ctx.save();ctx.fillStyle=color;ctx.strokeStyle="#6a4028";ctx.lineWidth=6;
+    if(handle){ctx.beginPath();ctx.arc(x+w/2,y+8,w*.31,Math.PI,Math.PI*2);ctx.stroke();}
+    rounded(x,y+24,w,h-24,12,color,"#63391f");line(x+10,y+38,x+w-10,y+38,"#e2b17c",2);
+    rounded(x+w*.43,y+h*.48,Math.max(12,w*.14),9,3,"#e2b17c");ctx.restore();
+  }
+  function draw(){
+    const g=ctx.createLinearGradient(0,0,1600,900);g.addColorStop(0,"#17130f");g.addColorStop(1,"#2c2118");ctx.fillStyle=g;ctx.fillRect(0,0,1600,900);
+    const glow=ctx.createRadialGradient(1330,70,10,1330,70,400);glow.addColorStop(0,"#b8784224");glow.addColorStop(1,"#b8784200");ctx.fillStyle=glow;ctx.fillRect(900,0,700,450);
+    text("SELECTED COMMERCE PROJECT",70,92,22,"#e5b77d","700","left",5);
+    text("ASTA",68,184,92,C.cream,"700");text("HANDCRAFTED LEATHER BAGS",72,231,23,C.muted,"400","left",2);
+    line(72,265,425,265,"#a96e3d",2);text("BUILT WITH",72,316,17,"#f0dfca","700","left",2);
+    [["ASTRO",72,338,105],["SUPABASE",188,338,138],["TYPESCRIPT",72,389,148]].forEach(([label,x,y,w])=>{rounded(x,y,w,38,19,"#493326","#8f633e");text(label,x+w/2,y+25,16,"#f4d8b7","700","center");});
+    [["Product catalog & details",484],["Cart & checkout flow",526],["Admin product management",568],["Authentication & data storage",610]].forEach(([label,y])=>{ctx.beginPath();ctx.arc(82,y-7,4,0,Math.PI*2);ctx.fillStyle="#d9a46c";ctx.fill();text(label,100,y,18,"#d7c3ac");});
+    rounded(88,676,335,132,18,"#211811","#65442e");text("THE STORE EXPERIENCE",112,711,13,"#bca48c","700","left",2);text("Browse. Choose. Checkout.",112,748,21,C.cream,"700");text("A responsive, product-first storefront.",112,778,14,"#c7ad92");
+    // Store browser
+    rounded(480,140,675,570,20,"#fffdf8","#4b3727");rounded(480,140,675,55,20,"#e4d6c4");ctx.fillStyle="#e4d6c4";ctx.fillRect(480,175,675,20);
+    ["#c17865","#d7a85d","#7b9b76"].forEach((color,i)=>{ctx.beginPath();ctx.arc(507+i*19,166,5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();});
+    rounded(646,154,340,24,12,"#f8f1e7");text("asta.store / collection",816,171,12,"#8b7864","400","center");
+    text("ASTA",515,230,28,C.ink,"700","left",2);text("SHOP   ABOUT   BAG (2)",1120,228,12,"#6d5a48","600","right");
+    rounded(508,251,619,175,12,"#e7d7c3");ctx.beginPath();ctx.arc(1060,282,100,0,Math.PI*2);ctx.fillStyle="#d1b394";ctx.fill();
+    text("MADE TO GO WITH YOU",535,291,11,"#8e5734","700","left",2);text("Carry what",535,332,31,"#38271c","700");text("matters.",535,366,31,"#38271c","700");
+    rounded(535,384,118,28,14,"#563720");text("SHOP THE EDIT",594,402,10,"#fff2df","700","center");
+    bag(916,280,126,122,"#9a623a");
+    text("FEATURED COLLECTION",510,465,17,"#493426","700");text("VIEW ALL ↗",1118,465,12,"#9a6c48","700","right");
+    const products=[["MESSENGER","#9a623a"],["ARTISAN TOTE","#b27a4d"],["SATCHEL","#74472e"],["BACKPACK","#a86d41"]];
+    products.forEach(([name,color],i)=>{const x=510+i*159;rounded(x,482,i===3?140:143,158,9,"#e8dccd");bag(x+27,504,88,90,color);text(name,x+4,660,11,"#5d4634","700");});
+    // Admin dashboard overlaps storefront lower-right edge for depth.
+    ctx.save();ctx.shadowColor="#0009";ctx.shadowBlur=24;ctx.shadowOffsetY=10;rounded(1010,555,520,250,16,C.dark,"#6d5039");ctx.restore();
+    rounded(1010,555,520,42,16,"#302820");ctx.fillStyle="#302820";ctx.fillRect(1010,580,520,17);ctx.beginPath();ctx.arc(1032,576,4,0,Math.PI*2);ctx.fillStyle="#b87a49";ctx.fill();text("ASTA / ADMIN",1048,581,12,"#f0dfca","700");text("DASHBOARD",1498,581,10,"#c9b59e","400","right");
+    [["PRODUCTS","24",1030,145],["ORDERS","18",1187,145],["REVENUE","$2.4k",1344,164]].forEach(([label,value,x,w])=>{rounded(x,613,w,56,8,"#393027");text(label,x+15,635,10,"#bca58b","700");text(value,x+15,657,20,"#fff0dd","700");});
+    text("PRODUCT MANAGEMENT",1032,699,12,"#e8d4bd","700");text("PRODUCT",1032,721,10,"#bba58e","700");text("PRICE",1258,721,10,"#bba58e","700");text("STOCK",1350,721,10,"#bba58e","700");text("STATUS",1448,721,10,"#bba58e","700");
+    [730,755,780].forEach(y=>line(1030,y,1508,y,"#4e4134"));
+    [["Classic Messenger","$149","12"],["Artisan Tote","$189","8"],["Heritage Satchel","$219","5"]].forEach(([name,price,stock],i)=>{const y=747+i*25;text(name,1032,y,11,"#f0e2d0");text(price,1258,y,11,"#f0e2d0");text(stock,1350,y,11,"#f0e2d0");text("ACTIVE",1448,y,10,"#b6c994","700");});
+    text("ASTRO · TYPESCRIPT · SUPABASE",70,862,14,"#b8a18a","700","left",1);text("PORTFOLIO PROJECT · ILLUSTRATIVE STORE DATA",1530,862,12,"#8d7762","400","right");
+  }
+  document.getElementById("redraw").addEventListener("click",draw);
+  document.getElementById("export").addEventListener("click",()=>{draw();const link=document.createElement("a");link.download="asta-store-thumbnail.png";link.href=canvas.toDataURL("image/png");link.click();});
+  draw();
+})();
+</script>
+</body>
+</html>

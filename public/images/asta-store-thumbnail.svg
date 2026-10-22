@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">ASTA Store — handcrafted leather bags storefront and admin dashboard</title>
+<desc id="desc">A polished dark espresso and warm ivory portfolio illustration showing a leather bag storefront, product cards, and store management dashboard.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17130f"/><stop offset="1" stop-color="#2c2118"/></linearGradient>
+ <linearGradient id="leather" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c88b52"/><stop offset=".55" stop-color="#8e512d"/><stop offset="1" stop-color="#4e2e20"/></linearGradient>
+ <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fffdf8"/><stop offset="1" stop-color="#f0e7da"/></linearGradient>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#080604" flood-opacity=".28"/></filter>
+ <pattern id="grain" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M2 8l8-2M26 30l7-2M13 40l4-1" stroke="#fff" stroke-opacity=".035" stroke-width="2"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/><rect width="1600" height="900" fill="url(#grain)"/>
+<circle cx="1350" cy="80" r="360" fill="#b87842" opacity=".07"/><circle cx="80" cy="840" r="360" fill="#b87842" opacity=".05"/>
+<g font-family="Arial,Helvetica,sans-serif">
+ <text x="70" y="93" fill="#e5b77d" font-size="24" letter-spacing="7">SELECTED COMMERCE PROJECT</text>
+ <text x="68" y="184" fill="#fff7eb" font-size="92" font-weight="700" letter-spacing="2">ASTA</text>
+ <text x="72" y="231" fill="#d9c7b2" font-size="25" letter-spacing="1.4">HANDCRAFTED LEATHER BAGS</text>
+ <path d="M72 265H425" stroke="#a96e3d" stroke-width="2"/>
+ <text x="72" y="316" fill="#f0dfca" font-size="18" letter-spacing="2">BUILT WITH</text>
+ <g font-size="17" font-weight="700">
+  <rect x="72" y="338" width="105" height="38" rx="19" fill="#493326" stroke="#8f633e"/><text x="124" y="362" fill="#f4d8b7" text-anchor="middle">ASTRO</text>
+  <rect x="188" y="338" width="138" height="38" rx="19" fill="#493326" stroke="#8f633e"/><text x="257" y="362" fill="#f4d8b7" text-anchor="middle">SUPABASE</text>
+  <rect x="72" y="389" width="148" height="38" rx="19" fill="#493326" stroke="#8f633e"/><text x="146" y="413" fill="#f4d8b7" text-anchor="middle">TYPESCRIPT</text>
+ </g>
+ <g fill="#d7c3ac" font-size="19">
+  <circle cx="82" cy="484" r="4" fill="#d9a46c"/><text x="100" y="491">Product catalog & details</text>
+  <circle cx="82" cy="526" r="4" fill="#d9a46c"/><text x="100" y="533">Cart & checkout flow</text>
+  <circle cx="82" cy="568" r="4" fill="#d9a46c"/><text x="100" y="575">Admin product management</text>
+  <circle cx="82" cy="610" r="4" fill="#d9a46c"/><text x="100" y="617">Authentication & data storage</text>
+ </g>
+ <g transform="translate(88 676)">
+  <rect width="335" height="132" rx="18" fill="#211811" stroke="#65442e"/>
+  <text x="24" y="35" fill="#bca48c" font-size="14" letter-spacing="2">THE STORE EXPERIENCE</text>
+  <text x="24" y="72" fill="#fff4e5" font-size="23" font-weight="700">Browse. Choose. Checkout.</text>
+  <text x="24" y="102" fill="#c7ad92" font-size="16">A responsive, product-first storefront.</text>
+ </g>
+ <!-- storefront browser -->
+ <g filter="url(#shadow)">
+  <rect x="480" y="140" width="675" height="570" rx="20" fill="url(#panel)"/>
+  <path d="M500 140H1135a20 20 0 0 1 20 20v34H480v-34a20 20 0 0 1 20-20Z" fill="#e4d6c4"/>
+  <circle cx="507" cy="166" r="5" fill="#c17865"/><circle cx="526" cy="166" r="5" fill="#d7a85d"/><circle cx="545" cy="166" r="5" fill="#7b9b76"/>
+  <rect x="646" y="154" width="340" height="24" rx="12" fill="#f8f1e7"/><text x="816" y="171" fill="#8b7864" font-size="12" text-anchor="middle">asta.store / collection</text>
+ </g>
+ <text x="515" y="230" fill="#4d3424" font-size="29" font-weight="700" letter-spacing="2">ASTA</text>
+ <text x="1020" y="228" fill="#6d5a48" font-size="13">SHOP   ABOUT   BAG (2)</text>
+ <rect x="508" y="251" width="619" height="175" rx="12" fill="#e7d7c3"/>
+ <circle cx="1060" cy="282" r="100" fill="#d1b394" opacity=".45"/>
+ <text x="535" y="291" fill="#8e5734" font-size="12" letter-spacing="3">MADE TO GO WITH YOU</text>
+ <text x="535" y="332" fill="#38271c" font-size="31" font-weight="700">Carry what</text><text x="535" y="366" fill="#38271c" font-size="31" font-weight="700">matters.</text>
+ <rect x="535" y="384" width="118" height="28" rx="14" fill="#563720"/><text x="594" y="402" fill="#fff2df" font-size="11" font-weight="700" text-anchor="middle">SHOP THE EDIT</text>
+ <!-- hero bag -->
+ <g transform="translate(900 275)">
+  <path d="M46 51C46-6 136-6 136 51" fill="none" stroke="#6a4028" stroke-width="12" stroke-linecap="round"/>
+  <rect x="24" y="42" width="138" height="106" rx="16" fill="url(#leather)" stroke="#63391f" stroke-width="3"/>
+  <path d="M38 56H148M38 132H148" stroke="#e2b17c" stroke-opacity=".6" stroke-width="2"/>
+  <rect x="82" y="79" width="22" height="15" rx="4" fill="#e2b17c"/><circle cx="93" cy="86" r="3" fill="#6a4028"/>
+  <path d="M33 60v73M153 60v73" stroke="#e4bd90" stroke-opacity=".45" stroke-width="2"/>
+ </g>
+ <text x="510" y="465" fill="#493426" font-size="18" font-weight="700">FEATURED COLLECTION</text>
+ <text x="1118" y="465" fill="#9a6c48" font-size="12" text-anchor="end">VIEW ALL ↗</text>
+ <!-- product tiles -->
+ <g>
+  <rect x="510" y="482" width="143" height="158" rx="9" fill="#e8dccd"/><rect x="669" y="482" width="143" height="158" rx="9" fill="#e8dccd"/><rect x="828" y="482" width="143" height="158" rx="9" fill="#e8dccd"/><rect x="987" y="482" width="140" height="158" rx="9" fill="#e8dccd"/>
+  <g transform="translate(542 504)"><path d="M14 30Q14-3 47-3Q80-3 80 30" fill="none" stroke="#6b4329" stroke-width="6"/><rect x="4" y="25" width="88" height="63" rx="9" fill="#9a623a"/><path d="M13 35H83" stroke="#d8ac7d" stroke-width="2"/><rect x="42" y="48" width="14" height="9" rx="2" fill="#e2bc91"/></g>
+  <g transform="translate(700 508)"><path d="M18 26Q18-1 48-1Q78-1 78 26" fill="none" stroke="#6b4329" stroke-width="6"/><rect x="4" y="23" width="88" height="67" rx="12" fill="#b27a4d"/><path d="M13 32H83" stroke="#e0b78d" stroke-width="2"/><rect x="42" y="50" width="14" height="9" rx="2" fill="#f0d1a7"/></g>
+  <g transform="translate(861 501)"><path d="M18 25V12Q48-10 78 12V25" fill="none" stroke="#70472c" stroke-width="7"/><rect x="4" y="22" width="88" height="70" rx="12" fill="#74472e"/><path d="M13 34H83" stroke="#cfa57a" stroke-width="2"/><rect x="42" y="50" width="14" height="9" rx="2" fill="#d9b28a"/></g>
+  <g transform="translate(1019 502)"><path d="M18 25V9Q48-6 78 9V25" fill="none" stroke="#70472c" stroke-width="7"/><rect x="4" y="22" width="88" height="70" rx="12" fill="#a86d41"/><path d="M13 34H83" stroke="#e0b78d" stroke-width="2"/><rect x="42" y="50" width="14" height="9" rx="2" fill="#f0d1a7"/></g>
+  <g fill="#5d4634" font-size="12"><text x="510" y="660">MESSENGER</text><text x="669" y="660">ARTISAN TOTE</text><text x="828" y="660">SATCHEL</text><text x="987" y="660">BACKPACK</text></g>
+ </g>
+ <!-- admin dashboard inset -->
+ <g filter="url(#shadow)">
+  <rect x="1010" y="555" width="520" height="250" rx="16" fill="#211e1a" stroke="#6d5039" stroke-width="2"/>
+  <rect x="1010" y="555" width="520" height="42" rx="16" fill="#302820"/><path d="M1010 581v16h520v-16" fill="#302820"/>
+  <circle cx="1032" cy="576" r="4" fill="#b87a49"/><text x="1048" y="581" fill="#f0dfca" font-size="13" font-weight="700">ASTA / ADMIN</text><text x="1498" y="581" fill="#c9b59e" font-size="11" text-anchor="end">DASHBOARD</text>
+  <g><rect x="1030" y="613" width="145" height="56" rx="8" fill="#393027"/><rect x="1187" y="613" width="145" height="56" rx="8" fill="#393027"/><rect x="1344" y="613" width="164" height="56" rx="8" fill="#393027"/>
+  <text x="1045" y="635" fill="#bca58b" font-size="11">PRODUCTS</text><text x="1045" y="657" fill="#fff0dd" font-size="21" font-weight="700">24</text>
+  <text x="1202" y="635" fill="#bca58b" font-size="11">ORDERS</text><text x="1202" y="657" fill="#fff0dd" font-size="21" font-weight="700">18</text>
+  <text x="1359" y="635" fill="#bca58b" font-size="11">REVENUE</text><text x="1359" y="657" fill="#fff0dd" font-size="21" font-weight="700">$2.4k</text></g>
+  <text x="1032" y="699" fill="#e8d4bd" font-size="13" font-weight="700">PRODUCT MANAGEMENT</text>
+  <g fill="#bba58e" font-size="11"><text x="1032" y="721">PRODUCT</text><text x="1258" y="721">PRICE</text><text x="1350" y="721">STOCK</text><text x="1448" y="721">STATUS</text></g>
+  <path d="M1030 730H1508" stroke="#4e4134"/><path d="M1030 755H1508" stroke="#4e4134"/><path d="M1030 780H1508" stroke="#4e4134"/>
+  <g fill="#f0e2d0" font-size="12"><text x="1032" y="747">Classic Messenger</text><text x="1258" y="747">$149</text><text x="1350" y="747">12</text><text x="1448" y="747" fill="#b6c994">ACTIVE</text><text x="1032" y="772">Artisan Tote</text><text x="1258" y="772">$189</text><text x="1350" y="772">8</text><text x="1448" y="772" fill="#b6c994">ACTIVE</text><text x="1032" y="797">Heritage Satchel</text><text x="1258" y="797">$219</text><text x="1350" y="797">5</text><text x="1448" y="797" fill="#b6c994">ACTIVE</text></g>
+ </g>
+ <text x="70" y="862" fill="#b8a18a" font-size="15" letter-spacing="1.5">ASTRO · TYPESCRIPT · SUPABASE</text>
+ <text x="1530" y="862" fill="#8d7762" font-size="14" text-anchor="end">PORTFOLIO PROJECT · ILLUSTRATIVE STORE DATA</text>
+</g></svg>

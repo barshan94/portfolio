@@ -312,15 +312,8 @@ const getExperienceDate = (experience: any) =>
 
               <div class="project-art" aria-hidden="true">
                                 {projectId(project) === "asta-store" ? (
-                  <div class="art-asta-animation" aria-hidden="true">
-                    <div class="art-store">
-                      <div class="store-topbar"><span></span><span></span><span></span></div>
-                      <div class="store-body">
-                        <div class="store-copy"><i></i><i></i><i></i></div>
-                        <div class="store-product"><span class="product-shape"></span></div>
-                      </div>
-                      <div class="store-footer"><i></i><i></i><i></i></div>
-                    </div>
+                  <div class="art-asta-thumbnail">
+                    <img src="/images/asta-store-thumbnail.svg" alt="" loading="lazy" decoding="async" />
                   </div>
                 ) : projectId(project) === "mount-royal-academy" ? (
                   <div class="art-academy-animation" aria-hidden="true">
