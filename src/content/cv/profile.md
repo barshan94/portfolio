@@ -61,8 +61,8 @@ experience:
     location: "India"
     period: "Aug 2022 — Jan 2023"
     bullets:
-      - "Supported AI and machine-learning project tasks, including work related to model development, training, and testing."
-      - "Built practical familiarity with Python and machine-learning workflows through remote internship projects."
+      - "Contributed to building, training, and testing machine-learning algorithms and AI models."
+      - "Collaborated remotely on AI project work and technical tasks as part of the internship."
 skills:
   - group: "Frontend"
     items: ["Astro", "React", "TypeScript", "Tailwind CSS", "HTML/CSS"]
