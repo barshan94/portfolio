@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b10">
+<title>Money Calculator — Financial System</title>
+<style>
+:root{color-scheme:dark;--bg:#080b10;--panel:#101821;--line:#253542;--muted:#8fa2b2;--white:#edf7fa;--teal:#57e0c0;--cyan:#74cfff;--amber:#ffc879}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+body{display:grid;place-items:center;padding:0}.frame{position:relative;width:100%;max-width:1600px;aspect-ratio:16/9;overflow:hidden;background:radial-gradient(ellipse at 52% 44%,#14252d 0%,#0b1118 43%,#080b10 78%);isolation:isolate}
+canvas{display:block;width:100%;height:100%}.grain{position:absolute;inset:0;pointer-events:none;opacity:.13;background-image:radial-gradient(#d7f7ff 0.45px,transparent .65px);background-size:5px 5px;mix-blend-mode:screen}
+.controls{display:flex;justify-content:center;padding:14px}.controls button{border:1px solid #334753;background:#14212a;color:#dffaf5;border-radius:9px;padding:10px 15px;font-weight:650;cursor:pointer}.controls button:hover{border-color:var(--teal)}
+body.embed{display:block;padding:0;overflow:hidden}.embed .frame{width:100%;max-width:none;height:100vh;height:100svh;aspect-ratio:auto}.embed .controls{display:none}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="frame" aria-label="Money Calculator financial system illustration">
+<canvas id="art" width="1600" height="900" role="img" aria-label="Money Calculator connects a double-entry ledger with accounts, financial assistant, budgets, loans, recurring transactions, investments, tuition, and reports."></canvas>
+<div class="grain" aria-hidden="true"></div>
+</main>
+<div class="controls"><button id="download" type="button">Download PNG · 1600 × 900</button></div>
+<script>
+(function(){
+  const params=new URLSearchParams(location.search);
+  if(params.get('embed')==='1') document.body.classList.add('embed');
+  const canvas=document.getElementById('art'),ctx=canvas.getContext('2d');
+  const W=1600,H=900;
+  const C={bg:'#080b10',panel:'#101821',line:'#253542',muted:'#8fa2b2',white:'#edf7fa',teal:'#57e0c0',cyan:'#74cfff',amber:'#ffc879'};
+  function roundRect(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.5;ctx.stroke()}}
+  function text(s,x,y,size,color,weight='400',align='left'){ctx.font=weight+' '+size+'px Inter, ui-sans-serif, system-ui, sans-serif';ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(s,x,y)}
+  function line(x1,y1,x2,y2,color,width=1){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()}
+  function glow(x,y,r,color){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2)}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#0a1017');bg.addColorStop(.55,'#101a22');bg.addColorStop(1,'#080b10');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    glow(810,390,440,'rgba(58,205,185,.10)');glow(1320,190,260,'rgba(78,166,255,.08)');
+    ctx.strokeStyle='rgba(134,178,190,.075)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=48){line(x,0,x,H,'rgba(134,178,190,.06)')}
+    for(let y=0;y<H;y+=48){line(0,y,W,y,'rgba(134,178,190,.06)')}
+    text('PERSONAL FINANCE  /  SYSTEM OVERVIEW',82,70,15,C.teal,'700');
+    text('MONEY CALCULATOR',80,135,53,C.white,'750');
+    text('Financial clarity, built on a trustworthy ledger.',84,177,22,C.muted,'400');
+    roundRect(1270,58,246,42,21,'rgba(87,224,192,.08)','rgba(87,224,192,.35)');
+    ctx.beginPath();ctx.arc(1294,79,5,0,Math.PI*2);ctx.fillStyle=C.teal;ctx.fill();
+    text('DOUBLE-ENTRY FINANCIAL SYSTEM',1310,84,11,C.teal,'700');
+    // Connected system paths
+    const nodes=[{x:105,y:275,w:290,h:118,title:'TRANSACTIONS & ACCOUNTS',sub:'Income · expenses · transfers',accent:C.cyan},{x:1205,y:275,w:290,h:118,title:'FINANCIAL ASSISTANT',sub:'Net worth · cash flow · insights',accent:C.teal},{x:105,y:470,w:290,h:118,title:'PLANS & RECURRING',sub:'Budgets · goals · schedules',accent:C.amber},{x:1205,y:470,w:290,h:118,title:'ASSETS & LIABILITIES',sub:'Loans · deposits · investments',accent:C.cyan},{x:250,y:665,w:290,h:118,title:'TUITION TRACKING',sub:'Students · payments · balances',accent:C.teal},{x:1060,y:665,w:290,h:118,title:'REPORTS & AUDIT',sub:'Forecasts · history · reversals',accent:C.amber}];
+    nodes.forEach(n=>{roundRect(n.x,n.y,n.w,n.h,14,'rgba(15,24,33,.93)',C.line);roundRect(n.x+18,n.y+19,4,78,2,n.accent,null);text(n.title,n.x+36,n.y+45,14,C.white,'700');text(n.sub,n.x+36,n.y+76,13,C.muted,'450')});
+    // central ledger
+    roundRect(510,240,580,390,24,'rgba(8,14,20,.96)','#38505c');
+    roundRect(535,263,530,51,12,'#14242c','rgba(87,224,192,.23)');
+    text('LEDGER CORE',558,294,15,C.teal,'750');text('BALANCED  ✓',1037,294,12,C.teal,'700','right');
+    text('ACCOUNT',557,350,11,C.muted,'700');text('DEBIT',812,350,11,C.muted,'700','right');text('CREDIT',933,350,11,C.muted,'700','right');text('STATUS',1035,350,11,C.muted,'700','right');
+    const rows=[['Everyday account','৳ 2,500','—','POSTED'],['Monthly income','—','৳ 2,500','POSTED'],['Savings transfer','৳ 800','৳ 800','MATCHED'],['Loan repayment','৳ 450','৳ 450','LINKED']];
+    rows.forEach((r,i)=>{const y=390+i*48;line(550,y-19,1050,y-19,'rgba(143,162,178,.15)');text(r[0],557,y,13,C.white,'500');text(r[1],812,y,13,C.cyan,'500','right');text(r[2],933,y,13,C.teal,'500','right');text(r[3],1035,y,10,i===2?C.amber:C.teal,'700','right')});
+    line(550,568,1050,568,'rgba(143,162,178,.22)');
+    text('EDIT  /  VOID  /  REVERSAL TRAIL',557,596,11,C.muted,'650');
+    // connections
+    const paths=[[[395,333],[455,333],[455,370],[510,370]],[[1090,370],[1145,370],[1145,333],[1205,333]],[[395,525],[455,525],[455,520],[510,520]],[[1090,520],[1145,520],[1145,525],[1205,525]],[[540,665],[540,630],[660,630]],[[1060,665],[1060,630],[940,630]]];
+    paths.forEach((p,i)=>{ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);for(let k=1;k<p.length;k++)ctx.lineTo(p[k][0],p[k][1]);ctx.strokeStyle=i%2?'rgba(116,207,255,.52)':'rgba(87,224,192,.58)';ctx.lineWidth=2;ctx.stroke();const end=p[p.length-1];ctx.beginPath();ctx.arc(end[0],end[1],4,0,Math.PI*2);ctx.fillStyle=i%2?C.cyan:C.teal;ctx.fill()});
+    roundRect(605,690,390,78,13,'rgba(87,224,192,.055)','rgba(87,224,192,.24)');
+    text('ONE CONNECTED FINANCIAL PICTURE',800,720,13,C.teal,'750','center');
+    text('Activity  →  Ledger  →  Insights',800,746,16,C.white,'550','center');
+    line(82,827,1518,827,'rgba(143,162,178,.25)');
+    text('PERSONAL FINANCE  ·  LEDGER INTEGRITY  ·  FINANCIAL INTELLIGENCE',84,858,12,C.muted,'600');
+    text('BDT  /  DEMO VISUAL',1515,858,12,C.amber,'700','right');
+  }
+  function fit(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    if(canvas.width!==W*dpr||canvas.height!==H*dpr){canvas.width=W*dpr;canvas.height=H*dpr}
+    ctx.setTransform(dpr,0,0,dpr,0,0);draw();
+  }
+  document.getElementById('download').addEventListener('click',()=>{
+    const exportCanvas=document.createElement('canvas');exportCanvas.width=W;exportCanvas.height=H;
+    const ex=exportCanvas.getContext('2d');ex.drawImage(canvas,0,0,W,H);
+    const a=document.createElement('a');a.download='money-calculator-thumbnail.png';a.href=exportCanvas.toDataURL('image/png');a.click();
+  });
+  fit();window.addEventListener('resize',fit);
+})();
+</script>
+</body>
+</html>
