@@ -1,738 +1,186 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MONEY CALCULATOR — Cinematic Transition</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#f7f8fa">
+<title>Money Calculator — Product Walkthrough</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{width:100%;height:100%;background:#07080a;overflow:hidden}
-  canvas{display:block;width:100vw;height:100dvh;cursor:none;touch-action:manipulation}
-  #ui{position:fixed;top:14px;right:14px;z-index:50;display:flex;gap:8px;
-      font-family:'JetBrains Mono',monospace;opacity:.18;transition:opacity .35s}
-  #ui:hover{opacity:1}
-  #ui button{background:rgba(10,18,22,.85);border:1px solid rgba(77,212,216,.28);
-      color:#8fd6da;font-family:inherit;font-size:9px;letter-spacing:.18em;
-      text-transform:uppercase;padding:7px 11px;border-radius:2px;cursor:pointer;
-      backdrop-filter:blur(6px);transition:.2s}
-  #ui button:hover{background:rgba(77,212,216,.14);color:#dff4f6;border-color:rgba(77,212,216,.6)}
-  #demo-note{position:fixed;top:14px;left:14px;z-index:40;max-width:34vw;font-family:'JetBrains Mono',monospace;font-size:8px;line-height:1.5;letter-spacing:.08em;color:rgba(120,170,180,.48);text-transform:uppercase;pointer-events:none}
-  #hint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;
-      font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.28em;
-      color:rgba(120,170,180,.22);text-transform:uppercase;pointer-events:none}
-
-  @media (max-width: 600px) {
-    #ui {
-      left: 8px;
-      right: 8px;
-      top: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 5px;
-      opacity: 1;
-    }
-
-    #ui button {
-      padding: 7px 8px;
-      font-size: 7px;
-      letter-spacing: .08em;
-    }
-
-    #demo-note{top:56px;left:8px;max-width:calc(100vw - 16px);font-size:7px;letter-spacing:.05em}
-
-    #hint {
-      bottom: 8px;
-      max-width: calc(100vw - 20px);
-      font-size: 7px;
-      letter-spacing: .08em;
-      line-height: 1.5;
-      text-align: center;
-      color: rgba(120,170,180,.65);
-    }
-
-    canvas {
-      cursor: auto;
-    }
-  }
+:root{color-scheme:light;--ink:#17212b;--muted:#74808e;--line:#e5e9ee;--paper:#fff;--canvas:#f5f7fa;--nav:#17242d;--navmuted:#a9b6bf;--green:#16845b;--greenbg:#e8f6ef;--red:#c44f52;--redbg:#fff0f0;--blue:#3868d9;--bluebg:#edf2ff;--amber:#a66b13;--amberbg:#fff5df;--shadow:0 2px 8px rgba(20,36,48,.035)}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--canvas);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}button{font:inherit}
+.app{height:100dvh;display:grid;grid-template-rows:58px minmax(0,1fr);background:var(--canvas);position:relative;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:#fff;border-bottom:1px solid var(--line);z-index:5;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:750;font-size:15px;letter-spacing:-.035em;white-space:nowrap}.brand-mark{height:29px;width:29px;border-radius:8px;background:#e6f5ee;display:grid;place-items:center;color:var(--green);font-size:17px;font-weight:800}.brand-mark:after{content:"৳"}
+.top-center{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px}.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px #e6f5ed}.top-actions{display:flex;align-items:center;gap:10px}.period{border:1px solid var(--line);background:#fff;color:#53606c;border-radius:7px;padding:7px 10px;font-size:11px}.avatar{width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#e9eefc;color:#3659a5;font-size:10px;font-weight:750}
+.workspace{min-height:0;display:grid;grid-template-columns:190px minmax(0,1fr)}
+.sidebar{background:var(--nav);padding:17px 10px 12px;color:#fff;display:flex;flex-direction:column;min-height:0}.side-caption{font-size:9px;letter-spacing:.12em;color:#80909a;text-transform:uppercase;padding:9px 10px 7px}.nav{display:grid;gap:3px}.nav-item{height:34px;border:0;border-radius:6px;padding:0 10px;display:flex;align-items:center;gap:10px;background:transparent;color:var(--navmuted);text-align:left;font-size:11px;white-space:nowrap}.nav-item .ico{width:17px;text-align:center;font-size:14px;opacity:.9}.nav-item.active{background:#263d3b;color:#c7f5de;box-shadow:inset 2px 0 #50c58e}.side-bottom{margin-top:auto;border-top:1px solid #30404a;padding:12px 10px 0;color:#a8b7c0;font-size:10px;line-height:1.7}.side-bottom strong{color:#fff;font-weight:600}
+.main{min-width:0;min-height:0;overflow:hidden;position:relative;padding:22px clamp(15px,2.5vw,34px) 30px}.screen{position:absolute;inset:0;padding:22px clamp(15px,2.5vw,34px) 26px;overflow:hidden;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .48s ease,transform .48s ease}.screen.active{opacity:1;transform:translateY(0);pointer-events:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px}.eyebrow{font-size:9px;font-weight:750;letter-spacing:.11em;text-transform:uppercase;color:var(--green);margin-bottom:6px}.page-head h1{font-size:clamp(20px,2vw,26px);line-height:1.15;letter-spacing:-.045em;margin:0;font-weight:750}.page-head p{font-size:11px;color:var(--muted);margin:7px 0 0}.primary{border:0;background:var(--green);color:#fff;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:650;white-space:nowrap}.secondary{border:1px solid var(--line);background:#fff;color:#475460;border-radius:7px;padding:8px 10px;font-size:10px;white-space:nowrap}.button-row{display:flex;gap:7px}
+.grid{display:grid;gap:12px}.metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:13px}.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);min-width:0}.metric{padding:14px 15px 13px;min-height:95px}.metric-label{font-size:10px;color:#6e7b87;display:flex;align-items:center;gap:6px}.metric-icon{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:13px}.metric-value{font-size:clamp(17px,1.8vw,23px);font-weight:750;letter-spacing:-.045em;margin:9px 0 5px;white-space:nowrap}.metric-foot{font-size:9px;color:var(--muted)}.positive{color:var(--green)}.negative{color:var(--red)}.two-col{grid-template-columns:minmax(0,1.45fr) minmax(220px,1fr)}.card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 15px 11px}.card-head h2{font-size:12px;margin:0;font-weight:720;letter-spacing:-.02em}.card-head p{font-size:9px;color:var(--muted);margin:4px 0 0}.text-link{font-size:10px;color:var(--blue);font-weight:650;white-space:nowrap}.chart-wrap{height:180px;padding:0 12px 12px;position:relative}.chart-wrap svg{width:100%;height:100%;overflow:visible}.legend{display:flex;gap:13px;padding:0 15px 13px;color:var(--muted);font-size:9px}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:7px;height:7px;border-radius:50%;display:inline-block}.account-list{padding:0 14px 8px}.account-row{display:flex;align-items:center;gap:10px;padding:10px 1px;border-bottom:1px solid #f0f2f5}.account-row:last-child{border:0}.account-icon{width:31px;height:31px;border-radius:8px;background:#f0f3f8;display:grid;place-items:center;font-size:14px;flex-shrink:0}.account-info{min-width:0;flex:1}.account-info strong{font-size:10px;display:block;font-weight:650}.account-info small{font-size:9px;color:var(--muted);display:block;margin-top:3px}.account-balance{font-size:11px;font-weight:700;white-space:nowrap}.table-card{margin-top:13px;overflow:hidden}.table-scroll{overflow:hidden}table{width:100%;border-collapse:collapse;text-align:left}th{font-size:9px;font-weight:650;color:#7b8792;background:#fafbfc;border-top:1px solid #eef1f4;border-bottom:1px solid #e8ecf0;padding:10px 14px;white-space:nowrap}td{font-size:10px;padding:10px 14px;border-bottom:1px solid #eff2f5;white-space:nowrap}tbody tr:last-child td{border-bottom:0}.tx-name{display:flex;align-items:center;gap:9px}.tx-badge{width:27px;height:27px;border-radius:7px;display:grid;place-items:center;background:#eef5f1;color:var(--green);font-size:12px}.tx-name strong{display:block;font-size:10px;font-weight:650}.tx-name small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border-radius:5px;font-size:9px;font-weight:650}.pill.green{background:var(--greenbg);color:var(--green)}.pill.red{background:var(--redbg);color:var(--red)}.pill.blue{background:var(--bluebg);color:var(--blue)}.pill.amber{background:var(--amberbg);color:var(--amber)}.amount-in{color:var(--green);font-weight:700}.amount-out{color:#36404a;font-weight:700}.status{font-size:9px;font-weight:650}.status:before{content:"";width:6px;height:6px;display:inline-block;border-radius:50%;background:currentColor;margin-right:5px}.status.paid{color:var(--green)}.status.partial{color:var(--amber)}.status.unpaid{color:var(--red)}
+.scene-label{position:absolute;right:18px;bottom:9px;font-size:8px;letter-spacing:.04em;color:#9aa4ad;pointer-events:none}.mini-stat{padding:13px 14px}.mini-stat span{display:block;font-size:9px;color:var(--muted)}.mini-stat strong{display:block;font-size:18px;letter-spacing:-.04em;margin-top:7px}.progress{height:6px;background:#edf0f3;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;border-radius:inherit;background:var(--green);width:0;transition:width 1.2s ease}.active .progress span{width:var(--p)}.loan-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:12px}.loan-card{padding:14px}.loan-top{display:flex;align-items:center;justify-content:space-between;gap:7px}.person{display:flex;align-items:center;gap:8px}.person-avatar{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#edf2ff;color:#4762a6;font-size:10px;font-weight:750}.person strong{font-size:10px;display:block}.person small{font-size:9px;color:var(--muted);display:block;margin-top:3px}.loan-amount{margin:13px 0 4px;font-size:19px;letter-spacing:-.04em;font-weight:750}.loan-sub{font-size:9px;color:var(--muted);margin-bottom:11px}.loan-details{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin:10px 0 7px}.loan-details strong{color:var(--ink)}.tuition-stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:13px}.tuition-stat{padding:14px}.tuition-stat span{font-size:10px;color:var(--muted)}.tuition-stat strong{display:block;font-size:21px;letter-spacing:-.04em;margin:8px 0 4px}.tuition-stat small{font-size:9px;color:var(--muted)}.report-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.report-card{padding:16px}.report-title{display:flex;align-items:center;gap:10px}.report-icon{width:34px;height:34px;border-radius:9px;background:var(--bluebg);color:var(--blue);display:grid;place-items:center;font-size:16px}.report-title h3{margin:0;font-size:11px}.report-title p{margin:4px 0 0;font-size:9px;color:var(--muted)}.report-preview{margin:14px 0 12px;padding:12px;border:1px solid #edf0f3;background:#fafbfc;border-radius:7px}.report-row{display:flex;justify-content:space-between;gap:10px;font-size:9px;color:#687582;padding:6px 0;border-bottom:1px solid #edf0f3}.report-row:last-child{border:0}.report-row strong{color:var(--ink)}.report-footer{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--muted)}.networth{display:grid;grid-template-columns:1fr 1fr;gap:12px}.networth-card{padding:16px}.networth-card h3{font-size:11px;margin:0}.networth-card .big{font-size:24px;font-weight:750;letter-spacing:-.05em;margin:10px 0 6px}.bars{display:flex;align-items:end;gap:7px;height:110px;padding:12px 8px 0}.bar{flex:1;background:#dcebe4;border-radius:4px 4px 0 0;min-width:6px;position:relative}.bar:last-child{background:var(--green)}.bar-labels{display:flex;gap:7px;padding:7px 8px 0}.bar-labels span{flex:1;text-align:center;color:var(--muted);font-size:8px}
+.timeline{display:flex;align-items:center;gap:5px;margin:0 0 15px}.timeline span{height:4px;flex:1;border-radius:9px;background:#e3e8ed}.timeline span.done{background:var(--green)}.timeline-copy{font-size:9px;color:var(--muted);text-align:right;margin-top:-10px;margin-bottom:12px}
+#controls{position:absolute;right:12px;bottom:12px;z-index:20;display:flex;gap:6px;opacity:.38;transition:opacity .2s}#controls:hover,#controls:focus-within{opacity:1}#controls button{background:rgba(255,255,255,.95);border:1px solid #dce2e7;color:#52616c;padding:7px 10px;border-radius:7px;font-size:10px;font-weight:650;box-shadow:0 2px 8px #15212b12;cursor:pointer}#controls button:hover{border-color:#a8b9b0;color:var(--green)}#demo{position:absolute;left:205px;bottom:12px;z-index:18;color:#8b969f;font-size:8px;background:#ffffffc9;padding:5px 8px;border:1px solid #e8ecef;border-radius:5px;pointer-events:none}.screen-tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #dfe9e4;background:#f4fbf7;border-radius:5px;padding:5px 8px;font-size:9px;color:#398060;font-weight:650}
+@media(min-width:1500px){.workspace{grid-template-columns:210px minmax(0,1fr)}.screen{padding-top:28px}.metric{padding:17px 18px;min-height:108px}.chart-wrap{height:205px}}
+@media(max-width:900px){.workspace{grid-template-columns:145px minmax(0,1fr)}.sidebar{padding-left:7px;padding-right:7px}.nav-item{font-size:10px;padding:0 7px;gap:7px}.screen{padding:17px 14px 24px}.metrics{gap:7px}.metric{padding:10px;min-height:88px}.metric-label{font-size:9px}.metric-value{font-size:16px}.two-col{grid-template-columns:minmax(0,1.2fr) minmax(190px,1fr)}.card-head{padding:11px}.account-list{padding:0 11px 7px}.account-row{gap:7px}.account-icon{width:27px;height:27px}.account-balance{font-size:10px}td{padding:9px 9px}th{padding:9px}.topbar{padding:0 13px}}
+@media(max-width:620px){.app{grid-template-rows:48px minmax(0,1fr)}.topbar{padding:0 10px;gap:6px}.brand{font-size:12px;gap:6px}.brand-mark{width:25px;height:25px}.top-center{display:none}.period{padding:6px;font-size:9px}.avatar{width:25px;height:25px}.workspace{grid-template-columns:1fr;grid-template-rows:42px minmax(0,1fr)}.sidebar{padding:4px 7px;overflow:hidden}.side-caption,.side-bottom{display:none}.nav{display:flex;overflow:hidden;gap:4px}.nav-item{height:33px;flex:1;min-width:0;justify-content:center;padding:0 3px;font-size:0;gap:0}.nav-item .ico{font-size:14px;width:auto}.main{overflow:hidden}.screen{padding:12px 10px 25px}.page-head{margin-bottom:11px}.page-head h1{font-size:20px}.page-head p{font-size:9px;line-height:1.4}.page-head .primary,.page-head .secondary{padding:7px;font-size:9px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:8px}.metric{min-height:72px;padding:9px 10px}.metric-label{font-size:9px}.metric-icon{width:19px;height:19px}.metric-value{font-size:17px;margin:6px 0 3px}.metric-foot{font-size:8px}.two-col{grid-template-columns:1fr;gap:8px}.chart-wrap{height:105px;padding-bottom:4px}.dashboard-secondary{display:none}.table-card{margin-top:8px}.card-head{padding:10px}.card-head h2{font-size:11px}.table-scroll{overflow:hidden}table{min-width:0}th{font-size:8px;padding:8px 6px}td{font-size:9px;padding:8px 6px}.tx-badge{width:23px;height:23px}.tx-name{gap:5px}.tx-name strong{font-size:9px}.tx-name small{font-size:8px}.optional-mobile{display:none}.loan-grid{grid-template-columns:1fr;gap:8px}.loan-card{padding:11px}.loan-amount{margin:8px 0 3px}.tuition-stats{gap:6px}.tuition-stat{padding:10px}.tuition-stat span{font-size:8px}.tuition-stat strong{font-size:16px;margin:7px 0 3px}.tuition-stat small{font-size:8px}.report-grid{grid-template-columns:1fr;gap:8px}.report-card{padding:11px}.report-preview{margin:9px 0;padding:8px}.report-row{padding:4px 0}.networth{grid-template-columns:1fr;gap:8px}.networth-card{padding:12px}.networth-card .big{font-size:20px}.bars{height:70px}.scene-label{font-size:7px;right:10px;bottom:5px}#controls{right:8px;bottom:7px;opacity:.85}#controls button{padding:6px 8px;font-size:9px}#demo{left:8px;bottom:8px;font-size:7px;max-width:58%;line-height:1.3}.report-footer{font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<canvas id="c"></canvas>
-
-<div id="demo-note">Cinematic ledger visualization · Not the live application UI</div>
-<div id="ui">
-  <button onclick="API.replay()">Replay</button>
-  <button onclick="API.toggle()">Pause</button>
-  <button onclick="API.exportJPG(2)">Export JPG</button>
-  <button onclick="API.exportJPG(4)">4K JPG</button>
-  <button onclick="API.saveFile()">Save .html</button>
+<div class="app" id="app">
+<header class="topbar">
+  <div class="brand"><span class="brand-mark"></span> Money Calculator</div>
+  <div class="top-center"><span class="live-dot"></span><span>Personal finance workspace</span><span style="color:#c2c9d0">/</span><span>Demo account</span></div>
+  <div class="top-actions"><span class="period">October 2026 ▾</span><span class="avatar">BG</span></div>
+</header>
+<div class="workspace">
+<aside class="sidebar">
+  <div class="side-caption">Workspace</div>
+  <nav class="nav" aria-label="Application sections">
+    <button class="nav-item active" data-nav="0"><span class="ico">▦</span>Dashboard</button>
+    <button class="nav-item" data-nav="1"><span class="ico">⇄</span>Transactions</button>
+    <button class="nav-item" data-nav="2"><span class="ico">▤</span>Accounts</button>
+    <button class="nav-item" data-nav="3"><span class="ico">↗</span>Loans</button>
+    <button class="nav-item" data-nav="4"><span class="ico">▣</span>Tuition</button>
+    <button class="nav-item" data-nav="5"><span class="ico">▥</span>Reports</button>
+  </nav>
+  <div class="side-caption" style="margin-top:14px">Plan & analyse</div>
+  <div class="nav">
+    <div class="nav-item"><span class="ico">◷</span>Budgets & goals</div>
+    <div class="nav-item"><span class="ico">◇</span>Investments</div>
+    <div class="nav-item"><span class="ico">⌁</span>Deposits & assets</div>
+  </div>
+  <div class="side-bottom"><strong>Money Calculator</strong><br>Ledger-first finance<br><span style="color:#7f929d">BDT · Asia/Dhaka</span></div>
+</aside>
+<main class="main">
+<section class="screen active" data-screen="0" aria-label="Dashboard overview">
+  <div class="page-head"><div><div class="eyebrow">Overview</div><h1>Good evening 👋</h1><p>Here’s your financial picture for October 2026.</p></div><div class="button-row"><button class="secondary">This month ▾</button><button class="primary">＋ Add transaction</button></div></div>
+  <div class="grid metrics">
+    <article class="card metric"><div class="metric-label"><span class="metric-icon" style="background:#e8f6ef;color:#16845b">↗</span> Total income</div><div class="metric-value" data-count="58400" data-prefix="৳">৳58,400</div><div class="metric-foot"><span class="positive">↑ 8.4%</span> vs last month</div></article>
+    <article class="card metric"><div class="metric-label"><span class="metric-icon" style="background:#fff0f0;color:#c44f52">↘</span> Total expenses</div><div class="metric-value" data-count="32750" data-prefix="৳">৳32,750</div><div class="metric-foot"><span class="negative">↑ 2.1%</span> vs last month</div></article>
+    <article class="card metric"><div class="metric-label"><span class="metric-icon" style="background:#edf2ff;color:#3868d9">▤</span> Available balance</div><div class="metric-value" data-count="74280" data-prefix="৳">৳74,280</div><div class="metric-foot">Across active accounts</div></article>
+    <article class="card metric"><div class="metric-label"><span class="metric-icon" style="background:#fff5df;color:#a66b13">◷</span> Net worth</div><div class="metric-value" data-count="186500" data-prefix="৳">৳1,86,500</div><div class="metric-foot"><span class="positive">↑ 4.6%</span> this month</div></article>
+  </div>
+  <div class="grid two-col">
+    <article class="card"><div class="card-head"><div><h2>Cash flow</h2><p>Income and expenses over the last 6 months</p></div><span class="text-link">View report →</span></div>
+      <div class="chart-wrap"><svg viewBox="0 0 600 190" role="img" aria-label="Illustrative income and expense chart"><defs><linearGradient id="incomeFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#16845b" stop-opacity=".18"/><stop offset="1" stop-color="#16845b" stop-opacity="0"/></linearGradient></defs><g stroke="#edf0f3" stroke-width="1"><path d="M35 28H585M35 67H585M35 106H585M35 145H585"/></g><g fill="#87929c" font-size="9"><text x="2" y="31">60k</text><text x="2" y="70">40k</text><text x="2" y="109">20k</text><text x="14" y="148">0</text></g><path d="M42 72 L145 56 L248 67 L351 43 L454 55 L565 30 L565 145 L42 145Z" fill="url(#incomeFill)"/><path d="M42 72 L145 56 L248 67 L351 43 L454 55 L565 30" fill="none" stroke="#16845b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="700" stroke-dashoffset="700" class="draw-line"/><path d="M42 111 L145 96 L248 105 L351 88 L454 99 L565 91" fill="none" stroke="#d8a24b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="700" stroke-dashoffset="700" class="draw-line delay"/><g fill="#87929c" font-size="9" text-anchor="middle"><text x="42" y="169">May</text><text x="145" y="169">Jun</text><text x="248" y="169">Jul</text><text x="351" y="169">Aug</text><text x="454" y="169">Sep</text><text x="565" y="169">Oct</text></g></svg></div><div class="legend"><span><i style="background:#16845b"></i>Income</span><span><i style="background:#d8a24b"></i>Expenses</span></div>
+    </article>
+    <article class="card dashboard-secondary"><div class="card-head"><div><h2>Account balances</h2><p>Available funds by account</p></div><span class="text-link">All accounts →</span></div><div class="account-list">
+      <div class="account-row"><span class="account-icon">▣</span><div class="account-info"><strong>Cash</strong><small>Cash on hand</small></div><span class="account-balance">৳8,500</span></div>
+      <div class="account-row"><span class="account-icon" style="background:#eaf0ff;color:#3868d9">▤</span><div class="account-info"><strong>Bank account</strong><small>Bank · BDT</small></div><span class="account-balance">৳42,780</span></div>
+      <div class="account-row"><span class="account-icon" style="background:#e6f7f1;color:#16845b">◉</span><div class="account-info"><strong>bKash</strong><small>Mobile wallet</small></div><span class="account-balance">৳5,000</span></div>
+      <div class="account-row"><span class="account-icon" style="background:#fff4df;color:#a66b13">◷</span><div class="account-info"><strong>Food wallet</strong><small>Spending account</small></div><span class="account-balance">৳1,250</span></div>
+    </div></article>
+  </div>
+  <article class="card table-card"><div class="card-head"><div><h2>Recent transactions</h2><p>Your latest recorded financial activity</p></div><span class="text-link">All transactions →</span></div><div class="table-scroll"><table><thead><tr><th>TRANSACTION</th><th>DATE</th><th>ACCOUNT</th><th>STATUS</th><th style="text-align:right">AMOUNT</th></tr></thead><tbody>
+    <tr><td><div class="tx-name"><span class="tx-badge">↗</span><span><strong>Monthly salary</strong><small>Income · Salary</small></span></div></td><td>Oct 21, 2026</td><td>Bank account</td><td><span class="pill green">Posted</span></td><td style="text-align:right" class="amount-in">+৳35,000</td></tr>
+    <tr><td><div class="tx-name"><span class="tx-badge" style="background:#fff5e7;color:#a66b13">↘</span><span><strong>Groceries</strong><small>Expense · Household</small></span></div></td><td>Oct 20, 2026</td><td>bKash</td><td><span class="pill green">Posted</span></td><td style="text-align:right" class="amount-out">−৳2,450</td></tr>
+  </tbody></table></div></article>
+</section>
+<section class="screen" data-screen="1" aria-label="Transactions ledger">
+  <div class="page-head"><div><div class="eyebrow">Ledger</div><h1>Transactions</h1><p>Every financial event, connected to its accounts and ledger entries.</p></div><button class="primary">＋ Add transaction</button></div>
+  <div class="grid metrics">
+    <article class="card metric"><div class="metric-label">Income this month</div><div class="metric-value">৳58,400</div><div class="metric-foot positive">Posted entries</div></article>
+    <article class="card metric"><div class="metric-label">Expenses this month</div><div class="metric-value">৳32,750</div><div class="metric-foot">Posted entries</div></article>
+    <article class="card metric"><div class="metric-label">Net cash flow</div><div class="metric-value positive">+৳25,650</div><div class="metric-foot">Income minus expenses</div></article>
+    <article class="card metric"><div class="metric-label">Ledger integrity</div><div class="metric-value" style="font-size:18px">Balanced ✓</div><div class="metric-foot">Posted entries reconcile</div></article>
+  </div>
+  <article class="card table-card" style="margin-top:0"><div class="card-head"><div><h2>All transactions</h2><p>Illustrative records · October 2026</p></div><div class="button-row"><button class="secondary">All types ▾</button><button class="secondary">Newest first ▾</button></div></div><div class="table-scroll"><table><thead><tr><th>DESCRIPTION</th><th>DATE</th><th>CATEGORY</th><th>ACCOUNT</th><th>STATUS</th><th style="text-align:right">AMOUNT</th></tr></thead><tbody>
+  <tr><td><div class="tx-name"><span class="tx-badge">↗</span><span><strong>Monthly salary</strong><small>TXN-1021 · Income</small></span></div></td><td>Oct 21</td><td>Salary</td><td>Bank account</td><td><span class="pill green">Posted</span></td><td style="text-align:right" class="amount-in">+৳35,000</td></tr>
+  <tr><td><div class="tx-name"><span class="tx-badge" style="background:#fff5e7;color:#a66b13">↘</span><span><strong>Groceries</strong><small>TXN-1020 · Expense</small></span></div></td><td>Oct 20</td><td>Household</td><td>bKash</td><td><span class="pill green">Posted</span></td><td style="text-align:right" class="amount-out">−৳2,450</td></tr>
+  <tr><td><div class="tx-name"><span class="tx-badge">⇄</span><span><strong>Move to savings</strong><small>TXN-1018 · Transfer</small></span></div></td><td>Oct 19</td><td>Transfer</td><td>Bank → Savings</td><td><span class="pill green">Posted</span></td><td style="text-align:right">৳5,000</td></tr>
+  <tr><td><div class="tx-name"><span class="tx-badge" style="background:#edf2ff;color:#3868d9">▣</span><span><strong>Tuition payment received</strong><small>TXN-1015 · Income</small></span></div></td><td>Oct 18</td><td>Tuition</td><td>Cash</td><td><span class="pill green">Posted</span></td><td style="text-align:right" class="amount-in">+৳3,000</td></tr>
+  <tr><td><div class="tx-name"><span class="tx-badge" style="background:#fff0f0;color:#c44f52">↘</span><span><strong>Utility bill</strong><small>TXN-1012 · Expense</small></span></div></td><td>Oct 16</td><td>Utilities</td><td>Bank account</td><td><span class="pill green">Posted</span></td><td style="text-align:right" class="amount-out">−৳1,850</td></tr>
+  <tr><td><div class="tx-name"><span class="tx-badge">↶</span><span><strong>Corrected duplicate entry</strong><small>TXN-1008 · Reversal linked to original</small></span></div></td><td>Oct 14</td><td>Adjustment</td><td>Bank account</td><td><span class="pill amber">Reversed</span></td><td style="text-align:right">৳850</td></tr>
+  </tbody></table></div></article>
+  <div class="grid two-col" style="margin-top:12px"><article class="card mini-stat"><span>Ledger-first corrections</span><strong style="font-size:13px">Edit · Void · Reverse</strong><p style="font-size:9px;color:var(--muted);margin:7px 0 0">Corrections preserve a traceable history.</p></article><article class="card mini-stat"><span>Financial integrity</span><strong style="font-size:13px;color:var(--green)">Debits = Credits</strong><p style="font-size:9px;color:var(--muted);margin:7px 0 0">Posted entries must balance.</p></article></div>
+</section>
+<section class="screen" data-screen="2" aria-label="Accounts">
+  <div class="page-head"><div><div class="eyebrow">Where your money lives</div><h1>Accounts</h1><p>Balances derived from recorded financial activity.</p></div><button class="primary">＋ New account</button></div>
+  <div class="grid metrics">
+    <article class="card metric"><div class="metric-label">Total liquid balance</div><div class="metric-value">৳74,280</div><div class="metric-foot">Active asset accounts</div></article>
+    <article class="card metric"><div class="metric-label">Cash & wallet</div><div class="metric-value">৳14,750</div><div class="metric-foot">Cash, bKash, food</div></article>
+    <article class="card metric"><div class="metric-label">Bank balances</div><div class="metric-value">৳59,530</div><div class="metric-foot">Bank and savings</div></article>
+    <article class="card metric"><div class="metric-label">Currencies</div><div class="metric-value">BDT</div><div class="metric-foot">Bangladeshi taka</div></article>
+  </div>
+  <article class="card table-card" style="margin-top:0"><div class="card-head"><div><h2>Active accounts</h2><p>Account type, recent activity and available balance</p></div><button class="secondary">Sort by balance ▾</button></div><div class="table-scroll"><table><thead><tr><th>ACCOUNT</th><th>TYPE</th><th>RECENT ACTIVITY</th><th>STATUS</th><th style="text-align:right">CURRENT BALANCE</th></tr></thead><tbody>
+  <tr><td><div class="tx-name"><span class="account-icon">▣</span><span><strong>Cash</strong><small>Physical cash</small></span></div></td><td>Asset</td><td>Tuition payment received</td><td><span class="pill green">Active</span></td><td style="text-align:right;font-weight:700">৳8,500.00</td></tr>
+  <tr><td><div class="tx-name"><span class="account-icon" style="color:#3868d9;background:#edf2ff">▤</span><span><strong>Bank account</strong><small>Primary bank</small></span></div></td><td>Asset</td><td>Monthly salary</td><td><span class="pill green">Active</span></td><td style="text-align:right;font-weight:700">৳42,780.00</td></tr>
+  <tr><td><div class="tx-name"><span class="account-icon" style="color:#16845b;background:#e8f6ef">◉</span><span><strong>bKash</strong><small>Mobile financial service</small></span></div></td><td>Asset</td><td>Groceries</td><td><span class="pill green">Active</span></td><td style="text-align:right;font-weight:700">৳5,000.00</td></tr>
+  <tr><td><div class="tx-name"><span class="account-icon" style="color:#a66b13;background:#fff5df">◷</span><span><strong>Food wallet</strong><small>Daily spending</small></span></div></td><td>Asset</td><td>Lunch</td><td><span class="pill green">Active</span></td><td style="text-align:right;font-weight:700">৳1,250.00</td></tr>
+  <tr><td><div class="tx-name"><span class="account-icon" style="color:#3868d9;background:#edf2ff">◇</span><span><strong>Savings</strong><small>Dedicated savings</small></span></div></td><td>Asset</td><td>Transfer from bank</td><td><span class="pill green">Active</span></td><td style="text-align:right;font-weight:700">৳16,750.00</td></tr>
+  </tbody></table></div></article>
+  <div class="grid two-col" style="margin-top:12px"><article class="card mini-stat"><span>Balance source</span><strong style="font-size:13px">Ledger entries</strong><p style="font-size:9px;color:var(--muted);margin:7px 0 0">Account totals follow posted and reversed transactions.</p></article><article class="card mini-stat"><span>Auditability</span><strong style="font-size:13px">History preserved</strong><p style="font-size:9px;color:var(--muted);margin:7px 0 0">Edits and voids are not silent balance changes.</p></article></div>
+</section>
+<section class="screen" data-screen="3" aria-label="Loans and repayments">
+  <div class="page-head"><div><div class="eyebrow">Money lent & borrowed</div><h1>Loans</h1><p>Track outstanding amounts by contact while keeping each loan and repayment separately linked.</p></div><button class="primary">＋ Add loan</button></div>
+  <div class="grid metrics"><article class="card metric"><div class="metric-label">Money lent · receivable</div><div class="metric-value">৳28,000</div><div class="metric-foot">Expected back from others</div></article><article class="card metric"><div class="metric-label">Money borrowed · payable</div><div class="metric-value">৳12,000</div><div class="metric-foot">Outstanding obligations</div></article><article class="card metric"><div class="metric-label">Active loan records</div><div class="metric-value">5</div><div class="metric-foot">Across 3 contacts</div></article><article class="card metric"><div class="metric-label">Repayments this month</div><div class="metric-value">৳6,500</div><div class="metric-foot positive">Recorded in ledger</div></article></div>
+  <div class="grid loan-grid">
+    <article class="card loan-card"><div class="loan-top"><div class="person"><span class="person-avatar">TA</span><span><strong>Tanvir Ahmed</strong><small>2 separate loans · Money lent</small></span></div><span class="pill amber">Active</span></div><div class="loan-amount">৳12,000</div><div class="loan-sub">Combined outstanding · 2 linked records</div><div class="progress" style="--p:55%"><span></span></div><div class="loan-details"><span>Principal lent</span><strong>৳20,000</strong></div><div class="loan-details"><span>Repaid so far</span><strong class="positive">৳8,000</strong></div><div style="border-top:1px solid #edf0f3;margin-top:10px;padding-top:9px;font-size:9px;color:var(--blue);font-weight:650">View individual loans & repayments →</div></article>
+    <article class="card loan-card"><div class="loan-top"><div class="person"><span class="person-avatar" style="background:#e8f6ef;color:#16845b">SR</span><span><strong>Samira Rahman</strong><small>1 loan · Money lent</small></span></div><span class="pill green">On track</span></div><div class="loan-amount">৳6,000</div><div class="loan-sub">Remaining receivable</div><div class="progress" style="--p:40%"><span></span></div><div class="loan-details"><span>Principal lent</span><strong>৳10,000</strong></div><div class="loan-details"><span>Repaid so far</span><strong class="positive">৳4,000</strong></div><div style="border-top:1px solid #edf0f3;margin-top:10px;padding-top:9px;font-size:9px;color:var(--blue);font-weight:650">Record repayment →</div></article>
+    <article class="card loan-card"><div class="loan-top"><div class="person"><span class="person-avatar" style="background:#fff5df;color:#a66b13">FH</span><span><strong>Family household</strong><small>2 obligations · Money borrowed</small></span></div><span class="pill amber">Due soon</span></div><div class="loan-amount">৳12,000</div><div class="loan-sub">Outstanding payable</div><div class="progress" style="--p:25%"><span style="background:#d8a24b"></span></div><div class="loan-details"><span>Original amount</span><strong>৳16,000</strong></div><div class="loan-details"><span>Paid so far</span><strong class="positive">৳4,000</strong></div><div style="border-top:1px solid #edf0f3;margin-top:10px;padding-top:9px;font-size:9px;color:var(--blue);font-weight:650">View repayment schedule →</div></article>
+  </div>
+  <article class="card table-card" style="margin-top:0"><div class="card-head"><div><h2>Recent loan activity</h2><p>Repayment history connected to each original loan</p></div><span class="text-link">Loan reliability →</span></div><div class="table-scroll"><table><thead><tr><th>CONTACT</th><th>ACTIVITY</th><th>DATE</th><th>LINKED LOAN</th><th style="text-align:right">AMOUNT</th></tr></thead><tbody><tr><td>Tanvir Ahmed</td><td>Partial repayment</td><td>Oct 19, 2026</td><td>Loan #LN-024</td><td style="text-align:right" class="amount-in">+৳3,000</td></tr><tr><td>Samira Rahman</td><td>Partial repayment</td><td>Oct 12, 2026</td><td>Loan #LN-019</td><td style="text-align:right" class="amount-in">+৳2,000</td></tr><tr><td>Family household</td><td>Repayment recorded</td><td>Oct 08, 2026</td><td>Loan #LN-016</td><td style="text-align:right" class="amount-out">−৳1,500</td></tr></tbody></table></div></article>
+</section>
+<section class="screen" data-screen="4" aria-label="Tuition collection">
+  <div class="page-head"><div><div class="eyebrow">Student fees & collection</div><h1>Tuition</h1><p>Monthly fees, partial payments, outstanding dues and payment history.</p></div><button class="primary">＋ Add student</button></div>
+  <div class="grid tuition-stats"><article class="card tuition-stat"><span>Expected this month</span><strong>৳24,000</strong><small>24 active students</small></article><article class="card tuition-stat"><span>Received</span><strong class="positive">৳19,500</strong><small>81% collected</small></article><article class="card tuition-stat"><span>Outstanding</span><strong class="negative">৳4,500</strong><small>Unpaid or partial fees</small></article></div>
+  <article class="card" style="padding:15px;margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px"><div><h2 style="font-size:12px;margin:0">Monthly collection progress</h2><p style="font-size:9px;color:var(--muted);margin:5px 0 0">October 2026 · recorded payments only</p></div><span class="pill green">81% collected</span></div><div class="progress" style="--p:81%;height:8px"><span></span></div><div style="display:flex;justify-content:space-between;gap:10px;font-size:9px;color:var(--muted);margin-top:8px"><span>৳19,500 received</span><span>৳4,500 remaining</span></div></article>
+  <article class="card table-card" style="margin-top:0"><div class="card-head"><div><h2>Students & monthly payment status</h2><p>Expected fees are not counted as available cash until paid.</p></div><button class="secondary">October 2026 ▾</button></div><div class="table-scroll"><table><thead><tr><th>STUDENT</th><th>MONTHLY FEE</th><th>PAID</th><th>OUTSTANDING</th><th>STATUS</th><th class="optional-mobile">PAYMENT HISTORY</th></tr></thead><tbody>
+  <tr><td><div class="tx-name"><span class="person-avatar" style="width:27px;height:27px">AR</span><span><strong>Araf Rahman</strong><small>Class 9 · Mathematics</small></span></div></td><td>৳3,000</td><td class="amount-in">৳3,000</td><td>৳0</td><td><span class="status paid">Paid</span></td><td class="optional-mobile">Oct 05 · Full</td></tr>
+  <tr><td><div class="tx-name"><span class="person-avatar" style="width:27px;height:27px;background:#fff5df;color:#a66b13">NS</span><span><strong>Nusrat Sultana</strong><small>Class 8 · ICT & Math</small></span></div></td><td>৳2,500</td><td class="amount-in">৳1,500</td><td>৳1,000</td><td><span class="status partial">Partial</span></td><td class="optional-mobile">Oct 08 · Part</td></tr>
+  <tr><td><div class="tx-name"><span class="person-avatar" style="width:27px;height:27px;background:#fff0f0;color:#c44f52">IM</span><span><strong>Imran Mahmud</strong><small>Class 10 · Mathematics</small></span></div></td><td>৳3,500</td><td>৳0</td><td class="negative">৳3,500</td><td><span class="status unpaid">Unpaid</span></td><td class="optional-mobile">No payment yet</td></tr>
+  <tr><td><div class="tx-name"><span class="person-avatar" style="width:27px;height:27px">FK</span><span><strong>Farhan Kabir</strong><small>Class 9 · ICT</small></span></div></td><td>৳2,000</td><td class="amount-in">৳2,000</td><td>৳0</td><td><span class="status paid">Paid</span></td><td class="optional-mobile">Oct 03 · Full</td></tr>
+  </tbody></table></div></article>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><span class="screen-tag">✓ Payment history</span><span class="screen-tag">✓ Partial payment tracking</span><span class="screen-tag">✓ Ledger-connected collections</span></div>
+</section>
+<section class="screen" data-screen="5" aria-label="Reports and forecasts">
+  <div class="page-head"><div><div class="eyebrow">Understand your money</div><h1>Reports & insights</h1><p>Explore cash flow, net worth, spending, obligations and future scenarios.</p></div><button class="secondary">October 2026 ▾</button></div>
+  <div class="grid report-grid">
+    <article class="card report-card"><div class="report-title"><span class="report-icon">⌁</span><span><h3>Income & expense report</h3><p>Monthly cash flow and category trends</p></span></div><div class="report-preview"><div class="report-row"><span>Total income</span><strong class="positive">৳58,400</strong></div><div class="report-row"><span>Total expenses</span><strong>৳32,750</strong></div><div class="report-row"><span>Net cash flow</span><strong class="positive">+৳25,650</strong></div></div><div class="report-footer"><span>Updated from posted ledger entries</span><span class="text-link">Explore →</span></div></article>
+    <article class="card report-card"><div class="report-title"><span class="report-icon" style="background:#e8f6ef;color:#16845b">◇</span><span><h3>Net worth & forecast</h3><p>Assets, liabilities and projected trajectory</p></span></div><div class="report-preview"><div class="report-row"><span>Liquid accounts</span><strong>৳74,280</strong></div><div class="report-row"><span>Other assets</span><strong>৳1,34,000</strong></div><div class="report-row"><span>Liabilities</span><strong>−৳21,780</strong></div></div><div class="report-footer"><span>Illustrative forecast, not a guarantee</span><span class="text-link">View forecast →</span></div></article>
+    <article class="card report-card"><div class="report-title"><span class="report-icon" style="background:#fff5df;color:#a66b13">◷</span><span><h3>Budget & spending</h3><p>Category limits, progress and overspending</p></span></div><div class="report-preview"><div class="report-row"><span>Food & groceries</span><strong>৳8,200 / ৳10,000</strong></div><div class="progress" style="--p:82%;margin:0 0 8px"><span></span></div><div class="report-row"><span>Transport</span><strong>৳2,100 / ৳3,000</strong></div><div class="progress" style="--p:70%"><span></span></div></div><div class="report-footer"><span>Budget status from actual spending</span><span class="text-link">View budgets →</span></div></article>
+    <article class="card report-card"><div class="report-title"><span class="report-icon" style="background:#edf2ff;color:#3868d9">↗</span><span><h3>Loans & tuition obligations</h3><p>Outstanding receivables, payables and fees</p></span></div><div class="report-preview"><div class="report-row"><span>Money lent</span><strong>৳28,000</strong></div><div class="report-row"><span>Money borrowed</span><strong>৳12,000</strong></div><div class="report-row"><span>Tuition still due</span><strong class="negative">৳4,500</strong></div></div><div class="report-footer"><span>Expected fees stay outside liquid balance</span><span class="text-link">View details →</span></div></article>
+  </div>
+  <div class="grid networth" style="margin-top:12px"><article class="card networth-card"><h3>Net worth trend</h3><div class="big">৳1,86,500</div><div class="positive" style="font-size:10px">↑ 4.6% this month</div><div class="bars"><span class="bar" style="height:45%"></span><span class="bar" style="height:50%"></span><span class="bar" style="height:47%"></span><span class="bar" style="height:64%"></span><span class="bar" style="height:70%"></span><span class="bar" style="height:82%"></span><span class="bar" style="height:93%"></span></div><div class="bar-labels"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span></div></article><article class="card networth-card"><h3>Cash-flow outlook</h3><div class="big">6-month view</div><p style="font-size:10px;color:var(--muted);line-height:1.65">Forecasts use past cash flow and recurring activity to help plan ahead. Scenarios explain possible outcomes and do not automatically change financial records.</p><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:12px"><span class="pill blue">Cash flow</span><span class="pill green">Goals</span><span class="pill amber">What-if scenarios</span></div></article></div>
+</section>
+</main>
 </div>
-<div id="hint">space pause &nbsp;·&nbsp; r replay &nbsp;·&nbsp; e export &nbsp;·&nbsp; 1–6 jump phase</div>
-
+<div id="demo">ILLUSTRATIVE DEMO DATA · BDT · NOT CONNECTED TO YOUR LIVE ACCOUNT</div>
+<div id="controls"><button id="replay" type="button">↻ Replay</button><button id="pause" type="button">Ⅱ Pause</button></div>
+</div>
 <script>
-/* ══════════════════════════════════════════════════════════════
-   MONEY CALCULATOR — CINEMATIC TRANSITION ENGINE  (single file)
-   Dark graphite · cyan/teal · amber numerics · left→right flow
-   ══════════════════════════════════════════════════════════════ */
-
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d', { alpha:false });
-
-let W=0, H=0, dpr=1, S=1;
-let t=0, playing=true, lastNow=performance.now(), seek=0;
-
-/* ─── Palette ─────────────────────────────────────────────── */
-const C = {
-  bg:'#07080a', bg2:'#0b0e11',
-  grid:'rgba(46,66,76,0.13)', gridMaj:'rgba(58,84,96,0.22)',
-  cyan:'#4dd4d8', teal:'#2b9ea0', blue:'#3f8bea', amber:'#d9a84a',
-  white:'#e2eef2', dim:'rgba(176,206,214,0.42)'
-};
-const rgba=(hex,a)=>{const n=parseInt(hex.slice(1),16);
-  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`};
-
-/* ─── Math helpers ────────────────────────────────────────── */
-const lerp=(a,b,k)=>a+(b-a)*k;
-const clamp=(v,a,b)=>v<a?a:v>b?b:v;
-const eOut=k=>1-Math.pow(1-k,3);
-const eIO=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
-const ss=(a,b,k)=>{k=clamp((k-a)/(b-a),0,1);return k*k*(3-2*k)};
-let _s=1337; const rnd=()=>(_s=_s*16807%2147483647)/2147483647;
-const money=v=>v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-
-/* ─── Timeline ────────────────────────────────────────────── */
-const PH = [
-  {id:'BOOT',      d:2.6, label:'initializing financial engine'},
-  {id:'STREAM',    d:4.0, label:'streaming transaction data'},
-  {id:'NETWORK',   d:4.0, label:'mapping account relationships'},
-  {id:'CALCULATE', d:3.4, label:'computing running balances'},
-  {id:'RECONCILE', d:3.2, label:'reconciling ledger'},
-  {id:'TITLE',     d:6.0, label:'money calculator'}
-];
-const TOTAL = PH.reduce((a,p)=>a+p.d,0);
-const STARTS = PH.reduce((a,p,i)=>(a.push(i?a[i-1]+PH[i-1].d:0),a),[]);
-function phaseAt(x){
-  for(let i=PH.length-1;i>=0;i--) if(x>=STARTS[i])
-    return {i, p:clamp((x-STARTS[i])/PH[i].d,0,1), id:PH[i].id};
-  return {i:0,p:0,id:'BOOT'};
-}
-const after=(x,i)=>x>=STARTS[i];
-
-/* ─── Resize ──────────────────────────────────────────────── */
-function resize(){
-  dpr=Math.min(window.devicePixelRatio||1,2);
-  W=window.innerWidth; H=window.innerHeight;
-  S=W<=600?clamp(W/1600,.34,.48):clamp(W/1600,.62,1.7);
-  canvas.width=W*dpr; canvas.height=H*dpr;
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  build();
-}
-window.addEventListener('resize',resize);
-
-/* ─── Layout anchors (16:9 cinematic composition) ─────────── */
-const L = {
-  get ledgerX(){return W*.055}, get ledgerY(){return H*.155},
-  get calcX(){return W*.395},   get calcY(){return H*.505},
-  get titleR(){return W*.945},  get titleY(){return H*.50}
-};
-
-/* ═══════════════════ SYSTEMS ═══════════════════════════════ */
-
-/* 1 ─ Background grid + horizon rails */
-function drawGrid(a){
-  if(a<.01) return;
-  const fine=16*S, maj=96*S;
-  ctx.globalAlpha=a*.34; ctx.strokeStyle=C.grid; ctx.lineWidth=.4;
-  ctx.beginPath();
-  for(let x=0;x<=W;x+=fine){ctx.moveTo(x|0,0);ctx.lineTo(x|0,H)}
-  for(let y=0;y<=H;y+=fine){ctx.moveTo(0,y|0);ctx.lineTo(W,y|0)}
-  ctx.stroke();
-  ctx.globalAlpha=a*.7; ctx.strokeStyle=C.gridMaj; ctx.lineWidth=.55;
-  ctx.beginPath();
-  for(let x=0;x<=W;x+=maj){ctx.moveTo(x|0,0);ctx.lineTo(x|0,H)}
-  for(let y=0;y<=H;y+=maj){ctx.moveTo(0,y|0);ctx.lineTo(W,y|0)}
-  ctx.stroke();
-  ctx.globalAlpha=1;
-}
-
-/* 2 ─ Horizontal flow rails (left→right motion cue) */
-const RAILS=[];
-function buildRails(){
-  RAILS.length=0;
-  for(let i=0;i<9;i++) RAILS.push({
-    y:H*(.12+i*.095), sp:26+rnd()*70, off:rnd()*1000,
-    col:[C.cyan,C.teal,C.blue,C.amber][i%4], a:.08+rnd()*.14
-  });
-}
-function drawRails(a){
-  if(a<.01) return;
-  ctx.lineWidth=.45; ctx.setLineDash([3*S,10*S]);
-  for(const r of RAILS){
-    ctx.globalAlpha=a*r.a; ctx.strokeStyle=rgba(r.col,.55);
-    ctx.lineDashOffset=-(t*r.sp+r.off);
-    ctx.beginPath(); ctx.moveTo(0,r.y|0); ctx.lineTo(W,r.y|0); ctx.stroke();
-  }
-  ctx.setLineDash([]); ctx.globalAlpha=1;
-}
-
-/* 3 ─ Transaction entries (ledger lines in motion) */
-const LABELS=['SALARY DEPOSIT','RENT PAYMENT','GROCERY','UTILITIES','SAVINGS XFER',
- 'TUITION FEE','LOAN PAYMENT','INDEX FUND','FREELANCE','INSURANCE','TRANSPORT',
- 'SUBSCRIPTION','EMERGENCY FUND','TAX WITHHOLD','BONUS','REFUND','INTEREST',
- 'DIVIDEND','MEDICAL','TUITION INSTALMENT'];
-
-class Tx{
-  constructor(i){
-    this.birth = .35 + i*.085 + rnd()*.5;
-    this.y0 = H*(.10+rnd()*.80);
-    this.x = -W*.08 - rnd()*W*.5;
-    this.y = this.y0;
-    this.sp = (70+rnd()*170)*S;
-    this.cr = rnd()>.42;
-    this.amt = (this.cr?1:-1)*(28+rnd()*5200);
-    this.lab = LABELS[(rnd()*LABELS.length)|0];
-    this.col = this.cr?C.cyan:C.amber;
-    this.len = (26+rnd()*86)*S;
-    this.w = rnd()<.25?1.1:.55;
-    this.tag = rnd()>.55;
-    this.ph = rnd()*6.28;
-    this.a = 0;
-    this.fade = 0;
-  }
-  update(dt,x,ph){
-    if(x<this.birth) return;
-    const accel = ph.i>=1 ? 1+ph.i*.22 : .7;
-    this.x += this.sp*accel*dt;
-    this.y = this.y0 + Math.sin(t*.9+this.ph)*2.2*S;
-    this.a = clamp(this.a+dt*2.2,0,1);
-    if(ph.i>=4){ this.fade=clamp(this.fade+dt*.75,0,1); }
-    if(this.x>W+200){ this.x=-200-rnd()*300; this.y0=H*(.10+rnd()*.80); }
-  }
-  draw(ph){
-    if(this.a<.01) return;
-    const vis=this.a*(1-this.fade*.92);
-    if(vis<.01) return;
-    const pulse=.72+.28*Math.sin(t*2.4+this.ph);
-    const x=this.x, y=this.y;
-
-    /* trailing streak */
-    const g=ctx.createLinearGradient(x-this.len,y,x,y);
-    g.addColorStop(0,rgba(this.col,0));
-    g.addColorStop(1,rgba(this.col,.55*vis));
-    ctx.strokeStyle=g; ctx.lineWidth=this.w;
-    ctx.beginPath(); ctx.moveTo(x-this.len,y); ctx.lineTo(x,y); ctx.stroke();
-
-    /* head glow */
-    ctx.globalAlpha=vis*.17*pulse;
-    const rg=ctx.createRadialGradient(x,y,0,x,y,22*S);
-    rg.addColorStop(0,this.col); rg.addColorStop(1,rgba(this.col,0));
-    ctx.fillStyle=rg; ctx.beginPath(); ctx.arc(x,y,22*S,0,6.283); ctx.fill();
-
-    /* head node */
-    ctx.globalAlpha=vis*pulse;
-    ctx.fillStyle=this.col;
-    ctx.beginPath(); ctx.arc(x,y,1.5*S,0,6.283); ctx.fill();
-
-    /* numeric tag */
-    if(this.tag && ph.i>=1){
-      ctx.globalAlpha=vis*.72;
-      ctx.font=`500 ${9*S}px 'JetBrains Mono',monospace`;
-      ctx.textAlign='left'; ctx.fillStyle=this.col;
-      ctx.fillText((this.cr?'+':'−')+money(Math.abs(this.amt)),x+7*S,y-5*S);
-      if(ph.i>=2){
-        ctx.globalAlpha=vis*.26;
-        ctx.font=`300 ${7*S}px 'JetBrains Mono',monospace`;
-        ctx.fillStyle=C.dim;
-        ctx.fillText(this.lab,x+7*S,y+7.5*S);
-      }
+(function(){
+  const screens=[...document.querySelectorAll('[data-screen]')];
+  const nav=[...document.querySelectorAll('[data-nav]')];
+  const replay=document.getElementById('replay');
+  const pause=document.getElementById('pause');
+  const durations=[4.2,4.0,3.7,4.0,4.0,4.4];
+  const total=durations.reduce((a,b)=>a+b,0);
+  let elapsed=0,playing=true,last=performance.now(),raf=0,active=-1;
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function stageAt(t){let acc=0;for(let i=0;i<durations.length;i++){acc+=durations[i];if(t<acc)return i;}return 5;}
+  function setStage(i){
+    if(i===active)return;
+    active=i;
+    screens.forEach((el,n)=>el.classList.toggle('active',n===i));
+    nav.forEach((el,n)=>el.classList.toggle('active',n===i));
+    if(i===0){
+      document.querySelectorAll('.draw-line').forEach(el=>{el.style.transition='none';el.style.strokeDashoffset='700';void el.getBoundingClientRect();el.style.transition='stroke-dashoffset 1.8s ease';el.style.strokeDashoffset='0';});
     }
-    ctx.globalAlpha=1;
   }
-}
-
-/* 4 ─ Financial nodes + connective tissue */
-const NODE_DEF=[
-  ['INCOME',      C.cyan , .115,.235],
-  ['DEPOSITS',    C.teal , .225,.775],
-  ['EXPENSES',    C.amber, .300,.215],
-  ['SAVINGS',     C.teal , .385,.790],
-  ['LOANS',       C.blue , .490,.715],
-  ['TUITION',     C.amber, .455,.205],
-  ['INVESTMENTS', C.cyan , .585,.300],
-  ['TAX',         C.amber, .600,.845]
-];
-const EDGES=[[0,2],[0,1],[0,6],[2,5],[2,7],[1,3],[3,6],[4,5],[4,3],[6,7],[5,6],[1,4],[0,3],[2,4]];
-
-class Node{
-  constructor(n,col,rx,ry){
-    this.n=n; this.col=col; this.rx=rx; this.ry=ry;
-    this.r=(13+rnd()*9);
-    this.v=200+rnd()*900; this.tv=this.v;
-    this.ph=rnd()*6.283; this.a=0; this.ring=0; this.hit=0;
+  function loop(now){
+    const dt=Math.min((now-last)/1000,.08);last=now;
+    if(playing&&!reduced){elapsed+=dt;if(elapsed>=total){elapsed=0;active=-1;}setStage(stageAt(elapsed));}
+    else if(reduced&&active<0)setStage(0);
+    raf=requestAnimationFrame(loop);
   }
-  get x(){return W*this.rx} get y(){return H*this.ry}
-  update(dt,ph){
-    this.ph+=dt*1.15;
-    if(ph.i>=2) this.a=clamp(this.a+dt*.9,0,.95);
-    if(ph.i>=5) this.a=clamp(this.a-dt*.5,.14,.95);
-    this.v=lerp(this.v,this.tv,clamp(dt*2.2,0,1));
-    if(ph.i>=2&&ph.i<5&&rnd()<.012){this.tv=400+rnd()*16000;this.hit=1}
-    this.hit=clamp(this.hit-dt*2.2,0,1);
-    this.ring=clamp(this.ring+dt*.55,0,1);
-  }
-  draw(){
-    if(this.a<.01) return;
-    const x=this.x,y=this.y,R=this.r*S;
-    const pul=.8+.2*Math.sin(this.ph)+this.hit*.5;
-
-    ctx.globalAlpha=this.a*.07*pul;
-    const g=ctx.createRadialGradient(x,y,0,x,y,R*4);
-    g.addColorStop(0,this.col); g.addColorStop(1,rgba(this.col,0));
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,R*4,0,6.283); ctx.fill();
-
-    ctx.globalAlpha=this.a*.55; ctx.strokeStyle=this.col; ctx.lineWidth=.8;
-    ctx.beginPath(); ctx.arc(x,y,R,-1.5708,-1.5708+6.283*this.ring); ctx.stroke();
-
-    ctx.globalAlpha=this.a*.16;
-    ctx.beginPath(); ctx.arc(x,y,R*.56,0,6.283); ctx.stroke();
-
-    ctx.globalAlpha=this.a*.9*pul; ctx.fillStyle=this.col;
-    ctx.beginPath(); ctx.arc(x,y,2.1*S,0,6.283); ctx.fill();
-
-    ctx.textAlign='center';
-    ctx.globalAlpha=this.a*.72;
-    ctx.font=`500 ${8*S}px 'JetBrains Mono',monospace`;
-    ctx.fillStyle=this.col; ctx.fillText(this.n,x,y-R-9*S);
-    ctx.globalAlpha=this.a*.42;
-    ctx.font=`400 ${7.5*S}px 'JetBrains Mono',monospace`;
-    ctx.fillStyle=C.dim; ctx.fillText('$'+money(this.v),x,y+R+13*S);
-    ctx.globalAlpha=1;
-  }
-}
-
-class Edge{
-  constructor(a,b){this.a=a;this.b=b;this.g=0;this.al=0;
-    this.pk=[rnd(),rnd()*.6+.2];this.sp=.18+rnd()*.3}
-  update(dt,ph){
-    if(ph.i>=2&&ph.i<5){
-      this.g=clamp(this.g+dt*.62,0,1);
-      this.al=clamp(this.al+dt*.6,0,.42);
-      this.pk=this.pk.map(p=>(p+this.sp*dt)%1);
-    } else if(ph.i>=5) this.al=clamp(this.al-dt*.34,0,.42);
-  }
-  draw(){
-    if(this.al<.01||this.g<.02) return;
-    const ax=this.a.x,ay=this.a.y,bx=this.b.x,by=this.b.y;
-    const mx=(ax+bx)/2+(by-ay)*.14, my=(ay+by)/2+(ax-bx)*.14;
-    const ex=lerp(ax,bx,this.g), ey=lerp(ay,by,this.g);
-
-    ctx.globalAlpha=this.al*.85; ctx.strokeStyle=rgba(C.cyan,.5); ctx.lineWidth=.42;
-    ctx.beginPath(); ctx.moveTo(ax,ay); ctx.quadraticCurveTo(mx,my,ex,ey); ctx.stroke();
-
-    if(this.g>.92) for(const k of this.pk){
-      const u=1-k, px=u*u*ax+2*u*k*mx+k*k*bx, py=u*u*ay+2*u*k*my+k*k*by;
-      ctx.globalAlpha=this.al*2.1; ctx.fillStyle=C.cyan;
-      ctx.beginPath(); ctx.arc(px,py,1.35*S,0,6.283); ctx.fill();
-      ctx.globalAlpha=this.al*.5;
-      ctx.beginPath(); ctx.arc(px,py,4.5*S,0,6.283); ctx.fill();
-    }
-    ctx.globalAlpha=1;
-  }
-}
-
-/* 5 ─ Central rolling calculator */
-const calc={
-  digits:new Array(9).fill(0),
-  target:[0,2,4,8,7,1,5,3,6],
-  spin:[14,19,11,23,17,27,13,21,29],
-  a:0, locked:new Array(9).fill(0),
-  update(dt,ph){
-    if(ph.i>=3&&ph.i<5) this.a=clamp(this.a+dt*1.5,0,1);
-    if(ph.i>=5) this.a=clamp(this.a-dt*.55,.22,1);
-    if(ph.i===3) for(let i=0;i<9;i++) this.digits[i]=(this.digits[i]+this.spin[i]*dt)%10;
-    if(ph.i>=4){
-      for(let i=0;i<9;i++){
-        const lk=clamp((ph.p*1.9)-(i*.085),0,1);
-        this.locked[i]=lk;
-        if(lk<1) this.digits[i]=(this.digits[i]+this.spin[i]*dt*(1-eOut(lk)))%10;
-        else this.digits[i]=lerp(this.digits[i],this.target[i],clamp(dt*9,0,1));
-      }
-    }
-  },
-  draw(ph){
-    if(this.a<.02) return;
-    const cx=L.calcX, cy=L.calcY, dw=23*S, gap=7*S;
-    const groups=[0,0,0,1,1,1,1,2,2]; // $ 024,871.536 style spacing
-    let total=0; for(let i=0;i<9;i++){total+=dw+(i&&groups[i]!==groups[i-1]?gap:0)}
-    const x0=cx-total/2;
-    const padX=26*S, padY=25*S;
-
-    /* housing */
-    ctx.globalAlpha=this.a*.055; ctx.fillStyle=C.cyan;
-    ctx.fillRect(x0-padX,cy-padY-9*S,total+padX*2,padY*2+6*S);
-    ctx.globalAlpha=this.a*.3; ctx.strokeStyle=rgba(C.cyan,.5); ctx.lineWidth=.55;
-    ctx.strokeRect(x0-padX,cy-padY-9*S,total+padX*2,padY*2+6*S);
-    /* corner ticks */
-    ctx.globalAlpha=this.a*.6; ctx.lineWidth=1;
-    const bx=x0-padX, by=cy-padY-9*S, bw=total+padX*2, bh=padY*2+6*S, tk=7*S;
-    ctx.beginPath();
-    [[bx,by,1,1],[bx+bw,by,-1,1],[bx,by+bh,1,-1],[bx+bw,by+bh,-1,-1]].forEach(([px,py,sx,sy])=>{
-      ctx.moveTo(px+sx*tk,py); ctx.lineTo(px,py); ctx.lineTo(px,py+sy*tk);
-    });
-    ctx.stroke();
-
-    /* caption */
-    ctx.globalAlpha=this.a*.4; ctx.textAlign='left';
-    ctx.font=`400 ${7.5*S}px 'JetBrains Mono',monospace`; ctx.fillStyle=C.teal;
-    ctx.fillText('RECONCILED  NET  BALANCE', x0-padX, by-8*S);
-    ctx.textAlign='right'; ctx.globalAlpha=this.a*.3; ctx.fillStyle=C.dim;
-    ctx.fillText(ph.i>=4?'STATUS · BALANCED':'STATUS · COMPUTING', x0+total+padX, by-8*S);
-
-    /* currency mark */
-    ctx.globalAlpha=this.a*.55; ctx.textAlign='right';
-    ctx.font=`300 ${17*S}px 'JetBrains Mono',monospace`; ctx.fillStyle=C.cyan;
-    ctx.fillText('$',x0-7*S,cy+7*S);
-
-    /* digits */
-    let x=x0;
-    ctx.textAlign='center';
-    for(let i=0;i<9;i++){
-      if(i&&groups[i]!==groups[i-1]){
-        ctx.globalAlpha=this.a*.32; ctx.fillStyle=C.dim;
-        ctx.font=`400 ${18*S}px 'JetBrains Mono',monospace`;
-        ctx.fillText(groups[i]===2?'.':',',x-gap*.45,cy+7*S);
-        x+=gap;
-      }
-      const v=this.digits[i], d=Math.floor(v)%10, f=v-Math.floor(v);
-      const dec=groups[i]===2;
-      ctx.save();
-      ctx.beginPath(); ctx.rect(x-dw/2,cy-15*S,dw,30*S); ctx.clip();
-      ctx.globalAlpha=this.a*(.55+this.locked[i]*.42);
-      ctx.fillStyle=dec?C.amber:C.white;
-      ctx.font=`600 ${20*S}px 'JetBrains Mono',monospace`;
-      const yo=-f*22*S;
-      ctx.fillText(String(d),x,cy+7*S+yo);
-      ctx.fillText(String((d+1)%10),x,cy+7*S+yo+22*S);
-      ctx.restore();
-      /* lock underline */
-      ctx.globalAlpha=this.a*this.locked[i]*.5;
-      ctx.strokeStyle=dec?C.amber:C.cyan; ctx.lineWidth=.9;
-      ctx.beginPath(); ctx.moveTo(x-dw*.33,cy+15*S); ctx.lineTo(x+dw*.33,cy+15*S); ctx.stroke();
-      x+=dw;
-    }
-    ctx.globalAlpha=1;
-  }
-};
-
-/* 6 ─ Structured ledger (left column) */
-const LEDGER=(()=>{
-  const rows=[
-    ['SALARY · OCT',        0, 5200.00],
-    ['RENT · UNIT 14B',  1850.00, 0],
-    ['TUITION · SEM 02', 2400.00, 0],
-    ['GROCERIES',         341.80, 0],
-    ['LOAN · PRINCIPAL',  380.25, 0],
-    ['SAVINGS GOAL',      500.00, 0],
-    ['INDEX FUND DCA',   1200.00, 0],
-    ['UTILITIES',         164.40, 0],
-    ['FREELANCE · INV#22',     0, 1800.00],
-    ['INTEREST ACCRUED',       0, 84.15]
-  ];
-  let bal=0;
-  return rows.map(r=>{bal+=r[2]-r[1];return{lab:r[0],d:r[1],c:r[2],b:bal,a:0,dx:34}});
+  replay.addEventListener('click',()=>{elapsed=0;active=-1;setStage(0);playing=true;pause.textContent='Ⅱ Pause';last=performance.now();});
+  pause.addEventListener('click',()=>{playing=!playing;pause.textContent=playing?'Ⅱ Pause':'▶ Resume';last=performance.now();});
+  nav.forEach(el=>el.addEventListener('click',()=>{const i=Number(el.dataset.nav);elapsed=durations.slice(0,i).reduce((a,b)=>a+b,0)+.01;setStage(i);playing=false;pause.textContent='▶ Resume';}));
+  window.addEventListener('keydown',e=>{if(e.key===' '&& !/INPUT|TEXTAREA|BUTTON/.test(document.activeElement.tagName)){e.preventDefault();pause.click();}else if(e.key.toLowerCase()==='r')replay.click();});
+  if(reduced){setStage(0);playing=false;pause.textContent='▶ Resume';}
+  else {setStage(0);raf=requestAnimationFrame(loop);}
 })();
-
-function drawLedger(dt,ph){
-  let base=0;
-  if(ph.i>=3) base=clamp(base+1,0,1);
-  const master = ph.i<3 ? 0 : (ph.i>=5 ? lerp(.82,.26,eIO(ph.p)) : .82);
-  if(master<.01) return;
-
-  const x=L.ledgerX, y=L.ledgerY, rh=19*S;
-  const col=[0, 168*S, 240*S, 332*S];
-  const prog = ph.i===3 ? ph.p*1.1 : 1;
-
-  ctx.textBaseline='alphabetic';
-  /* header */
-  ctx.globalAlpha=master*.52; ctx.fillStyle=C.teal;
-  ctx.font=`500 ${7.2*S}px 'JetBrains Mono',monospace`;
-  ctx.textAlign='left';  ctx.fillText('TRANSACTION LEDGER',x,y);
-  ctx.textAlign='right';
-  ctx.fillText('DEBIT',  x+col[1],y);
-  ctx.fillText('CREDIT', x+col[2],y);
-  ctx.fillText('BALANCE',x+col[3],y);
-  ctx.globalAlpha=master*.3; ctx.strokeStyle=C.teal; ctx.lineWidth=.6;
-  ctx.beginPath(); ctx.moveTo(x,y+6*S); ctx.lineTo(x+col[3],y+6*S); ctx.stroke();
-
-  LEDGER.forEach((r,i)=>{
-    const k=clamp(prog*LEDGER.length-i,0,1);
-    r.a=lerp(r.a,eOut(k),clamp(dt*7,0,1));
-    r.dx=lerp(r.dx,0,clamp(dt*6,0,1));
-    if(r.a<.01) return;
-    const ry=y+22*S+i*rh, A=master*r.a;
-    ctx.globalAlpha=A*.64; ctx.font=`400 ${8*S}px 'JetBrains Mono',monospace`;
-    ctx.textAlign='left'; ctx.fillStyle=C.dim; ctx.fillText(r.lab,x+r.dx,ry);
-    ctx.textAlign='right';
-    if(r.d){ctx.fillStyle=C.amber; ctx.fillText(money(r.d),x+col[1]+r.dx,ry)}
-    if(r.c){ctx.fillStyle=C.cyan;  ctx.fillText(money(r.c),x+col[2]+r.dx,ry)}
-    ctx.globalAlpha=A*.82; ctx.fillStyle=r.b>=0?C.cyan:C.amber;
-    ctx.fillText(money(r.b),x+col[3]+r.dx,ry);
-    ctx.globalAlpha=A*.07; ctx.strokeStyle=C.teal; ctx.lineWidth=.35;
-    ctx.beginPath(); ctx.moveTo(x,ry+6*S); ctx.lineTo(x+col[3],ry+6*S); ctx.stroke();
-  });
-
-  /* total rule */
-  const last=LEDGER[LEDGER.length-1];
-  if(last.a>.6){
-    const ry=y+22*S+LEDGER.length*rh;
-    ctx.globalAlpha=master*.4; ctx.strokeStyle=C.cyan; ctx.lineWidth=.7;
-    ctx.beginPath(); ctx.moveTo(x+col[1],ry-6*S); ctx.lineTo(x+col[3],ry-6*S); ctx.stroke();
-    ctx.globalAlpha=master*.62; ctx.textAlign='right';
-    ctx.font=`600 ${8.4*S}px 'JetBrains Mono',monospace`; ctx.fillStyle=C.cyan;
-    ctx.fillText(money(last.b),x+col[3],ry+8*S);
-    ctx.textAlign='left'; ctx.globalAlpha=master*.4; ctx.fillStyle=C.teal;
-    ctx.font=`400 ${7.2*S}px 'JetBrains Mono',monospace`;
-    ctx.fillText('NET POSITION',x,ry+8*S);
-  }
-  ctx.globalAlpha=1;
-}
-
-/* 7 ─ Reconciliation burst */
-function drawReconcile(ph){
-  if(ph.id!=='RECONCILE') return;
-  const k=eIO(ph.p), cx=L.calcX, cy=L.calcY;
-  const N=18;
-  for(let i=0;i<N;i++){
-    const ang=i/N*6.283+t*.1;
-    const r0=lerp(W*.33,26*S,k);
-    const r1=r0+lerp(70*S,0,k);
-    ctx.globalAlpha=.17*(1-k)*(1-k+.25);
-    ctx.strokeStyle=rgba(i%3?C.cyan:C.amber,.8); ctx.lineWidth=.5;
-    ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(ang)*r1,cy+Math.sin(ang)*r1);
-    ctx.lineTo(cx+Math.cos(ang)*r0,cy+Math.sin(ang)*r0);
-    ctx.stroke();
-  }
-  /* expanding confirm ring */
-  const rr=ss(.55,1,ph.p);
-  if(rr>0){
-    ctx.globalAlpha=.3*(1-rr); ctx.strokeStyle=C.cyan; ctx.lineWidth=1.1;
-    ctx.beginPath(); ctx.arc(cx,cy,lerp(20*S,W*.26,eOut(rr)),0,6.283); ctx.stroke();
-  }
-  ctx.globalAlpha=.09*k;
-  const g=ctx.createRadialGradient(cx,cy,0,cx,cy,W*.18*k);
-  g.addColorStop(0,C.cyan); g.addColorStop(1,rgba(C.cyan,0));
-  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,W*.18*k,0,6.283); ctx.fill();
-  ctx.globalAlpha=1;
-}
-
-/* 8 ─ Title lockup (right negative space) */
-const TITLE='MONEY CALCULATOR';
-function drawTitle(ph){
-  if(ph.i<5) return;
-  const p=ph.p, R=L.titleR, cy=L.titleY;
-  const fs=Math.min(W*.046,62*1.0)*1;
-  ctx.textAlign='right'; ctx.textBaseline='alphabetic';
-
-  /* eyebrow */
-  const e=ss(.06,.3,p);
-  ctx.globalAlpha=e*.62; ctx.fillStyle=C.cyan;
-  ctx.font=`400 ${11*S}px 'JetBrains Mono',monospace`;
-  let eb='PERSONAL  FINANCE  ENGINEERING';
-  ctx.save(); ctx.letterSpacing=`${3.4*S}px`;
-  ctx.fillText(eb,R,cy-fs*.95); ctx.restore();
-
-  /* main title — per-character reveal */
-  ctx.font=`600 ${fs}px 'JetBrains Mono',monospace`;
-  ctx.letterSpacing=`${fs*.055}px`;
-  const widths=[]; let tw=0;
-  for(const ch of TITLE){const w=ctx.measureText(ch).width+fs*.055; widths.push(w); tw+=w}
-  let cx=R-tw;
-  for(let i=0;i<TITLE.length;i++){
-    const k=clamp((p-.10-i*.026)/.17,0,1);
-    const a=eOut(k), dy=(1-eOut(k))*16*S;
-    if(a>.001){
-      ctx.globalAlpha=a*.16; ctx.fillStyle=C.cyan;
-      ctx.shadowColor=rgba(C.cyan,.7); ctx.shadowBlur=18*S*(1-k)+5*S;
-      ctx.textAlign='left'; ctx.fillText(TITLE[i],cx,cy+dy);
-      ctx.shadowBlur=0;
-      ctx.globalAlpha=a; ctx.fillStyle=C.white;
-      ctx.fillText(TITLE[i],cx,cy+dy);
-    }
-    cx+=widths[i];
-  }
-  ctx.letterSpacing='0px';
-
-  /* accent rule */
-  const rl=ss(.3,.62,p);
-  if(rl>0){
-    const w=lerp(0,W*.19,eOut(rl));
-    const g=ctx.createLinearGradient(R-w,0,R,0);
-    g.addColorStop(0,rgba(C.cyan,0)); g.addColorStop(.6,rgba(C.cyan,.75)); g.addColorStop(1,rgba(C.cyan,.1));
-    ctx.globalAlpha=1; ctx.strokeStyle=g; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(R-w,cy+fs*.42); ctx.lineTo(R,cy+fs*.42); ctx.stroke();
-  }
-
-  /* sub-line */
-  const s2=ss(.42,.78,p);
-  ctx.globalAlpha=s2*.4; ctx.fillStyle=C.teal; ctx.textAlign='right';
-  ctx.font=`300 ${9.5*S}px 'JetBrains Mono',monospace`;
-  ctx.save(); ctx.letterSpacing=`${3*S}px`;
-  ctx.fillText('TRANSACTION ENGINE · BALANCE RECONCILIATION · FINANCIAL ARCHITECTURE',R,cy+fs*.95);
-  ctx.restore();
-  ctx.globalAlpha=1;
-}
-
-/* 9 ─ HUD + film treatment */
-function drawHUD(x,ph){
-  const a=ss(.3,1.4,x)*(ph.i>=5?lerp(1,.45,ph.p):1);
-  ctx.globalAlpha=a*.42; ctx.fillStyle=C.teal; ctx.textAlign='left';
-  ctx.font=`400 ${8*S}px 'JetBrains Mono',monospace`;
-  ctx.save(); ctx.letterSpacing=`${2.6*S}px`;
-  ctx.fillText(PH[ph.i].label.toUpperCase(),W*.055,H*.935);
-  ctx.restore();
-  /* progress bar */
-  ctx.globalAlpha=a*.2; ctx.strokeStyle=C.teal; ctx.lineWidth=.6;
-  ctx.beginPath(); ctx.moveTo(W*.055,H*.955); ctx.lineTo(W*.055+W*.17,H*.955); ctx.stroke();
-  ctx.globalAlpha=a*.7; ctx.strokeStyle=C.cyan; ctx.lineWidth=1.1;
-  ctx.beginPath(); ctx.moveTo(W*.055,H*.955); ctx.lineTo(W*.055+W*.17*(x/TOTAL),H*.955); ctx.stroke();
-  /* right meta */
-  ctx.globalAlpha=a*.22; ctx.textAlign='right'; ctx.fillStyle=C.dim;
-  ctx.font=`400 ${7.4*S}px 'JetBrains Mono',monospace`;
-  ctx.fillText('SYS.FINANCE.ENGINE  v2.4.1   //   '+String(PH[ph.i].id).padEnd(9,' ')+'  '+(x).toFixed(2)+'s',W*.945,H*.935);
-  ctx.globalAlpha=1;
-}
-
-function drawFilm(){
-  /* scan lines */
-  ctx.globalAlpha=.055; ctx.fillStyle='#000';
-  for(let y=0;y<H;y+=3) ctx.fillRect(0,y,W,1);
-  /* vignette */
-  ctx.globalAlpha=1;
-  const g=ctx.createRadialGradient(W*.46,H*.5,Math.min(W,H)*.18,W*.46,H*.5,W*.78);
-  g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(0,0,0,.72)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-  /* top/bottom falloff */
-  const g2=ctx.createLinearGradient(0,0,0,H);
-  g2.addColorStop(0,'rgba(0,0,0,.42)'); g2.addColorStop(.22,'rgba(0,0,0,0)');
-  g2.addColorStop(.8,'rgba(0,0,0,0)'); g2.addColorStop(1,'rgba(0,0,0,.42)');
-  ctx.fillStyle=g2; ctx.fillRect(0,0,W,H);
-}
-
-/* ─── Ambient motes ───────────────────────────────────────── */
-const MOTES=[];
-function buildMotes(){
-  MOTES.length=0;
-  for(let i=0;i<54;i++) MOTES.push({
-    x:rnd()*W,y:rnd()*H,vx:(6+rnd()*22),r:(.4+rnd()*1.3),
-    a:.06+rnd()*.2,c:[C.cyan,C.teal,C.blue,C.amber][(rnd()*4)|0],ph:rnd()*6.283
-  });
-}
-function drawMotes(dt,a){
-  for(const m of MOTES){
-    m.x+=m.vx*dt; m.y+=Math.sin(t*.7+m.ph)*.12;
-    if(m.x>W+10) m.x=-10;
-    ctx.globalAlpha=m.a*a*(.55+.45*Math.sin(t*1.8+m.ph));
-    ctx.fillStyle=m.c; ctx.beginPath(); ctx.arc(m.x,m.y,m.r*S,0,6.283); ctx.fill();
-  }
-  ctx.globalAlpha=1;
-}
-
-/* ─── Build / reset ───────────────────────────────────────── */
-let TXS=[], NODES=[], LINKS=[];
-function build(){
-  _s=1337;
-  TXS=[]; for(let i=0;i<78;i++) TXS.push(new Tx(i));
-  NODES=NODE_DEF.map(d=>new Node(...d));
-  LINKS=EDGES.filter(([a,b])=>a<NODES.length&&b<NODES.length)
-             .map(([a,b])=>new Edge(NODES[a],NODES[b]));
-  LEDGER.forEach(r=>{r.a=0;r.dx=34});
-  calc.a=0; calc.digits=new Array(9).fill(0); calc.locked=new Array(9).fill(0);
-  buildRails(); buildMotes();
-}
-
-/* ─── Frame ───────────────────────────────────────────────── */
-function frame(dt){
-  const x = seek;
-  const ph = phaseAt(x);
-  const fade = ss(0,1.1,x);
-
-  /* background */
-  ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H);
-  const bg=ctx.createRadialGradient(W*.40,H*.5,0,W*.40,H*.5,W*.75);
-  bg.addColorStop(0,'rgba(22,46,56,.10)'); bg.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-
-  drawGrid(fade*(ph.i>=5?lerp(1,.55,ph.p):1));
-  drawRails(ss(.4,1.8,x)*(ph.i>=5?lerp(1,.3,ph.p):1));
-  drawMotes(dt,fade*.9);
-
-  for(const tx of TXS){ tx.update(dt,x,ph); tx.draw(ph); }
-  for(const e of LINKS){ e.update(dt,ph); e.draw(); }
-  for(const n of NODES){ n.update(dt,ph); n.draw(); }
-
-  drawLedger(dt,ph);
-  calc.update(dt,ph); calc.draw(ph);
-  drawReconcile(ph);
-  drawTitle(ph);
-  drawHUD(x,ph);
-  drawFilm();
-}
-
-/* ─── Loop ────────────────────────────────────────────────── */
-function loop(now){
-  requestAnimationFrame(loop);
-  const dt=Math.min((now-lastNow)/1000,.05); lastNow=now;
-  if(!playing){ return; }
-  t+=dt; seek+=dt;
-  if(seek>TOTAL+2.0){ seek=0; t=0; build(); }
-  frame(dt);
-}
-
-/* ─── Public API / controls ───────────────────────────────── */
-const API={
-  replay(){ seek=0; t=0; build(); playing=true; },
-  toggle(){ playing=!playing; if(playing) lastNow=performance.now(); },
-  jump(i){ seek=STARTS[clamp(i,0,PH.length-1)]+.001; build(); 
-           // fast-forward state so visuals match
-           for(let k=0;k<90;k++) frame(1/60); },
-  exportJPG(scale){
-    const ow=canvas.width, oh=canvas.height;
-    canvas.width=Math.round(W*scale); canvas.height=Math.round(H*scale);
-    ctx.setTransform(scale,0,0,scale,0,0);
-    frame(0);
-    const url=canvas.toDataURL('image/jpeg',.96);
-    canvas.width=ow; canvas.height=oh; ctx.setTransform(dpr,0,0,dpr,0,0); frame(0);
-    const a=document.createElement('a');
-    a.href=url; a.download=`money-calculator_${Math.round(W*scale)}x${Math.round(H*scale)}.jpg`;
-    a.click();
-  },
-  saveFile(){
-    const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-    const url=URL.createObjectURL(new Blob([html],{type:'text/html'}));
-    const a=document.createElement('a');
-    a.href=url; a.download='money-calculator.html'; a.click();
-    setTimeout(()=>URL.revokeObjectURL(url),2000);
-  }
-};
-window.API=API;
-
-addEventListener('keydown',e=>{
-  const k=e.key.toLowerCase();
-  if(k===' '){e.preventDefault();API.toggle()}
-  else if(k==='r') API.replay();
-  else if(k==='e') API.exportJPG(2);
-  else if(k>='1'&&k<='6') API.jump(+k-1);
-});
-
-/* ─── Boot (wait for font so canvas text is correct) ──────── */
-function start(){ resize(); lastNow=performance.now(); requestAnimationFrame(loop); }
-if(document.fonts && document.fonts.ready){
-  document.fonts.load("600 20px 'JetBrains Mono'").then(()=>document.fonts.ready).then(start).catch(start);
-} else start();
 </script>
 </body>
 </html>
