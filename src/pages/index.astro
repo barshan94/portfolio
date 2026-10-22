@@ -691,30 +691,16 @@ const getWritingLink = (entry: (typeof writing)[number]) =>
         </div>
         <p class="section-sub">Research, articles, and project notes behind the work.</p>
       </div>
-      {writing.length > 0 ? (
-        <div class="project-grid writing-grid">
-          {writing.map((entry, index) => (
-            <article class="project-card writing-card" data-reveal>
-              <div class="project-card-top">
-                <span class="project-number">{projectNumber(index + 1)}</span>
-                <span class="project-category">{entry.data.type}</span>
-              </div>
-              <div class="project-card-body">
-                <h3>{entry.data.title}</h3>
-                <p class="project-description">{entry.data.excerpt}</p>
-                <div class="project-card-links">
-                  <a href={getWritingLink(entry)}>Read more <span aria-hidden="true">↗</span></a>
-                  {entry.data.link && (
-                    <a href={entry.data.link} target="_blank" rel="noopener noreferrer">Original source <span aria-hidden="true">↗</span></a>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <p class="section-sub">Writing and research entries will appear here when published.</p>
-      )}
+      <div class="writing-entry-grid">
+        {writing.map((entry, index) => (
+          <article class="writing-entry" data-reveal>
+            <p class="writing-entry-type">{entry.data.type} / {projectNumber(index + 1)}</p>
+            <h3>{entry.data.title}</h3>
+            <p>{entry.data.excerpt}</p>
+            <a href={getWritingLink(entry)}>Read more <span aria-hidden="true">↗</span></a>
+          </article>
+        ))}
+      </div>
     </section>
 
     <!-- CONTACT -->
@@ -3260,6 +3246,15 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   .archive-text-link:hover { text-decoration: underline; }
   @media (max-width: 650px) { .project-gallery-cta { align-items: flex-start; flex-direction: column; padding: 19px; } }
 
+
+  .writing-entry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .writing-entry { padding: 22px; border: 1px solid var(--line, #292929); border-radius: 12px; background: var(--surface, #101010); }
+  .writing-entry-type { margin: 0 0 10px; color: var(--accent, #c6ff4d); font: .68rem/1.5 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .writing-entry h3 { margin: 0 0 9px; font-size: 1.1rem; }
+  .writing-entry > p:not(.writing-entry-type) { color: var(--ink-2, #929292); font-size: .88rem; line-height: 1.7; }
+  .writing-entry a { display: inline-block; margin-top: 6px; color: var(--accent, #c6ff4d); font-size: .82rem; text-decoration: none; }
+  .writing-entry a:hover { text-decoration: underline; }
+  @media (max-width: 650px) { .writing-entry-grid { grid-template-columns: 1fr; } }
 </style>
 
 
