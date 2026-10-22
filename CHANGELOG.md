@@ -5,21 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
-## [2026-10-22] — One-click interactive walkthrough gallery
+## [2026-10-22] — Direct project-card demos and animation alignment
 
 ### Changed
-- Replaced the large “EXPLORE THE FULL BODY OF WORK” homepage block with compact actions beside the Selected Projects heading: an interactive gallery link and a full repository archive link.
-- Renumbered the homepage section labels sequentially after removing the redundant block.
-- Reworked the walkthroughs page around a featured Money Calculator animation plus six on-demand demos.
-- Removed the extra modal step. Selecting a secondary demo now starts it inside its card; only one animation runs at a time.
-- Added reduced-motion behavior: visitors who prefer reduced motion see a static Money Calculator poster and must explicitly start the animation.
-- Refined walkthrough descriptions to distinguish what each animation actually demonstrates from broader features in its source repository.
-- Updated the coaching animation to focus on the two automations currently present in the linked Apps Script: adding a missing attendance date column and payment month column. Unsupported registry, report, and communication scenes are no longer rendered.
+- Added a **Play demo** action directly beside **Source code** on all seven homepage project cards; each opens its matching animation directly in a new tab.
+- Removed the homepage's “Open interactive gallery” link. The redundant full-width “EXPLORE THE FULL BODY OF WORK” block remains removed; a compact repository-archive link stays by the project heading.
+- Matched the seven homepage projects to the seven animations. The bIoT thesis remains in the archive as a thesis rather than taking the place of a demo-matched project.
+- Added a dedicated marketing workflow illustration to the Keyword Research card and clarified that the animation covers separate marketing repositories, not one deployed platform.
+- Refined animation and project claims: Money Calculator now discloses that its animation is not the live UI; Student Performance labels fictional data; Mount Royal is described as a website concept; 999 states it is an academic concept and does not contact responders; Digital Growth clarifies the independent-repository scope.
+- Removed unused student-registry, report-card, communication, and overview scenes from the coaching animation. Updated its title, visible scope note, and project description to match the current Apps Script's two header-column automations.
+- Normalized the ASTA Store project title.
 
 ### Verification
-- Confirmed the seven animation paths against the portfolio repository layout and build copy script.
-- Compared demo descriptions with the linked project metadata and inspected the current coaching Apps Script source.
-- The latest commit's Vercel status check reports success. Live visual confirmation could not be completed through the available browser and remains pending.
+- Confirmed all seven animation paths against the repository layout and build-copy script.
+- Confirmed homepage source includes a demo mapping and a Play demo link for each selected project.
+- Confirmed coaching animation no longer contains the unsupported scenes and its remaining attendance/payment scenes match the linked Apps Script.
+- Vercel deployment status and a live visual check should be confirmed after the latest commit.
 
 ---
 
