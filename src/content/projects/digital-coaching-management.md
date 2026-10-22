@@ -18,6 +18,6 @@ A lightweight spreadsheet automation experiment for a coaching workflow, using G
 
 ## Scope and limitations
 
-The current script does not implement a complete student registry, attendance-marking system, payment-processing workflow, report generation, WhatsApp messaging, or a standalone management dashboard. The portfolio animation uses illustrative sample rows to explain the spreadsheet context; only the two column-header automations above are implemented in the linked source.
+The current script does not implement a complete student registry, attendance-marking system, payment-processing workflow, report generation, WhatsApp messaging, or a standalone management dashboard. The portfolio animation now illustrates the broader intended workflow—HW, assignment, quiz and mock-exam marks, prepared WhatsApp follow-up links, and weekly, monthly, payment and attendance reports. These are concept visuals using sample data, not live integrations in the linked script; only the two column-header automations above are implemented in the linked source.
 
 [View the source repository](https://github.com/barshan94/digital-coaching-management-system)
