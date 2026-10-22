@@ -2,12 +2,12 @@
 const currentYear = new Date().getFullYear();
 
 const nav = [
-  { number: "01", label: "SYSTEM", href: "#about" },
-  { number: "02", label: "IMPACT", href: "#flagship" },
-  { number: "03", label: "PROJECTS", href: "#projects" },
-  { number: "04", label: "EXPERIENCE", href: "#experience" },
-  { number: "05", label: "WRITING", href: "#writing" },
-  { number: "06", label: "CONTACT", href: "#contact" },
+  { number: "01", label: "SYSTEM", mobileLabel: "HOME", href: "#about" },
+  { number: "02", label: "IMPACT", mobileLabel: "WORK", href: "#flagship" },
+  { number: "03", label: "PROJECTS", mobileLabel: "PROJECTS", href: "#projects" },
+  { number: "04", label: "EXPERIENCE", mobileLabel: "EXPERIENCE", href: "#experience" },
+  { number: "05", label: "WRITING", mobileLabel: "WRITING", href: "#writing" },
+  { number: "06", label: "CONTACT", mobileLabel: "CONTACT", href: "#contact" },
 ];
 ---
 
@@ -27,7 +27,7 @@ const nav = [
 <nav class="system-dock" aria-label="System navigation">
   <div class="dock-heading">INDEX <span>///</span></div>
   {nav.map((item) => (
-    <a href={item.href} class="dock-link" data-section={item.href.slice(1)}>
+    <a href={item.href} class="dock-link" data-section={item.href.slice(1)} data-mobile-label={item.mobileLabel}>
       <span class="dock-number">{item.number}</span>
       <span class="dock-label">{item.label}</span>
       <span class="dock-arrow" aria-hidden="true">↗</span>
@@ -222,6 +222,16 @@ const nav = [
 
 @media (prefers-reduced-motion: reduce) {
   .dock-link { transition: none; }
+}
+
+@media (max-width: 600px) {
+  .system-dock { justify-content: flex-start; gap: .1rem; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .system-dock::-webkit-scrollbar { display: none; }
+  .dock-heading { display: flex; align-items: center; flex: 0 0 auto; margin: 0; padding: .45rem .4rem; border: 0; font-size: .48rem; }
+  .dock-heading span { display: none; }
+  .dock-link { display: flex; flex: 0 0 auto; flex-direction: column; align-items: center; justify-content: center; gap: .12rem; min-width: 54px; padding: .45rem .3rem; }
+  .dock-number { display: none; }
+  .dock-label { display: block; font-size: .43rem; letter-spacing: .015em; line-height: 1.25; }
 }
 </style>
 

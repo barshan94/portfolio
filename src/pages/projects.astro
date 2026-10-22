@@ -21,7 +21,7 @@ const groups = repositoryCategories.slice(1).map((category) => ({
     <header class="archive-header">
       <p class="eyebrow">REPOSITORY DIRECTORY / {githubRepositories.length} REPOSITORIES</p>
       <h1>Every project.<br /><span>One searchable archive.</span></h1>
-      <p>Featured projects stay on the homepage. This directory keeps the wider body of work discoverable without giving every experiment the same visual weight.</p>
+      <p>Start with the selected projects, then search the full repository directory below. The homepage is the short portfolio; this page is the organized index of source repositories and earlier experiments.</p>
       <div class="archive-stats">
         <span><strong>{githubRepositories.length}</strong> repositories indexed</span>
         <span><strong>{groups.length}</strong> categories</span>
@@ -30,9 +30,9 @@ const groups = repositoryCategories.slice(1).map((category) => ({
     </header>
 
     <section class="project-records" aria-labelledby="project-records-title">
-      <div class="group-heading"><h2 id="project-records-title">Project case-study records</h2><span>{projectEntries.length} entries</span></div>
+      <div class="group-heading"><h2 id="project-records-title">Selected project records</h2><span>{projectEntries.filter((project) => project.data.featured).length} featured entries</span></div>
       <div class="project-record-grid">
-        {projectEntries.map((project) => (
+        {projectEntries.filter((project) => project.data.featured).map((project) => (
           <article class="project-record">
             <p class="record-status">{project.data.status === "in-progress" ? "IN PROGRESS" : "PROJECT RECORD"}</p>
             <h3>{project.data.title}</h3>

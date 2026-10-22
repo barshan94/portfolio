@@ -1,58 +1,95 @@
 ---
 title: "Money Calculator"
-description: "A personal finance application built around ledger-connected transactions, account balances, loan lifecycles, tuition payments, and traceable financial corrections."
-tags: ["Next.js 16", "TypeScript", "Supabase", "PostgreSQL", "React 19", "Tailwind", "Recharts"]
+description: "A personal-finance platform with a double-entry ledger, auditable transaction corrections, full loan and tuition lifecycles, asset tracking, financial planning, reports, and forecasting."
+tags: ["Next.js 16", "TypeScript", "React 19", "Supabase", "PostgreSQL", "Tailwind CSS", "Recharts", "Vitest", "Playwright"]
 repo: "https://github.com/barshan94/money-calculator"
 status: "in-progress"
 featured: true
 accent: "accent"
 ---
 
-Money Calculator is a personal finance application designed to organize everyday financial activity while preserving consistency between transactions, account balances, and related records.
-
-The central engineering challenge is ensuring financial changes remain consistent when a transaction is edited, voided, repaid, or corrected.
+Money Calculator is a personal financial management application designed to bring everyday bookkeeping, financial obligations, planning, and analysis into one connected system. It is built around a central rule: balances should follow the underlying financial records, and important corrections should remain traceable.
 
 ## The problem
 
-Financial records become unreliable when balances and related records drift apart. Editing a transaction should not leave its previous effect behind, and recording a repayment should update the relevant outstanding balance.
+Personal-finance tools become hard to trust when an edited transaction leaves an old balance effect behind, repayments become disconnected from the original loan, or expected income is mistaken for money already available. Money Calculator models these relationships explicitly instead of treating each screen as a separate calculator.
 
-The application explores these challenges through connected financial workflows, database-backed operations, and explicit lifecycle management.
+## Product capabilities
 
-## Core workflows
+### 1. Accounts, transactions, and double-entry ledger
 
-- **Transaction integrity:** create, update, and void transactions while accounting for their effects on financial balances.
-- **Loans and repayments:** track money lent or borrowed, record repayments, and maintain related loan records and outstanding amounts.
-- **Tuition tracking:** manage student payment records, payment history, and outstanding tuition amounts.
-- **Accounts and balances:** organize financial activity across accounts and connect balances to recorded transactions.
-- **Traceable corrections:** support reversible financial changes rather than treating corrections as isolated edits.
+- Record income, expenses, transfers, donations, and opening balances across cash, bank, and mobile financial-service accounts.
+- Organize transactions with categories connected to ledger accounts.
+- Derive balances from transaction entries rather than relying on unrelated manually maintained totals.
+- Validate that posted transactions have balanced debit and credit entries.
+- Edit, void, and reverse financial activity while preserving the original event and audit history.
 
-## Engineering approach
+### 2. Full loan lifecycle
 
-### Financial consistency
+- Record money lent (receivable assets) and money borrowed (payable liabilities).
+- Keep multiple loans for the same contact while retaining each loan and its repayment relationships.
+- Track principal, remaining balance, status, partial repayments, and settlement.
+- Edit repayments or cancel them through linked reversal records; cancelled repayments no longer count toward the outstanding balance.
+- Connect loan creation and repayment to normal financial transactions.
 
-A transaction change can affect an account balance or a related obligation. The application emphasizes coordinated database operations and consistency across these relationships.
+### 3. Tuition and payment collection
 
-### Explicit financial lifecycles
+- Manage students, monthly fees, due dates, and monthly payment records.
+- Support paid, partial, and unpaid states with accumulated payment history and outstanding dues.
+- Keep expected but unpaid tuition separate from available cash.
+- Connect collected payments to financial accounts and provide reliability/reminder workflows.
 
-Loans and repayments have relationships that need to remain coherent as activity is recorded. Explicit workflows help prevent repayments or corrections from becoming disconnected from the underlying obligation.
+### 4. Deposits, investments, and long-term assets
 
-### Authentication and access control
+- Manage deposits, principal, interest, maturity information, withdrawals, and account integration.
+- Track investment purchases and sales, current value, performance, returns, and close/archive lifecycle.
+- Record land and property with cost basis, acquisition costs, sales, and gain/loss accounting.
+- Keep asset-related cash movements connected to ledger entries.
 
-The application uses Supabase SSR authentication and PostgreSQL row-level security policies to support authenticated access to user financial data.
+### 5. Budgets, goals, and recurring activity
 
-### Testing and verification
+- Set category-based budgets and monitor spending, progress, and remaining amounts.
+- Create savings goals, track progress, and model goal forecasts.
+- Schedule recurring income or expenses, pause or edit schedules, and process due items into ordinary transactions.
+- Track eligible-income donation targets and amounts contributed.
 
-The development process includes unit and database integration tests for loan lifecycle handling, settlement, balance integrity, transaction corrections, reversal audit trails, and tuition payment history.
+### 6. Reporting and financial intelligence
+
+- Review account balances, income and expenses, category spending, cash flow, loans, deposits, investments, goals, and net worth.
+- Explore monthly trends, liquidity and financial-health indicators, and financial insights.
+- Calculate cash-flow, net-worth, and goal forecasts, investment analytics, budget intelligence, and what-if scenarios.
+- Use these calculations to explain possible outcomes; they do not silently mutate financial records.
+
+### 7. Search, receipts, and application access
+
+- Search across financial records including transactions, loans, accounts, students, deposits, investments, and long-term assets.
+- Attach receipts to supported financial resources.
+- Use authenticated sessions and a Progressive Web App foundation for a more app-like experience on supported devices.
+
+## Engineering and data integrity
+
+### Ledger-first design
+
+Financial records are the source of truth. A posted transaction must balance; an invalid correction should not leave its previous effect in place. Voids and repayment cancellations preserve an audit trail through explicit reversal relationships.
+
+### Database-enforced security
+
+The application uses Supabase authentication, PostgreSQL, Row Level Security, and ownership-checked RPC functions. Financial mutations are routed through database functions that validate authentication and related records rather than trusting UI-only checks. The service-role key is intended for server-side use only.
+
+### Testing strategy
+
+The repository includes Vitest unit tests, database integration tests against Supabase RPCs, financial-invariant checks, and Playwright end-to-end tests. Coverage includes transaction reversal, account-balance integrity, loan settlement and repayment cancellation, tuition payment history, cross-module relationships, and authorization boundaries. Full browser verification is maintained separately from unit and integration test claims.
 
 ## Technology
 
-- **Application:** Next.js, React, TypeScript
-- **Database and security:** Supabase, PostgreSQL, server-side authentication, row-level security
-- **Interface and visualization:** Tailwind CSS, Recharts
-- **Quality assurance:** Vitest and database integration testing
+- **Application:** Next.js App Router, React, TypeScript
+- **Database and authentication:** Supabase, PostgreSQL, Supabase SSR Auth
+- **Interface and charts:** Tailwind CSS, shadcn/ui, Recharts
+- **Testing:** Vitest, PostgreSQL/Supabase integration tests, Playwright
+- **Delivery:** GitHub Actions and Vercel workflows
 
 ## Project status
 
-Money Calculator is an evolving personal software project. Its implemented workflows and tests demonstrate the current engineering focus; planned features and reporting capabilities should not be assumed complete without verification against the current repository.
+Money Calculator is an evolving personal project. The repository documents an extensive set of implemented financial modules, but deployment readiness and individual browser flows should be judged from current build and test results rather than assuming every planned feature is complete.
 
-[View the source code on GitHub](https://github.com/barshan94/money-calculator)
+[Explore the source code on GitHub](https://github.com/barshan94/money-calculator)
