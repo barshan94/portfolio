@@ -1,5 +1,6 @@
 ---
 const nav = [
+  { number: "00", label: "ABOUT", mobileLabel: "ABOUT", href: "#about" },
   { number: "01", label: "PROJECTS", mobileLabel: "PROJECTS", href: "#projects" },
   { number: "02", label: "EXPERIENCE", mobileLabel: "EXPERIENCE", href: "#experience" },
   { number: "03", label: "TOOLKIT", mobileLabel: "TOOLKIT", href: "#skills" },
@@ -24,187 +25,143 @@ const nav = [
 </nav>
 
 <style>
-
-/* Stronger, cleaner masthead */
-.system-header {
-  width: min(calc(100% - 3rem), 1280px);
-  margin-top: 0.7rem;
-  padding: 1rem 1.15rem;
-  border: 1px solid rgba(145, 164, 255, 0.17);
-  border-radius: 12px;
-  background:
-    radial-gradient(ellipse at 8% 0%, rgba(98, 120, 255, 0.13), transparent 45%),
-    linear-gradient(120deg, rgba(17, 23, 37, 0.96), rgba(10, 13, 21, 0.94));
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
-}
-.system-dock {
-  border-radius: 12px;
-  border-color: rgba(145, 164, 255, 0.2);
-  background: rgba(12, 16, 25, 0.94);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(16px);
-}
-
-.system-header {
-  position: relative;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: min(100% - 3rem, 1440px);
-  margin: 0 auto;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--line, #292929);
-  font-family: "JetBrains Mono", monospace;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: var(--ink, #f1f1ed);
-  text-decoration: none;
-}
-
-.brand-name {
-  color: var(--ink, #f1f1ed);
-  font-family: "Space Grotesk", "Inter", sans-serif;
-  font-size: clamp(1.3rem, 2.1vw, 1.85rem);
-  font-weight: 700;
-  letter-spacing: -0.055em;
-  line-height: 1;
-}
-.brand-role {
-  margin-left: 0.25rem;
-  padding-left: 1rem;
-  border-left: 1px solid var(--line, #292929);
-  color: var(--ink-2, #929292);
-  font-family: "Inter", sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0;
-  font-weight: 500;
-}
-
-.system-dock {
-  position: fixed;
-  z-index: 110;
-  top: 50%;
-  left: 1rem;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  width: 148px;
-  padding: 0.7rem;
-  border: 1px solid var(--line, #292929);
-  background: var(--surface, #101010);
-  font-family: "JetBrains Mono", monospace;
-}
-
-.dock-link {
-  display: grid;
-  grid-template-columns: 1.6rem 1fr 0.8rem;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.7rem 0.35rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--line, #292929) 65%, transparent);
-  color: var(--ink-2, #929292);
-  text-decoration: none;
-  font-size: 0.59rem;
-  letter-spacing: 0.025em;
-  transition: color 160ms ease, background 160ms ease;
-}
-
-.dock-number { color: #686868; }
-.dock-arrow { opacity: 0; text-align: right; }
-.dock-link:hover,
-.dock-link.active {
-  color: var(--ink, #f1f1ed);
-  background: color-mix(in srgb, var(--accent, #c6ff4d) 7%, transparent);
-}
-.dock-link:hover .dock-number,
-.dock-link.active .dock-number { color: var(--accent, #c6ff4d); }
-.dock-link:hover .dock-arrow,
-.dock-link.active .dock-arrow { opacity: 1; color: var(--accent, #c6ff4d); }
-
-.dock-footer {
-  padding-top: 0.8rem;
-  font-size: 0.53rem;
-}
-
-@media (max-width: 1500px) {
-  .system-dock {
-    position: static;
-    transform: none;
-    width: min(100% - 3rem, 1180px);
-    max-width: 1180px;
-    margin: 0 auto 1rem;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0.35rem;
-    box-shadow: none;
+  .system-header {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(calc(100% - 3rem), 1440px);
+    margin: 0 auto;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid var(--line, #292929);
+    font-family: "JetBrains Mono", monospace;
   }
 
-  .dock-label,
-  .dock-arrow { display: none; }
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: var(--ink, #f1f1ed);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .brand-name {
+    color: var(--ink, #f1f1ed);
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+
+  /* Desktop and tablet: a single full-width horizontal navigation row. */
+  .system-dock {
+    position: relative;
+    z-index: 110;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 0.35rem;
+    width: min(calc(100% - 3rem), 1440px);
+    margin: 0 auto 1.25rem;
+    padding: 0.4rem;
+    border: 1px solid rgba(145, 164, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(12, 16, 25, 0.94);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(16px);
+    font-family: "JetBrains Mono", monospace;
+  }
 
   .dock-link {
     display: flex;
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
+    align-items: center;
     justify-content: center;
-    padding: 0.65rem 0.25rem;
-    border-bottom: 0;
-    font-size: 0.62rem;
+    gap: 0.55rem;
+    padding: 0.8rem 0.75rem;
+    border: 0;
+    border-radius: 8px;
+    color: var(--ink-2, #929292);
+    text-decoration: none;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition: color 160ms ease, background 160ms ease;
   }
-}
 
-@media (max-width: 600px) {
-  .system-header {
-    width: calc(100% - 1.5rem);
-    margin-top: 0.45rem;
-    padding: 0.75rem;
+  .dock-number {
+    color: #686868;
+    font-size: 0.58rem;
   }
-  .brand { flex-wrap: wrap; gap: 0.65rem 0.85rem; }
-  .brand-role { margin-left: 0; padding-left: 0; border-left: 0; font-size: 0.7rem; }
 
-  .system-dock {
-    top: auto;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transform: none;
-    width: auto;
-    max-width: none;
-    margin: 0;
-    box-shadow: none;
-    flex-direction: row;
-    justify-content: space-around;
-    width: auto;
-    padding: 0.35rem 0.2rem;
-    border-right: 0;
-    border-bottom: 0;
-    border-left: 0;
-    background: var(--surface, #101010);
+  .dock-label { display: inline; }
+  .dock-arrow { opacity: 0; margin-left: 0.1rem; }
+  .dock-link:hover,
+  .dock-link.active {
+    color: var(--ink, #f1f1ed);
+    background: color-mix(in srgb, var(--accent, #c6ff4d) 8%, transparent);
   }
-  .dock-link {
-    flex: 1;
-    padding: 0.8rem 0.1rem;
-    border-bottom: 0;
+  .dock-link:hover .dock-number,
+  .dock-link.active .dock-number { color: var(--accent, #c6ff4d); }
+  .dock-link:hover .dock-arrow,
+  .dock-link.active .dock-arrow { opacity: 1; color: var(--accent, #c6ff4d); }
+
+  @media (max-width: 700px) {
+    .system-header {
+      width: calc(100% - 1.5rem);
+      padding: 1rem 0;
+    }
+
+    /* Keep the compact, reachable bottom bar on phones. */
+    .system-dock {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      max-width: none;
+      margin: 0;
+      justify-content: space-around;
+      gap: 0.1rem;
+      padding: 0.35rem 0.2rem;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 0;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.22);
+      background: var(--surface, #101010);
+    }
+
+    .dock-link {
+      flex: 1 1 0;
+      flex-direction: column;
+      gap: 0.12rem;
+      min-width: 0;
+      padding: 0.55rem 0.1rem;
+    }
+
+    .dock-number,
+    .dock-arrow { display: none; }
+
+    .dock-label {
+      display: block;
+      font-size: clamp(0.43rem, 2vw, 0.58rem);
+      letter-spacing: 0.015em;
+      line-height: 1.25;
+    }
+
+    :global(body) { padding-bottom: 58px; }
   }
-  :global(body) { padding-bottom: 54px; }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .dock-link { transition: none; }
-}
-
-@media (max-width: 600px) {
-  .system-dock { justify-content: flex-start; gap: .1rem; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
-  .system-dock::-webkit-scrollbar { display: none; }
-  .dock-link { display: flex; flex: 0 0 auto; flex-direction: column; align-items: center; justify-content: center; gap: .12rem; min-width: 54px; padding: .45rem .3rem; }
-  .dock-number { display: none; }
-  .dock-label { display: block; font-size: .43rem; letter-spacing: .015em; line-height: 1.25; }
-}
+  @media (prefers-reduced-motion: reduce) {
+    .dock-link { transition: none; }
+  }
 </style>
 
 <script>
