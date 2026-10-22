@@ -4,7 +4,7 @@ description: "A personal-finance platform with a double-entry ledger, auditable 
 tags: ["Next.js 16", "TypeScript", "React 19", "Supabase", "PostgreSQL", "Tailwind CSS", "Recharts", "Vitest", "Playwright"]
 repo: "https://github.com/barshan94/money-calculator"
 status: "in-progress"
-featured: true
+featured: false
 accent: "accent"
 ---
 
