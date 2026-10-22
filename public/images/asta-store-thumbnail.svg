@@ -22,10 +22,10 @@
   <rect x="72" y="389" width="148" height="38" rx="19" fill="#493326" stroke="#8f633e"/><text x="146" y="413" fill="#f4d8b7" text-anchor="middle">TYPESCRIPT</text>
  </g>
  <g fill="#d7c3ac" font-size="19">
-  <circle cx="82" cy="484" r="4" fill="#d9a46c"/><text x="100" y="491">Product catalog & details</text>
-  <circle cx="82" cy="526" r="4" fill="#d9a46c"/><text x="100" y="533">Cart & checkout flow</text>
+  <circle cx="82" cy="484" r="4" fill="#d9a46c"/><text x="100" y="491">Product catalog &amp; details</text>
+  <circle cx="82" cy="526" r="4" fill="#d9a46c"/><text x="100" y="533">Cart &amp; checkout flow</text>
   <circle cx="82" cy="568" r="4" fill="#d9a46c"/><text x="100" y="575">Admin product management</text>
-  <circle cx="82" cy="610" r="4" fill="#d9a46c"/><text x="100" y="617">Authentication & data storage</text>
+  <circle cx="82" cy="610" r="4" fill="#d9a46c"/><text x="100" y="617">Authentication &amp; data storage</text>
  </g>
  <g transform="translate(88 676)">
   <rect width="335" height="132" rx="18" fill="#211811" stroke="#65442e"/>
