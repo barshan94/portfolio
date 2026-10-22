@@ -23,9 +23,11 @@
     </nav>
 
     <div class="footer-meta">
-      <span>&copy; <span id="year"></span> Barshan Ghosh</span>
-      <span class="footer-dot">&middot;</span>
-      <span>Built with Astro</span>
+      <div class="footer-meta-copy">
+        <span>&copy; <span id="year"></span> Barshan Ghosh</span>
+        <span class="footer-dot" aria-hidden="true">&middot;</span>
+      </div>
+      <span class="footer-built">Built with Astro</span>
     </div>
   </div>
 </footer>
@@ -67,12 +69,24 @@
 .footer-nav { display: flex; gap: 0.8rem 1.1rem; flex-wrap: wrap; justify-content: flex-end; }
 .footer-nav a { font-size: var(--step-1); color: var(--ink-muted); text-decoration: none; transition: color 0.15s ease; }
 .footer-nav a:hover, .footer-nav a:focus-visible { color: #b7c3ff; }
-.footer-meta { width: 100%; padding-top: 1.2rem; border-top: 1px solid rgba(145, 164, 255, 0.1); }
+.footer-meta {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(145, 164, 255, 0.1);
+}
+.footer-meta-copy { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+.footer-built { margin-left: auto; text-align: right; white-space: nowrap; }
 @media (max-width: 720px) {
   .footer-inner { align-items: flex-start; gap: 1.4rem; }
   .footer-nav { justify-content: flex-start; }
+  .footer-meta { align-items: flex-start; }
+  .footer-meta-copy { flex-wrap: wrap; }
 }
-.footer-meta { display: flex; gap: 0.5rem; align-items: center; font-size: var(--step-1); color: var(--ink-faint); }
+.footer-meta { font-size: var(--step-1); color: var(--ink-faint); }
 .footer-dot { color: var(--line-strong); }
 </style>
 
