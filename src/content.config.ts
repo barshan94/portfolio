@@ -27,6 +27,7 @@ const cvSchema = z.object({
   })),
   experience: z.array(z.object({
     type: z.string().min(1),
+    employmentType: z.string().optional(),
     role: z.string().min(1),
     org: z.string().min(1),
     location: z.string().optional(),
