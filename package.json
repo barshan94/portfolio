@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node copy-academy-animation.mjs",
+    "build": "astro build && node copy-academy-animation.mjs && node scripts/validate-portfolio.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "validate:portfolio": "node scripts/validate-portfolio.mjs"
   },
   "dependencies": {
     "astro": "^7.3.8"
