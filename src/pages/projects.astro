@@ -1,0 +1,134 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { githubRepositories, repositoryCategories } from "../data/github-repositories";
+
+const groups = repositoryCategories.slice(1).map((category) => ({
+  category,
+  repositories: githubRepositories.filter((repository) => repository.category === category),
+}));
+---
+<Layout
+  title="All GitHub Projects — Barshan Ghosh"
+  description="Browse Barshan Ghosh's complete categorized GitHub repository directory, from software projects and academic experiments to digital marketing work."
+>
+  <main class="archive-shell">
+    <a class="back-link" href="/">← Back to portfolio</a>
+    <header class="archive-header">
+      <p class="eyebrow">REPOSITORY DIRECTORY / {githubRepositories.length} REPOSITORIES</p>
+      <h1>Every project.<br /><span>One searchable archive.</span></h1>
+      <p>Featured projects stay on the homepage. This directory keeps the wider body of work discoverable without giving every experiment the same visual weight.</p>
+      <div class="archive-stats">
+        <span><strong>{githubRepositories.length}</strong> repositories indexed</span>
+        <span><strong>{groups.length}</strong> categories</span>
+        <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">Open GitHub profile ↗</a>
+      </div>
+    </header>
+
+    <section class="archive-tools" aria-label="Repository filters">
+      <label for="repo-search">Search repositories</label>
+      <input id="repo-search" type="search" placeholder="Search name, category, or description…" autocomplete="off" />
+      <div class="category-filters" role="group" aria-label="Filter by category">
+        {repositoryCategories.map((category, index) => (
+          <button type="button" class:list={["filter-button", { active: index === 0 }]} data-category={category} aria-pressed={index === 0 ? "true" : "false"}>{category}</button>
+        ))}
+      </div>
+      <p class="result-count" id="result-count" aria-live="polite">{githubRepositories.length} repositories shown</p>
+    </section>
+
+    <div class="repository-groups">
+      {groups.map((group) => (
+        <section class="repository-group" data-group={group.category} aria-label={group.category}>
+          <div class="group-heading"><h2>{group.category}</h2><span>{group.repositories.length} repositories</span></div>
+          <div class="repository-grid">
+            {group.repositories.map((repository) => (
+              <article class="repository-card" data-category={repository.category} data-search={`${repository.name} ${repository.category} ${repository.description}`.toLowerCase()}>
+                <div class="repo-card-top"><span class="repo-mark" aria-hidden="true">↗</span><span class="repo-category">{repository.category}</span></div>
+                <h3>{repository.name}</h3>
+                <p>{repository.description}</p>
+                <a href={`https://github.com/barshan94/${repository.name}`} target="_blank" rel="noopener noreferrer" aria-label={`Open ${repository.name} on GitHub`}>View repository <span aria-hidden="true">↗</span></a>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+    <p class="archive-footnote">Repository names are listed as they appear on GitHub. Older repositories may represent coursework, experiments, or archived learning rather than production applications.</p>
+  </main>
+</Layout>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>("#repo-search");
+  const cards = [...document.querySelectorAll<HTMLElement>(".repository-card")];
+  const groups = [...document.querySelectorAll<HTMLElement>(".repository-group")];
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>(".filter-button")];
+  const count = document.querySelector<HTMLElement>("#result-count");
+  let activeCategory = "All repositories";
+
+  const updateResults = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    let visible = 0;
+    cards.forEach((card) => {
+      const matchesCategory = activeCategory === "All repositories" || card.dataset.category === activeCategory;
+      const matchesQuery = (card.dataset.search || "").includes(query);
+      const show = matchesCategory && matchesQuery;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    groups.forEach((group) => {
+      group.hidden = !group.querySelector(".repository-card:not([hidden])");
+    });
+    if (count) count.textContent = `${visible} of ${cards.length} repositories shown`;
+  };
+
+  search?.addEventListener("input", updateResults);
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    activeCategory = button.dataset.category || "All repositories";
+    buttons.forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    updateResults();
+  }));
+</script>
+
+<style>
+  :global(body) { background: #080a0d; }
+  .archive-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 30px 0 90px; color: #f4f4f5; }
+  .back-link { display: inline-block; margin: 8px 0 44px; color: #a1a1aa; text-decoration: none; font-size: .86rem; }
+  .back-link:hover { color: #34d399; }
+  .archive-header { max-width: 780px; padding-bottom: 34px; }
+  .eyebrow { color: #a1a1aa; font: .72rem/1.6 "JetBrains Mono", monospace; letter-spacing: .14em; }
+  h1 { margin: 18px 0; font-size: clamp(2.6rem, 7vw, 5.5rem); line-height: .99; letter-spacing: -.065em; font-weight: 560; }
+  h1 span { color: #34d399; }
+  .archive-header > p:not(.eyebrow) { max-width: 660px; color: #b4b4bc; line-height: 1.8; }
+  .archive-stats { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 26px; padding-top: 20px; border-top: 1px solid #27272a; color: #a1a1aa; font-size: .82rem; }
+  .archive-stats strong { color: #f4f4f5; }
+  .archive-stats a { color: #a7f3d0; text-decoration: none; }
+  .archive-tools { position: sticky; top: 8px; z-index: 4; padding: 18px; margin: 16px 0 38px; border: 1px solid #303238; border-radius: 12px; background: rgb(10 12 15 / 94%); backdrop-filter: blur(12px); }
+  .archive-tools label { display: block; margin-bottom: 8px; color: #d4d4d8; font-size: .8rem; }
+  .archive-tools input { width: 100%; padding: 12px 13px; border: 1px solid #3f3f46; border-radius: 8px; background: #080a0d; color: #f4f4f5; font: inherit; font-size: .9rem; }
+  .archive-tools input:focus-visible, .filter-button:focus-visible, a:focus-visible { outline: 2px solid #34d399; outline-offset: 3px; }
+  .category-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .filter-button { padding: 8px 10px; border: 1px solid #36383d; border-radius: 999px; background: transparent; color: #c4c4cc; font: inherit; font-size: .75rem; cursor: pointer; }
+  .filter-button:hover, .filter-button.active { border-color: #34d39980; background: #103126; color: #a7f3d0; }
+  .result-count { margin: 12px 0 0; color: #a1a1aa; font-size: .76rem; }
+  .repository-group { margin: 0 0 42px; }
+  .group-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #27272a; }
+  .group-heading h2 { margin: 0; font-size: 1.25rem; font-weight: 560; }
+  .group-heading span { color: #a1a1aa; font-size: .76rem; white-space: nowrap; }
+  .repository-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .repository-card { min-width: 0; display: flex; flex-direction: column; padding: 16px; border: 1px solid #292c31; border-radius: 10px; background: linear-gradient(145deg, #0d1014, #0a0c0f); }
+  .repository-card[hidden], .repository-group[hidden] { display: none; }
+  .repo-card-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .repo-mark { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid #34d39940; border-radius: 7px; color: #a7f3d0; }
+  .repo-category { color: #92939b; font-size: .64rem; text-align: right; }
+  .repository-card h3 { overflow-wrap: anywhere; margin: 16px 0 7px; font-size: .94rem; font-weight: 600; }
+  .repository-card p { flex: 1; margin: 0 0 18px; color: #a1a1aa; font-size: .8rem; line-height: 1.65; }
+  .repository-card a { align-self: flex-start; color: #a7f3d0; text-decoration: none; font-size: .78rem; }
+  .repository-card a:hover { text-decoration: underline; }
+  .archive-footnote { padding-top: 18px; border-top: 1px solid #27272a; color: #92939b; font-size: .78rem; line-height: 1.7; }
+  @media (max-width: 850px) { .repository-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .archive-shell { width: calc(100% - 30px); } .repository-grid { grid-template-columns: 1fr; } .archive-tools { position: static; } .group-heading h2 { font-size: 1.05rem; } }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
