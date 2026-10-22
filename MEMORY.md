@@ -19,7 +19,7 @@ Last updated: 2026-10-22 (interactive gallery playback and demo-to-repository al
   - Digital Growth & Marketing is an overview of 12 separate repositories/workflows, not one deployed software platform.
   - Digital Coaching Management animation was narrowed to the two automations in the current `Code.js`: add today's date to the Attendance sheet and the current month to the Payment sheet when absent. Student registry/reporting/communication scenes no longer render as if implemented.
 - Build routing: the four root-level HTML animations (Asta, Mount Royal, 999, Digital Growth) are copied to `dist/` by `copy-academy-animation.mjs`; Money Calculator, Student Performance, and Coaching animations are served from `public/`.
-- Verification still required after these commits: confirm the production build/deployment and inspect the live page. Do not claim a successful deployment until Vercel status and the live site confirm it.
+- Verification: the latest commit's Vercel status check reports success. I could not independently inspect the live page through the available browser, so visual confirmation that the deployed page reflects the latest commit remains pending.
 
 ## Previous portfolio audit (2026-10-16)
 
