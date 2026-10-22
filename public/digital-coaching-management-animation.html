@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Digital Coaching Management System</title>
+<title>Coaching Spreadsheet Automation — Google Sheets &amp; Apps Script</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#07080a}
@@ -64,6 +64,8 @@ canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
 }
 #prog{width:clamp(70px,13vw,160px);height:1px;margin-top:5px;background:rgba(77,212,216,.1)}
 #progF{height:100%;width:0%;background:rgba(77,212,216,.4)}
+#demo-note{position:fixed;left:50%;bottom:38px;transform:translateX(-50%);z-index:45;max-width:calc(100vw - 24px);color:rgba(140,190,195,.62);font:9px/1.5 system-ui,sans-serif;letter-spacing:.04em;text-align:center;pointer-events:none;white-space:normal}
+@media(max-width:600px){#demo-note{bottom:38px;font-size:8px}}
 </style>
 </head>
 <body>
@@ -81,6 +83,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
 </div>
 <button id="skip">Skip ↗</button>
 <div id="hud"><span id="phL"></span><div id="prog"><div id="progF"></div></div></div>
+<div id="demo-note">Illustrative sample rows · Apps Script only adds missing attendance-date and payment-month headers</div>
 <script>
 var c=document.getElementById('c');
 var ctx=c.getContext('2d');
@@ -114,7 +117,6 @@ var CYAN='#4dd4d8',TEAL='#2b9ea0',BLUE='#3f8bea';
 var AMBER='#d9a84a',GREEN='#4dcb8a',RED='#e05555';
 var PURPLE='#a78bfa',WHITE='#e2eef2',DIM='rgba(176,206,214,0.42)';
 var GRID1='rgba(46,66,76,0.13)',GRID2='rgba(58,84,96,0.22)';
-var WHATSAPP='#25d366';
 
 /* ── Timeline ───────────────────────── */
 var PD=[2.4,3.6,3.2,3.4,3.4,3.0,3.6,4.2,3.5];
@@ -149,7 +151,6 @@ var STUDENTS=[
   {id:'CS-007',name:'Tanmoy Ghosh',cls:'VI',sub:'Math',ph:'+880-XXXX'},
   {id:'CS-008',name:'Nusrat Jahan',cls:'IX',sub:'Chemistry',ph:'+880-XXXX'}
 ];
-var REG_COLS=['ID','STUDENT','CLASS','SUBJECT','GUARDIAN'];
 
 var ATT_DATES=['12-Jun','13-Jun','14-Jun','15-Jun','16-Jun'];
 var ATT_DATA=[
@@ -280,52 +281,6 @@ function drawPanel(ox,oy,pw,ph2,label,labelCol,alpha){
   ctx.globalAlpha=alpha*.5;ctx.font='600 '+(7*S)+'px system-ui,sans-serif';
   ctx.fillStyle=labelCol;ctx.textAlign='left';
   ctx.fillText(label,ox,oy-6*S);
-}
-
-/* ═══════ STUDENT REGISTRY (Phase 1) ═══════ */
-function drRegistry(ph){
-  if(ph.i<1)return;
-  var ap=ph.i===1?eio(cl(ph.p*1.4,0,1)):1;
-  var fd=ph.i>=3?cl(1-(ph.p)*.8,0,1):1;
-  if(ph.i>=4)fd=cl(1-1,0,1);
-  var v=ap*fd;if(v<.01)return;
-
-  var ox=W*(mob?.03:.08),oy=H*(mob?.12:.14);
-  var cw=(mob?38:58)*S,rh=(mob?13:17)*S;
-  var numC=mob?3:5,numR=mob?5:STUDENTS.length;
-  var pw=numC*cw;
-
-  drawPanel(ox,oy,pw,rh*(numR+1.2),'STUDENT REGISTRY',CYAN,v);
-
-  /* header */
-  for(var ci=0;ci<numC;ci++){
-    var rv=cl(ap*(numC+1)-ci,0,1);
-    ctx.globalAlpha=v*.45*rv;ctx.fillStyle=CYAN;
-    ctx.font='600 '+(6.5*S)+'px system-ui,sans-serif';ctx.textAlign='center';
-    ctx.fillText(REG_COLS[ci],ox+ci*cw+cw*.5,oy+4*S);
-  }
-  ctx.globalAlpha=v*.25;ctx.strokeStyle=ha(CYAN,.35);ctx.lineWidth=.4;
-  ctx.beginPath();ctx.moveTo(ox,oy+rh*.6);ctx.lineTo(ox+pw*cl(ap*1.5,0,1),oy+rh*.6);ctx.stroke();
-
-  /* rows */
-  for(var ri=0;ri<numR;ri++){
-    var s=STUDENTS[ri];
-    var ry=oy+rh*(ri+1.15);
-    var rr=cl(ap*(numR+3)-ri*1.3,0,1);
-    if(rr<.01)continue;
-    var vals=[s.id,s.name,s.cls,s.sub,s.ph];
-    for(var cj=0;cj<numC;cj++){
-      var cr=cl(rr*numC-cj*.7,0,1);if(cr<.01)continue;
-      ctx.globalAlpha=v*.5*eo(cr);
-      ctx.fillStyle=cj===0?TEAL:DIM;
-      ctx.font=(cj===1?'500':'400')+' '+(6*S)+'px system-ui,sans-serif';
-      ctx.textAlign='center';
-      ctx.fillText(vals[cj],ox+cj*cw+cw*.5,ry);
-    }
-    ctx.globalAlpha=v*.04*rr;ctx.strokeStyle=TEAL;ctx.lineWidth=.25;
-    ctx.beginPath();ctx.moveTo(ox,ry+rh*.4);ctx.lineTo(ox+pw,ry+rh*.4);ctx.stroke();
-  }
-  ctx.globalAlpha=1;
 }
 
 /* ═══════ ATTENDANCE SHEET (Phase 2) ═══════ */
@@ -465,226 +420,6 @@ function drPayments(ph){
     ctx.globalAlpha=v*.035*rr;ctx.strokeStyle=AMBER;ctx.lineWidth=.25;
     ctx.beginPath();ctx.moveTo(ox,ry+rh*.4);ctx.lineTo(ox+pw,ry+rh*.4);ctx.stroke();
   }
-  ctx.globalAlpha=1;
-}
-
-/* ═══════ REPORT CARDS (Phase 4) ═══════ */
-function drReports(ph){
-  if(ph.i<4)return;
-  var ap=ph.i===4?eio(cl(ph.p*1.3,0,1)):1;
-  var fd=ph.i>=6?cl(1-ph.p*1.2,0,1):1;
-  var v=ap*fd;if(v<.01)return;
-
-  var cards=[
-    {name:'Aarav Sharma',cls:'VIII',att:'87%',pay:'5/6',grade:'B+',col:CYAN,dx:0},
-    {name:'Fatima Begum',cls:'VI',att:'93%',pay:'4/6',grade:'A',col:GREEN,dx:1},
-    {name:'Sneha Das',cls:'VII',att:'96%',pay:'6/6',grade:'A+',col:PURPLE,dx:2}
-  ];
-  var numCards=mob?2:3;
-  var cw=(mob?100:145)*S,ch=(mob?90:110)*S,gap=16*S;
-  var totalW=numCards*(cw+gap)-gap;
-  var startX=W*.5-totalW*.5;
-  var cy=H*(mob?.55:.52);
-
-  for(var i=0;i<numCards;i++){
-    var cd=cards[i];
-    var cr=cl(ap*(numCards+2)-i*1.2,0,1);if(cr<.01)continue;
-    var cx2=startX+i*(cw+gap);
-    var vis=v*eo(cr);
-    var yOff=(1-eo(cr))*15*S;
-
-    /* card bg */
-    ctx.globalAlpha=vis*.1;ctx.fillStyle=cd.col;
-    ctx.beginPath();ctx.roundRect(cx2,cy+yOff,cw,ch,5*S);ctx.fill();
-    ctx.globalAlpha=vis*.3;ctx.strokeStyle=ha(cd.col,.5);ctx.lineWidth=.5;
-    ctx.beginPath();ctx.roundRect(cx2,cy+yOff,cw,ch,5*S);ctx.stroke();
-
-    /* card label */
-    ctx.globalAlpha=vis*.35;ctx.font='600 '+(5.5*S)+'px system-ui,sans-serif';
-    ctx.fillStyle=cd.col;ctx.textAlign='left';
-    ctx.fillText('PROGRESS REPORT',cx2+8*S,cy+yOff+12*S);
-
-    /* student name */
-    ctx.globalAlpha=vis*.65;ctx.font='600 '+(8*S)+'px system-ui,sans-serif';
-    ctx.fillStyle=WHITE;
-    ctx.fillText(cd.name,cx2+8*S,cy+yOff+26*S);
-
-    /* class */
-    ctx.globalAlpha=vis*.35;ctx.font='400 '+(6*S)+'px system-ui,sans-serif';
-    ctx.fillStyle=DIM;
-    ctx.fillText('Class '+cd.cls,cx2+8*S,cy+yOff+37*S);
-
-    /* metrics row */
-    var my=cy+yOff+52*S;
-    var metrics=[
-      {lb:'ATT',val:cd.att,c:GREEN},
-      {lb:'PAY',val:cd.pay,c:AMBER},
-      {lb:'GRADE',val:cd.grade,c:cd.col}
-    ];
-    var mx=cx2+8*S;
-    for(var mi=0;mi<3;mi++){
-      var m=metrics[mi];
-      ctx.globalAlpha=vis*.3;ctx.font='500 '+(5*S)+'px system-ui,sans-serif';
-      ctx.fillStyle=DIM;ctx.textAlign='left';
-      ctx.fillText(m.lb,mx,my);
-      ctx.globalAlpha=vis*.7;ctx.font='700 '+(9*S)+'px system-ui,sans-serif';
-      ctx.fillStyle=m.c;
-      ctx.fillText(m.val,mx,my+12*S);
-      mx+=(mob?28:40)*S;
-    }
-
-    /* bar indicator */
-    var barY=cy+yOff+ch-14*S;
-    var barW=cw-16*S;
-    var pct=parseInt(cd.att)/100;
-    ctx.globalAlpha=vis*.1;ctx.fillStyle=DIM;
-    ctx.beginPath();ctx.roundRect(cx2+8*S,barY,barW,3*S,1.5*S);ctx.fill();
-    ctx.globalAlpha=vis*.5;ctx.fillStyle=cd.col;
-    ctx.beginPath();ctx.roundRect(cx2+8*S,barY,barW*pct*cl(ap*1.5,0,1),3*S,1.5*S);ctx.fill();
-  }
-  ctx.globalAlpha=1;
-}
-
-/* ═══════ COMMUNICATION CONCEPT (Phase 5) ═══════ */
-function drComms(ph){
-  if(ph.i<5)return;
-  var ap=ph.i===5?eio(cl(ph.p*1.5,0,1)):1;
-  var fd=ph.i>=6?cl(1-(ph.p)*.9,0,1):1;
-  var v=ap*fd;if(v<.01)return;
-
-  var cx=W*(mob?.5:.72),cy=H*(mob?.3:.35);
-  var bw=(mob?130:180)*S,bh=(mob?75:95)*S;
-
-  /* message bubble */
-  ctx.globalAlpha=v*.1;ctx.fillStyle=WHATSAPP;
-  ctx.beginPath();ctx.roundRect(cx-bw*.5,cy-bh*.5,bw,bh,6*S);ctx.fill();
-  ctx.globalAlpha=v*.35;ctx.strokeStyle=ha(WHATSAPP,.5);ctx.lineWidth=.6;
-  ctx.beginPath();ctx.roundRect(cx-bw*.5,cy-bh*.5,bw,bh,6*S);ctx.stroke();
-
-  /* WhatsApp icon area */
-  ctx.globalAlpha=v*.55;ctx.fillStyle=WHATSAPP;
-  ctx.beginPath();ctx.arc(cx-bw*.5+16*S,cy-bh*.5+16*S,8*S,0,6.283);ctx.fill();
-  ctx.globalAlpha=v*.8;ctx.font='700 '+(8*S)+'px system-ui,sans-serif';
-  ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText('W',cx-bw*.5+16*S,cy-bh*.5+16.5*S);
-
-  /* header */
-  ctx.globalAlpha=v*.5;ctx.font='600 '+(6.5*S)+'px system-ui,sans-serif';
-  ctx.fillStyle=WHATSAPP;ctx.textAlign='left';ctx.textBaseline='alphabetic';
-  ctx.fillText('ATTENDANCE NOTIFICATION',cx-bw*.5+30*S,cy-bh*.5+18*S);
-
-  /* message content */
-  var lines=[
-    'Dear Guardian,',
-    'Ravi Patel was absent today (14-Jun).',
-    'Please contact the coaching center.',
-    '— Digital Coaching System'
-  ];
-  ctx.font='400 '+(5.8*S)+'px system-ui,sans-serif';
-  for(var li=0;li<lines.length;li++){
-    var lr2=cl(ap*(lines.length+2)-li*1.5,0,1);
-    ctx.globalAlpha=v*.4*eo(lr2);
-    ctx.fillStyle=li===0||li===3?TEAL:DIM;
-    ctx.fillText(lines[li],cx-bw*.5+10*S,cy-bh*.5+34*S+li*11*S);
-  }
-
-  /* link indicator */
-  ctx.globalAlpha=v*.3;ctx.font='500 '+(5*S)+'px system-ui,sans-serif';
-  ctx.fillStyle=WHATSAPP;ctx.textAlign='center';
-  ctx.fillText('WHATSAPP MESSAGE LINK — ILLUSTRATIVE CONCEPT',cx,cy+bh*.5+12*S);
-
-  /* connecting line from absent cell */
-  if(ap>.3){
-    var lk=cl((ap-.3)*1.5,0,1);
-    ctx.globalAlpha=v*.15*lk;ctx.strokeStyle=ha(WHATSAPP,.5);ctx.lineWidth=.5;
-    ctx.setLineDash([3*S,4*S]);
-    ctx.beginPath();ctx.moveTo(cx-bw*.6,cy);ctx.lineTo(cx-bw*.5,cy);ctx.stroke();
-    ctx.setLineDash([]);
-  }
-  ctx.globalAlpha=1;
-}
-
-/* ═══════ OVERVIEW NODES (Phase 6) ═══════ */
-var OV_NODES=[
-  {lb:'STUDENTS',val:'32',col:CYAN,rx:.2,ry:.35},
-  {lb:'ATTENDANCE',val:'91%',col:GREEN,rx:.4,ry:.28},
-  {lb:'PAYMENTS',val:'86%',col:AMBER,rx:.6,ry:.35},
-  {lb:'REPORTS',val:'24',col:PURPLE,rx:.8,ry:.28},
-  {lb:'CLASSES',val:'4',col:BLUE,rx:.3,ry:.55},
-  {lb:'SUBJECTS',val:'6',col:TEAL,rx:.5,ry:.62},
-  {lb:'ALERTS',val:'3',col:RED,rx:.7,ry:.55}
-];
-var OV_EDGES=[[0,1],[1,2],[2,3],[0,4],[1,5],[2,6],[3,6],[4,5],[5,6],[0,2],[1,3]];
-var ovN=[];
-
-function mkOvNodes(){
-  ovN=[];sd=88;
-  for(var i=0;i<OV_NODES.length;i++){
-    var o=OV_NODES[i];
-    ovN.push({hx:W*o.rx,hy:H*o.ry,x:W*.5,y:H*.45,a:0,
-      r:(mob?20:30)*S,ph:rn()*6.283,o:o});
-  }
-}
-
-function drOverview(ph){
-  if(ph.i<6)return;
-  var ap=ph.i===6?eio(cl(ph.p*1.3,0,1)):1;
-  var fd=ph.i>=7?cl(1-ph.p*.8,0,1):1;
-  var v=ap*fd;if(v<.01)return;
-
-  /* update positions */
-  for(var i=0;i<ovN.length;i++){
-    var nd=ovN[i];
-    var em=cl(ap*1.5-.08*i,0,1);
-    nd.a=eo(cl(em*2.5,0,1));
-    if(ph.i>=7)nd.a=cl(nd.a*(1-ph.p*.85),0,1);
-    nd.x=lr(W*.5,nd.hx,nd.a)+Math.sin(t*.3+nd.ph)*2*S;
-    nd.y=lr(H*.45,nd.hy,nd.a)+Math.cos(t*.25+nd.ph)*1.5*S;
-  }
-
-  /* edges */
-  ctx.lineWidth=.35;
-  for(var ei=0;ei<OV_EDGES.length;ei++){
-    var a=ovN[OV_EDGES[ei][0]],b=ovN[OV_EDGES[ei][1]];
-    if(a.a<.03||b.a<.03)continue;
-    var ca=cl(ap*a.a*b.a*.4,0,.16)*fd;if(ca<.003)continue;
-    ctx.globalAlpha=ca;ctx.strokeStyle=ha(TEAL,.4);
-    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-    if(ph.i<8){
-      var tp=(t*.22+ei*.09)%1;
-      ctx.globalAlpha=ca*2;ctx.fillStyle=CYAN;
-      ctx.beginPath();ctx.arc(lr(a.x,b.x,tp),lr(a.y,b.y,tp),1*S,0,6.283);ctx.fill();
-    }
-  }
-
-  /* nodes */
-  for(var ni=0;ni<ovN.length;ni++){
-    var nd2=ovN[ni];if(nd2.a<.02)continue;
-    var o2=nd2.o;
-    ctx.globalAlpha=nd2.a*.3*fd;ctx.strokeStyle=o2.col;ctx.lineWidth=.6;
-    ctx.beginPath();ctx.arc(nd2.x,nd2.y,nd2.r,0,6.283);ctx.stroke();
-    ctx.globalAlpha=nd2.a*.1*fd;
-    ctx.beginPath();ctx.arc(nd2.x,nd2.y,nd2.r*.5,0,6.283);ctx.stroke();
-    ctx.globalAlpha=nd2.a*.05*fd;
-    var ng=ctx.createRadialGradient(nd2.x,nd2.y,0,nd2.x,nd2.y,nd2.r*1.8);
-    ng.addColorStop(0,o2.col);ng.addColorStop(1,ha(o2.col,0));
-    ctx.fillStyle=ng;ctx.beginPath();ctx.arc(nd2.x,nd2.y,nd2.r*1.8,0,6.283);ctx.fill();
-    ctx.globalAlpha=nd2.a*.75*fd;ctx.fillStyle=o2.col;
-    ctx.beginPath();ctx.arc(nd2.x,nd2.y,1.8*S,0,6.283);ctx.fill();
-    ctx.globalAlpha=nd2.a*.7*fd;
-    ctx.font='700 '+(9*S)+'px system-ui,sans-serif';
-    ctx.fillStyle=o2.col;ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(o2.val,nd2.x,nd2.y);
-    ctx.globalAlpha=nd2.a*.4*fd;
-    ctx.font='500 '+(6*S)+'px system-ui,sans-serif';
-    ctx.fillStyle=DIM;ctx.textBaseline='alphabetic';
-    ctx.fillText(o2.lb,nd2.x,nd2.y+nd2.r+9*S);
-  }
-
-  /* overview label */
-  ctx.globalAlpha=v*.35*fd;ctx.font='500 '+(8*S)+'px system-ui,sans-serif';
-  ctx.fillStyle=TEAL;ctx.textAlign='center';
-  ctx.fillText('SYSTEM OVERVIEW — ILLUSTRATIVE DEMONSTRATION',W*.5,H*.82);
   ctx.globalAlpha=1;
 }
 
