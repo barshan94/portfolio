@@ -34,6 +34,22 @@ for (const animation of animationPaths) {
   }
 }
 
+const homepage = await readFile(resolve(dist, "index.html"), "utf8");
+if (!homepage.includes('id="writing"')) fail("homepage writing navigation target is missing");
+if (!homepage.includes("/projects/")) fail("homepage link to complete project archive is missing");
+
+const writingDirectory = resolve(root, "src/content/writing");
+const { readdir } = await import("node:fs/promises");
+const writingFiles = (await readdir(writingDirectory)).filter((file) => file.endsWith(".md"));
+for (const file of writingFiles) {
+  const slug = file.replace(/\\.md$/, "");
+  try {
+    await access(resolve(dist, "writing", slug, "index.html"));
+  } catch {
+    fail(`writing detail page is missing from dist: ${slug}`);
+  }
+}
+
 for (const route of ["index.html", "walkthroughs/index.html", "projects/index.html", "sitemap.xml"]) {
   try {
     await access(resolve(dist, route));
