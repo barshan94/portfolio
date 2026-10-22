@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+
+const writing = await getCollection("writing");
+const projectNumber = (index: number) => String(index + 1).padStart(2, "0");
+const getWritingLink = (entry: (typeof writing)[number]) => `/writing/${entry.id}/`;
+---
+
+<section class="writing section-wrap section-block" id="writing" aria-labelledby="writing-title">
+  <div class="section-heading" data-reveal>
+    <div>
+      <p class="section-kicker">05 — WRITING &amp; RESEARCH</p>
+      <h2 id="writing-title">Ideas worth <span class="accent-text">documenting.</span></h2>
+    </div>
+    <p class="section-sub">Research, articles, and project notes behind the work.</p>
+  </div>
+  <div class="writing-entry-grid">
+    {writing.map((entry, index) => (
+      <article class="writing-entry" data-reveal>
+        <p class="writing-entry-type">{entry.data.type} / {projectNumber(index)}</p>
+        <h3>{entry.data.title}</h3>
+        <p>{entry.data.excerpt}</p>
+        <div class="writing-entry-links">
+          <a href={getWritingLink(entry)}>Read more <span aria-hidden="true">↗</span></a>
+          {entry.data.link && <a href={entry.data.link} target="_blank" rel="noopener noreferrer">Source ↗</a>}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .writing-entry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .writing-entry { display: flex; flex-direction: column; min-width: 0; padding: 22px; border: 1px solid var(--line, #292929); border-radius: 12px; background: var(--surface, #101010); }
+  .writing-entry-type { margin: 0 0 10px; color: var(--accent, #c6ff4d); font: .68rem/1.5 "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .writing-entry h3 { margin: 0 0 9px; font-size: 1.1rem; }
+  .writing-entry > p:not(.writing-entry-type) { flex: 1; color: var(--ink-2, #b4b4bc); font-size: .88rem; line-height: 1.7; }
+  .writing-entry-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+  .writing-entry a { color: var(--accent, #c6ff4d); font-size: .82rem; text-decoration: none; }
+  .writing-entry a:hover { text-decoration: underline; }
+  @media (max-width: 650px) { .writing-entry-grid { grid-template-columns: 1fr; } }
+</style>
