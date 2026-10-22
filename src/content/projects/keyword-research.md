@@ -1,6 +1,6 @@
 ---
 title: "Keyword Research & SEO Tools"
-description: "Series of digital marketing projects including Amazon affiliate keyword research, YouTube SEO optimization, Google Business Profile management, and content writing strategies."
+description: "Digital marketing work spanning Amazon affiliate keyword research, YouTube SEO, Google Business Profile, content, WordPress, campaigns, and automation. The linked animation is a portfolio-level overview of separate projects, not one deployed platform."
 tags: ["SEO", "Content", "Analytics", "WordPress"]
 repo: "https://github.com/barshan94/KeywordResearch"
 status: "completed"
@@ -8,7 +8,7 @@ featured: false
 accent: "default"
 ---
 
-A collection of digital marketing projects built through self-directed learning and freelance work (2020–present).
+A collection of digital marketing projects built through self-directed learning and freelance work (2020–present). The portfolio animation is a high-level overview of related work across separate repositories; this repository remains the source for the keyword-research work linked here.
 
 **Projects included:**
 
