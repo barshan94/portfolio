@@ -147,6 +147,19 @@ const getExperienceDate = (experience: any) =>
             Get in touch <span aria-hidden="true">↗</span>
           </a>
         </div>
+        <nav class="hero-profile-links" aria-label="Contact and professional profiles">
+          {contact?.email && <a href={`mailto:${contact.email}`}>Email <span aria-hidden="true">↗</span></a>}
+          {contact?.github && (
+            <a href={contact.github.startsWith("http") ? contact.github : `https://github.com/${contact.github.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          {contact?.linkedin && (
+            <a href={contact.linkedin.startsWith("http") ? contact.linkedin : `https://www.linkedin.com/in/${contact.linkedin.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </nav>
       </div>
     </section>
 
@@ -379,39 +392,33 @@ const getExperienceDate = (experience: any) =>
           </p>
         </div>
 
-        <div class="timeline">
+        <div class="experience-grid">
           {cv.experience.map((experience, index) => (
-            <article class="timeline-item" data-reveal>
-              <div class="timeline-marker">
-                <span>{projectNumber(index)}</span>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-meta">
-                  {getExperienceDate(experience) && (
-                    <span>{getExperienceDate(experience)}</span>
-                  )}
-                  {experience.location && (
-                    <span>{experience.location}</span>
-                  )}
-                  {experience.employmentType && (
-                    <span class="timeline-employment">{experience.employmentType}</span>
-                  )}
-                </div>
-                <h3>{experience.role || experience.title}</h3>
-                <p class="timeline-company">
-                  {experience.org || experience.company || experience.organization}
-                </p>
-                {experience.description && (
-                  <p class="timeline-description">{experience.description}</p>
-                )}
-                {(experience.bullets?.length || experience.highlights?.length) && (
-                  <ul class="timeline-highlights">
-                    {(experience.bullets || experience.highlights || []).map((highlight) => (
-                      <li>{highlight}</li>
-                    ))}
-                  </ul>
+            <article class="experience-card" data-reveal>
+              <div class="experience-card-top">
+                <span class="experience-number">{projectNumber(index)}</span>
+                {experience.employmentType && (
+                  <span class="experience-employment">{experience.employmentType}</span>
                 )}
               </div>
+              <p class="experience-period">{getExperienceDate(experience)}</p>
+              <h3>{experience.role || experience.title}</h3>
+              <p class="experience-company">
+                {experience.org || experience.company || experience.organization}
+              </p>
+              <div class="experience-card-meta">
+                {experience.location && <span>{experience.location}</span>}
+              </div>
+              {experience.description && (
+                <p class="experience-description">{experience.description}</p>
+              )}
+              {(experience.bullets?.length || experience.highlights?.length) && (
+                <ul class="experience-highlights">
+                  {(experience.bullets || experience.highlights || []).map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+              )}
             </article>
           ))}
         </div>
@@ -3026,6 +3033,152 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   .project-card-digital-coaching-management:hover .art-coaching-thumbnail img { transform: scale(1.025); }
   @media (max-width: 600px) { .art-student-dashboard-thumbnail, .art-student-dashboard-thumbnail img, .art-coaching-thumbnail, .art-coaching-thumbnail img { min-height: 190px; } }
   @media (prefers-reduced-motion: reduce) { .art-student-dashboard-thumbnail img, .art-coaching-thumbnail img { transition: none; } }
+
+
+  /* Three-column recruiter-friendly experience cards, matching the projects grid. */
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 17px;
+  }
+  .experience-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: linear-gradient(155deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+  }
+  .experience-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(124,229,210,.38);
+    background: linear-gradient(155deg, rgba(124,229,210,.055), rgba(255,255,255,.012));
+  }
+  .experience-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .experience-number {
+    display: inline-grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--accent);
+    font: 600 .75rem/1 "JetBrains Mono", monospace;
+  }
+  .experience-employment {
+    max-width: 70%;
+    padding: 5px 8px;
+    border: 1px solid rgba(124,229,210,.2);
+    border-radius: 999px;
+    color: #9be8da;
+    font-size: .67rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+  .experience-period {
+    margin: 0 0 10px;
+    color: var(--accent);
+    font: 600 .72rem/1.5 "JetBrains Mono", monospace;
+    letter-spacing: .015em;
+  }
+  .experience-card h3 {
+    margin: 0 0 8px;
+    color: var(--text);
+    font-size: 1.12rem;
+    line-height: 1.4;
+    letter-spacing: -.025em;
+  }
+  .experience-company {
+    margin: 0;
+    color: #d8deea;
+    font-size: .91rem;
+    font-weight: 650;
+    line-height: 1.5;
+  }
+  .experience-card-meta {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: .77rem;
+    line-height: 1.5;
+  }
+  .experience-description {
+    margin: 15px 0 0;
+    color: var(--muted);
+    font-size: .88rem;
+    line-height: 1.7;
+  }
+  .experience-highlights {
+    display: grid;
+    gap: 9px;
+    margin: 16px 0 0;
+    padding: 15px 0 0;
+    border-top: 1px solid var(--border);
+    list-style: none;
+  }
+  .experience-highlights li {
+    position: relative;
+    padding-left: 14px;
+    color: var(--muted);
+    font-size: .82rem;
+    line-height: 1.65;
+  }
+  .experience-highlights li::before {
+    position: absolute;
+    top: .65em;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    content: "";
+  }
+  .hero-profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+    margin-top: 20px;
+  }
+  .hero-profile-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #aeb9ca;
+    font-size: .82rem;
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+  .hero-profile-links a:hover,
+  .hero-profile-links a:focus-visible { color: var(--accent); }
+  /* Reduce excess vertical whitespace on wide screens without crowding content. */
+  @media (min-width: 761px) {
+    .portfolio-shell > .section-block { padding-top: 10px !important; }
+    .portfolio-shell > .section-block .section-heading { margin-bottom: 18px; }
+    .portfolio-shell > .hero.hero-editorial { padding-bottom: 18px; }
+    .experience-grid { gap: 15px; }
+  }
+  @media (max-width: 1000px) {
+    .experience-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 620px) {
+    .experience-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .experience-card { padding: 19px; }
+    .experience-card-top { margin-bottom: 17px; }
+    .hero-profile-links { gap: 18px; margin-top: 17px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .experience-card, .hero-profile-links a { transition: none; }
+    .experience-card:hover { transform: none; }
+  }
 
 </style>
 
