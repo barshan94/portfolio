@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Changed
 - Replaced the large “EXPLORE THE FULL BODY OF WORK” homepage block with compact actions beside the Selected Projects heading: an interactive gallery link and a full repository archive link.
+- Renumbered the homepage section labels sequentially after removing the redundant block.
 - Reworked the walkthroughs page around a featured Money Calculator animation plus six on-demand demos.
 - Removed the extra modal step. Selecting a secondary demo now starts it inside its card; only one animation runs at a time.
 - Added reduced-motion behavior: visitors who prefer reduced motion see a static Money Calculator poster and must explicitly start the animation.
