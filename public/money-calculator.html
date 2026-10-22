@@ -45,9 +45,8 @@
   </nav>
   <div class="side-caption" style="margin-top:14px">Plan & analyse</div>
   <div class="nav">
-    <div class="nav-item"><span class="ico">◷</span>Budgets & goals</div>
-    <div class="nav-item"><span class="ico">◇</span>Investments</div>
-    <div class="nav-item"><span class="ico">⌁</span>Deposits & assets</div>
+    <button class="nav-item" data-nav="5"><span class="ico">◷</span>Budgets & goals</button>
+    <button class="nav-item" data-nav="6"><span class="ico">◇</span>Investments & assets</button>
   </div>
   <div class="side-bottom"><strong>Money Calculator</strong><br>Ledger-first finance<br><span style="color:#7f929d">BDT · Asia/Dhaka</span></div>
 </aside>
@@ -133,7 +132,36 @@
   </tbody></table></div></article>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><span class="screen-tag">✓ Payment history</span><span class="screen-tag">✓ Partial payment tracking</span><span class="screen-tag">✓ Ledger-connected collections</span></div>
 </section>
-<section class="screen" data-screen="5" aria-label="Reports and forecasts">
+<section class="screen" data-screen="5" aria-label="Budgets and savings goals">
+  <div class="page-head"><div><div class="eyebrow">Plan with intention</div><h1>Budgets & goals</h1><p>Compare actual spending with category limits and track progress toward savings targets.</p></div><button class="primary">＋ Create budget</button></div>
+  <div class="grid metrics"><article class="card metric"><div class="metric-label">Active budgets</div><div class="metric-value">6</div><div class="metric-foot">Across spending categories</div></article><article class="card metric"><div class="metric-label">Budget used</div><div class="metric-value">68%</div><div class="metric-foot">৳21,600 of ৳31,800</div></article><article class="card metric"><div class="metric-label">Savings goals</div><div class="metric-value">3</div><div class="metric-foot">Active goals</div></article><article class="card metric"><div class="metric-label">Goal progress</div><div class="metric-value positive">42%</div><div class="metric-foot">Across active goals</div></article></div>
+  <div class="grid two-col">
+    <article class="card"><div class="card-head"><div><h2>Budget progress</h2><p>Actual spending against monthly limits</p></div><span class="text-link">Manage budgets →</span></div><div style="padding:0 15px 14px">
+      <div style="margin:11px 0"><div class="loan-details"><span>Food & groceries</span><strong>৳8,200 / ৳10,000</strong></div><div class="progress" style="--p:82%"><span></span></div></div>
+      <div style="margin:11px 0"><div class="loan-details"><span>Transport</span><strong>৳2,100 / ৳3,000</strong></div><div class="progress" style="--p:70%"><span></span></div></div>
+      <div style="margin:11px 0"><div class="loan-details"><span>Utilities</span><strong>৳1,850 / ৳2,500</strong></div><div class="progress" style="--p:74%"><span></span></div></div>
+      <div style="margin:11px 0"><div class="loan-details"><span>Dining out</span><strong style="color:var(--red)">৳3,400 / ৳3,000</strong></div><div class="progress" style="--p:100%"><span style="background:var(--red)"></span></div></div>
+    </div></article>
+    <article class="card"><div class="card-head"><div><h2>Savings goals</h2><p>Progress toward personal targets</p></div><span class="text-link">View forecasts →</span></div><div class="account-list">
+      <div class="account-row"><span class="account-icon" style="background:#e8f6ef;color:#16845b">⌂</span><div class="account-info"><strong>Emergency fund</strong><small>৳30,000 of ৳50,000</small><div class="progress" style="--p:60%;margin-top:7px"><span></span></div></div><strong class="account-balance">60%</strong></div>
+      <div class="account-row"><span class="account-icon" style="background:#edf2ff;color:#3868d9">▤</span><div class="account-info"><strong>New laptop</strong><small>৳24,000 of ৳80,000</small><div class="progress" style="--p:30%;margin-top:7px"><span></span></div></div><strong class="account-balance">30%</strong></div>
+      <div class="account-row"><span class="account-icon" style="background:#fff5df;color:#a66b13">◇</span><div class="account-info"><strong>Long-term savings</strong><small>৳42,000 of ৳60,000</small><div class="progress" style="--p:70%;margin-top:7px"><span></span></div></div><strong class="account-balance">70%</strong></div>
+    </div></article>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:13px"><span class="screen-tag">✓ Actual spending drives budget status</span><span class="screen-tag">✓ Forecasts are informational</span><span class="screen-tag">✓ Goals do not silently alter ledger entries</span></div>
+</section>
+<section class="screen" data-screen="6" aria-label="Investments deposits and long-term assets">
+  <div class="page-head"><div><div class="eyebrow">Build and protect assets</div><h1>Investments & assets</h1><p>Track deposits, investment activity, maturity dates and long-term property values.</p></div><button class="primary">＋ Add asset</button></div>
+  <div class="grid metrics"><article class="card metric"><div class="metric-label">Investments</div><div class="metric-value">৳48,500</div><div class="metric-foot">Illustrative current value</div></article><article class="card metric"><div class="metric-label">Deposits</div><div class="metric-value">৳35,000</div><div class="metric-foot">Principal held</div></article><article class="card metric"><div class="metric-label">Long-term assets</div><div class="metric-value">৳1,10,000</div><div class="metric-foot">Recorded cost basis</div></article><article class="card metric"><div class="metric-label">Investment return</div><div class="metric-value positive">+৳3,250</div><div class="metric-foot">Illustrative gain</div></article></div>
+  <article class="card table-card" style="margin-top:0"><div class="card-head"><div><h2>Portfolio & asset register</h2><p>Asset values and related cash movements in one place</p></div><button class="secondary">All asset types ▾</button></div><div class="table-scroll"><table><thead><tr><th>ASSET</th><th>TYPE</th><th>INVESTED / COST</th><th>CURRENT VALUE</th><th>GAIN / STATUS</th></tr></thead><tbody>
+    <tr><td><div class="tx-name"><span class="account-icon" style="color:#3868d9;background:#edf2ff">◇</span><span><strong>Index fund</strong><small>Recurring investment</small></span></div></td><td>Investment</td><td>৳25,000</td><td>৳27,400</td><td class="amount-in">+৳2,400</td></tr>
+    <tr><td><div class="tx-name"><span class="account-icon" style="color:#16845b;background:#e8f6ef">▤</span><span><strong>Fixed deposit</strong><small>Maturity tracked</small></span></div></td><td>Deposit</td><td>৳35,000</td><td>৳36,250</td><td><span class="pill green">Active</span></td></tr>
+    <tr><td><div class="tx-name"><span class="account-icon" style="color:#a66b13;background:#fff5df">⌂</span><span><strong>Land / property</strong><small>Acquisition cost and expenses recorded</small></span></div></td><td>Long-term asset</td><td>৳1,10,000</td><td>৳1,10,000</td><td><span class="pill blue">Held</span></td></tr>
+    <tr><td><div class="tx-name"><span class="account-icon">↻</span><span><strong>Monthly fund purchase</strong><small>Linked cash movement</small></span></div></td><td>Investment activity</td><td>৳2,500</td><td>Recorded in ledger</td><td><span class="pill green">Posted</span></td></tr>
+  </tbody></table></div></article>
+  <div class="grid two-col" style="margin-top:12px"><article class="card mini-stat"><span>Lifecycle tracking</span><strong style="font-size:13px">Purchase · Add · Withdraw · Close</strong><p style="font-size:9px;color:var(--muted);margin:7px 0 0">Asset changes retain related transaction history.</p></article><article class="card mini-stat"><span>Forecasting</span><strong style="font-size:13px">What-if scenarios</strong><p style="font-size:9px;color:var(--muted);margin:7px 0 0">Explore possible outcomes without changing real records.</p></article></div>
+</section>
+<section class="screen" data-screen="7" aria-label="Reports and forecasts">
   <div class="page-head"><div><div class="eyebrow">Understand your money</div><h1>Reports & insights</h1><p>Explore cash flow, net worth, spending, obligations and future scenarios.</p></div><button class="secondary">October 2026 ▾</button></div>
   <div class="grid report-grid">
     <article class="card report-card"><div class="report-title"><span class="report-icon">⌁</span><span><h3>Income & expense report</h3><p>Monthly cash flow and category trends</p></span></div><div class="report-preview"><div class="report-row"><span>Total income</span><strong class="positive">৳58,400</strong></div><div class="report-row"><span>Total expenses</span><strong>৳32,750</strong></div><div class="report-row"><span>Net cash flow</span><strong class="positive">+৳25,650</strong></div></div><div class="report-footer"><span>Updated from posted ledger entries</span><span class="text-link">Explore →</span></div></article>
@@ -154,7 +182,7 @@
   const nav=[...document.querySelectorAll('[data-nav]')];
   const replay=document.getElementById('replay');
   const pause=document.getElementById('pause');
-  const durations=[4.2,4.0,3.7,4.0,4.0,4.4];
+  const durations=[3.8,3.8,3.5,3.8,3.8,3.5,3.8,4.2];
   const total=durations.reduce((a,b)=>a+b,0);
   let elapsed=0,playing=true,last=performance.now(),raf=0,active=-1;
   const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
