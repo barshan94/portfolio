@@ -21,6 +21,7 @@ const featuredProjectIds = new Set([
   "mount-royal-academy",
   "student-performance-dashboard",
   "digital-coaching-management",
+  "999-national-emergency-service",
 ]);
 
 // Keep the homepage deliberately curated; the full archive lives below in a disclosure.
@@ -303,7 +304,9 @@ const getExperienceDate = (experience: any) =>
                           ? "Analytics"
                           : projectId(project) === "digital-coaching-management"
                             ? "Education operations"
-                            : "Selected project"}
+                            : projectId(project) === "999-national-emergency-service"
+                              ? "Public-service software"
+                              : "Selected project"}
                 </span>
               </div>
 
@@ -345,6 +348,10 @@ const getExperienceDate = (experience: any) =>
                 ) : projectId(project) === "digital-coaching-management" ? (
                   <div class="art-coaching-thumbnail">
                     <img src="/images/digital-coaching-management-thumbnail.svg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                ) : projectId(project) === "999-national-emergency-service" ? (
+                  <div class="art-emergency-thumbnail">
+                    <img src="/images/999-national-emergency-service-thumbnail.svg" alt="" loading="lazy" decoding="async" />
                   </div>
                 ) : (
                   <div class="art-generic">
@@ -614,6 +621,21 @@ const getExperienceDate = (experience: any) =>
   </main>
 
 <style>
+  /* 999 National Emergency Service project thumbnail */
+  .art-emergency-thumbnail {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0a0e14;
+  }
+
+  .art-emergency-thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   /* Student Performance Dashboard showcase */
   .dashboard-showcase .section-heading {
     margin-bottom: 34px;

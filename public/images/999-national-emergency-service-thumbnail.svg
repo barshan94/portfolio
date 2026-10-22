@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">999 National Emergency Service — project thumbnail</title>
+<desc id="desc">A dark emergency-service application concept showing nine service categories, NID sign-in, illustrative request records, active-session monitoring, admin tools, and an application-flow diagram. This is a portfolio illustration, not a live system.</desc>
+<defs>
+  <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#e34e52" stroke-opacity=".05"/></pattern>
+  <linearGradient id="red" x2="1" y2="1"><stop stop-color="#f2676b"/><stop offset="1" stop-color="#a72f3c"/></linearGradient>
+  <style>
+    text{font-family:Segoe UI,Arial,sans-serif}
+    .heading{font-size:39px;font-weight:800;letter-spacing:-1px;fill:#f1f5fb}
+    .eyebrow{font-size:12px;font-weight:700;fill:#ef8184;letter-spacing:2px}
+    .subtitle{font-size:15px;font-weight:500;fill:#9ba9bc}
+    .copy{font-size:13px;fill:#aab7c8}
+    .section{font-size:12px;font-weight:700;fill:#e1e9f3;letter-spacing:1px}
+    .card-title{font-size:11px;font-weight:650;fill:#dbe4ef}
+    .micro{font-size:9px;fill:#8999ae}
+    .table{font-size:10px;fill:#b2bece}
+  </style>
+</defs>
+<rect width="1600" height="900" fill="#0a0e14"/><rect width="1600" height="900" fill="url(#grid)"/>
+<circle cx="90" cy="150" r="240" fill="#df494f" opacity=".05"/><circle cx="1500" cy="780" r="260" fill="#3677c7" opacity=".05"/>
+<!-- Intro -->
+<g transform="translate(64 66)">
+  <rect width="58" height="30" rx="5" fill="#e34e52" fill-opacity=".15" stroke="#e34e52" stroke-opacity=".5"/>
+  <text x="29" y="20" text-anchor="middle" font-size="13" font-weight="800" fill="#f06b6f">999</text>
+  <text x="74" y="19" class="eyebrow">PROJECT / EMERGENCY SYSTEMS</text>
+  <text x="0" y="91" class="heading">999 NATIONAL</text><text x="0" y="139" class="heading" fill="#e95a5e">EMERGENCY SERVICE</text>
+  <rect y="158" width="94" height="4" rx="2" fill="url(#red)"/>
+  <text x="0" y="194" class="subtitle">Emergency Request Management</text><text x="0" y="216" class="subtitle">&amp; Administration</text>
+  <text x="0" y="255" class="copy">A C# desktop application for citizen</text><text x="0" y="276" class="copy">service requests, NID-based sign-in,</text><text x="0" y="297" class="copy">and administrative request monitoring.</text>
+  <g transform="translate(0 326)">
+    <rect width="48" height="27" rx="5" fill="#69a8ff" fill-opacity=".12" stroke="#69a8ff" stroke-opacity=".3"/><text x="24" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#83b7ff">C#</text>
+    <rect x="57" width="93" height="27" rx="5" fill="#69a8ff" fill-opacity=".12" stroke="#69a8ff" stroke-opacity=".3"/><text x="103" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#83b7ff">SQL Server</text>
+    <rect x="159" width="116" height="27" rx="5" fill="#69a8ff" fill-opacity=".12" stroke="#69a8ff" stroke-opacity=".3"/><text x="217" y="17" text-anchor="middle" font-size="11" font-weight="700" fill="#83b7ff">Windows Forms</text>
+  </g>
+  <g transform="translate(0 391)">
+    <circle cx="5" cy="6" r="4" fill="#e34e52"/><text x="19" y="10" class="copy">9 emergency service categories</text>
+    <g transform="translate(0 32)"><circle cx="5" cy="6" r="4" fill="#69a8ff"/><text x="19" y="10" class="copy">NID registration, login &amp; profile updates</text></g>
+    <g transform="translate(0 64)"><circle cx="5" cy="6" r="4" fill="#3fc99a"/><text x="19" y="10" class="copy">Requests include date, time &amp; location</text></g>
+    <g transform="translate(0 96)"><circle cx="5" cy="6" r="4" fill="#f0b44e"/><text x="19" y="10" class="copy">Admin view of users and service requests</text></g>
+    <g transform="translate(0 128)"><circle cx="5" cy="6" r="4" fill="#a78bfa"/><text x="19" y="10" class="copy">Current-login session table</text></g>
+  </g>
+  <text x="0" y="590" font-size="11" fill="#526176">github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE</text>
+  <text x="0" y="612" font-size="10" letter-spacing="1.2" fill="#64748b">ACADEMIC PROJECT · CONCEPTUAL PREVIEW</text>
+</g>
+<!-- Application frame -->
+<rect x="570" y="38" width="970" height="810" rx="10" fill="#101722" stroke="#29364a"/>
+<path d="M580 38H1530Q1540 38 1540 48V80H570V48Q570 38 580 38Z" fill="#151e2b"/>
+<circle cx="592" cy="59" r="5" fill="#e34e52"/><circle cx="610" cy="59" r="5" fill="#e5ad4c"/><circle cx="628" cy="59" r="5" fill="#3fc99a"/>
+<text x="650" y="63" class="section">999 EMERGENCY SERVICE / ADMIN OVERVIEW</text>
+<rect x="1402" y="48" width="116" height="22" rx="5" fill="#3fc99a" fill-opacity=".12" stroke="#3fc99a" stroke-opacity=".4"/><circle cx="1415" cy="59" r="3" fill="#3fc99a"/><text x="1425" y="63" font-size="9" font-weight="700" fill="#65dfb5">UI CONCEPT</text>
+<!-- Nine service categories -->
+<rect x="590" y="98" width="532" height="318" rx="7" fill="#0d131d" stroke="#273448"/><text x="608" y="121" class="section">EMERGENCY SERVICES</text><text x="1103" y="121" text-anchor="end" class="micro">9 CATEGORIES</text>
+<g transform="translate(608 140)">
+  <g><rect width="158" height="78" rx="6" fill="#69a8ff" fill-opacity=".06" stroke="#69a8ff" stroke-opacity=".25"/><circle cx="20" cy="23" r="11" fill="#69a8ff" fill-opacity=".16"/><path d="M20 15l6 3v6q-1 6-6 8q-5-2-6-8v-6z" fill="none" stroke="#7db4ff" stroke-width="1.4"/><text x="38" y="22" class="card-title">Police</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(170)"><rect width="158" height="78" rx="6" fill="#f08a52" fill-opacity=".06" stroke="#f08a52" stroke-opacity=".25"/><circle cx="20" cy="23" r="11" fill="#f08a52" fill-opacity=".16"/><path d="M20 13q-7 9-5 14q2 5 7 4q7-3 3-10l-2 4q-5-4-3-12" fill="none" stroke="#f3a071" stroke-width="1.4"/><text x="38" y="22" class="card-title">Fire Service</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(340)"><rect width="158" height="78" rx="6" fill="#e34e52" fill-opacity=".06" stroke="#e34e52" stroke-opacity=".25"/><circle cx="20" cy="23" r="11" fill="#e34e52" fill-opacity=".16"/><path d="M17 15h6v5h5v6h-5v5h-6v-5h-5v-6h5z" fill="#f1767a"/><text x="38" y="22" class="card-title">Ambulance</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(0 88)"><rect width="158" height="78" rx="6" fill="#3fc99a" fill-opacity=".05" stroke="#3fc99a" stroke-opacity=".23"/><circle cx="20" cy="23" r="11" fill="#3fc99a" fill-opacity=".15"/><path d="M14 29q0-9 6-9t6 9M20 17a4 4 0 1 0 0-8a4 4 0 0 0 0 8" fill="none" stroke="#5edbb0" stroke-width="1.4"/><text x="38" y="22" class="card-title">Doctor</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(170 88)"><rect width="158" height="78" rx="6" fill="#f0b44e" fill-opacity=".05" stroke="#f0b44e" stroke-opacity=".23"/><circle cx="20" cy="23" r="11" fill="#f0b44e" fill-opacity=".15"/><circle cx="20" cy="19" r="3.5" fill="none" stroke="#f4c46d" stroke-width="1.4"/><path d="M13 30q1-7 7-7t7 7" fill="none" stroke="#f4c46d" stroke-width="1.4"/><text x="38" y="22" class="card-title">Child Helpline</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(340 88)"><rect width="158" height="78" rx="6" fill="#c084fc" fill-opacity=".05" stroke="#c084fc" stroke-opacity=".23"/><circle cx="20" cy="23" r="11" fill="#c084fc" fill-opacity=".15"/><path d="M20 13l7 3v6q-1 6-7 9q-6-3-7-9v-6z" fill="none" stroke="#d4a7ff" stroke-width="1.4"/><path d="M20 18v9M16 22.5h8" stroke="#d4a7ff" stroke-width="1.4"/><text x="38" y="22" class="card-title">Women &amp; Child</text><text x="38" y="38" class="micro">Protection cell</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(0 176)"><rect width="158" height="78" rx="6" fill="#83a6ce" fill-opacity=".05" stroke="#83a6ce" stroke-opacity=".23"/><circle cx="20" cy="23" r="11" fill="#83a6ce" fill-opacity=".15"/><path d="M20 14v17M12 18h16M14 18l-4 8h8zM26 18l-4 8h8z" fill="none" stroke="#9ebde0" stroke-width="1.3"/><text x="38" y="22" class="card-title">Anti-Corruption</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(170 176)"><rect width="158" height="78" rx="6" fill="#71b6b0" fill-opacity=".05" stroke="#71b6b0" stroke-opacity=".23"/><circle cx="20" cy="23" r="11" fill="#71b6b0" fill-opacity=".15"/><path d="M20 13l8 5v8l-8 5l-8-5v-8z" fill="none" stroke="#8bd0ca" stroke-width="1.3"/><path d="M16 23l3 3l5-6" fill="none" stroke="#8bd0ca" stroke-width="1.3"/><text x="38" y="22" class="card-title">Govt Services</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+  <g transform="translate(340 176)"><rect width="158" height="78" rx="6" fill="#e4c15b" fill-opacity=".05" stroke="#e4c15b" stroke-opacity=".23"/><circle cx="20" cy="23" r="11" fill="#e4c15b" fill-opacity=".15"/><circle cx="20" cy="23" r="6" fill="none" stroke="#e7cd78" stroke-width="1.3"/><path d="M20 14v3M20 29v3M11 23h3M26 23h3M14 17l2 2M24 27l2 2M26 17l-2 2M16 27l-2 2" stroke="#e7cd78" stroke-width="1.2"/><text x="38" y="22" class="card-title">COVID Special</text><text x="38" y="38" class="micro">Request service</text><text x="12" y="63" class="micro">Date · Time · Location</text></g>
+</g>
+<!-- Illustrative request table -->
+<rect x="590" y="432" width="532" height="253" rx="7" fill="#0d131d" stroke="#273448"/><text x="608" y="455" class="section">REQUEST RECORDS</text><text x="1103" y="455" text-anchor="end" class="micro">ILLUSTRATIVE DATA</text><rect x="604" y="471" width="504" height="25" rx="3" fill="#151e2b"/>
+<text x="614" y="487" class="micro">NID</text><text x="673" y="487" class="micro">SERVICE</text><text x="798" y="487" class="micro">DATE</text><text x="884" y="487" class="micro">TIME</text><text x="960" y="487" class="micro">LOCATION</text>
+<g class="table">
+  <rect x="604" y="502" width="504" height="25" fill="#111a28" opacity=".5"/><text x="614" y="518">10••••</text><text x="673" y="518">Police</text><text x="798" y="518">Sample</text><text x="884" y="518">14:23</text><text x="960" y="518">Dhaka</text>
+  <path d="M604 528H1108M604 558H1108M604 588H1108M604 618H1108M604 648H1108" stroke="#273448"/>
+  <text x="614" y="548">20••••</text><text x="673" y="548">Ambulance</text><text x="798" y="548">Sample</text><text x="884" y="548">14:18</text><text x="960" y="548">Chattogram</text>
+  <text x="614" y="578">15••••</text><text x="673" y="578">Fire Service</text><text x="798" y="578">Sample</text><text x="884" y="578">13:55</text><text x="960" y="578">Rajshahi</text>
+  <text x="614" y="608">30••••</text><text x="673" y="608">Doctor</text><text x="798" y="608">Sample</text><text x="884" y="608">13:40</text><text x="960" y="608">Khulna</text>
+  <text x="614" y="638">42••••</text><text x="673" y="638">Child Help</text><text x="798" y="638">Sample</text><text x="884" y="638">12:12</text><text x="960" y="638">Sylhet</text>
+  <text x="614" y="668">18••••</text><text x="673" y="668">Govt Service</text><text x="798" y="668">Sample</text><text x="884" y="668">11:05</text><text x="960" y="668">Rangpur</text>
+</g>
+<rect x="604" y="672" width="504" height="9" rx="2" fill="#e34e52" fill-opacity=".12"/><text x="856" y="679" text-anchor="middle" font-size="8" fill="#f08b8e">Illustrative interface — not live service data</text>
+<!-- Right-side admin panels -->
+<rect x="1140" y="98" width="380" height="180" rx="7" fill="#0d131d" stroke="#273448"/><text x="1158" y="121" class="section">USER AUTHENTICATION</text>
+<rect x="1158" y="140" width="172" height="30" rx="4" fill="#151e2b" stroke="#29364a"/><text x="1170" y="159" class="micro">NID: 10••••••••</text><rect x="1158" y="178" width="172" height="30" rx="4" fill="#151e2b" stroke="#29364a"/><text x="1170" y="197" class="micro">Password: ••••••••</text>
+<rect x="1340" y="140" width="78" height="30" rx="4" fill="#69a8ff" fill-opacity=".13" stroke="#69a8ff" stroke-opacity=".35"/><text x="1379" y="159" text-anchor="middle" font-size="10" font-weight="700" fill="#83b7ff">LOGIN</text><rect x="1426" y="140" width="76" height="30" rx="4" fill="#3fc99a" fill-opacity=".13" stroke="#3fc99a" stroke-opacity=".35"/><text x="1464" y="159" text-anchor="middle" font-size="10" font-weight="700" fill="#65dfb5">REGISTER</text>
+<rect x="1340" y="178" width="78" height="30" rx="4" fill="#f0b44e" fill-opacity=".12" stroke="#f0b44e" stroke-opacity=".35"/><text x="1379" y="197" text-anchor="middle" font-size="10" font-weight="700" fill="#f0c56f">UPDATE</text><rect x="1426" y="178" width="76" height="30" rx="4" fill="#273448"/><text x="1464" y="197" text-anchor="middle" font-size="10" font-weight="700" fill="#aab7c8">EXIT</text>
+<text x="1158" y="232" class="micro">NID is the permanent primary identifier.</text><text x="1158" y="247" class="micro">Profile fields can be updated without changing NID.</text>
+<rect x="1140" y="294" width="380" height="160" rx="7" fill="#0d131d" stroke="#273448"/><text x="1158" y="317" class="section">ACTIVE SESSIONS</text><text x="1502" y="317" text-anchor="end" class="micro">LOGIN TABLE</text><rect x="1152" y="333" width="356" height="22" rx="3" fill="#151e2b"/><text x="1160" y="348" class="micro">NID</text><text x="1228" y="348" class="micro">NAME</text><text x="1360" y="348" class="micro">PHONE</text><text x="1466" y="348" class="micro">STATE</text>
+<g class="table"><path d="M1152 380H1508M1152 405H1508M1152 430H1508" stroke="#273448"/><text x="1160" y="372">10•••</text><text x="1228" y="372">Sample user</text><text x="1360" y="372">01••••••••</text><circle cx="1471" cy="369" r="3" fill="#3fc99a"/><text x="1479" y="372">In</text><text x="1160" y="397">20•••</text><text x="1228" y="397">Sample user</text><text x="1360" y="397">01••••••••</text><circle cx="1471" cy="394" r="3" fill="#3fc99a"/><text x="1479" y="397">In</text><text x="1160" y="422">15•••</text><text x="1228" y="422">Sample user</text><text x="1360" y="422">01••••••••</text><circle cx="1471" cy="419" r="3" fill="#3fc99a"/><text x="1479" y="422">In</text></g>
+<text x="1158" y="442" class="micro">Illustration of the current-login table</text>
+<rect x="1140" y="470" width="380" height="215" rx="7" fill="#0d131d" stroke="#273448"/><text x="1158" y="493" class="section">ADMIN MONITORING</text><rect x="1458" y="480" width="44" height="22" rx="4" fill="#f0b44e" fill-opacity=".12" stroke="#f0b44e" stroke-opacity=".4"/><text x="1480" y="494" text-anchor="middle" font-size="9" font-weight="700" fill="#f0c56f">FORM 3</text>
+<g>
+  <rect x="1158" y="514" width="344" height="34" rx="5" fill="#151e2b"/><circle cx="1174" cy="531" r="4" fill="#69a8ff"/><text x="1188" y="535" class="copy">Registered users</text><text x="1488" y="535" text-anchor="end" class="micro">VIEW</text>
+  <rect x="1158" y="557" width="344" height="34" rx="5" fill="#151e2b"/><circle cx="1174" cy="574" r="4" fill="#3fc99a"/><text x="1188" y="578" class="copy">Current login sessions</text><text x="1488" y="578" text-anchor="end" class="micro">VIEW</text>
+  <rect x="1158" y="600" width="344" height="34" rx="5" fill="#151e2b"/><circle cx="1174" cy="617" r="4" fill="#f0b44e"/><text x="1188" y="621" class="copy">Service request records</text><text x="1488" y="621" text-anchor="end" class="micro">VIEW</text>
+  <rect x="1158" y="643" width="344" height="34" rx="5" fill="#151e2b"/><circle cx="1174" cy="660" r="4" fill="#c084fc"/><text x="1188" y="664" class="copy">Modify user &amp; request data</text><text x="1488" y="664" text-anchor="end" class="micro">EDIT</text>
+</g>
+<!-- Application flow -->
+<rect x="590" y="707" width="930" height="115" rx="7" fill="#0d131d" stroke="#273448"/><text x="608" y="730" class="section">APPLICATION FLOW</text>
+<g transform="translate(608 744)">
+  <rect width="186" height="60" rx="5" fill="#69a8ff" fill-opacity=".06" stroke="#69a8ff" stroke-opacity=".3"/><text x="93" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#83b7ff">FORM 1</text><text x="93" y="36" text-anchor="middle" class="micro">Register · Login · Update</text>
+  <path d="M192 30h28m-6-5l6 5l-6 5" fill="none" stroke="#61758f" stroke-width="1.5"/>
+  <rect x="226" width="186" height="60" rx="5" fill="#e34e52" fill-opacity=".06" stroke="#e34e52" stroke-opacity=".3"/><text x="319" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#f1767a">FORM 2</text><text x="319" y="36" text-anchor="middle" class="micro">9 service request options</text>
+  <path d="M418 30h28m-6-5l6 5l-6 5" fill="none" stroke="#61758f" stroke-width="1.5"/>
+  <rect x="452" width="186" height="60" rx="5" fill="#f0b44e" fill-opacity=".06" stroke="#f0b44e" stroke-opacity=".3"/><text x="545" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#f0c56f">FORM 3</text><text x="545" y="36" text-anchor="middle" class="micro">Admin monitoring</text>
+  <path d="M644 30h28m-6-5l6 5l-6 5" fill="none" stroke="#61758f" stroke-width="1.5"/>
+  <rect x="678" width="234" height="60" rx="5" fill="#3fc99a" fill-opacity=".06" stroke="#3fc99a" stroke-opacity=".3"/><text x="795" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="#65dfb5">SQL SERVER</text><text x="795" y="36" text-anchor="middle" class="micro">Users · Sessions · Requests</text>
+</g>
+<text x="800" y="875" text-anchor="middle" font-size="10" fill="#64748b">Academic software project · Fictional sample data · Not affiliated with a government agency</text>
+</svg>
