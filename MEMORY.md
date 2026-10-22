@@ -7,20 +7,20 @@ Last updated: 2026-10-22 (interactive gallery playback and demo-to-repository al
 
 ## Current portfolio audit (2026-10-22)
 
-- Homepage: removed the full-width “EXPLORE THE FULL BODY OF WORK” CTA block. The Selected Projects heading now contains a compact primary link to `/walkthroughs/` and a secondary link to `/projects/`, preserving both destinations with less vertical space.
-- Section labels are sequential again after removing the redundant CTA: Projects 01, Experience 02, Toolkit 03, Writing & Research 04, Contact 05.
-- Walkthroughs: Money Calculator is the featured animation and starts automatically unless the visitor prefers reduced motion. The remaining six demos load inside their own cards after one click; no separate video modal or second play click is required.
-- Performance/accessibility: only one animation is active at a time; starting another demo stops the previous one. Reduced-motion visitors see a static featured poster and can choose whether to start motion.
-- Demo/repository alignment audit:
-  - Money Calculator is a cinematic ledger visualization, not a screenshot or live UI; its source repo remains the source of truth for implemented financial features.
-  - Asta Store animation covers catalog browsing and adding an item to the bag; checkout/admin features exist in the linked repository but are not shown in this animation.
-  - Student Performance Dashboard is an Excel-based academic analytics project; animation data is fictional.
-  - Mount Royal Academy animation is a school-themed motion piece, not a screen-by-screen preview of the actual website/admin interface.
-  - 999 is an academic C# Windows Forms / SQL Server concept, not a live emergency service.
-  - Digital Growth & Marketing is an overview of 12 separate repositories/workflows, not one deployed software platform.
-  - Digital Coaching Management animation was narrowed to the two automations in the current `Code.js`: add today's date to the Attendance sheet and the current month to the Payment sheet when absent. Student registry/reporting/communication scenes no longer render as if implemented.
-- Build routing: the four root-level HTML animations (Asta, Mount Royal, 999, Digital Growth) are copied to `dist/` by `copy-academy-animation.mjs`; Money Calculator, Student Performance, and Coaching animations are served from `public/`.
-- Verification: the latest commit's Vercel status check reports success. I could not independently inspect the live page through the available browser, so visual confirmation that the deployed page reflects the latest commit remains pending.
+- Homepage project cards now place a **Play demo** link beside **Source code** for all seven showcased animation-matched projects. Each button opens its own animation directly in a new tab; the homepage no longer links to the separate walkthroughs page.
+- Selected homepage projects now align with the seven animations: Money Calculator, ASTA Store, Mount Royal Academy, Keyword Research & SEO Tools (which launches the broader marketing-work overview), Student Performance Dashboard, Digital Coaching Spreadsheet Automation, and 999 National Emergency Service. The bIoT thesis remains available in the full project archive and is still categorized as a thesis.
+- Removed the large “EXPLORE THE FULL BODY OF WORK” block; kept only a compact “Browse all repositories” link by the project heading. Section labels are sequential: Projects 01, Experience 02, Toolkit 03, Writing & Research 04, Contact 05.
+- Animation refinements pushed:
+  - Money Calculator visibly states it is a cinematic ledger visualization, not the live application UI.
+  - Student Performance Dashboard labels its data as fictional and the demo as an Excel concept, not connected to a live school.
+  - Mount Royal Academy labels the animation as a school website concept.
+  - 999 describes the academic desktop-app scope and says it cannot contact emergency responders.
+  - Digital Growth & Marketing clarifies that it illustrates independent repositories and workflows, not one deployed platform.
+  - Digital Coaching animation code no longer includes unused student-registry, report-card, messaging, or overview scenes. It focuses on attendance-date and payment-month header automation, with a visible scope note.
+- The Digital Coaching project content now accurately states that the current Apps Script only adds a missing date column to Attendance and month column to Payment; it does not claim a complete student-management system.
+- ASTA Store's project title was normalized to match the demo.
+- Build routing: root-level HTML animations (Asta, Mount Royal, 999, Digital Growth) are copied to `dist/` by `copy-academy-animation.mjs`; Money Calculator, Student Performance, and Coaching animations are served from `public/`.
+- Verification: all seven demo paths exist in the repository layout and the Vercel status check for the latest deployment should be checked after the final documentation commit. Visual inspection of the live homepage remains necessary.
 
 ## Previous portfolio audit (2026-10-16)
 
