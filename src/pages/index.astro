@@ -11,7 +11,7 @@ const selectedProjectIds = [
   "money-calculator",
   "asta-store",
   "mount-royal-academy",
-  "biot-thesis",
+  "keyword-research",
   "student-performance-dashboard",
   "digital-coaching-management",
   "999-national-emergency-service",
@@ -43,6 +43,20 @@ const getProjectLink = (project: (typeof allProjects)[number]) =>
 
 const getProjectRepo = (project: (typeof allProjects)[number]) =>
   project.data.repo || project.data.github || "";
+
+const getProjectDemo = (project: (typeof allProjects)[number]) => {
+  const demoByProject: Record<string, string> = {
+    "money-calculator": "/money-calculator.html",
+    "asta-store": "/asta-store-animation.html",
+    "mount-royal-academy": "/mount-royal-academy-animation.html",
+    "keyword-research": "/digital-growth-marketing-animation.html",
+    "student-performance-dashboard": "/student-performance-dashboard.html",
+    "digital-coaching-management": "/digital-coaching-management-animation.html",
+    "999-national-emergency-service": "/999-emergency-service-animation.html",
+  };
+
+  return demoByProject[projectId(project)] || "";
+};
 
 const getProjectTags = (project: (typeof allProjects)[number]) =>
   Array.isArray(project.data.tags)
@@ -183,16 +197,11 @@ const getExperienceDate = (experience: any) =>
         </div>
         <div class="project-heading-actions">
           <p class="section-sub">
-            A focused selection of software, education, research, and product projects.
+            A focused selection of software, education, research, and product projects. Play a demo or inspect the source directly from each card.
           </p>
-          <div class="project-heading-links">
-            <a class="button button-primary" href="/walkthroughs/">
-              Open interactive gallery <span aria-hidden="true">↗</span>
-            </a>
-            <a class="project-archive-link" href="/projects/">
-              Browse all repositories <span aria-hidden="true">↗</span>
-            </a>
-          </div>
+          <a class="project-archive-link" href="/projects/">
+            Browse all repositories <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
 
@@ -318,6 +327,18 @@ const getExperienceDate = (experience: any) =>
                       rel="noopener noreferrer"
                     >
                       Source code <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+
+                  {getProjectDemo(project) && (
+                    <a
+                      class="project-demo-link"
+                      href={getProjectDemo(project)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Play demo: ${project.data.title}`}
+                    >
+                      <span aria-hidden="true">▶</span> Play demo
                     </a>
                   )}
                 </div>
@@ -1624,6 +1645,27 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 
   .project-card-links a:hover {
     color: #fff;
+  }
+
+  .project-card-links .project-demo-link {
+    color: #a7f3d0;
+    padding: 7px 10px;
+    margin-top: -7px;
+    border: 1px solid rgba(52, 211, 153, 0.34);
+    border-radius: 7px;
+    background: rgba(16, 49, 38, 0.48);
+    transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+  }
+
+  .project-card-links .project-demo-link:hover,
+  .project-card-links .project-demo-link:focus-visible {
+    color: #ecfdf5;
+    border-color: rgba(52, 211, 153, 0.8);
+    background: rgba(16, 49, 38, 0.9);
+  }
+
+  .project-card-links .project-demo-link span {
+    font-size: 0.65rem;
   }
 
   .empty-state {
