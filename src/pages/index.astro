@@ -119,28 +119,23 @@ const getExperienceDate = (experience: any) =>
   
 <main class="portfolio-shell">
     <!-- HERO -->
-    <section class="hero section-wrap" id="about" aria-labelledby="hero-title">
-      <div class="hero-topline">
-        <span class="hero-topline-label">ENGINEERING PORTFOLIO</span>
-        <p class="hero-role">Software Engineer · Full-Stack &amp; Applied AI</p>
+    <section class="hero section-wrap hero-editorial" id="about" aria-labelledby="hero-title">
+      <div class="hero-eyebrow" data-reveal>
+        <span class="hero-eyebrow-mark" aria-hidden="true"></span>
+        <span>SOFTWARE ENGINEERING <span aria-hidden="true">/</span> FINANCIAL SYSTEMS <span aria-hidden="true">/</span> APPLIED AI</span>
       </div>
 
-      <nav class="hero-pillars" aria-label="Professional focus areas">
-        <span>Software Engineering</span>
-        <span>Financial Systems</span>
-        <span>Applied AI</span>
-      </nav>
-
       <div class="hero-copy" data-reveal>
+        <p class="hero-intro">Practical engineering. Thoughtful solutions.</p>
         <h1 id="hero-title">
-          Engineering useful systems<br />
-          for <span class="accent-text">real-world problems.</span>
+          I build software that makes<br class="hero-desktop-break" />
+          <span class="accent-text">complex work simpler.</span>
         </h1>
 
         <p class="hero-description">
-          I'm Barshan Ghosh, a computer science graduate who builds practical
-          software and financial tools, explores applied AI, and brings hands-on
-          experience in IT operations, digital marketing, and technology education.
+          From financial workflows to focused web applications, I turn real-world
+          needs into clear, reliable software. My work spans full-stack development,
+          IT operations, and applied machine learning.
         </p>
 
         <div class="hero-actions">
@@ -152,17 +147,7 @@ const getExperienceDate = (experience: any) =>
             Get in touch <span aria-hidden="true">↗</span>
           </a>
         </div>
-        <nav class="hero-quick-links" aria-label="Professional links">
-          {contact?.email && <a href={`mailto:${contact.email}`}>Email ↗</a>}
-          <a href={contact?.github || "https://github.com/barshan94"} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          {contact?.linkedin && <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
-        </nav>
-
-
       </div>
-
-      
-
     </section>
 
     <!-- CV DOWNLOAD -->
@@ -492,7 +477,7 @@ const getExperienceDate = (experience: any) =>
     >
       <div class="contact-wrap" data-reveal>
         <div class="contact-copy">
-          <p class="section-kicker">05 — CONTACT</p>
+          <p class="section-kicker">04 — CONTACT</p>
           <h2 id="contact-title">
             Have a good<br />
             <span class="accent-text">problem to solve?</span>
@@ -3141,5 +3126,160 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   @media (max-width: 380px) {
     .hero-pillars { gap: 6px; }
     .hero-pillars span { font-size: 0.56rem; }
+  }
+</style>
+
+
+<style is:global>
+  /* Editorial hero: clear hierarchy, intentional alignment, no duplicate contact links. */
+  .portfolio-shell > .hero.hero-editorial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: clamp(3.5rem, 7vw, 6.5rem);
+    padding-bottom: clamp(1.5rem, 2.5vw, 2.5rem);
+    text-align: center;
+  }
+
+  .hero-editorial .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 100%;
+    margin: 0 0 clamp(2.25rem, 4vw, 3.75rem);
+    padding: 0.65rem 1rem;
+    border: 1px solid rgba(145, 164, 255, 0.22);
+    border-radius: 999px;
+    background: rgba(18, 24, 38, 0.72);
+    color: #aeb9d0;
+    font: 500 clamp(0.55rem, 0.9vw, 0.7rem)/1.5 "JetBrains Mono", monospace;
+    letter-spacing: 0.09em;
+    text-wrap: balance;
+  }
+
+  .hero-eyebrow-mark {
+    flex: 0 0 auto;
+    width: 0.48rem;
+    height: 0.48rem;
+    border-radius: 50%;
+    background: #72ead5;
+    box-shadow: 0 0 0 4px rgba(114, 234, 213, 0.1), 0 0 18px rgba(114, 234, 213, 0.4);
+  }
+
+  .hero-editorial .hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .hero-intro {
+    margin: 0 0 1rem;
+    color: #b9c4d7;
+    font-size: clamp(0.95rem, 1.35vw, 1.12rem);
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  .hero-editorial h1 {
+    max-width: 1000px;
+    margin: 0;
+    color: #f4f6fb;
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: clamp(3rem, 6.5vw, 6.3rem);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.065em;
+    text-wrap: balance;
+  }
+
+  .hero-editorial h1 .accent-text {
+    display: inline-block;
+    padding-bottom: 0.06em;
+    background: linear-gradient(100deg, #8ca3ff 8%, #7ce5d2 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-editorial .hero-description {
+    max-width: 690px;
+    margin: clamp(1.4rem, 2.4vw, 2rem) auto 0;
+    color: #a6b0c2;
+    font-size: clamp(1rem, 1.3vw, 1.12rem);
+    line-height: 1.85;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .hero-editorial .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .portfolio-shell > .section-block {
+    padding-top: clamp(1rem, 1.6vw, 1.5rem) !important;
+    margin-top: 0 !important;
+  }
+
+  .portfolio-shell > .section-block .section-heading {
+    margin-bottom: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  @media (max-width: 760px) {
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: 3.25rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .hero-editorial .hero-eyebrow {
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-editorial h1 {
+      font-size: clamp(2.65rem, 10vw, 4.2rem);
+      line-height: 1.06;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-desktop-break { display: none; }
+
+    .hero-editorial .hero-description {
+      margin-top: 1.25rem;
+      font-size: 0.98rem;
+      line-height: 1.75;
+    }
+
+    .portfolio-shell > .section-block {
+      padding-top: 1.25rem !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .hero-editorial .hero-eyebrow {
+      align-items: flex-start;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .hero-editorial .hero-actions {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-editorial .hero-actions .button {
+      justify-content: center;
+    }
   }
 </style>
