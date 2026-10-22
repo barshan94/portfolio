@@ -1,4 +1,6 @@
 ---
+const currentYear = new Date().getFullYear();
+
 const nav = [
   { number: "01", label: "SYSTEM", href: "#about" },
   { number: "02", label: "IMPACT", href: "#flagship" },
@@ -18,7 +20,7 @@ const nav = [
   <div class="system-status">
     <span class="status-light"></span>
     <span>SYSTEM ONLINE</span>
-    <span class="status-year">BD / 2026</span>
+    <span class="status-year">BD / {currentYear}</span>
   </div>
 </header>
 
