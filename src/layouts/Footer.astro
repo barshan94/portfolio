@@ -1,19 +1,5 @@
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <span class="brand-mark" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
-          <rect x="3" y="6" width="26" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
-          <path d="M10 16h12M10 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="23" cy="11" r="2" fill="currentColor"/>
-        </svg>
-      </span>
-      <div>
-        <p class="footer-name">Barshan Ghosh</p>
-        <p class="footer-tag">Building practical software, exploring intelligent systems.</p>
-      </div>
-    </div>
-
+  <div class="footer-inner">
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -23,71 +9,91 @@
     </nav>
 
     <div class="footer-meta">
-      <div class="footer-meta-copy">
-        <span>&copy; <span id="year"></span> Barshan Ghosh</span>
-        <span class="footer-dot" aria-hidden="true">&middot;</span>
-      </div>
+      <span>&copy; <span id="year"></span> Barshan Ghosh</span>
       <span class="footer-built">Built with Astro</span>
     </div>
   </div>
 </footer>
 
 <style>
-.site-footer {
-  position: relative;
-  overflow: hidden;
-  margin-top: clamp(2rem, 4vw, 3.5rem);
-  border-top: 1px solid rgba(145, 164, 255, 0.24);
-  background:
-    radial-gradient(ellipse at 12% 0%, rgba(48, 194, 177, 0.08), transparent 32rem),
-    radial-gradient(ellipse at 88% 100%, rgba(96, 120, 255, 0.12), transparent 34rem),
-    #080b12;
-  padding: clamp(2.5rem, 5vw, 4rem) 0 1.75rem;
-}
-.footer-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 1.4rem;
-  border-top: 1px solid rgba(145, 164, 255, 0.12);
-}
-.footer-brand { display: flex; align-items: center; gap: 0.75rem; }
-.footer-brand .brand-mark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  color: #a9b7ff;
-  border: 1px solid rgba(145, 164, 255, 0.28);
-  border-radius: 10px;
-  background: rgba(145, 164, 255, 0.08);
-}
-.footer-name { font-weight: 600; margin: 0; }
-.footer-tag { margin: 0.15rem 0 0; font-size: var(--step-1); color: var(--ink-muted); }
-.footer-nav { display: flex; gap: 0.8rem 1.1rem; flex-wrap: wrap; justify-content: flex-end; }
-.footer-nav a { font-size: var(--step-1); color: var(--ink-muted); text-decoration: none; transition: color 0.15s ease; }
-.footer-nav a:hover, .footer-nav a:focus-visible { color: #b7c3ff; }
-.footer-meta {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid rgba(145, 164, 255, 0.1);
-}
-.footer-meta-copy { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
-.footer-built { margin-left: auto; text-align: right; white-space: nowrap; }
-@media (max-width: 720px) {
-  .footer-inner { align-items: flex-start; gap: 1.4rem; }
-  .footer-nav { justify-content: flex-start; }
-  .footer-meta { align-items: flex-start; }
-  .footer-meta-copy { flex-wrap: wrap; }
-}
-.footer-meta { font-size: var(--step-1); color: var(--ink-faint); }
-.footer-dot { color: var(--line-strong); }
+  .site-footer {
+    position: relative;
+    margin-top: clamp(1.5rem, 2.5vw, 2.5rem);
+    padding: 1.5rem 0 1.25rem;
+    border-top: 1px solid rgba(145, 164, 255, 0.2);
+    background:
+      radial-gradient(ellipse at 12% 0%, rgba(48, 194, 177, 0.06), transparent 32rem),
+      #080b12;
+  }
+
+  .footer-inner {
+    width: min(calc(100% - 3rem), 1440px);
+    margin-inline: auto;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.65rem clamp(1.25rem, 3vw, 2.75rem);
+    margin: 0;
+    padding: 0.35rem 0 1.35rem;
+  }
+
+  .footer-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    color: #c0c8d8;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+
+  .footer-nav a:hover,
+  .footer-nav a:focus-visible {
+    color: #91a4ff;
+  }
+
+  .footer-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(145, 164, 255, 0.12);
+    color: #778196;
+    font-size: 0.78rem;
+  }
+
+  .footer-built {
+    margin-left: auto;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner {
+      width: calc(100% - 1.5rem);
+    }
+    .footer-nav {
+      gap: 0.35rem 1rem;
+      padding-bottom: 1rem;
+    }
+    .footer-nav a {
+      font-size: 0.82rem;
+    }
+    .footer-meta {
+      align-items: flex-start;
+      font-size: 0.72rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-nav a { transition: none; }
+  }
 </style>
 
 <script>
