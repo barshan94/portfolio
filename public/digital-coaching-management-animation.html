@@ -69,9 +69,9 @@ canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
 <body>
 <canvas id="c"></canvas>
 <div id="title">
-  <h1 id="tN">Digital Coaching<br><b>Management System</b></h1>
+  <h1 id="tN">Coaching Spreadsheet<br><b>Automation</b></h1>
   <div class="rule" id="tR"></div>
-  <p id="tP">Attendance · Payments · Reports · Communication</p>
+  <p id="tP">Attendance date · Payment month columns</p>
 </div>
 <div id="dbg" hidden></div>
 <div id="ctrls">
@@ -119,15 +119,15 @@ var WHATSAPP='#25d366';
 /* ── Timeline ───────────────────────── */
 var PD=[2.4,3.6,3.2,3.4,3.4,3.0,3.6,4.2,3.5];
 var PL=[
-  'initializing coaching system',
-  'loading student registry',
-  'recording daily attendance',
-  'processing monthly payments',
-  'generating progress reports',
-  'preparing communication',
-  'composing system overview',
-  'digital coaching management',
-  'digital coaching management'
+  'initializing spreadsheet automation',
+  'opening attendance sheet',
+  'checking today\'s date column',
+  'opening payment sheet',
+  'checking current month column',
+  'avoiding duplicate headers',
+  'verifying spreadsheet automation',
+  'attendance + payment column automation',
+  'google sheets · apps script'
 ];
 var TOT=0,PS=[];
 for(var i=0;i<PD.length;i++){PS.push(TOT);TOT+=PD[i]}
@@ -260,9 +260,9 @@ function drBrand(ph){
   ctx.fillText('DIGITAL COACHING',cx,cy-14*S);
   ctx.globalAlpha=v*.55;
   ctx.font='600 '+(24*S)+'px system-ui,sans-serif';
-  ctx.fillText('MANAGEMENT SYSTEM',cx,cy+18*S);
+  ctx.fillText('SHEET AUTOMATION',cx,cy+18*S);
   ctx.globalAlpha=v*.3;ctx.font=(8*S)+'px system-ui,sans-serif';ctx.fillStyle=TEAL;
-  ctx.fillText('GOOGLE SHEETS · APPS SCRIPT · AUTOMATION',cx,cy+44*S);
+  ctx.fillText('ATTENDANCE DATE · PAYMENT MONTH COLUMNS',cx,cy+44*S);
 
   ctx.globalAlpha=v*.2;ctx.strokeStyle=ha(CYAN,.3);ctx.lineWidth=.5;
   var lw=80*S*v;
@@ -756,12 +756,8 @@ function loop(now){
   drStreams(fade*(ph.i>=1?.6:0)*(ph.i>=7?cl(1-ph.p*1.5,0,1):1));
   drPts(dt,fade*.5);
   drBrand(ph);
-  drRegistry(ph);
   drAttendance(ph);
   drPayments(ph);
-  drReports(ph);
-  drComms(ph);
-  drOverview(ph);
   drSweep(ph);
   drFilm();
 
@@ -794,8 +790,7 @@ document.getElementById('bE').onclick=function(){
   var ph=gp(sk),fade=sm(0,1.2,sk);
   ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
   drGrid(fade);drStreams(fade*.6);drPts(0,fade*.5);drBrand(ph);
-  drRegistry(ph);drAttendance(ph);drPayments(ph);drReports(ph);
-  drComms(ph);drOverview(ph);drSweep(ph);drFilm();
+  drAttendance(ph);drPayments(ph);drSweep(ph);drFilm();
   var url=c.toDataURL('image/jpeg',.95);
   c.width=ow;c.height=oh;ctx.setTransform(dpr,0,0,dpr,0,0);
   var a=document.createElement('a');a.href=url;
