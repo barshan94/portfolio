@@ -120,12 +120,18 @@ const getExperienceDate = (experience: any) =>
 <main class="portfolio-shell">
     <!-- HERO -->
     <section class="hero section-wrap" id="about" aria-labelledby="hero-title">
-      <div class="hero-copy" data-reveal>
-        <p class="eyebrow">
-          <span class="status-dot" aria-hidden="true"></span>
-          Software Engineering <span class="eyebrow-divider">/</span> Financial Systems <span class="eyebrow-divider">/</span> Applied AI
-        </p>
+      <div class="hero-topline">
+        <span class="hero-topline-label">ENGINEERING PORTFOLIO</span>
+        <p class="hero-role">Software Engineer · Full-Stack &amp; Applied AI</p>
+      </div>
 
+      <nav class="hero-pillars" aria-label="Professional focus areas">
+        <span>Software Engineering</span>
+        <span>Financial Systems</span>
+        <span>Applied AI</span>
+      </nav>
+
+      <div class="hero-copy" data-reveal>
         <h1 id="hero-title">
           Engineering useful systems<br />
           for <span class="accent-text">real-world problems.</span>
@@ -3037,7 +3043,103 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 </style>
 
 
+<style is:global>
+  /* Final desktop alignment and consistent spacing */
+  .portfolio-shell > .hero.section-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
 
+  .hero-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    margin: 0 0 clamp(30px, 4vw, 48px);
+  }
 
+  .hero-topline-label {
+    color: #7f8b9e;
+    font: 500 0.68rem/1.4 "JetBrains Mono", monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
 
+  .hero-role {
+    margin: 0;
+    color: #d6dce7;
+    font-size: clamp(0.82rem, 1.1vw, 0.98rem);
+    font-weight: 500;
+    text-align: right;
+  }
 
+  .hero-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    margin: 0 0 clamp(38px, 5vw, 62px);
+    padding: 20px 0;
+    border-top: 1px solid rgba(145, 164, 255, 0.2);
+    border-bottom: 1px solid rgba(145, 164, 255, 0.2);
+  }
+
+  .hero-pillars span {
+    min-width: 0;
+    color: #aeb9ca;
+    font: 500 clamp(0.72rem, 1.15vw, 0.98rem)/1.5 "JetBrains Mono", monospace;
+    letter-spacing: 0.015em;
+  }
+
+  .hero-pillars span:nth-child(1) { text-align: left; }
+  .hero-pillars span:nth-child(2) { text-align: center; }
+  .hero-pillars span:nth-child(3) { text-align: right; }
+
+  .portfolio-shell > .hero .hero-copy {
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .portfolio-shell > .section-block {
+    padding-top: clamp(12px, 1.35vw, 20px) !important;
+  }
+
+  .portfolio-shell > .section-block .section-heading {
+    margin-bottom: clamp(18px, 2vw, 26px);
+  }
+
+  @media (max-width: 760px) {
+    .hero-topline {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .hero-role { text-align: left; }
+
+    .hero-pillars {
+      gap: 10px;
+      margin-bottom: 34px;
+      padding: 15px 0;
+    }
+
+    .hero-pillars span {
+      font-size: clamp(0.58rem, 2.25vw, 0.78rem);
+      letter-spacing: -0.02em;
+    }
+
+    .portfolio-shell > .section-block {
+      padding-top: 18px !important;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .hero-pillars { gap: 6px; }
+    .hero-pillars span { font-size: 0.56rem; }
+  }
+</style>
