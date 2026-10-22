@@ -1,7 +1,6 @@
 ﻿
 ---
 import Layout from "../layouts/Layout.astro";
-import MoneyCalculatorTransition from "../components/MoneyCalculatorTransition.astro";
 import ProjectArchiveCTA from "../components/ProjectArchiveCTA.astro";
 import WritingSection from "../components/WritingSection.astro";
 import { digitalMarketingRepos } from "../data/digital-marketing-projects";
@@ -140,50 +139,31 @@ const getExperienceDate = (experience: any) =>
           {contact?.linkedin && <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
         </nav>
 
-        <div class="hero-facts" aria-label="Engineering focus">
-          <div class="hero-fact">
-            <span class="fact-value">LEDGER</span>
-            <span class="fact-label">Connected transactions</span>
-          </div>
-          <div class="hero-fact">
-            <span class="fact-value">LIFECYCLE</span>
-            <span class="fact-label">Loans and repayments</span>
-          </div>
-          <div class="hero-fact">
-            <span class="fact-value">AUDIT</span>
-            <span class="fact-label">Reversible changes</span>
-          </div>
-        </div>
+
       </div>
 
       
-      <div class="hero-visual engineering-console" data-reveal aria-label="Engineering system profile">
-        <div class="console-topline">
-          <span><i class="console-dot"></i> ENGINEERING / SYSTEM PROFILE</span>
-          <span>BG.SYS_01</span>
+
+    </section>
+
+    <!-- CV DOWNLOAD -->
+    <section class="cv-download section-wrap section-block" id="cv" aria-labelledby="cv-title">
+      <div class="cv-download-card" data-reveal>
+        <div class="cv-download-copy">
+          <p class="section-kicker">CURRICULUM VITAE</p>
+          <h2 id="cv-title">A clear view of my <span class="accent-text">experience.</span></h2>
+          <p>
+            A concise CV covering my CSE degree, professional experience,
+            technical skills, and selected software projects.
+          </p>
+          <div class="cv-highlights">
+            <span>B.Sc. CSE · AIUB · CGPA 3.83/4.00</span>
+            <span>Software projects · IT support · AI/ML internship</span>
+          </div>
         </div>
-        <div class="console-title">
-          <span class="console-kicker">FLAGSHIP BUILD</span>
-          <h2>Money<span class="console-accent">Calculator</span></h2>
-          <p>Personal finance workflows built around connected ledger records.</p>
-        </div>
-        <div class="console-divider"></div>
-        <div class="console-row">
-          <span class="console-index">01</span>
-          <span class="console-label">FINANCIAL LEDGER</span>
-          <span class="console-state">IMPLEMENTED</span>
-        </div>
-        <div class="console-row">
-          <span class="console-index">02</span>
-          <span class="console-label">LOAN LIFECYCLE</span>
-          <span class="console-state">IMPLEMENTED</span>
-        </div>
-        <div class="console-row">
-          <span class="console-index">03</span>
-          <span class="console-label">REVERSIBLE HISTORY</span>
-          <span class="console-state">IMPLEMENTED</span>
-        </div>
-        <div class="console-bottomline"><span>FINANCIAL SYSTEMS</span><span>BUILD / WITH PURPOSE ↗</span></div>
+        <a class="button button-primary cv-download-button" href="/cv.pdf" download="Barshan-Ghosh-CV.pdf">
+          Download CV (PDF) <span aria-hidden="true">↓</span>
+        </a>
       </div>
     </section>
 
@@ -203,8 +183,6 @@ const getExperienceDate = (experience: any) =>
           </div>
           <span class="section-side-note">Personal finance / Web application</span>
         </div>
-
-        <MoneyCalculatorTransition />
 
         <div class="flagship-card" data-reveal>
           <div class="flagship-content">
@@ -424,22 +402,23 @@ const getExperienceDate = (experience: any) =>
 
               <div class="project-art" aria-hidden="true">
                                 {projectId(project) === "asta-store" ? (
-                  <div class="art-asta-animation">
-                    <iframe
-                      src="/asta-store-animation.html"
-                      title="Asta Store e-commerce animation"
-                      loading="lazy"
-                      tabindex="-1"
-                    ></iframe>
+                  <div class="art-asta-animation" aria-hidden="true">
+                    <div class="art-store">
+                      <div class="store-topbar"><span></span><span></span><span></span></div>
+                      <div class="store-body">
+                        <div class="store-copy"><i></i><i></i><i></i></div>
+                        <div class="store-product"><span class="product-shape"></span></div>
+                      </div>
+                      <div class="store-footer"><i></i><i></i><i></i></div>
+                    </div>
                   </div>
                 ) : projectId(project) === "mount-royal-academy" ? (
-                  <div class="art-academy-animation">
-                    <iframe
-                      src="/mount-royal-academy-animation.html"
-                      title="Mount Royal Academy animation"
-                      loading="lazy"
-                      tabindex="-1"
-                    ></iframe>
+                  <div class="art-academy-animation" aria-hidden="true">
+                    <div class="art-academy">
+                      <div class="academy-header"><span></span><span></span></div>
+                      <div class="academy-hero"><span class="academy-sun"></span><div class="academy-building"></div></div>
+                      <div class="academy-cards"><i></i><i></i><i></i></div>
+                    </div>
                   </div>
                 ) : projectId(project) === "biot-thesis" ? (  
                 
@@ -542,8 +521,8 @@ const getExperienceDate = (experience: any) =>
             <a href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener noreferrer">
               <span><strong>Digital Coaching Management</strong><small>Google Sheets + Apps Script · student records and payment tracking</small></span><span aria-hidden="true">↗</span>
             </a>
-            <a href="/student-performance-dashboard.html" target="_blank" rel="noopener noreferrer">
-              <span><strong>Student Performance Dashboard</strong><small>Animated analytics demo with fictional sample data</small></span><span aria-hidden="true">↗</span>
+            <a href="/walkthroughs/">
+              <span><strong>Interactive project gallery</strong><small>Explore all seven animated project walkthroughs</small></span><span aria-hidden="true">↗</span>
             </a>
             <a href="https://github.com/barshan94/999_NATIONAL_EMERGENCY_SERVICE" target="_blank" rel="noopener noreferrer">
               <span><strong>999 Emergency Service concept</strong><small>Public-service workflow prototype · not a live dispatch service</small></span><span aria-hidden="true">↗</span>
@@ -3200,6 +3179,62 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 
 
 
+
+
+  /* Recruiter-first layout: the hero is intentionally text-led. */
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+    padding-bottom: clamp(52px, 7vw, 84px);
+  }
+  .hero-copy { max-width: 850px; }
+  .hero .hero-actions { margin-top: 28px; }
+  .cv-download { padding-top: 0; }
+  .cv-download-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: clamp(24px, 4vw, 42px);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 14px;
+    background: linear-gradient(125deg, rgba(86, 214, 194, 0.07), rgba(255,255,255,0.015));
+  }
+  .cv-download-copy { max-width: 690px; }
+  .cv-download-copy h2 {
+    margin: 8px 0 12px;
+    font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+    letter-spacing: -0.055em;
+    line-height: 1.1;
+  }
+  .cv-download-copy > p:not(.section-kicker) {
+    max-width: 620px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .cv-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .cv-highlights span {
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+  .cv-download-button { flex: 0 0 auto; white-space: nowrap; }
+  .art-asta-animation,
+  .art-academy-animation { display: grid; place-items: center; }
+  .art-asta-animation .art-store,
+  .art-academy-animation .art-academy { width: 78%; }
+  @media (max-width: 760px) {
+    .cv-download-card { align-items: flex-start; flex-direction: column; }
+    .cv-download-button { width: fit-content; }
+  }
 
 </style>
 
