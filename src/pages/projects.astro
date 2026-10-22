@@ -1,6 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
 import { githubRepositories, repositoryCategories } from "../data/github-repositories";
+
+const projectEntries = (await getCollection("projects")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
 
 const groups = repositoryCategories.slice(1).map((category) => ({
   category,
@@ -23,6 +28,26 @@ const groups = repositoryCategories.slice(1).map((category) => ({
         <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">Open GitHub profile ↗</a>
       </div>
     </header>
+
+    <section class="project-records" aria-labelledby="project-records-title">
+      <div class="group-heading"><h2 id="project-records-title">Project case-study records</h2><span>{projectEntries.length} entries</span></div>
+      <div class="project-record-grid">
+        {projectEntries.map((project) => (
+          <article class="project-record">
+            <p class="record-status">{project.data.status === "in-progress" ? "IN PROGRESS" : "PROJECT RECORD"}</p>
+            <h3>{project.data.title}</h3>
+            <p>{project.data.description}</p>
+            {project.data.tags.length > 0 && (
+              <div class="record-tags">{project.data.tags.slice(0, 4).map((tag) => <span>{tag}</span>)}</div>
+            )}
+            <div class="record-links">
+              {project.data.repo && <a href={project.data.repo} target="_blank" rel="noopener noreferrer">Source ↗</a>}
+              {project.data.live && <a href={project.data.live} target="_blank" rel="noopener noreferrer">Live project ↗</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
 
     <section class="archive-tools" aria-label="Repository filters">
       <label for="repo-search">Search repositories</label>
@@ -105,6 +130,17 @@ const groups = repositoryCategories.slice(1).map((category) => ({
   .archive-stats { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 26px; padding-top: 20px; border-top: 1px solid #27272a; color: #a1a1aa; font-size: .82rem; }
   .archive-stats strong { color: #f4f4f5; }
   .archive-stats a { color: #a7f3d0; text-decoration: none; }
+  .project-records { margin: 8px 0 38px; }
+  .project-record-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .project-record { min-width: 0; display: flex; flex-direction: column; padding: 18px; border: 1px solid #292c31; border-radius: 10px; background: #0c0f13; }
+  .record-status { margin: 0 0 10px; color: #a7f3d0; font: .65rem/1.5 "JetBrains Mono", monospace; letter-spacing: .1em; }
+  .project-record h3 { margin: 0 0 8px; font-size: 1rem; }
+  .project-record > p:not(.record-status) { flex: 1; margin: 0 0 14px; color: #b4b4bc; font-size: .82rem; line-height: 1.7; }
+  .record-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; }
+  .record-tags span { padding: 4px 7px; border: 1px solid #34363c; border-radius: 5px; color: #b4b4bc; font-size: .66rem; }
+  .record-links { display: flex; flex-wrap: wrap; gap: 14px; }
+  .record-links a { color: #a7f3d0; font-size: .78rem; text-decoration: none; }
+  .record-links a:hover { text-decoration: underline; }
   .archive-tools { position: sticky; top: 8px; z-index: 4; padding: 18px; margin: 16px 0 38px; border: 1px solid #303238; border-radius: 12px; background: rgb(10 12 15 / 94%); backdrop-filter: blur(12px); }
   .archive-tools label { display: block; margin-bottom: 8px; color: #d4d4d8; font-size: .8rem; }
   .archive-tools input { width: 100%; padding: 12px 13px; border: 1px solid #3f3f46; border-radius: 8px; background: #080a0d; color: #f4f4f5; font: inherit; font-size: .9rem; }
@@ -128,7 +164,7 @@ const groups = repositoryCategories.slice(1).map((category) => ({
   .repository-card a { align-self: flex-start; color: #a7f3d0; text-decoration: none; font-size: .78rem; }
   .repository-card a:hover { text-decoration: underline; }
   .archive-footnote { padding-top: 18px; border-top: 1px solid #27272a; color: #92939b; font-size: .78rem; line-height: 1.7; }
-  @media (max-width: 850px) { .repository-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 600px) { .archive-shell { width: calc(100% - 30px); } .repository-grid { grid-template-columns: 1fr; } .archive-tools { position: static; } .group-heading h2 { font-size: 1.05rem; } }
+  @media (max-width: 850px) { .repository-grid, .project-record-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .archive-shell { width: calc(100% - 30px); } .repository-grid, .project-record-grid { grid-template-columns: 1fr; } .archive-tools { position: static; } .group-heading h2 { font-size: 1.05rem; } }
   @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>
