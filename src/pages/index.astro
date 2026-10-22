@@ -1,7 +1,6 @@
 ﻿
 ---
 import Layout from "../layouts/Layout.astro";
-import WritingSection from "../components/WritingSection.astro";
 import { getCollection } from "astro:content";
 
 const allProjects = await getCollection("projects");
@@ -149,6 +148,7 @@ const getExperienceDate = (experience: any) =>
           </a>
         </div>
         <nav class="hero-quick-links" aria-label="Professional links">
+          {contact?.email && <a href={`mailto:${contact.email}`}>Email ↗</a>}
           <a href={contact?.github || "https://github.com/barshan94"} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           {contact?.linkedin && <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
         </nav>
@@ -479,8 +479,6 @@ const getExperienceDate = (experience: any) =>
       </section>
     )}
 
-    <WritingSection />
-
     <!-- CONTACT -->
     <section
       class="contact section-wrap section-block"
@@ -489,7 +487,7 @@ const getExperienceDate = (experience: any) =>
     >
       <div class="contact-wrap" data-reveal>
         <div class="contact-copy">
-          <p class="section-kicker">05 — CONTACT</p>
+          <p class="section-kicker">04 — CONTACT</p>
           <h2 id="contact-title">
             Have a good<br />
             <span class="accent-text">problem to solve?</span>
@@ -673,7 +671,7 @@ const getExperienceDate = (experience: any) =>
   }
 
   .section-block {
-    padding-top: clamp(88px, 12vw, 150px);
+    padding-top: clamp(56px, 6.5vw, 88px);
   }
 
   .eyebrow,
@@ -2186,7 +2184,7 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     }
 
     .section-block {
-      padding-top: 88px;
+      padding-top: 58px;
     }
 
     .hero {
