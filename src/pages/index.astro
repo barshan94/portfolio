@@ -224,8 +224,10 @@ const getExperienceDate = (experience: any) =>
                     ? "E-commerce"
                     : projectId(project) === "mount-royal-academy"
                       ? "Education"
-                      : projectId(project) === "biot-thesis"
-                        ? "Thesis"
+                      : projectId(project) === "keyword-research"
+                        ? "Digital marketing"
+                        : projectId(project) === "biot-thesis"
+                          ? "Thesis"
                         : projectId(project) === "student-performance-dashboard"
                           ? "Analytics"
                           : projectId(project) === "digital-coaching-management"
@@ -249,6 +251,18 @@ const getExperienceDate = (experience: any) =>
                 ) : projectId(project) === "asta-store" ? (
                   <div class="art-asta-thumbnail">
                     <img src="/images/asta-store-thumbnail.svg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                ) : projectId(project) === "keyword-research" ? (
+                  <div class="art-marketing-system">
+                    <span class="marketing-art-orbit orbit-a"></span>
+                    <span class="marketing-art-orbit orbit-b"></span>
+                    <span class="marketing-art-node node-search">SEO</span>
+                    <span class="marketing-art-node node-local">LOCAL</span>
+                    <span class="marketing-art-node node-video">VIDEO</span>
+                    <span class="marketing-art-node node-ads">ADS</span>
+                    <span class="marketing-art-node node-content">CONTENT</span>
+                    <span class="marketing-art-node node-automation">AUTOMATION</span>
+                    <span class="marketing-art-core">GROWTH</span>
                   </div>
                 ) : projectId(project) === "mount-royal-academy" ? (
                   <div class="art-academy-thumbnail">
