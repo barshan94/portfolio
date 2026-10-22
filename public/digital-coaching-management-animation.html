@@ -72,8 +72,8 @@ canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
 #static-fallback p{font-size:clamp(13px,1.5vw,16px);line-height:1.65;color:#a9c0c7}
 #static-fallback .tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:20px}
 #static-fallback .tags span{font-size:11px;color:#b8e8e5;border:1px solid rgba(77,212,216,.24);padding:7px 10px;border-radius:999px}
-#demo-note{position:fixed;left:50%;bottom:38px;transform:translateX(-50%);z-index:45;max-width:calc(100vw - 24px);color:rgba(140,190,195,.62);font:9px/1.5 system-ui,sans-serif;letter-spacing:.04em;text-align:center;pointer-events:none;white-space:normal}
-@media(max-width:600px){#demo-note{bottom:38px;font-size:8px}}
+#demo-note{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:45;max-width:calc(100vw - 24px);color:rgba(140,190,195,.72);font:9px/1.5 system-ui,sans-serif;letter-spacing:.04em;text-align:center;pointer-events:none;white-space:normal;background:rgba(7,8,10,.7);padding:4px 8px;border-radius:4px}
+@media(max-width:600px){#demo-note{bottom:8px;font-size:8px;max-width:94vw}}
 </style>
 </head>
 <body>
@@ -82,14 +82,14 @@ canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
   <div class="panel">
     <div class="eyebrow">Google Sheets · Apps Script</div>
     <h1>Coaching Spreadsheet<br>Automation</h1>
-    <p>A small automation that adds the missing current-date column to the attendance sheet and the missing current-month column to the payment sheet—without duplicating existing headers.</p>
-    <div class="tags"><span>Attendance date</span><span>Payment month</span><span>Duplicate-safe headers</span></div>
+    <p>An illustrative coaching workflow: enter HW, assignment, quiz and mock-exam marks; prepare WhatsApp follow-up links; and generate weekly, monthly, payment and attendance reports. The linked Apps Script currently implements duplicate-safe attendance-date and payment-month headers.</p>
+    <div class="tags"><span>HW · Assignment · Quiz · Mock</span><span>WhatsApp follow-up</span><span>4 report types</span></div>
   </div>
 </div>
 <div id="title">
   <h1 id="tN">Coaching Spreadsheet<br><b>Automation</b></h1>
   <div class="rule" id="tR"></div>
-  <p id="tP">Attendance date · Payment month columns</p>
+  <p id="tP">Exam marks · WhatsApp links · Weekly / monthly reports</p>
 </div>
 <div id="dbg" hidden></div>
 <div id="ctrls">
@@ -99,7 +99,7 @@ canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1}
 </div>
 <button id="skip">Skip ↗</button>
 <div id="hud"><span id="phL"></span><div id="prog"><div id="progF"></div></div></div>
-<div id="demo-note">Illustrative sample rows · Apps Script only adds missing attendance-date and payment-month headers</div>
+<div id="demo-note">CONCEPT WORKFLOW · Sample data only · WhatsApp opens a prepared message; it is not silently auto-sent · Linked Apps Script currently adds attendance-date and payment-month headers</div>
 <script>
 var c=document.getElementById('c');
 var ctx=c.getContext('2d');
@@ -135,17 +135,20 @@ var PURPLE='#a78bfa',WHITE='#e2eef2',DIM='rgba(176,206,214,0.42)';
 var GRID1='rgba(46,66,76,0.13)',GRID2='rgba(58,84,96,0.22)';
 
 /* ── Timeline ───────────────────────── */
-var PD=[2.4,3.6,3.2,3.4,3.4,3.0,3.6,4.2,3.5];
+var PD=[2.4,3.2,3.0,3.2,3.0,2.6,3.6,2.8,2.8,2.8,2.8,4.0];
 var PL=[
-  'initializing spreadsheet automation',
+  'initializing coaching workflow',
   'opening attendance sheet',
   'checking today\'s date column',
   'opening payment sheet',
   'checking current month column',
-  'avoiding duplicate headers',
-  'verifying spreadsheet automation',
-  'attendance + payment column automation',
-  'google sheets · apps script'
+  'entering HW · assignment · quiz · mock marks',
+  'preparing WhatsApp follow-up link',
+  'building weekly progress report',
+  'building monthly progress report',
+  'building payment report',
+  'building attendance report',
+  'coaching workflow · Sheets · reports · follow-up'
 ];
 var TOT=0,PS=[];
 for(var i=0;i<PD.length;i++){PS.push(TOT);TOT+=PD[i]}
@@ -303,7 +306,7 @@ function drawPanel(ox,oy,pw,ph2,label,labelCol,alpha){
 function drAttendance(ph){
   if(ph.i<2)return;
   var ap=ph.i===2?eio(cl(ph.p*1.3,0,1)):1;
-  var fd=ph.i>=4?cl(1-ph.p*1.2,0,1):1;
+  var fd=ph.i===4?cl(1-ph.p*1.2,0,1):(ph.i>4?0:1);
   var v=ap*fd;if(v<.01)return;
 
   var ox=W*(mob?.03:.06),oy=H*(mob?.12:.13);
@@ -378,7 +381,7 @@ function drAttendance(ph){
 function drPayments(ph){
   if(ph.i<3)return;
   var ap=ph.i===3?eio(cl(ph.p*1.3,0,1)):1;
-  var fd=ph.i>=5?cl(1-ph.p*1.2,0,1):1;
+  var fd=ph.i===5?cl(1-ph.p*1.2,0,1):(ph.i>5?0:1);
   var v=ap*fd;if(v<.01)return;
 
   var ox=W*(mob?.52:.54),oy=H*(mob?.12:.13);
@@ -440,6 +443,115 @@ function drPayments(ph){
 }
 
 /* ═══════ LIGHT SWEEP ═══════ */
+/* ═══════ EXAMS, WHATSAPP & REPORT WORKFLOW ═══════
+   Concept illustration only; it does not connect to a live spreadsheet or send messages. */
+function drWorkflow(ph){
+  if(ph.i<5)return;
+  var stage=ph.i-5;
+  var enter=eio(cl(ph.p*2.8,0,1));
+  var leave=(ph.i===11)?cl(1-ph.p*1.8,0,1):1;
+  var a=enter*leave;
+  if(a<.01)return;
+  var pw=Math.min(W*(mob?.94:.78),920*S);
+  var px=(W-pw)/2;
+  var phh=Math.min(H*(mob?.60:.57),430*S);
+  var py=H*(mob?.17:.18);
+  if(py+phh>H-48)py=Math.max(58,H-phh-58);
+  var pad=mob?12:22,head=mob?43:54,innerW=pw-pad*2,small=mob,fs=small?7:10;
+  var rowH=Math.min((small?23:30)*S,(phh-head-pad*2)*.19);
+  var title=stage===0?'ASSESSMENT MARKS':stage===1?'WHATSAPP FOLLOW-UP':stage===2?'WEEKLY PROGRESS REPORT':stage===3?'MONTHLY SUMMARY':stage===4?'PAYMENT REPORT':stage===5?'ATTENDANCE REPORT':'COACHING WORKFLOW';
+  var accent=stage===0?PURPLE:stage===1?GREEN:stage===4?AMBER:CYAN;
+  ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba(7,12,16,.94)';ctx.strokeStyle=ha(accent,.46);ctx.lineWidth=1;
+  ctx.beginPath();ctx.roundRect(px,py,pw,phh,10*S);ctx.fill();ctx.stroke();
+  ctx.fillStyle=ha(accent,.12);ctx.beginPath();ctx.roundRect(px+1,py+1,pw-2,head,9*S);ctx.fill();
+  ctx.fillStyle=accent;ctx.font='600 '+((mob?8:10)*S)+'px system-ui,sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('COACHING DESK  /  '+title,px+pad,py+head*.46);
+  ctx.fillStyle=ha(GREEN,.95);ctx.font='600 '+((mob?6:8)*S)+'px system-ui,sans-serif';ctx.textAlign='right';
+  ctx.fillText('ILLUSTRATIVE',px+pw-pad,py+head*.46);
+  ctx.strokeStyle=ha(accent,.24);ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(px+pad,py+head);ctx.lineTo(px+pw-pad,py+head);ctx.stroke();
+  var top=py+head+pad,bottom=py+phh-pad,contentH=bottom-top;
+  function txt(str,x,y,size,color,weight,align){
+    ctx.fillStyle=color||WHITE;ctx.font=(weight||'400')+' '+(size*S)+'px system-ui,sans-serif';
+    ctx.textAlign=align||'left';ctx.textBaseline='middle';ctx.fillText(str,x,y);
+  }
+  function line(x1,y1,x2,y2,color){
+    ctx.strokeStyle=color||ha(CYAN,.15);ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+  }
+  function chip(label,x,y,w,color){
+    ctx.fillStyle=ha(color,.13);ctx.strokeStyle=ha(color,.4);ctx.lineWidth=.6;
+    ctx.beginPath();ctx.roundRect(x,y-rowH*.34,w,rowH*.68,4*S);ctx.fill();ctx.stroke();
+    txt(label,x+w/2,y,small?6.2:8,color,'600','center');
+  }
+  if(stage===0){
+    txt('STUDENT',px+pad,top+rowH*.5,fs,DIM,'600');
+    var labels=['HW','ASSIGN','QUIZ','MOCK'],nameW=innerW*(small?.31:.28),colW=(innerW-nameW)/4;
+    labels.forEach(function(label,j){txt(label,px+pad+nameW+colW*(j+.5),top+rowH*.5,small?6:8,[CYAN,PURPLE,AMBER,GREEN][j],'600','center')});
+    line(px+pad,top+rowH,px+pw-pad,top+rowH,ha(CYAN,.3));
+    var names=['Aarav S.','Fatima B.','Ravi P.','Sneha D.'],scores=[[8,9,7,16],[9,8,9,18],[7,8,8,15],[10,9,9,19]];
+    for(var r=0;r<4;r++){
+      var yy=top+rowH*(r+1.5);txt(names[r],px+pad,yy,fs,DIM,'400');
+      for(var j=0;j<4;j++)txt(String(scores[r][j])+(j===3?'/20':'/10'),px+pad+nameW+colW*(j+.5),yy,fs,j===3?GREEN:WHITE,'500','center');
+      line(px+pad,yy+rowH*.5,px+pw-pad,yy+rowH*.5,ha(CYAN,.1));
+    }
+    var by=top+rowH*5.5;chip('MARKS ENTERED',px+pad,by,innerW*.38,GREEN);
+    txt('HW  /  ASSIGNMENT  /  QUIZ  /  MOCK',px+pad+innerW*.43,by,small?5.8:8,DIM,'500');
+  }else if(stage===1){
+    txt('RESULT MESSAGE · READY TO OPEN',px+pad,top+fs,fs,GREEN,'600');
+    var msgY=top+rowH*1.45,msgH=Math.min(contentH*.48,rowH*3.1);
+    ctx.fillStyle='rgba(30,100,68,.12)';ctx.strokeStyle=ha(GREEN,.3);ctx.lineWidth=.6;
+    ctx.beginPath();ctx.roundRect(px+pad,msgY,innerW,msgH,6*S);ctx.fill();ctx.stroke();
+    txt('Assalamu Alaikum, Guardian.',px+pad+10*S,msgY+rowH*.65,fs,WHITE,'500');
+    txt('Assessment marks are ready for this week.',px+pad+10*S,msgY+rowH*1.45,small?6.6:9,DIM,'400');
+    txt('HW 8/10 · Assignment 9/10 · Quiz 7/10',px+pad+10*S,msgY+rowH*2.2,small?6.1:8,CYAN,'500');
+    var btnY=Math.min(bottom-rowH*.6,msgY+msgH+rowH*.8),bw=Math.min(innerW*.62,250*S);
+    ctx.fillStyle=ha(GREEN,.22);ctx.strokeStyle=ha(GREEN,.8);ctx.lineWidth=.8;
+    ctx.beginPath();ctx.roundRect(px+pad,btnY-rowH*.55,bw,rowH*1.1,5*S);ctx.fill();ctx.stroke();
+    txt('↗  OPEN WHATSAPP MESSAGE',px+pad+bw/2,btnY,small?6.4:9,GREEN,'600','center');
+    txt('Prefilled link · teacher reviews and clicks Send',px+pad+bw+10*S,btnY,small?5.3:7,DIM,'400');
+  }else if(stage>=2&&stage<=5){
+    var reportNames=['WEEKLY REPORT','MONTHLY REPORT','PAYMENT REPORT','ATTENDANCE REPORT'],idx=stage-2;
+    var metrics=[
+      [['Classes','12'],['Assessments','4'],['Avg. score','82%'],['Follow-ups','8']],
+      [['Students','24'],['Avg. score','84%'],['Homework','91%'],['Trend','+6%']],
+      [['Expected','৳24,000'],['Received','৳21,000'],['Pending','৳3,000'],['Collection','87.5%']],
+      [['Sessions','20'],['Present','18'],['Absent','2'],['Attendance','90%']]
+    ][idx];
+    txt(reportNames[idx]+'  /  THIS PERIOD',px+pad,top+fs,fs,accent,'600');
+    var gap=small?6:10,cardW=(innerW-gap*3)/4,cardY=top+rowH*1.5,cardH=Math.min(contentH*.43,rowH*2.65);
+    metrics.forEach(function(m,j){
+      var cx=px+pad+j*(cardW+gap);
+      ctx.fillStyle='rgba(24,35,43,.78)';ctx.strokeStyle=ha(accent,.28);ctx.lineWidth=.6;
+      ctx.beginPath();ctx.roundRect(cx,cardY,cardW,cardH,5*S);ctx.fill();ctx.stroke();
+      txt(m[0],cx+cardW/2,cardY+cardH*.28,small?5.5:7,DIM,'500','center');
+      txt(m[1],cx+cardW/2,cardY+cardH*.62,small?7.5:12,j===2&&idx===2?AMBER:WHITE,'600','center');
+    });
+    var barY=cardY+cardH+rowH*.65;txt('PREPARED SUMMARY',px+pad,barY,small?5.8:8,DIM,'600');
+    var barW=innerW*.58;ctx.fillStyle=ha(accent,.12);ctx.beginPath();ctx.roundRect(px+pad,barY+rowH*.45,barW,rowH*.32,3*S);ctx.fill();
+    ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(px+pad,barY+rowH*.45,barW*(idx===2?.875:idx===3?.9:.82),rowH*.32,3*S);ctx.fill();
+    var actionW=Math.min(innerW*.28,180*S);ctx.fillStyle=ha(GREEN,.16);ctx.strokeStyle=ha(GREEN,.55);ctx.lineWidth=.6;
+    ctx.beginPath();ctx.roundRect(px+pw-pad-actionW,bottom-rowH*.9,actionW,rowH*.9,4*S);ctx.fill();ctx.stroke();
+    txt('↗  SHARE REPORT',px+pw-pad-actionW/2,bottom-rowH*.45,small?5.7:8,GREEN,'600','center');
+  }else{
+    var cards=[
+      ['01','ASSESSMENTS','HW · Assignment · Quiz · Mock',PURPLE],
+      ['02','FOLLOW-UP','Prefilled WhatsApp links',GREEN],
+      ['03','REPORTS','Weekly · Monthly · Payment · Attendance',CYAN],
+      ['04','SHEETS','Attendance date · Payment month',AMBER]
+    ];
+    var gap=small?7:12,cardW=(innerW-gap*3)/4,cardY=top+rowH*.5,cardH=Math.min(contentH*.58,rowH*3.6);
+    cards.forEach(function(card,j){
+      var cx=px+pad+j*(cardW+gap);
+      ctx.fillStyle='rgba(24,35,43,.78)';ctx.strokeStyle=ha(card[3],.36);ctx.lineWidth=.7;
+      ctx.beginPath();ctx.roundRect(cx,cardY,cardW,cardH,6*S);ctx.fill();ctx.stroke();
+      txt(card[0],cx+cardW/2,cardY+rowH*.55,small?7:10,card[3],'600','center');
+      txt(card[1],cx+cardW/2,cardY+rowH*1.35,small?5.7:8,WHITE,'600','center');
+      card[2].split(' · ').forEach(function(lineText,k){if(k<(small?3:4))txt(lineText,cx+cardW/2,cardY+rowH*(2.05+k*.65),small?4.7:6.8,DIM,'400','center')});
+    });
+    txt('A connected workflow concept — not a live integration demo',px+pw/2,bottom-rowH*.45,small?6:8,DIM,'400','center');
+  }
+  ctx.restore();
+}
+
 function drSweep(ph){
   if(ph.i!==7)return;
   var sp=eio(ph.p);if(sp<.01)return;
@@ -509,12 +621,13 @@ function loop(now){
   drBrand(ph);
   drAttendance(ph);
   drPayments(ph);
+  drWorkflow(ph);
   drSweep(ph);
   drFilm();
   document.getElementById('static-fallback').classList.add('ready');
 
-  if(ph.i>=7&&ph.p>.18)showT();
-  if(ph.i>=8)document.getElementById('skip').classList.add('off');
+  if(ph.i>=11&&ph.p>.18)showT();
+  if(ph.i>=11)document.getElementById('skip').classList.add('off');
   document.getElementById('phL').textContent=PL[ph.i];
   document.getElementById('progF').style.width=(sk/TOT*100)+'%';
   dbg.textContent='F:'+fc+' T:'+t.toFixed(1)+'s PH:'+ph.i+' '+W+'x'+H;
