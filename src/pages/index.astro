@@ -679,6 +679,38 @@ const getExperienceDate = (experience: any) =>
     padding-top: clamp(18px, 2vw, 28px);
   }
 
+  .education-card,
+  .certification-card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  }
+  .education-card-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .education-card h3,
+  .certification-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .education-card-heading > span {
+    color: var(--muted);
+    font-size: .76rem;
+  }
+  .education-card p,
+  .languages-block p {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: .86rem;
+    line-height: 1.7;
+  }
+
+
   .section-heading {
     margin-bottom: clamp(18px, 2vw, 26px);
   }
