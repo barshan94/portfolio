@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">Barshan Ghosh — contact and systems thumbnail</title>
+<desc id="desc">A dark technical composition with connected network nodes, an abstract analytics dashboard, data charts, and ledger rows.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090b10"/><stop offset="1" stop-color="#111a2a"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#39c5b0" stop-opacity=".14"/><stop offset=".55" stop-color="#7b8cff" stop-opacity=".04"/><stop offset="1" stop-color="#090b10" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#283044" stroke-opacity=".38" stroke-width="1"/></pattern>
+  <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#39c5b0"/><stop offset="1" stop-color="#79f0d7"/></linearGradient>
+  <linearGradient id="indigo" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7b8cff"/><stop offset="1" stop-color="#a3b0ff"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#000" flood-opacity=".35"/></filter>
+</defs>
+<rect width="1600" height="1200" fill="url(#bg)"/><rect width="1600" height="1200" fill="url(#grid)"/><circle cx="800" cy="570" r="620" fill="url(#glow)"/>
+<g opacity=".5" fill="none" stroke-width="1.5">
+  <path d="M260 330L360 440L280 560L390 660L330 770M260 330L440 360L520 480L390 660M360 440L520 480L560 630L390 660" stroke="#39c5b0" stroke-opacity=".34"/>
+  <path d="M1300 300L1200 420L1330 520L1220 660L1340 790M1300 300L1150 340L1200 420L1070 520L1220 660" stroke="#7b8cff" stroke-opacity=".34"/>
+  <path d="M330 770C520 880 620 850 760 790M1340 790C1170 900 1060 860 920 790" stroke="#68758f" stroke-opacity=".28"/>
+</g>
+<g fill="#0e1924" stroke="#39c5b0" stroke-opacity=".75">
+  <circle cx="260" cy="330" r="13"/><circle cx="360" cy="440" r="10"/><circle cx="280" cy="560" r="9"/><circle cx="390" cy="660" r="12"/><circle cx="330" cy="770" r="8"/><circle cx="440" cy="360" r="9"/><circle cx="520" cy="480" r="11"/><circle cx="560" cy="630" r="8"/>
+</g>
+<g fill="#0e1924" stroke="#7b8cff" stroke-opacity=".8">
+  <circle cx="1300" cy="300" r="12"/><circle cx="1200" cy="420" r="10"/><circle cx="1330" cy="520" r="9"/><circle cx="1220" cy="660" r="12"/><circle cx="1340" cy="790" r="8"/><circle cx="1150" cy="340" r="9"/><circle cx="1070" cy="520" r="11"/>
+</g>
+<g filter="url(#shadow)">
+  <rect x="445" y="180" width="710" height="700" rx="18" fill="#111827" stroke="#38445c" stroke-opacity=".9"/>
+  <path d="M445 236H1155" stroke="#354057"/>
+  <circle cx="470" cy="208" r="5" fill="#ff756e"/><circle cx="488" cy="208" r="5" fill="#ffc45d"/><circle cx="506" cy="208" r="5" fill="#43d99b"/>
+  <text x="535" y="214" fill="#eaf0f6" font-family="system-ui, sans-serif" font-size="17" font-weight="650">SYSTEM OVERVIEW</text>
+  <text x="1124" y="214" fill="#8996ad" font-family="monospace" font-size="12" text-anchor="end">LIVE DATA / STRUCTURE</text>
+</g>
+<text x="492" y="284" fill="#8c9ab0" font-family="monospace" font-size="12" letter-spacing="2">ANALYTICS / PERFORMANCE</text>
+<g stroke="#354057" stroke-opacity=".6" stroke-width="1">
+  <path d="M492 330H1108M492 385H1108M492 440H1108M492 495H1108"/>
+</g>
+<path d="M492 478L540 450L585 461L630 416L675 430L720 380L765 395L810 350L855 368L900 326L945 345L990 306L1035 320L1080 288L1108 298L1108 500L492 500Z" fill="#39c5b0" fill-opacity=".1"/>
+<path d="M492 478L540 450L585 461L630 416L675 430L720 380L765 395L810 350L855 368L900 326L945 345L990 306L1035 320L1080 288L1108 298" fill="none" stroke="url(#teal)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M492 463L540 472L585 442L630 450L675 420L720 434L765 410L810 416L855 390L900 402L945 378L990 389L1035 363L1080 371L1108 354" fill="none" stroke="url(#indigo)" stroke-width="2.5" stroke-dasharray="6 7" stroke-linecap="round"/>
+<g>
+  <rect x="492" y="535" width="190" height="102" rx="9" fill="#0b121e" stroke="#2c394e"/>
+  <rect x="702" y="535" width="190" height="102" rx="9" fill="#0b121e" stroke="#2c394e"/>
+  <rect x="912" y="535" width="196" height="102" rx="9" fill="#0b121e" stroke="#2c394e"/>
+  <text x="512" y="562" fill="#8996ad" font-family="monospace" font-size="11" letter-spacing="1">SYSTEM HEALTH</text>
+  <text x="512" y="603" fill="#dffcf6" font-family="system-ui, sans-serif" font-size="28" font-weight="700">99.9%</text>
+  <text x="722" y="562" fill="#8996ad" font-family="monospace" font-size="11" letter-spacing="1">DATA FLOW</text>
+  <text x="722" y="603" fill="#b7c2ff" font-family="system-ui, sans-serif" font-size="28" font-weight="700">Stable</text>
+  <text x="932" y="562" fill="#8996ad" font-family="monospace" font-size="11" letter-spacing="1">CONNECTED</text>
+  <text x="932" y="603" fill="#dffcf6" font-family="system-ui, sans-serif" font-size="28" font-weight="700">12 nodes</text>
+</g>
+<text x="492" y="682" fill="#8c9ab0" font-family="monospace" font-size="12" letter-spacing="2">EVENT LEDGER</text>
+<path d="M492 703H1108M492 747H1108M492 791H1108M492 835H1108" stroke="#2a3548"/>
+<g font-family="system-ui, sans-serif" font-size="14">
+  <circle cx="507" cy="725" r="4" fill="#39c5b0"/><text x="526" y="730" fill="#d8e1ee">Service connected</text><text x="1090" y="730" fill="#8c9ab0" text-anchor="end" font-family="monospace" font-size="12">OK / 09:41</text>
+  <circle cx="507" cy="769" r="4" fill="#7b8cff"/><text x="526" y="774" fill="#d8e1ee">Data pipeline checked</text><text x="1090" y="774" fill="#8c9ab0" text-anchor="end" font-family="monospace" font-size="12">PASS / 09:42</text>
+  <circle cx="507" cy="813" r="4" fill="#39c5b0"/><text x="526" y="818" fill="#d8e1ee">System state reconciled</text><text x="1090" y="818" fill="#8c9ab0" text-anchor="end" font-family="monospace" font-size="12">SYNC / 09:43</text>
+</g>
+<g fill="none" stroke="#27364a">
+  <rect x="110" y="435" width="260" height="310" rx="14" fill="#0d131e" stroke-opacity=".9"/>
+  <rect x="1230" y="435" width="260" height="310" rx="14" fill="#0d131e" stroke-opacity=".9"/>
+</g>
+<text x="140" y="475" fill="#a9b5c9" font-family="monospace" font-size="12" letter-spacing="1.5">NETWORK MAP</text>
+<text x="1260" y="475" fill="#a9b5c9" font-family="monospace" font-size="12" letter-spacing="1.5">DATA STREAM</text>
+<g fill="none" stroke="#39c5b0" stroke-opacity=".4" stroke-width="2">
+  <path d="M240 530L180 600L285 645L330 570L240 530L285 645L180 690L330 570"/>
+</g>
+<g fill="#101e2b" stroke="#39c5b0" stroke-width="2">
+  <circle cx="240" cy="530" r="11"/><circle cx="180" cy="600" r="9"/><circle cx="285" cy="645" r="12"/><circle cx="330" cy="570" r="8"/><circle cx="180" cy="690" r="8"/>
+</g>
+<g>
+  <rect x="1260" y="515" width="190" height="24" rx="4" fill="#172132"/><rect x="1260" y="515" width="116" height="24" rx="4" fill="#39c5b0" fill-opacity=".34"/>
+  <rect x="1260" y="558" width="190" height="24" rx="4" fill="#172132"/><rect x="1260" y="558" width="142" height="24" rx="4" fill="#7b8cff" fill-opacity=".34"/>
+  <rect x="1260" y="601" width="190" height="24" rx="4" fill="#172132"/><rect x="1260" y="601" width="88" height="24" rx="4" fill="#39c5b0" fill-opacity=".34"/>
+  <rect x="1260" y="644" width="190" height="24" rx="4" fill="#172132"/><rect x="1260" y="644" width="160" height="24" rx="4" fill="#7b8cff" fill-opacity=".34"/>
+  <rect x="1260" y="687" width="190" height="24" rx="4" fill="#172132"/><rect x="1260" y="687" width="126" height="24" rx="4" fill="#39c5b0" fill-opacity=".34"/>
+</g>
+<g fill="none" stroke="#39c5b0" stroke-opacity=".22" stroke-width="2">
+  <path d="M370 585C405 585 414 520 445 520"/><path d="M1155 520C1190 520 1195 585 1230 585"/>
+</g>
+<text x="110" y="1065" fill="#c7d2e5" font-family="system-ui, sans-serif" font-size="20" font-weight="650">CONNECT · ANALYSE · BUILD</text>
+<text x="110" y="1098" fill="#7f8ca3" font-family="monospace" font-size="13" letter-spacing="2">SOFTWARE / SYSTEMS / APPLIED AI</text>
+<text x="1490" y="1098" fill="#7f8ca3" font-family="monospace" font-size="12" text-anchor="end">BG / PORTFOLIO</text>
+</svg>
