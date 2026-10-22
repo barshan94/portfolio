@@ -7,6 +7,7 @@
 <title>Money Calculator — Cinematic Transition</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;background:#07090D;color:#eaf0f6;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}#stage{position:fixed;inset:0;display:grid;place-items:center}canvas{display:block;width:100%;height:100%}.ctl{position:fixed;right:14px;bottom:12px;display:flex;gap:6px;opacity:.24;transition:opacity .25s}.ctl:hover,.ctl:focus-within{opacity:1}.ctl button{background:#111923d9;color:#aab4c4;border:1px solid #46546b80;border-radius:6px;padding:6px 10px;font:600 11px/1.4 system-ui;cursor:pointer;letter-spacing:.04em}.ctl button:hover,.ctl button:focus-visible{background:#202c3a;color:#fff;outline:2px solid #39e6d0;outline-offset:2px}
+body.embed .ctl{display:none!important}
 </style>
 </head>
 <body>
@@ -14,6 +15,7 @@
 <script>
 (function(){
 "use strict";
+if(new URLSearchParams(window.location.search).get("embed")==="1")document.body.classList.add("embed");
 var cv=document.getElementById("cv"),ctx=cv.getContext("2d"),DW=1600,DH=900,TAU=Math.PI*2,LOOP=24;
 var FN='Inter,system-ui,-apple-system,"Segoe UI",sans-serif',MO='ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace';
 var C={bg:"#07090D",cy:[57,230,208],bl:[100,140,255],am:[255,191,105],tx:[234,240,246],mu:[132,146,166],ln:[70,90,120]};
