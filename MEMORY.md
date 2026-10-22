@@ -1,11 +1,27 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-16 (portfolio audit: corrected CSS load order, reduced haze, simplified first load, and reorganized projects)
+Last updated: 2026-10-22 (interactive gallery playback and demo-to-repository alignment)
 
 ---
 
-## Current portfolio audit (2026-10-16)
+## Current portfolio audit (2026-10-22)
+
+- Homepage: removed the full-width “EXPLORE THE FULL BODY OF WORK” CTA block. The Selected Projects heading now contains a compact primary link to `/walkthroughs/` and a secondary link to `/projects/`, preserving both destinations with less vertical space.
+- Walkthroughs: Money Calculator is the featured animation and starts automatically unless the visitor prefers reduced motion. The remaining six demos load inside their own cards after one click; no separate video modal or second play click is required.
+- Performance/accessibility: only one animation is active at a time; starting another demo stops the previous one. Reduced-motion visitors see a static featured poster and can choose whether to start motion.
+- Demo/repository alignment audit:
+  - Money Calculator is a cinematic ledger visualization, not a screenshot or live UI; its source repo remains the source of truth for implemented financial features.
+  - Asta Store animation covers catalog browsing and adding an item to the bag; checkout/admin features exist in the linked repository but are not shown in this animation.
+  - Student Performance Dashboard is an Excel-based academic analytics project; animation data is fictional.
+  - Mount Royal Academy animation is a school-themed motion piece, not a screen-by-screen preview of the actual website/admin interface.
+  - 999 is an academic C# Windows Forms / SQL Server concept, not a live emergency service.
+  - Digital Growth & Marketing is an overview of 12 separate repositories/workflows, not one deployed software platform.
+  - Digital Coaching Management animation was narrowed to the two automations in the current `Code.js`: add today's date to the Attendance sheet and the current month to the Payment sheet when absent. Student registry/reporting/communication scenes no longer render as if implemented.
+- Build routing: the four root-level HTML animations (Asta, Mount Royal, 999, Digital Growth) are copied to `dist/` by `copy-academy-animation.mjs`; Money Calculator, Student Performance, and Coaching animations are served from `public/`.
+- Verification still required after these commits: confirm the production build/deployment and inspect the live page. Do not claim a successful deployment until Vercel status and the live site confirm it.
+
+## Previous portfolio audit (2026-10-16)
 
 - The page hierarchy is now: hero → featured Money Calculator → selected project cards → interactive project walkthroughs → experience → skills → writing → contact.
 - Removed the forced startup overlay so visitors can read the page immediately.
