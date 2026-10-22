@@ -3,81 +3,205 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080b10">
-<title>Money Calculator — Financial System</title>
+<meta name="theme-color" content="#f8fafc">
+<title>Money Calculator — Animated Product Walkthrough</title>
 <style>
-:root{color-scheme:dark;--bg:#080b10;--panel:#101821;--line:#253542;--muted:#8fa2b2;--white:#edf7fa;--teal:#57e0c0;--cyan:#74cfff;--amber:#ffc879}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-body{display:grid;place-items:center;padding:0}.frame{position:relative;width:100%;max-width:1600px;aspect-ratio:16/9;overflow:hidden;background:radial-gradient(ellipse at 52% 44%,#14252d 0%,#0b1118 43%,#080b10 78%);isolation:isolate}
-canvas{display:block;width:100%;height:100%}.grain{position:absolute;inset:0;pointer-events:none;opacity:.13;background-image:radial-gradient(#d7f7ff 0.45px,transparent .65px);background-size:5px 5px;mix-blend-mode:screen}
-.controls{display:flex;justify-content:center;padding:14px}.controls button{border:1px solid #334753;background:#14212a;color:#dffaf5;border-radius:9px;padding:10px 15px;font-weight:650;cursor:pointer}.controls button:hover{border-color:var(--teal)}
-body.embed{display:block;padding:0;overflow:hidden}.embed .frame{width:100%;max-width:none;height:100vh;height:100svh;aspect-ratio:auto}.embed .controls{display:none}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+:root{color-scheme:light;--bg:#f8fafc;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#16a34a;--red:#dc2626}
+*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink)}
+body{display:grid;place-items:center}.frame{position:relative;width:100%;max-width:1600px;aspect-ratio:16/9;overflow:hidden;background:#f8fafc;isolation:isolate;border:1px solid #dbe3ed}canvas{display:block;width:100%;height:100%}.controls{display:flex;justify-content:center;gap:8px;padding:12px}.controls button{border:1px solid #cbd5e1;background:#fff;color:#334155;border-radius:8px;padding:9px 13px;font-size:12px;font-weight:650;cursor:pointer}.controls button:hover{border-color:#2563eb;color:#2563eb}
+body.embed{display:block;overflow:hidden}body.embed .frame{width:100%;max-width:none;height:100vh;height:100svh;aspect-ratio:auto;border:0}body.embed .controls{display:none}
+@media(prefers-reduced-motion:reduce){.controls button{transition:none}}
 </style>
 </head>
 <body>
-<main class="frame" aria-label="Money Calculator financial system illustration">
-<canvas id="art" width="1600" height="900" role="img" aria-label="Money Calculator connects a double-entry ledger with accounts, financial assistant, budgets, loans, recurring transactions, investments, tuition, and reports."></canvas>
-<div class="grain" aria-hidden="true"></div>
+<main class="frame" aria-label="Animated Money Calculator product walkthrough">
+<canvas id="art" width="1600" height="900" role="img" aria-label="Animated tour of the Money Calculator financial application: dashboard, double-entry transactions, accounts, loans and repayments, tuition payments, budgets and goals, investments and assets, and financial reports."></canvas>
 </main>
-<div class="controls"><button id="download" type="button">Download PNG · 1600 × 900</button></div>
+<div class="controls"><button id="replay" type="button">↻ Replay walkthrough</button><button id="pause" type="button">Ⅱ Pause</button><button id="download" type="button">Download current frame · PNG</button></div>
 <script>
 (function(){
   const params=new URLSearchParams(location.search);
-  if(params.get('embed')==='1') document.body.classList.add('embed');
+  const embedded=params.get('embed')==='1';
+  if(embedded)document.body.classList.add('embed');
   const canvas=document.getElementById('art'),ctx=canvas.getContext('2d');
-  const W=1600,H=900;
-  const C={bg:'#080b10',panel:'#101821',line:'#253542',muted:'#8fa2b2',white:'#edf7fa',teal:'#57e0c0',cyan:'#74cfff',amber:'#ffc879'};
-  function roundRect(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.5;ctx.stroke()}}
-  function text(s,x,y,size,color,weight='400',align='left'){ctx.font=weight+' '+size+'px Inter, ui-sans-serif, system-ui, sans-serif';ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(s,x,y)}
-  function line(x1,y1,x2,y2,color,width=1){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()}
-  function glow(x,y,r,color){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2)}
+  const W=1600,H=900,DURATION=5.25,COUNT=8,TOTAL=DURATION*COUNT;
+  const C={bg:'#f8fafc',white:'#ffffff',ink:'#0f172a',muted:'#64748b',line:'#e2e8f0',blue:'#2563eb',blueSoft:'#eff6ff',green:'#16a34a',greenSoft:'#f0fdf4',red:'#dc2626',redSoft:'#fef2f2',amber:'#d97706',amberSoft:'#fffbeb',sidebar:'#0b1220',sidebarText:'#94a3b8',sidebarActive:'#2563eb'};
+  const screens=[
+    {title:'Dashboard',sub:'Your financial picture, at a glance',nav:0},
+    {title:'Transactions',sub:'Every entry traceable, balanced, and auditable',nav:2},
+    {title:'Accounts',sub:'Balances calculated from ledger activity',nav:1},
+    {title:'Loans',sub:'Track money lent, borrowed, and repayments',nav:3},
+    {title:'Tuition',sub:'Monthly fees, payment history, and outstanding amounts',nav:12},
+    {title:'Budgets & goals',sub:'Plan spending and track progress toward targets',nav:5},
+    {title:'Investments & assets',sub:'Monitor investments, deposits, and long-term assets',nav:6},
+    {title:'Reports & insights',sub:'Understand trends, forecasts, and financial health',nav:11}
+  ];
+  const navItems=[['⌂','Dashboard'],['◫','Accounts'],['↔','Transactions'],['↗','Loans'],['▦','Categories'],['◉','Budgets'],['↗','Investments'],['⌂','Long-term assets'],['▣','Deposits'],['↻','Recurring'],['◎','Goals'],['▥','Reports'],['▣','Tuition'],['⌕','Search'],['✳','Financial assistant'],['◑','Audit log']];
+  let playing=true,elapsed=0,last=performance.now(),raf=0,reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+  const ease=v=>{v=clamp(v);return v*v*(3-2*v)};
+  function rr(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.3;ctx.stroke()}}
+  function txt(s,x,y,size=14,color=C.ink,weight=400,align='left'){ctx.font=weight+' '+size+'px Inter,ui-sans-serif,system-ui,sans-serif';ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline='alphabetic';ctx.fillText(String(s),x,y)}
+  function ln(x1,y1,x2,y2,color=C.line,width=1){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()}
+  function circ(x,y,r,fill,stroke){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.4;ctx.stroke()}}
+  function money(n){return '৳'+Math.round(n).toLocaleString('en-BD')}
+  function pill(label,x,y,color=C.green,bg=C.greenSoft,w){ctx.font='600 11px Inter,system-ui,sans-serif';const ww=w||ctx.measureText(label).width+20;rr(x,y-16,ww,24,6,bg);txt(label,x+ww/2,y,color===C.red?C.red:color,600,'center');return ww}
+  function base(scene,p,t){
+    ctx.fillStyle=C.bg;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=C.white;ctx.fillRect(0,0,W,66);ln(0,65,W,65);
+    rr(28,18,30,30,8,'#dbeafe');txt('৳',43,39,19,C.blue,800,'center');
+    txt('Money Calculator',69,38,19,C.ink,750);
+    circ(683,32,4,C.green);txt('Personal finance workspace',696,37,12,C.muted,500);txt('/',858,37,12,'#cbd5e1',400);txt('Demo account',873,37,12,C.muted,500);
+    rr(1320,17,146,32,7,C.white,C.line);txt('October 2026  ▾',1393,38,12,'#475569',550,'center');circ(1514,33,16,'#dbeafe');txt('BG',1514,37,11,'#1d4ed8',750,'center');
+    ctx.fillStyle=C.sidebar;ctx.fillRect(0,66,240,834);
+    txt('WORKSPACE',26,103,10,'#64748b',750);
+    navItems.forEach((it,i)=>{const y=128+i*39;const active=i===scene.nav;if(active){rr(12,y-21,216,32,7,'#172f55');rr(12,y-21,3,32,2,C.blue);};txt(it[0],30,y,17,active?'#bfdbfe':C.sidebarText,650);txt(it[1],58,y,12,active?'#ffffff':C.sidebarText,active?650:450);});
+    ln(18,777,222,777,'#253246');txt('MONEY CALCULATOR',26,804,10,'#cbd5e1',700);txt('Ledger-first finance',26,826,11,'#94a3b8',450);txt('BDT · Illustrative demo',26,846,10,'#64748b',450);
+    const x=276;txt('OVERVIEW  /  '+scene.title.toUpperCase(),x,104,10,C.blue,750);
+    txt(scene.title,x,145,29,C.ink,750);txt(scene.sub,x,173,13,C.muted,400);
+    rr(1390,112,150,38,8,C.blue);txt(scene.title==='Transactions'?'+ Add transaction':scene.title==='Loans'?'+ New loan':scene.title==='Tuition'?'+ Record payment':scene.title==='Budgets & goals'?'+ New budget':scene.title==='Accounts'?'+ New account':scene.title==='Investments & assets'?'+ Add asset':scene.title==='Reports & insights'?'View all reports':'＋ Quick action',1465,136,12,C.white,650,'center');
+    txt('ILLUSTRATIVE DEMO DATA · BDT · NOT CONNECTED TO LIVE ACCOUNT',W-26,H-17,10,'#64748b',650,'right');
+  }
+  function card(x,y,w,h,title,sub){rr(x,y,w,h,11,C.white,C.line);if(title)txt(title,x+18,y+27,13,C.ink,700);if(sub)txt(sub,x+18,y+46,10,C.muted,450)}
+  function metric(x,y,w,label,value,foot,accent=C.blue,p=1){
+    rr(x,y,w,104,10,C.white,C.line);circ(x+23,y+24,11,accent===C.green?C.greenSoft:accent===C.red?C.redSoft:C.blueSoft);txt(label,x+41,y+28,11,C.muted,550);
+    txt(money(value*ease(p)),x+17,y+63,23,C.ink,750);txt(foot,x+17,y+84,10,accent,550);
+  }
+  function drawDashboard(p,t){
+    metric(276,202,296,'Income this month',58400,'↑ 8.4% vs last month',C.green,p);
+    metric(586,202,296,'Expenses this month',32750,'↑ 2.1% vs last month',C.red,p);
+    metric(896,202,296,'Available balance',74280,'Across active accounts',C.blue,p);
+    metric(1206,202,334,'Net worth',186500,'↑ 4.6% this month',C.green,p);
+    card(276,324,780,285,'Cash flow','Income and expenses · last six months');
+    const gx=320,gy=384,gw=690,gh=165;for(let i=0;i<4;i++)ln(gx,gy+i*48,gx+gw,gy+i*48,'#eef2f7');
+    txt('60k',290,gy+4,10,C.muted);txt('40k',290,gy+52,10,C.muted);txt('20k',290,gy+100,10,C.muted);txt('0',300,gy+148,10,C.muted);
+    const income=[.55,.72,.63,.81,.76,.95],expense=[.28,.4,.34,.47,.43,.53],months=['May','Jun','Jul','Aug','Sep','Oct'];
+    function chart(vals,color){ctx.beginPath();vals.forEach((v,i)=>{const xx=gx+12+i*(gw-24)/5,yy=gy+150-v*135*ease(p);if(i===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy)});ctx.strokeStyle=color;ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();vals.forEach((v,i)=>{const xx=gx+12+i*(gw-24)/5,yy=gy+150-v*135*ease(p);circ(xx,yy,4,C.white,color)});}
+    chart(income,C.blue);chart(expense,'#f59e0b');months.forEach((m,i)=>txt(m,gx+12+i*(gw-24)/5,gy+174,10,C.muted,450,'center'));
+    pill('Income',855,354,C.blue,C.blueSoft,70);pill('Expenses',936,354,C.amber,C.amberSoft,80);
+    card(1074,324,466,285,'Financial position','A connected view of your money');
+    const stats=[['Money lent','৳18,000',C.blue],['Money borrowed','৳12,000',C.red],['Deposits','৳45,000',C.green],['Investments','৳32,000',C.blue],['Active goals','3',C.amber]];
+    stats.forEach((r,i)=>{const yy=390+i*38;txt(r[0],1094,yy,12,C.muted,450);txt(r[1],1515,yy,13,r[2],700,'right');if(i<stats.length-1)ln(1094,yy+12,1517,yy+12,'#f1f5f9')});
+    card(276,630,780,213,'Recent activity','Latest posted entries · reversal-aware');
+    const rows=[['Salary','Income','+ ৳45,000',C.green],['Groceries','Expense','− ৳3,250',C.red],['Savings transfer','Transfer','৳5,000',C.blue],['Loan repayment','Repayment','৳2,000',C.blue]];
+    rows.forEach((r,i)=>{const yy=686+i*36,alpha=ease((p*1.25-i*.16));ctx.globalAlpha=alpha;circ(298,yy-4,9,r[3]===C.green?C.greenSoft:r[3]===C.red?C.redSoft:C.blueSoft);txt('↔',298,yy,11,r[3],700,'center');txt(r[0],318,yy,12,C.ink,550);txt(r[1],620,yy,11,C.muted);txt(r[2],1019,yy,12,r[3],700,'right');ctx.globalAlpha=1;if(i<3)ln(294,yy+12,1035,yy+12,'#f1f5f9')});
+    card(1074,630,466,213,'Goals & budgets','Progress based on recorded activity');
+    [['Emergency fund',68,C.blue],['Monthly essentials',72,C.green],['Laptop savings',43,C.amber]].forEach((r,i)=>{const yy=687+i*48;txt(r[0],1094,yy,11,C.muted,550);txt(Math.round(r[1]*ease(p))+'%',1515,yy,11,C.ink,700,'right');rr(1094,yy+8,421,7,4,'#e2e8f0');rr(1094,yy+8,421*r[1]*ease(p)/100,7,4,r[2])});
+  }
+  function table(x,y,w,headers,rows,p,widths){
+    const h=42;rr(x,y,w,rows.length*44+h,10,C.white,C.line);ctx.fillStyle='#f8fafc';ctx.fillRect(x+1,y+1,w-2,h);
+    let xx=x+16;headers.forEach((head,i)=>{txt(head,xx,y+26,10,C.muted,700);xx+=widths[i]});ln(x,y+h,x+w,y+h);
+    rows.forEach((row,i)=>{const q=ease((p*1.4-i*.16));ctx.globalAlpha=q;const yy=y+h+29+i*44;let cx=x+16;row.forEach((v,j)=>{const col=typeof v==='object'?v.color:C.ink;const val=typeof v==='object'?v.text:v;txt(val,cx,yy,11,col,j===0?600:500);cx+=widths[j]});ctx.globalAlpha=1;if(i<rows.length-1)ln(x+12,yy+15,x+w-12,yy+15,'#f1f5f9')});
+  }
+  function drawTransactions(p,t){
+    metric(276,202,296,'Income',58400,'This month',C.green,p);metric(586,202,296,'Expenses',32750,'This month',C.red,p);metric(896,202,296,'Net cash flow',25650,'Income minus expenses',C.blue,p);metric(1206,202,334,'Reversed entries',2,'Audit trail retained',C.amber,p);
+    card(276,324,1264,500,'Ledger entries','Balanced debit / credit records · edits and voids leave an audit trail');
+    const headers=['DESCRIPTION','CATEGORY','ACCOUNT','DATE','AMOUNT','STATUS'];const widths=[245,190,230,145,190,170];
+    table(292,382,1232,headers,[
+      ['Salary','Income','Bank account','Oct 20, 2026',{text:'+ ৳45,000',color:C.green},{text:'POSTED ✓',color:C.green}],
+      ['Groceries','Food','Cash wallet','Oct 19, 2026',{text:'− ৳3,250',color:C.red},{text:'POSTED ✓',color:C.green}],
+      ['Transfer to savings','Transfer','Bank → Savings','Oct 18, 2026',{text:'৳5,000',color:C.blue},{text:'MATCHED ✓',color:C.green}],
+      ['Loan repayment','Loan','bKash wallet','Oct 17, 2026',{text:'৳2,000',color:C.blue},{text:'LINKED ✓',color:C.green}],
+      ['Old duplicate entry','Adjustment','Bank account','Oct 16, 2026',{text:'৳800',color:C.muted},{text:'REVERSED ↩',color:C.amber}]
+    ],p,widths);
+    const q=ease((p-.18)*1.8);if(q>0){ctx.globalAlpha=q;rr(1110,740,390,51,9,C.blueSoft,'#bfdbfe');txt('✓ Ledger balanced',1130,761,12,C.blue,700);txt('The reversal remains in the audit history.',1130,779,10,C.muted,450);ctx.globalAlpha=1;}
+  }
+  function drawAccounts(p,t){
+    const cards=[['Bank account','Savings · BDT',42800,C.blue],['Cash wallet','Cash · BDT',6450,C.green],['bKash wallet','Mobile money · BDT',15030,C.amber],['Emergency fund','Savings · BDT',10000,C.green]];
+    cards.forEach((a,i)=>{const x=276+(i%2)*638,y=202+Math.floor(i/2)*155;card(x,y,614,132,a[0],a[1]);circ(x+34,y+77,16,a[3]===C.green?C.greenSoft:a[3]===C.amber?C.amberSoft:C.blueSoft);txt('৳',x+34,y+82,16,a[3],750,'center');txt(money(a[2]*ease(p)),x+64,y+84,23,C.ink,750);txt('Ledger-calculated balance',x+64,y+105,10,C.muted,450);pill('ACTIVE',x+492,y+36,C.green,C.greenSoft,76)});
+    card(276,528,1278,295,'Account activity','Transactions and transfers update balances through ledger entries');
+    table(292,585,1246,['ACCOUNT','TYPE','OPENING BALANCE','ACTIVITY','CURRENT BALANCE'],[
+      ['Bank account','Asset','৳25,000','+ ৳17,800',{text:'৳42,800',color:C.blue}],
+      ['Cash wallet','Asset','৳8,000','− ৳1,550',{text:'৳6,450',color:C.blue}],
+      ['bKash wallet','Asset','৳12,000','+ ৳3,030',{text:'৳15,030',color:C.blue}]
+    ],p,[240,180,230,230,230]);
+  }
+  function drawLoans(p,t){
+    metric(276,202,396,'Money lent outstanding',18000,'Receivable · 2 contacts',C.blue,p);metric(690,202,396,'Money borrowed',12000,'Payable · 1 contact',C.red,p);metric(1104,202,436,'Repayments recorded',12000,'Linked to original loans',C.green,p);
+    const loans=[{name:'Tanvir Ahmed',kind:'Money lent',principal:20000,paid:8000,left:12000,c:C.blue},{name:'Samira Rahman',kind:'Money lent',principal:10000,paid:4000,left:6000,c:C.blue},{name:'Rafi Hasan',kind:'Money borrowed',principal:15000,paid:3000,left:12000,c:C.red}];
+    loans.forEach((l,i)=>{const x=276+i*426,y=330;card(x,y,406,248,l.name,l.kind);circ(x+36,y+76,20,'#dbeafe');txt(l.name.split(' ').map(n=>n[0]).join(''),x+36,y+80,11,C.blue,750,'center');txt('Outstanding balance',x+20,y+125,11,C.muted);txt(money(l.left),x+20,y+158,26,C.ink,750);txt('Principal '+money(l.principal),x+20,y+185,10,C.muted);txt('Repaid '+money(l.paid*ease(p)),x+20,y+207,10,C.green,600);rr(x+20,y+219,366,6,4,'#e2e8f0');rr(x+20,y+219,366*(l.paid/l.principal)*ease(p),6,4,l.c)});
+    card(276,601,1270,223,'Repayment history','Each repayment is linked to its loan and ledger transaction');
+    table(292,652,1238,['CONTACT','DATE','PAYMENT ACCOUNT','REPAYMENT','RECORD'],[
+      ['Tanvir Ahmed','Oct 20, 2026','Bank account',{text:'৳2,000',color:C.green},{text:'Linked ✓',color:C.green}],
+      ['Samira Rahman','Oct 18, 2026','bKash wallet',{text:'৳1,500',color:C.green},{text:'Linked ✓',color:C.green}],
+      ['Rafi Hasan','Oct 16, 2026','Cash wallet',{text:'৳3,000',color:C.red},{text:'Linked ✓',color:C.green}]
+    ],p,[230,190,260,220,200]);
+  }
+  function drawTuition(p,t){
+    metric(276,202,396,'Expected this month',24000,'3 active students',C.blue,p);metric(690,202,396,'Collected',19500,'81.25% collected',C.green,p);metric(1104,202,436,'Still due',4500,'Not counted as cash',C.red,p);
+    card(276,324,1264,150,'Monthly collection progress','Payments linked to account and transaction records');txt('Collection rate',298,381,12,C.muted);txt(Math.round(81.25*ease(p))+'%',1515,381,15,C.green,750,'right');rr(298,398,1217,13,7,'#e2e8f0');rr(298,398,1217*.8125*ease(p),13,7,C.green);txt('৳19,500 received',298,432,11,C.green,650);txt('৳4,500 outstanding',1515,432,11,C.red,650,'right');
+    card(276,495,1264,328,'Students & monthly payment status','Record a payment, inspect history, or review late-payment reliability');
+    table(292,551,1232,['STUDENT','MONTHLY FEE','PAID','REMAINING','STATUS','ACTION'],[
+      ['Nabil Hasan','৳8,000','৳8,000',{text:'৳0',color:C.green},{text:'PAID ✓',color:C.green},{text:'Payment history',color:C.blue}],
+      ['Maliha Islam','৳8,000','৳6,500',{text:'৳1,500',color:C.red},{text:'PARTIAL',color:C.amber},{text:'Record payment',color:C.blue}],
+      ['Rayan Ahmed','৳8,000','৳5,000',{text:'৳3,000',color:C.red},{text:'PARTIAL',color:C.amber},{text:'Record payment',color:C.blue}]
+    ],p,[220,170,160,180,170,210]);
+  }
+  function drawBudgets(p,t){
+    metric(276,202,396,'Active budgets',5,'Across spending categories',C.blue,p);metric(690,202,396,'Within budget',4,'One category needs attention',C.green,p);metric(1104,202,436,'Savings goals',3,'Track target and current amount',C.amber,p);
+    card(276,324,780,493,'Budget progress','Actual expenses compared with planned limits');
+    const b=[['Food & groceries',8500,10000,C.green],['Transport',3400,4000,C.green],['Bills',6200,6000,C.red],['Personal',2800,5000,C.blue]];
+    b.forEach((r,i)=>{const y=391+i*92;txt(r[0],300,y,13,C.ink,650);txt(money(r[1])+' / '+money(r[2]),1018,y,12,r[3],650,'right');rr(300,y+17,718,10,5,'#e2e8f0');rr(300,y+17,718*Math.min(1,r[1]/r[2])*ease(p),10,5,r[3]);txt(Math.round(r[1]/r[2]*100)+'% used',300,y+48,10,C.muted);if(r[1]>r[2])pill('OVER LIMIT',899,y+47,C.red,C.redSoft,108)});
+    card(1074,324,466,493,'Savings goals','Progress toward your chosen targets');
+    [['Emergency fund',45000,65000,C.blue],['Laptop upgrade',18000,40000,C.green],['Travel fund',9000,30000,C.amber]].forEach((r,i)=>{const y=395+i*125;txt(r[0],1096,y,13,C.ink,650);txt(money(r[1])+' / '+money(r[2]),1516,y+24,11,C.muted,500,'right');rr(1096,y+37,420,10,5,'#e2e8f0');rr(1096,y+37,420*r[1]/r[2]*ease(p),10,5,r[3]);txt(Math.round(r[1]/r[2]*100)+'% saved',1096,y+67,10,r[3],650)});
+  }
+  function drawAssets(p,t){
+    metric(276,202,396,'Investment value',32000,'Portfolio snapshot',C.blue,p);metric(690,202,396,'Fixed deposits',45000,'Principal across active deposits',C.green,p);metric(1104,202,436,'Long-term assets',125000,'Land and property estimates',C.amber,p);
+    card(276,324,1264,260,'Investment portfolio','Track units, cost basis, current value, and realized or unrealized gains');
+    table(292,376,1232,['INVESTMENT','TYPE','INVESTED','CURRENT VALUE','GAIN / LOSS','STATUS'],[
+      ['Gold holdings','Commodity','৳18,000','৳19,200',{text:'+ ৳1,200',color:C.green},{text:'ACTIVE',color:C.green}],
+      ['Index fund','Fund','৳10,000','৳10,850',{text:'+ ৳850',color:C.green},{text:'ACTIVE',color:C.green}],
+      ['Shares','Equity','৳5,000','৳4,700',{text:'− ৳300',color:C.red},{text:'ACTIVE',color:C.green}]
+    ],p,[220,170,180,210,190,150]);
+    card(276,607,616,214,'Fixed deposits','Principal, interest rate, maturity date, maturity value');txt('Bank FDR · 12 months',298,674,13,C.ink,650);txt('৳45,000 principal',298,697,11,C.muted);pill('ACTIVE',775,674,C.green,C.greenSoft,82);rr(298,722,550,8,4,'#e2e8f0');rr(298,722,550*ease(p),8,4,C.green);txt('Maturity amount: ৳50,400',298,755,12,C.green,650);
+    card(912,607,628,214,'Long-term assets','Purchase cost and current valuation');txt('Land / property',934,674,13,C.ink,650);txt('Cost basis',934,703,11,C.muted);txt('৳110,000',1515,703,12,C.ink,650,'right');txt('Current value',934,734,11,C.muted);txt('৳125,000',1515,734,12,C.green,700,'right');txt('Value updates and sales are recorded in the ledger.',934,779,10,C.muted);
+  }
+  function drawReports(p,t){
+    metric(276,202,396,'Net worth',186500,'Assets less liabilities',C.blue,p);metric(690,202,396,'Cash-flow forecast',31000,'Projected next month',C.green,p);metric(1104,202,436,'Financial health',82,'Illustrative score / 100',C.amber,p);
+    card(276,324,780,310,'Net-worth trend','Historical values and a forward-looking projection');
+    const gx=315,gy=387,gw=695,gh=175;for(let i=0;i<4;i++)ln(gx,gy+i*43,gx+gw,gy+i*43,'#eef2f7');
+    const hist=[.32,.4,.37,.52,.58,.65,.7,.79,.87],labels=['Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
+    ctx.beginPath();hist.forEach((v,i)=>{const xx=gx+i*gw/(hist.length-1),yy=gy+145-v*140*ease(p);if(i===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy)});ctx.strokeStyle=C.blue;ctx.lineWidth=3;ctx.lineJoin='round';ctx.stroke();
+    ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(gx+gw*.78,gy+145-hist[7]*140*ease(p));ctx.lineTo(gx+gw,gy+145-.97*140*ease(p));ctx.strokeStyle=C.green;ctx.lineWidth=2;ctx.stroke();ctx.setLineDash([]);
+    labels.forEach((m,i)=>txt(m,gx+i*gw/(labels.length-1),gy+168,10,C.muted,450,'center'));pill('Actual',834,355,C.blue,C.blueSoft,62);pill('Forecast',906,355,C.green,C.greenSoft,82);
+    card(1074,324,466,310,'Financial insights','Signals derived from recorded financial activity');
+    [['Liquidity outlook','Healthy',C.green],['Budget warning','Bills over limit',C.amber],['Tuition outstanding','৳4,500',C.red],['Recurring expenses','5 scheduled',C.blue]].forEach((r,i)=>{const y=389+i*50;circ(1096,y-4,5,r[2]);txt(r[0],1112,y,11,C.muted,500);txt(r[1],1515,y,11,r[2],650,'right');if(i<3)ln(1094,y+14,1518,y+14,'#f1f5f9')});
+    card(276,654,1264,170,'Planning tools','Reports use real records in the app; this animation uses synthetic demo figures');
+    [['Cash-flow forecast','6-month projection'],['Goal forecast','Target-date estimates'],['What-if scenarios','Compare possible outcomes'],['Audit log','Changes and reversals']].forEach((r,i)=>{const x=298+i*310;rr(x,700,286,92,8,'#f8fafc',C.line);txt(r[0],x+14,728,12,C.ink,650);txt(r[1],x+14,751,10,C.muted,450);txt('Open report  ↗',x+14,775,10,C.blue,650)});
+  }
+  function drawScene(scene,p,t){
+    base(scene,p,t);
+    if(scene.nav===0)drawDashboard(p,t);
+    else if(scene.nav===2)drawTransactions(p,t);
+    else if(scene.nav===1)drawAccounts(p,t);
+    else if(scene.nav===3)drawLoans(p,t);
+    else if(scene.nav===12)drawTuition(p,t);
+    else if(scene.nav===5)drawBudgets(p,t);
+    else if(scene.nav===6)drawAssets(p,t);
+    else drawReports(p,t);
+  }
+  function cursor(t,scene,p){
+    const from=[1420,132],to=scene.nav===0?[480,247]:scene.nav===2?[95,206]:scene.nav===1?[94,167]:scene.nav===3?[94,245]:scene.nav===12?[96,596]:scene.nav===5?[95,362]:scene.nav===6?[95,401]:[95,595];
+    const start=[1420,132],end=to,q=ease((p-.08)/.48);const x=start[0]+(end[0]-start[0])*q+Math.sin(t*2.3)*2,y=start[1]+(end[1]-start[1])*q+Math.cos(t*2)*2;
+    ctx.save();ctx.globalAlpha=.92;ctx.translate(x,y);ctx.rotate(-.22);ctx.fillStyle='#0f172a';ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,26);ctx.lineTo(7,19);ctx.lineTo(14,31);ctx.lineTo(19,28);ctx.lineTo(12,16);ctx.lineTo(22,16);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
+    if(p>.42&&p<.68){const r=8+Math.sin(t*10)*3;circ(x,y,r,'rgba(37,99,235,.12)','rgba(37,99,235,.6)')}
+  }
   function draw(){
-    ctx.clearRect(0,0,W,H);
-    const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#0a1017');bg.addColorStop(.55,'#101a22');bg.addColorStop(1,'#080b10');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    glow(810,390,440,'rgba(58,205,185,.10)');glow(1320,190,260,'rgba(78,166,255,.08)');
-    ctx.strokeStyle='rgba(134,178,190,.075)';ctx.lineWidth=1;
-    for(let x=0;x<W;x+=48){line(x,0,x,H,'rgba(134,178,190,.06)')}
-    for(let y=0;y<H;y+=48){line(0,y,W,y,'rgba(134,178,190,.06)')}
-    text('PERSONAL FINANCE  /  SYSTEM OVERVIEW',82,70,15,C.teal,'700');
-    text('MONEY CALCULATOR',80,135,53,C.white,'750');
-    text('Financial clarity, built on a trustworthy ledger.',84,177,22,C.muted,'400');
-    roundRect(1270,58,246,42,21,'rgba(87,224,192,.08)','rgba(87,224,192,.35)');
-    ctx.beginPath();ctx.arc(1294,79,5,0,Math.PI*2);ctx.fillStyle=C.teal;ctx.fill();
-    text('DOUBLE-ENTRY FINANCIAL SYSTEM',1310,84,11,C.teal,'700');
-    // Connected system paths
-    const nodes=[{x:105,y:275,w:290,h:118,title:'TRANSACTIONS & ACCOUNTS',sub:'Income · expenses · transfers',accent:C.cyan},{x:1205,y:275,w:290,h:118,title:'FINANCIAL ASSISTANT',sub:'Net worth · cash flow · insights',accent:C.teal},{x:105,y:470,w:290,h:118,title:'PLANS & RECURRING',sub:'Budgets · goals · schedules',accent:C.amber},{x:1205,y:470,w:290,h:118,title:'ASSETS & LIABILITIES',sub:'Loans · deposits · investments',accent:C.cyan},{x:250,y:665,w:290,h:118,title:'TUITION TRACKING',sub:'Students · payments · balances',accent:C.teal},{x:1060,y:665,w:290,h:118,title:'REPORTS & AUDIT',sub:'Forecasts · history · reversals',accent:C.amber}];
-    nodes.forEach(n=>{roundRect(n.x,n.y,n.w,n.h,14,'rgba(15,24,33,.93)',C.line);roundRect(n.x+18,n.y+19,4,78,2,n.accent,null);text(n.title,n.x+36,n.y+45,14,C.white,'700');text(n.sub,n.x+36,n.y+76,13,C.muted,'450')});
-    // central ledger
-    roundRect(510,240,580,390,24,'rgba(8,14,20,.96)','#38505c');
-    roundRect(535,263,530,51,12,'#14242c','rgba(87,224,192,.23)');
-    text('LEDGER CORE',558,294,15,C.teal,'750');text('BALANCED  ✓',1037,294,12,C.teal,'700','right');
-    text('ACCOUNT',557,350,11,C.muted,'700');text('DEBIT',812,350,11,C.muted,'700','right');text('CREDIT',933,350,11,C.muted,'700','right');text('STATUS',1035,350,11,C.muted,'700','right');
-    const rows=[['Everyday account','৳ 2,500','—','POSTED'],['Monthly income','—','৳ 2,500','POSTED'],['Savings transfer','৳ 800','৳ 800','MATCHED'],['Loan repayment','৳ 450','৳ 450','LINKED']];
-    rows.forEach((r,i)=>{const y=390+i*48;line(550,y-19,1050,y-19,'rgba(143,162,178,.15)');text(r[0],557,y,13,C.white,'500');text(r[1],812,y,13,C.cyan,'500','right');text(r[2],933,y,13,C.teal,'500','right');text(r[3],1035,y,10,i===2?C.amber:C.teal,'700','right')});
-    line(550,568,1050,568,'rgba(143,162,178,.22)');
-    text('EDIT  /  VOID  /  REVERSAL TRAIL',557,596,11,C.muted,'650');
-    // connections
-    const paths=[[[395,333],[455,333],[455,370],[510,370]],[[1090,370],[1145,370],[1145,333],[1205,333]],[[395,525],[455,525],[455,520],[510,520]],[[1090,520],[1145,520],[1145,525],[1205,525]],[[540,665],[540,630],[660,630]],[[1060,665],[1060,630],[940,630]]];
-    paths.forEach((p,i)=>{ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);for(let k=1;k<p.length;k++)ctx.lineTo(p[k][0],p[k][1]);ctx.strokeStyle=i%2?'rgba(116,207,255,.52)':'rgba(87,224,192,.58)';ctx.lineWidth=2;ctx.stroke();const end=p[p.length-1];ctx.beginPath();ctx.arc(end[0],end[1],4,0,Math.PI*2);ctx.fillStyle=i%2?C.cyan:C.teal;ctx.fill()});
-    roundRect(605,690,390,78,13,'rgba(87,224,192,.055)','rgba(87,224,192,.24)');
-    text('ONE CONNECTED FINANCIAL PICTURE',800,720,13,C.teal,'750','center');
-    text('Activity  →  Ledger  →  Insights',800,746,16,C.white,'550','center');
-    line(82,827,1518,827,'rgba(143,162,178,.25)');
-    text('PERSONAL FINANCE  ·  LEDGER INTEGRITY  ·  FINANCIAL INTELLIGENCE',84,858,12,C.muted,'600');
-    text('BDT  /  DEMO VISUAL',1515,858,12,C.amber,'700','right');
+    const sceneIndex=Math.min(COUNT-1,Math.floor(elapsed/DURATION)),scene=screens[sceneIndex],within=elapsed-sceneIndex*DURATION,p=clamp(within/DURATION);
+    drawScene(scene,ease(p),elapsed);
+    const progress=(within/DURATION);
+    rr(276,868,1264,4,2,'#e2e8f0');rr(276,868,1264*((sceneIndex+progress)/COUNT),4,2,C.blue);
+    txt('PRODUCT WALKTHROUGH  ·  '+String(sceneIndex+1).padStart(2,'0')+' / '+COUNT,276,854,9,C.muted,700);
+    if(!reduced)cursor(within,scene,p);
   }
-  function fit(){
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    if(canvas.width!==W*dpr||canvas.height!==H*dpr){canvas.width=W*dpr;canvas.height=H*dpr}
-    ctx.setTransform(dpr,0,0,dpr,0,0);draw();
-  }
-  document.getElementById('download').addEventListener('click',()=>{
-    const exportCanvas=document.createElement('canvas');exportCanvas.width=W;exportCanvas.height=H;
-    const ex=exportCanvas.getContext('2d');ex.drawImage(canvas,0,0,W,H);
-    const a=document.createElement('a');a.download='money-calculator-thumbnail.png';a.href=exportCanvas.toDataURL('image/png');a.click();
-  });
-  fit();window.addEventListener('resize',fit);
+  function resize(){const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw()}
+  function tick(now){const dt=Math.min((now-last)/1000,.06);last=now;if(playing&&!reduced){elapsed=(elapsed+dt)%TOTAL;}draw();raf=requestAnimationFrame(tick)}
+  document.getElementById('replay').addEventListener('click',()=>{elapsed=0;playing=true;last=performance.now();document.getElementById('pause').textContent='Ⅱ Pause'});
+  document.getElementById('pause').addEventListener('click',()=>{playing=!playing;last=performance.now();document.getElementById('pause').textContent=playing?'Ⅱ Pause':'▶ Resume'});
+  document.getElementById('download').addEventListener('click',()=>{const out=document.createElement('canvas');out.width=W;out.height=H;const o=out.getContext('2d');o.drawImage(canvas,0,0,W,H);const a=document.createElement('a');a.download='money-calculator-walkthrough-frame.png';a.href=out.toDataURL('image/png');a.click()});
+  window.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='r'){elapsed=0;playing=true;}else if(e.code==='Space'&&!/BUTTON|INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();playing=!playing;document.getElementById('pause').textContent=playing?'Ⅱ Pause':'▶ Resume';}});
+  if(reduced){playing=false;draw()}else{resize();raf=requestAnimationFrame(tick)}
+  window.addEventListener('resize',resize);
 })();
 </script>
 </body>
