@@ -8,6 +8,7 @@ Last updated: 2026-10-22 (interactive gallery playback and demo-to-repository al
 ## Current portfolio audit (2026-10-22)
 
 - Homepage: removed the full-width “EXPLORE THE FULL BODY OF WORK” CTA block. The Selected Projects heading now contains a compact primary link to `/walkthroughs/` and a secondary link to `/projects/`, preserving both destinations with less vertical space.
+- Section labels are sequential again after removing the redundant CTA: Projects 01, Experience 02, Toolkit 03, Writing & Research 04, Contact 05.
 - Walkthroughs: Money Calculator is the featured animation and starts automatically unless the visitor prefers reduced motion. The remaining six demos load inside their own cards after one click; no separate video modal or second play click is required.
 - Performance/accessibility: only one animation is active at a time; starting another demo stops the previous one. Reduced-motion visitors see a static featured poster and can choose whether to start motion.
 - Demo/repository alignment audit:
