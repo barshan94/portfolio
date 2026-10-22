@@ -8,27 +8,26 @@ import { getCollection } from "astro:content";
 const allProjects = await getCollection("projects");
 const projectId = (project) => project.id.replace(/\.md$/, "");
 
-const flagship =
-  allProjects.find((project) => projectId(project) === "money-calculator") ||
-  allProjects.find((project) =>
-    project.data.title.toLowerCase().includes("money")
-  ) ||
-  allProjects[0];
-
-const featuredProjectIds = new Set([
+const selectedProjectIds = [
+  "money-calculator",
   "asta-store",
-  "biot-thesis",
   "mount-royal-academy",
+  "biot-thesis",
   "student-performance-dashboard",
   "digital-coaching-management",
   "999-national-emergency-service",
-]);
+];
 
-// Keep the homepage deliberately curated; the full archive lives below in a disclosure.
-const otherProjects = allProjects.filter(
-  (project) =>
-    project !== flagship && featuredProjectIds.has(projectId(project))
+const selectedOrder = new Map(
+  selectedProjectIds.map((id, index) => [id, index])
 );
+
+const otherProjects = allProjects
+  .filter((project) => selectedOrder.has(projectId(project)))
+  .sort(
+    (a, b) =>
+      selectedOrder.get(projectId(a))! - selectedOrder.get(projectId(b))!
+  );
 
 const [cvEntry] = await getCollection("cv");
 const cv = cvEntry?.data;
@@ -128,7 +127,7 @@ const getExperienceDate = (experience: any) =>
         </p>
 
         <div class="hero-actions">
-          <a class="button button-primary" href="#flagship">
+          <a class="button button-primary" href="#projects">
             Explore my work
             <span aria-hidden="true">↘</span>
           </a>
@@ -169,99 +168,6 @@ const getExperienceDate = (experience: any) =>
       </div>
     </section>
 
-    <!-- FEATURED PROJECT -->
-    {flagship && (
-      <section
-        class="flagship section-wrap section-block"
-        id="flagship"
-        aria-labelledby="flagship-title"
-      >
-        <div class="section-heading" data-reveal>
-          <div>
-            <p class="section-kicker">01 — FEATURED PROJECT</p>
-            <h2 id="flagship-title">
-              Money, made <span class="accent-text">understandable.</span>
-            </h2>
-          </div>
-          <span class="section-side-note">Personal finance / Web application</span>
-        </div>
-
-        <div class="flagship-card" data-reveal>
-          <div class="flagship-content">
-            <div class="project-overline">
-              <span class="project-dot"></span>
-              Featured build
-            </div>
-
-            <h3>Money Calculator</h3>
-
-            <p class="flagship-description">
-              A personal-finance system built around one principle: every
-              financial change should remain consistent, explainable, and
-              traceable. It brings daily bookkeeping, lending, planning,
-              assets, and financial analysis together instead of maintaining
-              disconnected totals across separate tools.
-            </p>
-
-            <div class="feature-list">
-              <div class="feature-item"><span class="feature-number">01</span><div><h4>Ledger-backed transactions and accounts</h4><p>Record income, expenses, transfers, donations, and opening balances across cash, bank, and mobile-financial-service accounts. Categories connect to ledger accounts; posted entries are balanced rather than relying on manually edited totals.</p></div></div>
-              <div class="feature-item"><span class="feature-number">02</span><div><h4>Auditable edits, voids, and reversals</h4><p>Correct financial history without silently erasing evidence. Transaction changes and voids preserve an audit trail, with reversal records used to neutralize previous effects and keep balances consistent.</p></div></div>
-              <div class="feature-item"><span class="feature-number">03</span><div><h4>Complete loan lifecycle</h4><p>Track money lent and money borrowed, multiple loans for the same contact, principal and outstanding balances, partial repayments, settlement, repayment edits, cancellation, and linked reversal history.</p></div></div>
-              <div class="feature-item"><span class="feature-number">04</span><div><h4>Tuition and payment collection</h4><p>Manage students, monthly fees, due dates, paid/partial/unpaid states, accumulated payments, payment history, outstanding dues, reliability indicators, and WhatsApp reminder workflows.</p></div></div>
-              <div class="feature-item"><span class="feature-number">05</span><div><h4>Assets, deposits, and investments</h4><p>Manage deposits, maturity and expected interest, investment purchases and sales, current value and performance, plus long-term assets such as land or property with cost basis and sale gain/loss accounting.</p></div></div>
-              <div class="feature-item"><span class="feature-number">06</span><div><h4>Budgets, goals, and recurring transactions</h4><p>Plan spending by category, track budget progress and savings goals, and schedule recurring income or expenses. Due items can be processed into normal ledger-backed transactions rather than remaining isolated reminders.</p></div></div>
-              <div class="feature-item"><span class="feature-number">07</span><div><h4>Reports and financial intelligence</h4><p>Explore income and expenses, cash flow, account balances, liquidity, loans, deposits, investments, net worth, and trends. The intelligence layer includes forecasts, financial insights, goal projections, investment analysis, and what-if scenarios.</p></div></div>
-              <div class="feature-item"><span class="feature-number">08</span><div><h4>Search, receipts, and secure access</h4><p>Use global search and receipt/attachment workflows alongside authenticated access. Supabase Row Level Security and ownership-checked PostgreSQL RPCs protect user data; financial writes are routed through server-side database functions.</p></div></div>
-            </div>
-            <div class="engineering-principles">
-              <p class="section-kicker">ENGINEERING PRINCIPLES</p>
-              <div class="principle-grid">
-                <div><strong>Double-entry integrity</strong><span>Every posted transaction must balance.</span></div>
-                <div><strong>Lifecycle consistency</strong><span>Repayments, reversals, and related records stay connected.</span></div>
-                <div><strong>Server-enforced rules</strong><span>Ownership and financial validation do not rely only on the interface.</span></div>
-                <div><strong>Verification</strong><span>Unit and database integration tests cover financial invariants and cross-module workflows.</span></div>
-              </div>
-            </div>
-
-            <div class="tag-list" aria-label="Technologies">
-              <span>Next.js</span>
-              <span>TypeScript</span>
-              <span>React</span>
-              <span>Supabase</span>
-              <span>PostgreSQL</span>
-              <span>Tailwind CSS</span>
-            </div>
-
-            <div class="flagship-actions">
-              {getProjectRepo(flagship) && (
-                <a
-                  class="button button-primary"
-                  href={getProjectRepo(flagship)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View source <span aria-hidden="true">↗</span>
-                </a>
-              )}
-
-              {getProjectLink(flagship) && (
-                <a
-                  class="button button-quiet"
-                  href={getProjectLink(flagship)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open project <span aria-hidden="true">↗</span>
-                </a>
-              )}
-            </div>
-          </div>
-
-
-        </div>
-      </section>
-    )}
-
     <!-- PROJECTS -->
     <section
       class="projects section-wrap section-block"
@@ -270,7 +176,7 @@ const getExperienceDate = (experience: any) =>
     >
       <div class="section-heading" data-reveal>
         <div>
-          <p class="section-kicker">02 — SELECTED WORK</p>
+          <p class="section-kicker">01 — SELECTED PROJECTS</p>
           <h2 id="projects-title">
             Different problems.<br />
             <span class="accent-text">Different approaches.</span>
@@ -292,9 +198,11 @@ const getExperienceDate = (experience: any) =>
               data-reveal
             >
               <div class="project-card-top">
-                <span class="project-number">{projectNumber(index + 2)}</span>
+                <span class="project-number">{projectNumber(index + 1)}</span>
                 <span class="project-category">
-                  {projectId(project) === "asta-store"
+                  {projectId(project) === "money-calculator"
+                    ? "Personal finance"
+                    : projectId(project) === "asta-store"
                     ? "E-commerce"
                     : projectId(project) === "mount-royal-academy"
                       ? "Education"
@@ -311,7 +219,11 @@ const getExperienceDate = (experience: any) =>
               </div>
 
               <div class="project-art" aria-hidden="true">
-                                {projectId(project) === "asta-store" ? (
+                {projectId(project) === "money-calculator" ? (
+                  <div class="art-money-thumbnail">
+                    <img src="/images/money-calculator-thumbnail.png" alt="" loading="lazy" decoding="async" />
+                  </div>
+                ) : projectId(project) === "asta-store" ? (
                   <div class="art-asta-thumbnail">
                     <img src="/images/asta-store-thumbnail.svg" alt="" loading="lazy" decoding="async" />
                   </div>
@@ -1220,6 +1132,30 @@ const getExperienceDate = (experience: any) =>
   }
 
   .project-card-biot-thesis:hover .art-biot-thumbnail img {
+    transform: scale(1.025);
+  }
+
+  .art-money-thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 215px;
+    align-self: stretch;
+    overflow: hidden;
+    background: #080d12;
+  }
+
+  .art-money-thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 215px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 260ms ease;
+  }
+
+  .project-card-money-calculator:hover .art-money-thumbnail img {
     transform: scale(1.025);
   }
 
