@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Student Performance Dashboard — academic analytics concept</title>
+<desc id="desc">A dark analytics dashboard with sample score trends, subject averages, fictional student records, grade distribution, and academic insights. All data is illustrative.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1018"/><stop offset="1" stop-color="#111b2a"/></linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#60a5fa" stop-opacity=".95"/><stop offset="1" stop-color="#60a5fa" stop-opacity=".35"/></linearGradient>
+  <linearGradient id="trendfill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#60a5fa" stop-opacity=".22"/><stop offset="1" stop-color="#60a5fa" stop-opacity="0"/></linearGradient>
+  <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#60a5fa" stroke-opacity=".045"/></pattern>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity=".28"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/><rect width="1600" height="900" fill="url(#grid)"/>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+  <text x="72" y="82" font-size="15" font-weight="700" letter-spacing="2.4" fill="#60a5fa">PROJECT / EDUCATION ANALYTICS</text>
+  <text x="70" y="151" font-size="47" font-weight="750" letter-spacing="-1.8" fill="#eef2f7">STUDENT PERFORMANCE</text>
+  <text x="70" y="207" font-size="52" font-weight="750" letter-spacing="-1.8" fill="#60a5fa">DASHBOARD</text>
+  <rect x="72" y="231" width="92" height="4" rx="2" fill="#60a5fa"/>
+  <text x="72" y="273" font-size="17" fill="#a7b5c9">Academic insights · assessment analytics</text>
+  <text x="72" y="298" font-size="17" fill="#a7b5c9">· progress tracking</text>
+  <text x="72" y="354" font-size="16" fill="#8190a6">Explore results, compare subjects, and</text>
+  <text x="72" y="380" font-size="16" fill="#8190a6">spot patterns that can guide student</text>
+  <text x="72" y="406" font-size="16" fill="#8190a6">support and classroom decisions.</text>
+  <g font-size="13" font-weight="650">
+    <rect x="72" y="448" width="113" height="34" rx="6" fill="#60a5fa" fill-opacity=".12" stroke="#60a5fa" stroke-opacity=".35"/><text x="128" y="470" text-anchor="middle" fill="#93c5fd">Analytics</text>
+    <rect x="195" y="448" width="115" height="34" rx="6" fill="#2bc48a" fill-opacity=".1" stroke="#2bc48a" stroke-opacity=".3"/><text x="252" y="470" text-anchor="middle" fill="#6ee7b7">Education</text>
+    <rect x="320" y="448" width="120" height="34" rx="6" fill="#818cf8" fill-opacity=".1" stroke="#818cf8" stroke-opacity=".3"/><text x="380" y="470" text-anchor="middle" fill="#a5b4fc">Data viz</text>
+  </g>
+  <g font-size="15" fill="#a7b5c9">
+    <circle cx="79" cy="539" r="4" fill="#60a5fa"/><text x="96" y="544">Performance overview &amp; key metrics</text>
+    <circle cx="79" cy="578" r="4" fill="#2bc48a"/><text x="96" y="583">Subject-wise score comparisons</text>
+    <circle cx="79" cy="617" r="4" fill="#818cf8"/><text x="96" y="622">Assessment progress trends</text>
+    <circle cx="79" cy="656" r="4" fill="#f59e0b"/><text x="96" y="661">At-risk indicators for early support</text>
+  </g>
+  <text x="72" y="783" font-size="13" fill="#64748b">github.com/barshan94/student-performance-dashboard</text>
+  <text x="72" y="811" font-size="11" font-weight="700" letter-spacing="1.5" fill="#526176">CONCEPT VISUAL · FICTIONAL SAMPLE DATA</text>
+</g>
+<g filter="url(#shadow)">
+  <rect x="570" y="42" width="970" height="806" rx="12" fill="#0e1724" stroke="#25344a" stroke-width="2"/>
+  <path d="M582 42H1528Q1540 42 1540 54V92H570V54Q570 42 582 42Z" fill="#172030"/>
+  <circle cx="594" cy="67" r="5" fill="#4a5568"/><circle cx="612" cy="67" r="5" fill="#4a5568"/><circle cx="630" cy="67" r="5" fill="#4a5568"/>
+  <text x="654" y="72" font-size="15" font-weight="700" fill="#dce5f2">STUDENT PERFORMANCE DASHBOARD</text>
+  <rect x="1381" y="54" width="137" height="26" rx="5" fill="#60a5fa" fill-opacity=".12" stroke="#60a5fa" stroke-opacity=".35"/>
+  <text x="1449" y="71" font-size="11" font-weight="700" text-anchor="middle" fill="#93c5fd">ANALYTICS VIEW</text>
+</g>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+  <g>
+    <rect x="590" y="111" width="218" height="83" rx="8" fill="#111d2c" stroke="#26354a"/><text x="607" y="135" font-size="11" font-weight="700" letter-spacing=".7" fill="#8090a5">TOTAL STUDENTS</text><text x="607" y="177" font-size="34" font-weight="750" fill="#eef2f7">32</text><rect x="766" y="128" width="25" height="25" rx="6" fill="#60a5fa" fill-opacity=".15"/><text x="778" y="145" text-anchor="middle" font-size="15" font-weight="700" fill="#60a5fa">#</text>
+    <rect x="820" y="111" width="218" height="83" rx="8" fill="#111d2c" stroke="#26354a"/><text x="837" y="135" font-size="11" font-weight="700" letter-spacing=".7" fill="#8090a5">AVERAGE SCORE</text><text x="837" y="177" font-size="34" font-weight="750" fill="#eef2f7">76.4</text><text x="917" y="176" font-size="13" fill="#8090a5">/100</text><rect x="996" y="128" width="25" height="25" rx="6" fill="#2bc48a" fill-opacity=".15"/><text x="1008" y="145" text-anchor="middle" font-size="14" font-weight="700" fill="#2bc48a">↗</text>
+    <rect x="1050" y="111" width="218" height="83" rx="8" fill="#111d2c" stroke="#26354a"/><text x="1067" y="135" font-size="11" font-weight="700" letter-spacing=".7" fill="#8090a5">PASS RATE</text><text x="1067" y="177" font-size="34" font-weight="750" fill="#eef2f7">91%</text><rect x="1226" y="128" width="25" height="25" rx="6" fill="#818cf8" fill-opacity=".15"/><text x="1238" y="145" text-anchor="middle" font-size="13" font-weight="700" fill="#a5b4fc">P</text>
+    <rect x="1280" y="111" width="240" height="83" rx="8" fill="#111d2c" stroke="#26354a"/><text x="1297" y="135" font-size="11" font-weight="700" letter-spacing=".7" fill="#8090a5">AT-RISK STUDENTS</text><text x="1297" y="177" font-size="34" font-weight="750" fill="#fbbf24">3</text><rect x="1477" y="128" width="25" height="25" rx="6" fill="#f59e0b" fill-opacity=".15"/><text x="1489" y="145" text-anchor="middle" font-size="15" font-weight="700" fill="#fbbf24">!</text>
+  </g>
+  <g>
+    <rect x="590" y="210" width="447" height="235" rx="8" fill="#101a28" stroke="#26354a"/>
+    <text x="608" y="235" font-size="13" font-weight="700" fill="#dce5f2">SCORE TREND</text><text x="1019" y="235" font-size="10" text-anchor="end" fill="#64748b">Illustrative student</text>
+    <g stroke="#25344a" stroke-width="1"><path d="M637 270H1017M637 307H1017M637 344H1017M637 381H1017M637 418H1017"/></g>
+    <g font-size="10" fill="#68788e" text-anchor="end"><text x="629" y="274">100</text><text x="629" y="311">80</text><text x="629" y="348">60</text><text x="629" y="385">40</text><text x="629" y="422">20</text></g>
+    <path d="M653 322 L741 316 L829 300 L917 294 L1005 278 L1005 418 L653 418 Z" fill="url(#trendfill)"/>
+    <path d="M653 322 L741 316 L829 300 L917 294 L1005 278" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#0e1724" stroke="#60a5fa" stroke-width="2.5"><circle cx="653" cy="322" r="5"/><circle cx="741" cy="316" r="5"/><circle cx="829" cy="300" r="5"/><circle cx="917" cy="294" r="5"/><circle cx="1005" cy="278" r="5"/></g>
+    <g font-size="10" fill="#8fa0b7" text-anchor="middle"><text x="653" y="437">Test 1</text><text x="741" y="437">Test 2</text><text x="829" y="437">Test 3</text><text x="917" y="437">Test 4</text><text x="1005" y="437">Test 5</text></g>
+    <rect x="1050" y="210" width="470" height="235" rx="8" fill="#101a28" stroke="#26354a"/>
+    <text x="1068" y="235" font-size="13" font-weight="700" fill="#dce5f2">SUBJECT AVERAGES</text><text x="1500" y="235" font-size="10" text-anchor="end" fill="#64748b">Average / 100</text>
+    <g stroke="#25344a" stroke-dasharray="4 4"><path d="M1092 285H1499M1092 322H1499M1092 359H1499M1092 396H1499"/></g>
+    <g>
+      <rect x="1111" y="304" width="48" height="108" rx="4" fill="#60a5fa"/><rect x="1186" y="311" width="48" height="101" rx="4" fill="#818cf8"/><rect x="1261" y="306" width="48" height="106" rx="4" fill="#2bc48a"/><rect x="1336" y="300" width="48" height="112" rx="4" fill="#f59e0b"/><rect x="1411" y="306" width="48" height="106" rx="4" fill="#e879a0"/>
+      <g font-size="11" font-weight="700" fill="#dce5f2" text-anchor="middle"><text x="1135" y="296">79</text><text x="1210" y="303">74</text><text x="1285" y="298">78</text><text x="1360" y="292">81</text><text x="1435" y="298">77</text></g>
+      <g font-size="10" fill="#8190a6" text-anchor="middle"><text x="1135" y="430">Math</text><text x="1210" y="430">Physics</text><text x="1285" y="430">Chem</text><text x="1360" y="430">English</text><text x="1435" y="430">Bengali</text></g>
+    </g>
+  </g>
+  <g>
+    <rect x="590" y="461" width="620" height="286" rx="8" fill="#101a28" stroke="#26354a"/>
+    <text x="608" y="486" font-size="13" font-weight="700" fill="#dce5f2">STUDENT RECORDS</text><text x="1192" y="486" font-size="10" text-anchor="end" fill="#64748b">Fictional sample data</text>
+    <rect x="604" y="503" width="592" height="28" rx="4" fill="#172335"/>
+    <g font-size="10" font-weight="700" fill="#8392a7"><text x="614" y="521">#</text><text x="638" y="521">STUDENT</text><text x="783" y="521">GRD</text><text x="822" y="521">MATH</text><text x="865" y="521">PHY</text><text x="905" y="521">CHEM</text><text x="949" y="521">ENG</text><text x="990" y="521">BEN</text><text x="1031" y="521">ATT%</text><text x="1090" y="521">STATUS</text></g>
+    <g font-size="11">
+      <rect x="604" y="536" width="592" height="30" rx="3" fill="#141f2e"/><text x="614" y="555" fill="#64748b">01</text><text x="638" y="555" fill="#e2e8f0">Fatima Begum</text><text x="783" y="555" fill="#60a5fa" font-weight="700">A+</text><text x="822" y="555" fill="#d0d9e6">95</text><text x="865" y="555" fill="#d0d9e6">92</text><text x="905" y="555" fill="#d0d9e6">88</text><text x="949" y="555" fill="#d0d9e6">97</text><text x="990" y="555" fill="#d0d9e6">90</text><text x="1031" y="555" fill="#2bc48a">98%</text><rect x="1080" y="543" width="65" height="16" rx="4" fill="#60a5fa" fill-opacity=".15"/><text x="1112" y="555" text-anchor="middle" fill="#93c5fd" font-size="9" font-weight="700">TOP</text>
+      <rect x="604" y="568" width="592" height="30" rx="3" fill="#111b29"/><text x="614" y="587" fill="#64748b">02</text><text x="638" y="587" fill="#e2e8f0">Aarav Sharma</text><text x="783" y="587" fill="#60a5fa" font-weight="700">A</text><text x="822" y="587" fill="#d0d9e6">88</text><text x="865" y="587" fill="#d0d9e6">76</text><text x="905" y="587" fill="#d0d9e6">82</text><text x="949" y="587" fill="#d0d9e6">91</text><text x="990" y="587" fill="#d0d9e6">79</text><text x="1031" y="587" fill="#2bc48a">94%</text><rect x="1080" y="575" width="65" height="16" rx="4" fill="#2bc48a" fill-opacity=".13"/><text x="1112" y="587" text-anchor="middle" fill="#6ee7b7" font-size="9" font-weight="700">GOOD</text>
+      <rect x="604" y="600" width="592" height="30" rx="3" fill="#141f2e"/><text x="614" y="619" fill="#64748b">03</text><text x="638" y="619" fill="#e2e8f0">Ravi Patel</text><text x="783" y="619" fill="#2bc48a" font-weight="700">B</text><text x="822" y="619" fill="#d0d9e6">62</text><text x="865" y="619" fill="#fbbf24">58</text><text x="905" y="619" fill="#d0d9e6">71</text><text x="949" y="619" fill="#d0d9e6">68</text><text x="990" y="619" fill="#d0d9e6">65</text><text x="1031" y="619" fill="#fbbf24">82%</text><rect x="1080" y="607" width="65" height="16" rx="4" fill="#f59e0b" fill-opacity=".15"/><text x="1112" y="619" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="700">AT-RISK</text>
+      <rect x="604" y="632" width="592" height="30" rx="3" fill="#111b29"/><text x="614" y="651" fill="#64748b">04</text><text x="638" y="651" fill="#e2e8f0">Sneha Das</text><text x="783" y="651" fill="#60a5fa" font-weight="700">A</text><text x="822" y="651" fill="#d0d9e6">85</text><text x="865" y="651" fill="#d0d9e6">80</text><text x="905" y="651" fill="#d0d9e6">78</text><text x="949" y="651" fill="#d0d9e6">89</text><text x="990" y="651" fill="#d0d9e6">83</text><text x="1031" y="651" fill="#2bc48a">96%</text><rect x="1080" y="639" width="65" height="16" rx="4" fill="#2bc48a" fill-opacity=".13"/><text x="1112" y="651" text-anchor="middle" fill="#6ee7b7" font-size="9" font-weight="700">GOOD</text>
+      <rect x="604" y="664" width="592" height="30" rx="3" fill="#141f2e"/><text x="614" y="683" fill="#64748b">05</text><text x="638" y="683" fill="#e2e8f0">Imran Khan</text><text x="783" y="683" fill="#2bc48a" font-weight="700">B+</text><text x="822" y="683" fill="#d0d9e6">75</text><text x="865" y="683" fill="#d0d9e6">70</text><text x="905" y="683" fill="#d0d9e6">80</text><text x="949" y="683" fill="#d0d9e6">72</text><text x="990" y="683" fill="#d0d9e6">77</text><text x="1031" y="683" fill="#2bc48a">90%</text><rect x="1080" y="671" width="65" height="16" rx="4" fill="#2bc48a" fill-opacity=".13"/><text x="1112" y="683" text-anchor="middle" fill="#6ee7b7" font-size="9" font-weight="700">GOOD</text>
+      <rect x="604" y="696" width="592" height="30" rx="3" fill="#111b29"/><text x="614" y="715" fill="#64748b">06</text><text x="638" y="715" fill="#e2e8f0">Tanmoy Ghosh</text><text x="783" y="715" fill="#f87171" font-weight="700">C+</text><text x="822" y="715" fill="#f87171">58</text><text x="865" y="715" fill="#f87171">52</text><text x="905" y="715" fill="#d0d9e6">65</text><text x="949" y="715" fill="#d0d9e6">60</text><text x="990" y="715" fill="#f87171">55</text><text x="1031" y="715" fill="#f87171">78%</text><rect x="1080" y="703" width="65" height="16" rx="4" fill="#f87171" fill-opacity=".14"/><text x="1112" y="715" text-anchor="middle" fill="#fca5a5" font-size="9" font-weight="700">AT-RISK</text>
+    </g>
+  </g>
+  <g>
+    <rect x="1224" y="461" width="296" height="135" rx="8" fill="#101a28" stroke="#26354a"/>
+    <text x="1242" y="486" font-size="13" font-weight="700" fill="#dce5f2">GRADE DISTRIBUTION</text>
+    <rect x="1242" y="505" width="260" height="18" rx="4" fill="#25344a"/><path d="M1246 505H1273V523H1246Q1242 523 1242 519V509Q1242 505 1246 505Z" fill="#60a5fa"/><rect x="1273" y="505" width="81" height="18" fill="#2bc48a"/><rect x="1354" y="505" width="49" height="18" fill="#818cf8"/><rect x="1403" y="505" width="42" height="18" fill="#f59e0b"/><path d="M1445 505H1498Q1502 505 1502 509V519Q1502 523 1498 523H1445Z" fill="#e05555"/>
+    <g font-size="10" fill="#9aa9bd"><circle cx="1248" cy="543" r="4" fill="#60a5fa"/><text x="1258" y="547">A+ 12%</text><circle cx="1342" cy="543" r="4" fill="#2bc48a"/><text x="1352" y="547">A 31%</text><circle cx="1424" cy="543" r="4" fill="#818cf8"/><text x="1434" y="547">B+ 19%</text><circle cx="1250" cy="570" r="4" fill="#f59e0b"/><text x="1260" y="574">B 16%</text><circle cx="1342" cy="570" r="4" fill="#e05555"/><text x="1352" y="574">C+ or below 22%</text></g>
+    <rect x="1224" y="610" width="296" height="137" rx="8" fill="#101a28" stroke="#26354a"/>
+    <text x="1242" y="635" font-size="13" font-weight="700" fill="#dce5f2">INSIGHTS</text><text x="1502" y="635" text-anchor="end" font-size="10" fill="#64748b">Illustrative</text>
+    <circle cx="1250" cy="660" r="7" fill="#2bc48a" fill-opacity=".18"/><text x="1250" y="664" text-anchor="middle" font-size="10" font-weight="700" fill="#6ee7b7">+</text><text x="1265" y="664" font-size="10" fill="#a7b5c9">Aarav: +16 pts over 5 tests</text>
+    <circle cx="1250" cy="688" r="7" fill="#f59e0b" fill-opacity=".18"/><text x="1250" y="692" text-anchor="middle" font-size="10" font-weight="700" fill="#fbbf24">!</text><text x="1265" y="692" font-size="10" fill="#a7b5c9">Ravi: support in Physics</text>
+    <circle cx="1250" cy="716" r="7" fill="#e05555" fill-opacity=".18"/><text x="1250" y="720" text-anchor="middle" font-size="10" font-weight="700" fill="#fca5a5">−</text><text x="1265" y="720" font-size="10" fill="#a7b5c9">Tanmoy: below target</text>
+  </g>
+  <rect x="590" y="762" width="930" height="47" rx="6" fill="#0a111b" stroke="#26354a"/>
+  <text x="608" y="790" font-size="12" fill="#7f8fa5">5 subjects · 5 assessments · fictional sample records</text><text x="1502" y="790" font-size="11" fill="#526176" text-anchor="end">CONCEPT PREVIEW</text>
+  <text x="800" y="881" text-anchor="middle" font-size="12" fill="#536176">Portfolio project · illustrative data · not affiliated with an educational institution</text>
+</g>
+</svg>
