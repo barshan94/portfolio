@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bIoT Thesis Thumbnail — Preview</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:#090d16;color:#edf3ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px}
+main{width:min(1600px,100%)}img{display:block;width:100%;height:auto;border:1px solid #26344c;border-radius:12px;box-shadow:0 24px 80px #0007}
+.actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+button{border:0;border-radius:9px;background:#59d9a9;color:#08131b;padding:13px 22px;font-size:15px;font-weight:750;cursor:pointer}
+button:focus-visible{outline:3px solid #b3a6ff;outline-offset:3px}button:hover{filter:brightness(1.08)}p{margin:0;color:#93a2bc;font-size:13px;text-align:center}
+@media(max-width:600px){body{padding:12px}.actions{gap:9px}button{padding:11px 15px}}
+</style>
+</head>
+<body>
+<main><img id="thumbnail" src="../images/blockchain-iot-healthcare-thumbnail.svg" alt="Blockchain-based IoT healthcare security thesis thumbnail"></main>
+<div class="actions"><button id="download" type="button">Download PNG (1600 × 900)</button></div>
+<p>1600 × 900 · Undergraduate thesis · SVG artwork, exported to PNG on request</p>
+<script>
+const image = document.getElementById("thumbnail");
+document.getElementById("download").addEventListener("click", () => {
+  if (!image.complete || !image.naturalWidth) {
+    image.addEventListener("load", exportPng, { once: true });
+    image.addEventListener("error", () => alert("The thumbnail could not be loaded. Please refresh and try again."), { once: true });
+    return;
+  }
+  exportPng();
+});
+function exportPng() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1600;
+  canvas.height = 900;
+  const context = canvas.getContext("2d");
+  if (!context) { alert("PNG export is not supported by this browser."); return; }
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob((blob) => {
+    if (!blob) { alert("PNG export failed. Please try again."); return; }
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "blockchain-iot-healthcare-thumbnail.png";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }, "image/png");
+}
+</script>
+</body>
+</html>

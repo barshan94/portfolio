@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Blockchain-based IoT healthcare security thesis</title>
+<desc id="desc">Research thumbnail showing wearable patient sensors connected through an IoT gateway and secure network to a blockchain ledger, medical records, and a remote clinician, with authentication, integrity, and privacy themes.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080e1c"/><stop offset="1" stop-color="#101b35"/></linearGradient>
+ <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#50e2e7"/><stop offset="1" stop-color="#59d9a9"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#4de2e8" stop-opacity=".18"/><stop offset="1" stop-color="#4de2e8" stop-opacity="0"/></radialGradient>
+ <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#76dce7" stroke-opacity=".08" stroke-width="1"/></pattern>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".25"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/><rect width="1600" height="900" fill="url(#grid)"/><circle cx="760" cy="400" r="500" fill="url(#glow)"/>
+<path d="M0 4H420" stroke="url(#accent)" stroke-width="5"/><path d="M0 896H1600" stroke="url(#accent)" stroke-width="4" opacity=".65"/>
+<!-- left title -->
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+ <rect x="62" y="70" width="342" height="36" rx="18" fill="#9b8cff" fill-opacity=".13" stroke="#9b8cff" stroke-opacity=".5"/>
+ <text x="83" y="93" fill="#c3baff" font-size="15" font-weight="700" letter-spacing="2">UNDERGRADUATE THESIS</text>
+ <text x="62" y="177" fill="#f5f7ff" font-size="55" font-weight="800" letter-spacing="-1">BLOCKCHAIN</text>
+ <text x="62" y="236" fill="#4de2e8" font-size="42" font-weight="600">× IoT HEALTHCARE</text>
+ <text x="62" y="283" fill="#f5f7ff" font-size="28" font-weight="700">Security &amp; Trust</text>
+ <rect x="62" y="307" width="92" height="5" rx="2.5" fill="url(#accent)"/>
+ <text x="62" y="353" fill="#aab8d0" font-size="19">A literature review and proposed</text><text x="62" y="380" fill="#aab8d0" font-size="19">healthcare architecture</text>
+ <text x="62" y="436" fill="#dbe5f6" font-size="16" font-weight="700" letter-spacing="1.8">RESEARCH THEMES</text>
+ <circle cx="72" cy="472" r="5" fill="#4de2e8"/><text x="91" y="478" fill="#c4cfe2" font-size="17">Wearable sensor networks</text><circle cx="72" cy="514" r="5" fill="#59d9a9"/><text x="91" y="520" fill="#c4cfe2" font-size="17">Remote patient monitoring</text><circle cx="72" cy="556" r="5" fill="#b3a6ff"/><text x="91" y="562" fill="#c4cfe2" font-size="17">Authentication &amp; integrity</text><circle cx="72" cy="598" r="5" fill="#f4c66a"/><text x="91" y="604" fill="#c4cfe2" font-size="17">Privacy &amp; interoperability</text>
+ <rect x="62" y="676" width="354" height="110" rx="14" fill="#101b30" stroke="#263954"/>
+ <text x="84" y="710" fill="#4de2e8" font-size="14" font-weight="700" letter-spacing="1.5">CORE QUESTION</text>
+ <text x="84" y="740" fill="#e8eef9" font-size="16">How can distributed trust support</text><text x="84" y="764" fill="#e8eef9" font-size="16">safer connected healthcare?</text>
+</g>
+<!-- architecture panel -->
+<rect x="455" y="68" width="790" height="720" rx="24" fill="#0e182c" stroke="#31425d" stroke-opacity=".85" filter="url(#shadow)"/>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+ <text x="490" y="111" fill="#aab8d0" font-size="14" font-weight="700" letter-spacing="2">PROPOSED SYSTEM ARCHITECTURE</text>
+ <!-- connector lines behind nodes -->
+ <path d="M610 265H680 M790 265H852 M972 265H1030 M1090 315V390 M1030 440H970 M852 440H790 M680 440H610" fill="none" stroke="#4de2e8" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 8" opacity=".85"/>
+ <path d="M610 265H680 M790 265H852 M972 265H1030" fill="none" stroke="#59d9a9" stroke-width="2" opacity=".65"/>
+ <!-- wearable -->
+ <rect x="492" y="176" width="118" height="140" rx="16" fill="#14273a" stroke="#4de2e8" stroke-opacity=".8"/>
+ <circle cx="551" cy="218" r="20" fill="#4de2e8" fill-opacity=".12" stroke="#4de2e8" stroke-width="2"/>
+ <path d="M533 218h10l5-10 7 21 5-11h10" fill="none" stroke="#4de2e8" stroke-width="2.5" stroke-linejoin="round"/>
+ <text x="551" y="265" text-anchor="middle" fill="#f2f6ff" font-size="14" font-weight="700">WEARABLES</text><text x="551" y="286" text-anchor="middle" fill="#aab8d0" font-size="12">Health sensors</text>
+ <!-- gateway -->
+ <rect x="680" y="200" width="110" height="112" rx="16" fill="#14273a" stroke="#4de2e8" stroke-opacity=".8"/>
+ <rect x="710" y="225" width="50" height="36" rx="5" fill="#4de2e8" fill-opacity=".12" stroke="#4de2e8" stroke-width="2"/>
+ <path d="M735 225v-14m-9 0a9 9 0 0 1 18 0m-25-6a16 16 0 0 1 32 0" fill="none" stroke="#4de2e8" stroke-width="2" stroke-linecap="round"/>
+ <text x="735" y="283" text-anchor="middle" fill="#f2f6ff" font-size="13" font-weight="700">IoT GATEWAY</text>
+ <!-- secure network -->
+ <rect x="852" y="200" width="120" height="112" rx="16" fill="#211e3e" stroke="#b3a6ff" stroke-opacity=".85"/>
+ <circle cx="912" cy="231" r="7" fill="#b3a6ff"/><circle cx="888" cy="251" r="6" fill="#b3a6ff" fill-opacity=".8"/><circle cx="936" cy="251" r="6" fill="#b3a6ff" fill-opacity=".8"/>
+ <path d="M912 238l-19 9m26-9 14 9m-45 6h42" stroke="#b3a6ff" stroke-width="2" fill="none"/>
+ <text x="912" y="283" text-anchor="middle" fill="#f2f6ff" font-size="13" font-weight="700">SECURE NETWORK</text>
+ <!-- blockchain -->
+ <rect x="1030" y="176" width="178" height="140" rx="16" fill="#211e3e" stroke="#b3a6ff" stroke-opacity=".9"/>
+ <g fill="#b3a6ff" fill-opacity=".12" stroke="#b3a6ff" stroke-width="1.5"><rect x="1050" y="207" width="38" height="38" rx="5"/><rect x="1098" y="207" width="38" height="38" rx="5"/><rect x="1146" y="207" width="38" height="38" rx="5"/></g>
+ <path d="M1088 226h10m38 0h10" stroke="#b3a6ff" stroke-width="2"/>
+ <text x="1119" y="272" text-anchor="middle" fill="#f2f6ff" font-size="14" font-weight="700">BLOCKCHAIN</text><text x="1119" y="292" text-anchor="middle" fill="#c3baff" font-size="12">Distributed ledger</text>
+ <!-- access down -->
+ <path d="M1119 316V364" stroke="#59d9a9" stroke-width="3" stroke-dasharray="6 6"/><path d="M1111 355l8 10 8-10" fill="none" stroke="#59d9a9" stroke-width="3"/>
+ <!-- records -->
+ <rect x="1030" y="390" width="178" height="120" rx="16" fill="#12332f" stroke="#59d9a9" stroke-opacity=".9"/>
+ <path d="M1060 416h28v36h-28z M1067 426h14m-14 7h14m-14 7h10" stroke="#59d9a9" stroke-width="2" fill="none"/>
+ <path d="M1099 425l8 8 15-18" stroke="#59d9a9" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ <text x="1119" y="474" text-anchor="middle" fill="#f2f6ff" font-size="14" font-weight="700">MEDICAL RECORDS</text><text x="1119" y="493" text-anchor="middle" fill="#a8d9c9" font-size="12">Controlled access</text>
+ <!-- clinician -->
+ <rect x="852" y="390" width="120" height="120" rx="16" fill="#12332f" stroke="#59d9a9" stroke-opacity=".9"/>
+ <circle cx="912" cy="423" r="12" fill="#59d9a9" fill-opacity=".15" stroke="#59d9a9" stroke-width="2"/><path d="M889 455c2-17 44-17 46 0m-23-18v13m-9-7h18" fill="none" stroke="#59d9a9" stroke-width="2" stroke-linecap="round"/>
+ <text x="912" y="479" text-anchor="middle" fill="#f2f6ff" font-size="13" font-weight="700">CLINICIAN</text><text x="912" y="496" text-anchor="middle" fill="#a8d9c9" font-size="11">Remote monitoring</text>
+ <!-- access control -->
+ <rect x="492" y="390" width="298" height="120" rx="16" fill="#17243a" stroke="#4de2e8" stroke-opacity=".65"/>
+ <path d="M530 426v-8a12 12 0 0 1 24 0v8m-28 0h32v28h-32z" fill="none" stroke="#4de2e8" stroke-width="2.5" stroke-linejoin="round"/>
+ <circle cx="542" cy="438" r="3" fill="#4de2e8"/><path d="M542 441v5" stroke="#4de2e8" stroke-width="2"/>
+ <text x="578" y="426" fill="#f2f6ff" font-size="15" font-weight="700">IDENTITY &amp; ACCESS CONTROL</text><text x="578" y="451" fill="#aab8d0" font-size="13">Authenticate people and devices</text><text x="578" y="472" fill="#aab8d0" font-size="13">Apply permission-based access</text>
+ <!-- bottom layers -->
+ <rect x="492" y="550" width="716" height="190" rx="18" fill="#111c30" stroke="#31425d"/>
+ <text x="520" y="585" fill="#dfe8f8" font-size="15" font-weight="700" letter-spacing="1">SECURITY CONSIDERATIONS</text>
+ <g>
+ <rect x="520" y="610" width="205" height="94" rx="12" fill="#14283b" stroke="#4de2e8" stroke-opacity=".5"/>
+ <circle cx="546" cy="637" r="10" fill="none" stroke="#4de2e8" stroke-width="2"/><path d="M541 637l4 4 7-9" fill="none" stroke="#4de2e8" stroke-width="2"/>
+ <text x="565" y="642" fill="#eaf5ff" font-size="14" font-weight="700">Authentication</text><text x="538" y="671" fill="#aab8d0" font-size="12">Verify identities &amp; devices</text>
+ <rect x="747" y="610" width="205" height="94" rx="12" fill="#211e3e" stroke="#b3a6ff" stroke-opacity=".5"/>
+ <path d="M772 627l11-5 11 5v10c0 8-6 13-11 16-6-3-11-8-11-16z" fill="none" stroke="#b3a6ff" stroke-width="2"/><path d="M777 637l4 4 7-8" fill="none" stroke="#b3a6ff" stroke-width="2"/>
+ <text x="803" y="642" fill="#eaf5ff" font-size="14" font-weight="700">Integrity &amp; audit</text><text x="765" y="671" fill="#aab8d0" font-size="12">Detect record alteration</text>
+ <rect x="974" y="610" width="206" height="94" rx="12" fill="#332b1c" stroke="#f4c66a" stroke-opacity=".55"/>
+ <rect x="995" y="628" width="18" height="18" rx="3" fill="none" stroke="#f4c66a" stroke-width="2"/><path d="M1000 628v-5a4 4 0 0 1 8 0v5" fill="none" stroke="#f4c66a" stroke-width="2"/>
+ <text x="1022" y="642" fill="#eaf5ff" font-size="14" font-weight="700">Privacy &amp; compliance</text><text x="992" y="671" fill="#c9bda5" font-size="12">HIPAA considerations</text>
+ </g>
+ <text x="490" y="767" fill="#7f91ae" font-size="12">Conceptual architecture • literature review • not a clinical deployment claim</text>
+</g>
+<!-- right callout -->
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+ <text x="1280" y="120" fill="#dfe8f8" font-size="16" font-weight="800" letter-spacing="1.5">THESIS FOCUS</text>
+ <path d="M1280 140H1525" stroke="#b3a6ff" stroke-width="2" opacity=".8"/>
+ <g transform="translate(1280 176)"><circle cx="20" cy="20" r="20" fill="#4de2e8" fill-opacity=".12" stroke="#4de2e8"/><path d="M20 9v22m-11-11h22" stroke="#4de2e8" stroke-width="2"/><text x="54" y="17" fill="#f2f6ff" font-size="17" font-weight="700">Connected health</text><text x="54" y="40" fill="#9eacc4" font-size="13">Wearables &amp; IoT</text></g>
+ <g transform="translate(1280 270)"><circle cx="20" cy="20" r="20" fill="#b3a6ff" fill-opacity=".12" stroke="#b3a6ff"/><path d="M11 15h18v14H11zM15 11h10v4" fill="none" stroke="#b3a6ff" stroke-width="2"/><text x="54" y="17" fill="#f2f6ff" font-size="17" font-weight="700">Distributed trust</text><text x="54" y="40" fill="#9eacc4" font-size="13">Shared audit trail</text></g>
+ <g transform="translate(1280 364)"><circle cx="20" cy="20" r="20" fill="#59d9a9" fill-opacity=".12" stroke="#59d9a9"/><path d="M10 20l7 7 14-16" fill="none" stroke="#59d9a9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><text x="54" y="17" fill="#f2f6ff" font-size="17" font-weight="700">Data integrity</text><text x="54" y="40" fill="#9eacc4" font-size="13">Authentication &amp; traceability</text></g>
+ <rect x="1280" y="470" width="245" height="168" rx="16" fill="#111c30" stroke="#31425d"/>
+ <text x="1302" y="505" fill="#f4c66a" font-size="13" font-weight="800" letter-spacing="1.2">RESEARCH NOTE</text>
+ <text x="1302" y="538" fill="#dfe8f8" font-size="14">Blockchain can support</text><text x="1302" y="560" fill="#dfe8f8" font-size="14">auditability; it does not</text><text x="1302" y="582" fill="#dfe8f8" font-size="14">automatically guarantee</text><text x="1302" y="604" fill="#dfe8f8" font-size="14">privacy or HIPAA compliance.</text>
+ <text x="1280" y="708" fill="#6f819f" font-size="12" letter-spacing="1">RESEARCH • ARCHITECTURE • SECURITY</text>
+</g>
+</svg>

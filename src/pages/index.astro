@@ -299,7 +299,7 @@ const getExperienceDate = (experience: any) =>
                     : projectId(project) === "mount-royal-academy"
                       ? "Education"
                       : projectId(project) === "biot-thesis"
-                        ? "Research"
+                        ? "Thesis"
                         : projectId(project) === "student-performance-dashboard"
                           ? "Analytics"
                           : projectId(project) === "digital-coaching-management"
@@ -319,16 +319,9 @@ const getExperienceDate = (experience: any) =>
                   <div class="art-academy-thumbnail">
                     <img src="/images/mount-royal-academy-thumbnail.svg" alt="" loading="lazy" decoding="async" />
                   </div>
-                ) : projectId(project) === "biot-thesis" ? (  
-                
-
-                  <div class="art-research">
-                    <div class="research-node node-one">DATA</div>
-                    <div class="research-node node-two">MODEL</div>
-                    <div class="research-node node-three">RESULT</div>
-                    <div class="research-line line-one"></div>
-                    <div class="research-line line-two"></div>
-                    <div class="research-line line-three"></div>
+                ) : projectId(project) === "biot-thesis" ? (
+                  <div class="art-biot-thumbnail">
+                    <img src="/images/blockchain-iot-healthcare-thumbnail.svg" alt="" loading="lazy" decoding="async" />
                   </div>
                 ) : projectId(project) === "student-performance-dashboard" ? (
                   <div class="art-student-dashboard-thumbnail">
