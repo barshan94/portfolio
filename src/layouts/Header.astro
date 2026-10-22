@@ -10,7 +10,6 @@ const nav = [
 <header class="system-header">
   <a href="/" class="brand" aria-label="Barshan Ghosh home">
     <span class="brand-name">Barshan Ghosh</span>
-    <span class="brand-role">Software Engineer <span aria-hidden="true">·</span> Full-Stack &amp; Applied AI</span>
   </a>
 </header>
 
@@ -234,3 +233,30 @@ const nav = [
     sections.forEach((section) => observer.observe(section));
   }
 </script>
+
+
+<style>
+  /* Keep the masthead intentionally quiet: the name is the only brand element. */
+  .system-header {
+    justify-content: center;
+    width: min(calc(100% - 3rem), 1440px);
+    margin: 0 auto;
+    padding: 1.35rem 0;
+  }
+  .brand {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+  .brand-name {
+    text-align: center;
+    font-size: clamp(1.6rem, 2.6vw, 2.15rem);
+    letter-spacing: -0.045em;
+  }
+  @media (max-width: 600px) {
+    .system-header {
+      width: calc(100% - 1.5rem);
+      padding: 1rem 0;
+    }
+  }
+</style>
