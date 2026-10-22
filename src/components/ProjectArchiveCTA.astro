@@ -1,0 +1,36 @@
+<section class="project-gallery-cta section-wrap" aria-labelledby="project-archive-title">
+  <div>
+    <p class="section-kicker">EXPLORE THE FULL BODY OF WORK</p>
+    <h2 id="project-archive-title">Projects, <span class="accent-text">in context.</span></h2>
+    <p>Explore the original interactive demonstrations or browse the complete categorized GitHub archive, including older academic projects and experiments.</p>
+  </div>
+  <div class="project-archive-actions">
+    <a class="button button-primary" href="/walkthroughs/">Explore interactive gallery <span aria-hidden="true">↗</span></a>
+    <a class="archive-text-link" href="/projects/">Browse all 38 GitHub repositories <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<style>
+  .project-gallery-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    padding: 24px;
+    border: 1px solid rgb(52 211 153 / 22%);
+    border-radius: 14px;
+    background: linear-gradient(115deg, rgb(16 185 129 / 7%), rgb(255 255 255 / 1.2%));
+  }
+  .project-gallery-cta > div:first-child { max-width: 620px; }
+  .project-gallery-cta h2 { margin: 6px 0; font-size: clamp(1.2rem, 2.2vw, 1.7rem); }
+  .project-gallery-cta p:not(.section-kicker) { margin: 0; color: #b4b4bc; font-size: .88rem; line-height: 1.7; }
+  .project-archive-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; flex-shrink: 0; }
+  .project-archive-actions .button { white-space: nowrap; }
+  .archive-text-link { color: #a7f3d0; font-size: .82rem; text-decoration: none; }
+  .archive-text-link:hover { text-decoration: underline; }
+  @media (max-width: 650px) {
+    .project-gallery-cta { align-items: flex-start; flex-direction: column; padding: 19px; }
+  }
+</style>
