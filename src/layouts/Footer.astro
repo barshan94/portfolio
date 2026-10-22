@@ -19,7 +19,6 @@
       <a href="#projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Toolkit</a>
-      <a href="#teaching">Teaching</a>
       <a href="#education">Education</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -34,9 +33,15 @@
 
 <style>
 .site-footer {
-  border-top: 1px solid var(--line);
-  background: var(--bg);
-  padding: 3rem 0 2rem;
+  position: relative;
+  overflow: hidden;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  border-top: 1px solid rgba(145, 164, 255, 0.24);
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(48, 194, 177, 0.08), transparent 32rem),
+    radial-gradient(ellipse at 88% 100%, rgba(96, 120, 255, 0.12), transparent 34rem),
+    #080b12;
+  padding: clamp(2.5rem, 5vw, 4rem) 0 1.75rem;
 }
 .footer-inner {
   display: flex;
@@ -44,14 +49,30 @@
   gap: 2rem;
   align-items: center;
   justify-content: space-between;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(145, 164, 255, 0.12);
 }
 .footer-brand { display: flex; align-items: center; gap: 0.75rem; }
-.footer-brand .brand-mark { color: var(--accent); }
+.footer-brand .brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  color: #a9b7ff;
+  border: 1px solid rgba(145, 164, 255, 0.28);
+  border-radius: 10px;
+  background: rgba(145, 164, 255, 0.08);
+}
 .footer-name { font-weight: 600; margin: 0; }
 .footer-tag { margin: 0.15rem 0 0; font-size: var(--step-1); color: var(--ink-muted); }
 .footer-nav { display: flex; gap: 0.8rem 1.1rem; flex-wrap: wrap; justify-content: flex-end; }
 .footer-nav a { font-size: var(--step-1); color: var(--ink-muted); text-decoration: none; transition: color 0.15s ease; }
-.footer-nav a:hover, .footer-nav a:focus-visible { color: var(--ink); }
+.footer-nav a:hover, .footer-nav a:focus-visible { color: #b7c3ff; }
+.footer-meta { width: 100%; padding-top: 1.2rem; border-top: 1px solid rgba(145, 164, 255, 0.1); }
+@media (max-width: 720px) {
+  .footer-inner { align-items: flex-start; gap: 1.4rem; }
+  .footer-nav { justify-content: flex-start; }
+}
 .footer-meta { display: flex; gap: 0.5rem; align-items: center; font-size: var(--step-1); color: var(--ink-faint); }
 .footer-dot { color: var(--line-strong); }
 </style>
