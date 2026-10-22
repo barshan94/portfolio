@@ -5,8 +5,18 @@ role: "Software Developer · Full-Stack Applications · AI & Automation"
 education:
   - degree: "Bachelor of Science in Computer Science and Engineering"
     institution: "American International University-Bangladesh (AIUB)"
+    location: "Dhaka, Bangladesh"
+    period: "2019 — 2023"
     cgpa: "3.83/4.00"
     duration: "Completed in 3 years"
+  - degree: "Higher Secondary Certificate (HSC) — Science"
+    institution: "Government Tolaram College"
+    period: "2017 — 2019"
+    gpa: "3.92/5.00"
+  - degree: "Secondary School Certificate (SSC) — Science"
+    institution: "Narayanganj High School & College"
+    period: "2014 — 2017"
+    gpa: "5.00/5.00"
 experience:
   - type: "work"
     employmentType: "Full-time · Active"
@@ -63,25 +73,51 @@ experience:
     bullets:
       - "Contributed to building, training, and testing machine-learning algorithms and AI models."
       - "Collaborated remotely on AI project work and technical tasks as part of the internship."
+teachingExperience:
+  - role: "Private Tutor — HSC Science"
+    period: "Oct 2024 — Present"
+    subjects: ["ICT", "English", "Bengali"]
+    description: "Provide subject support and explain concepts in a structured, student-centred way for an HSC Science learner (2026 candidate)."
+  - role: "Private Tutor — SSC Arts"
+    period: "Jan 2023 — Present"
+    subjects: ["ICT", "English", "General Mathematics", "General Science"]
+    description: "Support an SSC Arts learner through regular lessons, practice, and concept clarification."
+  - role: "Private Tutor — SSC Science"
+    period: "Jan 2023 — Dec 2024"
+    subjects: ["Physics", "Chemistry", "Higher Mathematics", "Biology"]
+    description: "Delivered private tuition across core science subjects, adapting explanations and practice to the learner's needs."
+certifications:
+  - "Operating System"
+  - "AI For Everyone"
+  - "Python for Everybody"
+  - "IT Fundamentals for Cybersecurity"
+  - "MS Excel — Beginner to Advanced"
+  - "MS PowerPoint Advanced Course"
+  - "Digital Marketing Business Workshop"
+languages: ["Bengali", "English", "Hindi"]
 skills:
-  - group: "Frontend"
-    items: ["Astro", "React", "TypeScript", "Tailwind CSS", "HTML/CSS"]
-  - group: "Backend & Data"
-    items: ["Node.js", "Supabase", "PostgreSQL", "REST APIs"]
-  - group: "AI / ML"
-    items: ["Python", "TensorFlow/Keras fundamentals", "Weka", "Kaggle", "LLM prompting"]
-  - group: "DevOps & Tools"
-    items: ["Git/GitHub", "Vercel", "Playwright", "Vitest", "Docker basics"]
-  - group: "Digital Marketing"
-    items: ["SEO", "Google Analytics (GA4)", "GTM", "Meta Pixel", "WordPress", "Shopify", "Canva"]
-  - group: "Other Languages"
-    items: ["Java", "C++", "PHP — read, write, and understand"]
+  - group: "Frontend & Web"
+    items: ["Astro", "React", "TypeScript", "JavaScript", "HTML/CSS", "Tailwind CSS", "WordPress", "Shopify"]
+  - group: "Backend & Databases"
+    items: ["Node.js", "Supabase", "PostgreSQL", "MySQL", "Firebase", "REST APIs"]
+  - group: "AI / ML & Analytics"
+    items: ["Python", "TensorFlow/Keras fundamentals", "Weka", "Kaggle", "Power BI", "ChatGPT", "Gemini", "LLM prompting"]
+  - group: "DevOps, Systems & Support"
+    items: ["Git/GitHub", "Vercel", "Playwright", "Vitest", "Docker basics", "Linux", "Windows", "Hardware & network troubleshooting"]
+  - group: "Teaching & Digital Learning"
+    items: ["Curriculum design", "Classroom management", "Student-centred instruction", "Google Classroom", "Zoom", "Microsoft Teams", "Kahoot", "Quizizz", "Padlet"]
+  - group: "Digital Marketing & Productivity"
+    items: ["SEO", "Google Analytics (GA4)", "GTM", "Meta Pixel", "Canva", "MS Office", "Google Workspace"]
+  - group: "Programming Languages"
+    items: ["C", "C++", "Python", "Java", "JavaScript", "PHP — read, write, and understand"]
 contact:
   email: "barshan.ghoshofficial@gmail.com"
+  phone: "+8801624811454"
+  location: "30 Nayamati, Narayanganj, Bangladesh"
   github: "https://github.com/barshan94"
   linkedin: "https://www.linkedin.com/in/barshan-ghosh/"
 ---
 
 # Barshan Ghosh — CV
 
-This file is the single source of truth for all bio, experience, skills, and contact information shown on the portfolio site. Edit this file, run `npm run build`, and the site updates.
+This file is the single source of truth for all bio, experience, skills, education, teaching, certifications, and contact information shown on the portfolio site. Edit this file, run `npm run build`, and the site updates.
