@@ -119,10 +119,6 @@ const secondaryDemos = demos.slice(1);
           allowfullscreen
           hidden
         ></iframe>
-        <div class="featured-paused" data-featured-paused hidden>
-          <span>FEATURED ANIMATION PAUSED</span>
-          <button class="featured-play" type="button" data-featured-play>Resume Money Calculator <span aria-hidden="true">▶</span></button>
-        </div>
       </div>
     </section>
 
@@ -170,7 +166,6 @@ const secondaryDemos = demos.slice(1);
 <script>
   const featuredFrame = document.querySelector<HTMLIFrameElement>("[data-featured-frame]");
   const featuredPoster = document.querySelector<HTMLElement>("[data-featured-poster]");
-  const featuredPaused = document.querySelector<HTMLElement>("[data-featured-paused]");
   const featuredPlayButtons = document.querySelectorAll<HTMLButtonElement>("[data-featured-play]");
   const posterSnapshots = new WeakMap<HTMLElement, Node[]>();
   let featuredPlaying = false;
@@ -203,7 +198,7 @@ const secondaryDemos = demos.slice(1);
       featuredFrame.src = "about:blank";
       featuredFrame.hidden = true;
       featuredPoster?.removeAttribute("hidden");
-      featuredPaused?.setAttribute("hidden", "");
+      featuredPlayButtons.forEach((button) => button.removeAttribute("hidden"));
       featuredPlaying = false;
     }
   };
@@ -214,7 +209,7 @@ const secondaryDemos = demos.slice(1);
     featuredFrame.src = featuredFrame.dataset.src || "/money-calculator.html";
     featuredFrame.hidden = false;
     featuredPoster?.setAttribute("hidden", "");
-    featuredPaused?.setAttribute("hidden", "");
+    featuredPlayButtons.forEach((button) => button.setAttribute("hidden", ""));
     featuredPlaying = true;
   };
 
@@ -300,9 +295,6 @@ const secondaryDemos = demos.slice(1);
   .poster-row:last-child { border-bottom: 0; }
   .poster-head { color: #6ee7b7; background: #16352c; letter-spacing: .1em; }
   .poster-footer { color: #7e9e98; text-align: center; font-size: clamp(6px, .7vw, 9px); letter-spacing: .12em; }
-  .featured-paused { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; background: #080a0ded; text-align: center; }
-  .featured-paused[hidden] { display: none; }
-  .featured-paused > span { color: #a1a1aa; font-size: .7rem; letter-spacing: .12em; }
 
   .gallery-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 22px; margin: 42px 0 18px; }
   .gallery-section-heading h2 { margin: 8px 0 0; font-size: clamp(1.7rem, 3.5vw, 2.4rem); letter-spacing: -.05em; }
