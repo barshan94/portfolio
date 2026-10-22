@@ -8,7 +8,7 @@
 <style>
 :root{color-scheme:light;--bg:#07080a;--ink:#e2eef2;--muted:#78919a;--line:#26363e;--blue:#4dd4d8;--green:#55c79b;--red:#ff7777}
 *{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink)}
-body{display:grid;place-items:center}.frame{position:relative;width:100%;max-width:1600px;aspect-ratio:16/9;overflow:hidden;background:#07080a;isolation:isolate;border:1px solid #dbe3ed}canvas{display:block;width:100%;height:100%}.controls{display:flex;justify-content:center;gap:8px;padding:12px}.controls button{border:1px solid #344750;background:#fff;color:#334155;border-radius:8px;padding:9px 13px;font-size:12px;font-weight:650;cursor:pointer}.controls button:hover{border-color:#4dd4d8;color:#4dd4d8}
+body{display:grid;place-items:center}.frame{position:relative;width:100%;max-width:1600px;aspect-ratio:16/9;overflow:hidden;background:#07080a;isolation:isolate;border:1px solid #dbe3ed}canvas{display:block;width:100%;height:100%}.controls{display:flex;justify-content:center;gap:8px;padding:12px}.controls button{border:1px solid #344750;background:#0b0e11;color:#8fd6da;border-radius:8px;padding:9px 13px;font-size:12px;font-weight:650;cursor:pointer}.controls button:hover{border-color:#4dd4d8;color:#4dd4d8}
 body.embed{display:block;overflow:hidden}body.embed .frame{width:100%;max-width:none;height:100vh;height:100svh;aspect-ratio:auto;border:0}body.embed .controls{display:none}
 @media(prefers-reduced-motion:reduce){.controls button{transition:none}}
 </style>
@@ -183,7 +183,7 @@ body.embed{display:block;overflow:hidden}body.embed .frame{width:100%;max-width:
   function cursor(t,scene,p){
     const from=[1420,132],to=scene.nav===0?[480,247]:scene.nav===2?[95,206]:scene.nav===1?[94,167]:scene.nav===3?[94,245]:scene.nav===12?[96,596]:scene.nav===5?[95,362]:scene.nav===6?[95,401]:[95,595];
     const start=[1420,132],end=to,q=ease((p-.08)/.48);const x=start[0]+(end[0]-start[0])*q+Math.sin(t*2.3)*2,y=start[1]+(end[1]-start[1])*q+Math.cos(t*2)*2;
-    ctx.save();ctx.globalAlpha=.92;ctx.translate(x,y);ctx.rotate(-.22);ctx.fillStyle='#e2eef2';ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,26);ctx.lineTo(7,19);ctx.lineTo(14,31);ctx.lineTo(19,28);ctx.lineTo(12,16);ctx.lineTo(22,16);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
+    ctx.save();ctx.globalAlpha=.92;ctx.translate(x,y);ctx.rotate(-.22);ctx.fillStyle='#e2eef2';ctx.strokeStyle='#07080a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,26);ctx.lineTo(7,19);ctx.lineTo(14,31);ctx.lineTo(19,28);ctx.lineTo(12,16);ctx.lineTo(22,16);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
     if(p>.42&&p<.68){const r=8+Math.sin(t*10)*3;circ(x,y,r,'rgba(37,99,235,.12)','rgba(37,99,235,.6)')}
   }
   function motionOverlay(t,sceneIndex){
