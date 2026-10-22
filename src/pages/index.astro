@@ -147,7 +147,7 @@ const getExperienceDate = (experience: any) =>
           </a>
         </div>
         <nav class="hero-quick-links" aria-label="Professional links">
-          {contact?.email && <a href={`mailto:${contact.email}`}>Email ↗</a>}
+          {contact?.email && <a href={`mailto:${contact.email}`}>{contact.email} ↗</a>}
           <a href={contact?.github || "https://github.com/barshan94"} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
           {contact?.linkedin && <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
         </nav>
