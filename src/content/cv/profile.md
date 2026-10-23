@@ -20,14 +20,14 @@ education:
 experience:
   - type: "work"
     employmentType: "Full-time · Active"
-    role: "IT Coordinator · Computer Science Teacher · O-Level Physics Guest Lecturer"
+    role: "IT Coordinator · Computer Teacher · O-Level Physics Guest Lecturer"
     org: "Mount Royal Academy"
     location: "Narayanganj, Bangladesh"
     period: "Jun 2025 — Present"
     bullets:
       - "Oversee the school's IT infrastructure and day-to-day technology operations, supporting reliable systems for staff and students."
-      - "Teach Computer Science to students in Grades 3–7, making core concepts accessible to different learning levels."
-      - "Deliver guest lectures in O-Level Physics, supporting subject learning and exam preparation."
+      - "Teach Computer Science to students in Grades 3–7, making technical concepts accessible and practical."
+      - "Deliver guest lectures in O-Level Physics, supporting students with subject instruction and classroom learning."
   - type: "work"
     employmentType: "Temporary · Short-term"
     role: "Proxy ICT Teacher"
@@ -35,8 +35,8 @@ experience:
     location: "Narayanganj, Bangladesh"
     period: "Apr 2025 — May 2025"
     bullets:
-      - "Covered ICT classes during regular teachers' absences and maintained continuity of classroom learning."
-      - "Delivered planned lessons and guided students through classroom technology activities."
+      - "Covered ICT classes during regular teachers' absences and maintained continuity in the planned curriculum."
+      - "Led classroom technology activities and delivered lesson plans to keep students engaged and on track."
   - type: "work"
     employmentType: "Remote"
     role: "Digital Marketer"
@@ -45,16 +45,7 @@ experience:
     period: "Oct 2024 — Jan 2025"
     bullets:
       - "Executed online marketing activities to strengthen brand visibility and reach prospective learners."
-      - "Supported social media outreach and distribution of promotional content across digital channels."
-  - type: "work"
-    employmentType: "Remote"
-    role: "IT Consultant"
-    org: "Digital Fire Safety Solution Ltd"
-    location: "Dhaka, Bangladesh"
-    period: "Aug 2022 — Oct 2024"
-    bullets:
-      - "Provided remote technical consultation and troubleshooting to address system and user issues."
-      - "Reviewed IT infrastructure and recommended practical improvements to support operational efficiency."
+      - "Supported social media outreach and distributed promotional content across digital channels."
   - type: "work"
     employmentType: "Hybrid"
     role: "IT Associate"
@@ -62,8 +53,17 @@ experience:
     location: "Dhaka, Bangladesh"
     period: "Jan 2023 — Sep 2024"
     bullets:
-      - "Maintained day-to-day IT systems and provided hardware support to keep workplace technology operational."
-      - "Troubleshot network and user-technology issues, supporting both on-site and remote operations."
+      - "Maintained day-to-day IT systems and provided hardware support and network troubleshooting."
+      - "Delivered on-site and remote IT assistance to support business operations and staff productivity."
+  - type: "work"
+    employmentType: "Remote"
+    role: "IT Consultant"
+    org: "Digital Fire Safety Solution Ltd"
+    location: "Dhaka, Bangladesh"
+    period: "Aug 2022 — Oct 2024"
+    bullets:
+      - "Provided remote technical consulting and troubleshooting to resolve operational IT issues."
+      - "Reviewed IT infrastructure and recommended practical improvements to system reliability and operational efficiency."
   - type: "internship"
     employmentType: "Remote internship"
     role: "AI Engineer Intern"
@@ -71,30 +71,8 @@ experience:
     location: "India"
     period: "Aug 2022 — Jan 2023"
     bullets:
-      - "Contributed to building, training, and testing machine-learning algorithms and AI models."
-      - "Collaborated remotely on AI project work and technical tasks as part of the internship."
-teachingExperience:
-  - role: "Private Tutor — HSC Science"
-    period: "Oct 2024 — Present"
-    subjects: ["ICT", "English", "Bengali"]
-    description: "Provide subject support and explain concepts in a structured, student-centred way for an HSC Science learner (2026 candidate)."
-  - role: "Private Tutor — SSC Arts"
-    period: "Jan 2023 — Present"
-    subjects: ["ICT", "English", "General Mathematics", "General Science"]
-    description: "Support an SSC Arts learner through regular lessons, practice, and concept clarification."
-  - role: "Private Tutor — SSC Science"
-    period: "Jan 2023 — Dec 2024"
-    subjects: ["Physics", "Chemistry", "Higher Mathematics", "Biology"]
-    description: "Delivered private tuition across core science subjects, adapting explanations and practice to the learner's needs."
-certifications:
-  - "Operating System"
-  - "AI For Everyone"
-  - "Python for Everybody"
-  - "IT Fundamentals for Cybersecurity"
-  - "MS Excel — Beginner to Advanced"
-  - "MS PowerPoint Advanced Course"
-  - "Digital Marketing Business Workshop"
-languages: ["Bengali", "English", "Hindi"]
+      - "Supported practical AI and machine-learning tasks, including work with model-building, training, and testing workflows."
+      - "Collaborated remotely on technical project activities and explored applied machine-learning approaches."
 skills:
   - group: "Frontend & Web"
     items: ["Astro", "React", "TypeScript", "JavaScript", "HTML/CSS", "Tailwind CSS", "WordPress", "Shopify"]
