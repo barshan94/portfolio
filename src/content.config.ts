@@ -45,13 +45,6 @@ const cvSchema = z.object({
   }),
 });
 
-const writingSchema = z.object({
-  title: z.string().min(1, "title is required"),
-  type: z.enum(["Research Paper", "Project", "Article", "Talk"]).default("Article"),
-  excerpt: z.string().min(1, "excerpt is required"),
-  link: z.string().url("link must be a valid URL").optional(),
-});
-
 export const collections = {
   projects: defineCollection({
     pattern: "src/content/projects/*.md",
@@ -60,9 +53,5 @@ export const collections = {
   cv: defineCollection({
     pattern: "src/content/cv/*.md",
     schema: cvSchema,
-  }),
-  writing: defineCollection({
-    pattern: "src/content/writing/*.md",
-    schema: writingSchema,
   }),
 };
