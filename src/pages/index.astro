@@ -480,6 +480,48 @@ const getExperienceDate = (experience: any) =>
       </section>
     )}
 
+    <!-- INTERESTS -->
+    <section
+      class="interests section-wrap section-block"
+      id="interests"
+      aria-labelledby="interests-title"
+    >
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="section-kicker">04 — BEYOND THE SCREEN</p>
+          <h2 id="interests-title">
+            What keeps me <span class="accent-text">curious.</span>
+          </h2>
+        </div>
+        <p class="section-sub">
+          A few things that help me stay curious, grounded, and open to new perspectives.
+        </p>
+      </div>
+
+      <div class="interests-grid">
+        <article class="interest-card" data-reveal>
+          <span class="interest-symbol" aria-hidden="true">01</span>
+          <h3>Photography</h3>
+          <p>Capturing meaningful moments and perspectives.</p>
+        </article>
+        <article class="interest-card" data-reveal>
+          <span class="interest-symbol" aria-hidden="true">02</span>
+          <h3>Solo Travel</h3>
+          <p>Discovering new places and learning through experiences.</p>
+        </article>
+        <article class="interest-card" data-reveal>
+          <span class="interest-symbol" aria-hidden="true">03</span>
+          <h3>Quality Time with My Family</h3>
+          <p>Cherishing meaningful moments with the people closest to me.</p>
+        </article>
+        <article class="interest-card" data-reveal>
+          <span class="interest-symbol" aria-hidden="true">04</span>
+          <h3>Religious Exploration</h3>
+          <p>Deepening my understanding of faith, spirituality, and personal values.</p>
+        </article>
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section
       class="contact section-wrap section-block"
@@ -488,7 +530,7 @@ const getExperienceDate = (experience: any) =>
     >
       <div class="contact-wrap" data-reveal>
         <div class="contact-copy">
-          <p class="section-kicker">04 — CONTACT</p>
+          <p class="section-kicker">05 — CONTACT</p>
           <h2 id="contact-title">
             Have a good<br />
             <span class="accent-text">problem to solve?</span>
@@ -3740,6 +3782,65 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
       gap: 10px 14px;
       margin-top: 14px;
     }
+  }
+
+  /* Personal interests: a compact, responsive closing section before contact. */
+  .portfolio-shell #interests .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .portfolio-shell #interests .interest-card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  }
+  .portfolio-shell #interests .interest-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(124,229,210,.38);
+    background: linear-gradient(145deg, rgba(124,229,210,.05), rgba(255,255,255,.012));
+  }
+  .portfolio-shell #interests .interest-symbol {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: var(--accent);
+    font: 600 .72rem/1 "JetBrains Mono", monospace;
+  }
+  .portfolio-shell #interests .interest-card h3 {
+    margin: 0 0 9px;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .portfolio-shell #interests .interest-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .86rem;
+    line-height: 1.7;
+  }
+  @media (max-width: 1000px) {
+    .portfolio-shell #interests .interests-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 520px) {
+    .portfolio-shell #interests .interests-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+    }
+    .portfolio-shell #interests .interest-card {
+      padding: 18px;
+    }
+    .portfolio-shell #interests .interest-symbol {
+      margin-bottom: 14px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-shell #interests .interest-card { transition: none; }
+    .portfolio-shell #interests .interest-card:hover { transform: none; }
   }
 </style>
 
