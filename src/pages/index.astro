@@ -341,17 +341,15 @@ const getExperienceDate = (experience: any) =>
                   )}
 
                   {getProjectDemo(project) && (
-                    <div class="project-demo-row">
-                      <a
-                        class="project-demo-link"
-                        href={getProjectDemo(project)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Play demo: ${project.data.title}`}
-                      >
-                        <span aria-hidden="true">▶</span> Play demo
-                      </a>
-                    </div>
+                    <a
+                      class="project-demo-link"
+                      href={getProjectDemo(project)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Play demo: ${project.data.title}`}
+                    >
+                      <span aria-hidden="true">▶</span> Play demo
+                    </a>
                   )}
                 </div>
               </div>
@@ -3905,20 +3903,30 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
       white-space: nowrap;
     }
 
-    .portfolio-shell .project-demo-row {
-      display: flex;
-      flex: 0 0 100%;
-      justify-content: flex-end;
-      width: 100%;
-      margin-top: 4px;
+    .portfolio-shell .project-card-links {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding-top: 18px;
+      min-width: 0;
+    }
+
+    .portfolio-shell .project-card-links > a {
+      flex: 0 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      font-size: clamp(0.62rem, 2.55vw, 0.74rem);
+      gap: 4px;
     }
 
     .portfolio-shell .project-card-links .project-demo-link {
       flex: 0 0 auto;
-      width: max-content;
-      max-width: 100%;
-      margin: 0;
+      margin: 0 0 0 auto;
+      padding: 6px 7px;
       white-space: nowrap;
+      font-size: clamp(0.62rem, 2.55vw, 0.74rem);
     }
   }
 
