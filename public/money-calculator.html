@@ -7,10 +7,17 @@
 <title>Money Calculator — Cinematic Transition</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;background:#07090D;color:#eaf0f6;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}#stage{position:fixed;inset:0;display:grid;place-items:center}canvas{display:block;width:100%;height:100%}.ctl{position:fixed;right:14px;bottom:12px;display:flex;gap:6px;opacity:.24;transition:opacity .25s}.ctl:hover,.ctl:focus-within{opacity:1}.ctl button{background:#111923d9;color:#aab4c4;border:1px solid #46546b80;border-radius:6px;padding:6px 10px;font:600 11px/1.4 system-ui;cursor:pointer;letter-spacing:.04em}.ctl button:hover,.ctl button:focus-visible{background:#202c3a;color:#fff;outline:2px solid #39e6d0;outline-offset:2px}
-body.embed .ctl{display:none!important}
+body.embed .ctl{display:none!important}body.embed .portfolio-return{display:none!important}
+
+/* Persistent route back to the main portfolio */
+.portfolio-return{position:fixed;top:16px;right:16px;z-index:1000;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid rgba(130,160,180,.42);border-radius:999px;background:rgba(8,13,20,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#eaf0f6;text-decoration:none;font:600 12px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.015em;box-shadow:0 6px 24px rgba(0,0,0,.22);transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.portfolio-return:hover{background:rgba(24,37,49,.96);border-color:rgba(100,220,215,.8);transform:translateY(-1px)}
+.portfolio-return:focus-visible{outline:2px solid #5de6d7;outline-offset:3px}
+@media(max-width:520px){.portfolio-return{top:10px;right:10px;min-height:36px;padding:0 11px;font-size:11px;gap:6px}}
 </style>
 </head>
 <body>
+<a class="portfolio-return" href="/#projects" target="_top" aria-label="Back to portfolio projects"><span aria-hidden="true">←</span> Back to Portfolio</a>
 <div id="stage"><canvas id="cv" role="img" aria-label="Animated illustrative Money Calculator financial system showing account balances, transactions, ledger posting and reconciliation"></canvas><div class="ctl"><button id="btnPlay" aria-label="Pause animation">PAUSE</button><button id="btnReplay">REPLAY</button></div></div>
 <script>
 (function(){
