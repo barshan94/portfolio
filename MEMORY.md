@@ -1,7 +1,7 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-23 (latest CV uploaded and canonical download path updated)
+Last updated: 2026-10-23 (CV download path and cinematic video CV refined)
 
 ---
 
@@ -12,6 +12,16 @@ Last updated: 2026-10-23 (latest CV uploaded and canonical download path updated
 - The current CV uses a clear, ATS-conscious structure: professional summary, technical skills, selected projects, professional experience, education, private tutoring experience, certifications/professional development, and languages. It includes clickable portfolio, GitHub/repository, LinkedIn, and digital-marketing certificate links.
 - Private tutoring includes O-Level/Edexcel subjects: Physics, ICT, Computer Science, Mathematics B, and Further Pure Mathematics (from June 2026). Keep these details consistent when updating CV-related content.
 - Do not revert `public/cv.pdf` to the older hand-authored one-page PDF. Verify the canonical download asset after future CV uploads.
+
+---
+
+## Animated video CV (2026-10-23)
+
+- The portfolio's **Watch Animated CV** button points to `/animated-cv.html`, backed by `public/animated-cv.html`. The old temporary `public/check.html` page has been retired.
+- The animated CV is a presentation-only experience: do not append a second full text CV below it. The primary portfolio page already offers the downloadable PDF CV.
+- The presentation is condensed to nine cinematic scenes with an approximately 70-second runtime. It auto-plays on entry and includes play/pause, replay, chapter navigation/progress, and a persistent **Back to portfolio** link.
+- Keep the scene transitions, animated canvas background, responsive mobile layout, reduced-motion opt-in, and playback controls intact during future edits.
+- If the file is renamed again, update the homepage link in `src/pages/index.astro` and this memory note together.
 
 ---
 
