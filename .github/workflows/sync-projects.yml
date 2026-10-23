@@ -4,6 +4,14 @@ on:
   schedule:
     # Check once per hour for repositories tagged for the portfolio.
     - cron: "17 * * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/sync-projects.mjs"
+      - ".github/workflows/sync-projects.yml"
+      - "src/data/portfolio-showcase.json"
+      - "sync-map.json"
   workflow_dispatch:
 
 permissions:
