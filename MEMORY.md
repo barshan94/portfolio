@@ -1,7 +1,17 @@
 # Portfolio — Project Memory
 
 This file is the **single source of truth** for the portfolio. Read it before any change.
-Last updated: 2026-10-22 (interactive gallery playback and demo-to-repository alignment)
+Last updated: 2026-10-23 (latest CV uploaded and canonical download path updated)
+
+---
+
+## Current CV source (2026-10-23)
+
+- The latest user-edited CV is stored at `public/Barshan_Ghosh_Master_CV (1).pdf`.
+- `public/cv.pdf` now points to the exact same Git blob as that uploaded PDF. The homepage Download CV button already links to `/cv.pdf` and downloads it as `Barshan-Ghosh-CV.pdf`; preserve this canonical path unless the button is intentionally changed.
+- The current CV uses a clear, ATS-conscious structure: professional summary, technical skills, selected projects, professional experience, education, private tutoring experience, certifications/professional development, and languages. It includes clickable portfolio, GitHub/repository, LinkedIn, and digital-marketing certificate links.
+- Private tutoring includes O-Level/Edexcel subjects: Physics, ICT, Computer Science, Mathematics B, and Further Pure Mathematics (from June 2026). Keep these details consistent when updating CV-related content.
+- Do not revert `public/cv.pdf` to the older hand-authored one-page PDF. Verify the canonical download asset after future CV uploads.
 
 ---
 
