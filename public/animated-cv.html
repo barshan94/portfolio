@@ -317,6 +317,25 @@ body{min-height:100svh}
   .ctrl-top .tc{grid-column:1/-1;justify-self:end;margin-left:0;font-size:9px}
   .controls{padding-left:9px;padding-right:9px}
 }
+
+/* Automatically synchronized GitHub showcase appendix */
+.showcase-appendix{margin:clamp(28px,5vw,56px) 0 30px;padding:clamp(18px,3vw,30px);border:1px solid var(--border);border-radius:var(--r);background:linear-gradient(160deg,rgba(14,20,30,.94),rgba(7,10,15,.96));}
+.showcase-appendix[hidden]{display:none!important}
+.showcase-heading{max-width:760px}
+.showcase-heading .kicker{margin-bottom:10px}
+.showcase-heading h2{font-size:clamp(24px,4vw,38px);line-height:1.1;letter-spacing:-.035em;margin:0;color:var(--text)}
+.showcase-heading>p:last-child{margin:10px 0 0;max-width:68ch;color:var(--muted);font-size:14px;line-height:1.7}
+.showcase-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.showcase-card{min-width:0;display:flex;flex-direction:column;padding:16px;border:1px solid var(--border);border-radius:var(--rs);background:rgba(255,255,255,.025)}
+.showcase-card h3{margin:0 0 7px;font-size:16px;line-height:1.35;overflow-wrap:anywhere}
+.showcase-card h3 a{color:var(--text);text-decoration:none}
+.showcase-card h3 a:hover{color:var(--teal)}
+.showcase-card p{margin:0;color:#AFC0D1;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.showcase-meta{margin-top:10px!important;color:var(--muted)!important;font:10px/1.5 var(--mono)!important;letter-spacing:.04em}
+.showcase-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.showcase-links a{display:inline-flex;align-items:center;padding:6px 10px;border:1px solid rgba(45,226,206,.24);border-radius:999px;color:var(--teal);font:10px/1.4 var(--mono);text-decoration:none}
+.showcase-links a:hover{background:var(--tealDim);text-decoration:none}
+@media(max-width:600px){.showcase-grid{grid-template-columns:1fr}.showcase-appendix{padding:16px}.showcase-card{padding:14px}}
 </style>
 <noscript><style>.cinema,.controls{display:none!important}.noscript-msg{display:block!important}
 </style></noscript>
@@ -547,6 +566,15 @@ body{min-height:100svh}
 </div>
 
 </section><!-- /cinema -->
+
+<section class="showcase-appendix" id="github-projects" hidden aria-labelledby="showcase-title">
+  <div class="showcase-heading">
+    <p class="kicker">LIVE PORTFOLIO INDEX</p>
+    <h2 id="showcase-title">Selected GitHub projects</h2>
+    <p>Repositories I have intentionally marked for showcase. This list updates when approved portfolio changes are published.</p>
+  </div>
+  <div class="showcase-grid" id="showcase-grid"></div>
+</section>
 
 </div><!-- /wrap -->
 
@@ -838,6 +866,73 @@ if(reduced){document.body.classList.add("reduced-motion");playing=false;setPlayU
 else{setPlayUI();setTimeout(function(){play()},500)}
 requestAnimationFrame(loop);
 
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var section = document.getElementById("github-projects");
+  var grid = document.getElementById("showcase-grid");
+  if (!section || !grid || !window.fetch) return;
+
+  function addLink(container, href, label) {
+    if (!href) return;
+    try {
+      var url = new URL(href, window.location.origin);
+      if (url.protocol !== "https:" && url.protocol !== "http:") return;
+      var anchor = document.createElement("a");
+      anchor.href = url.href;
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
+      anchor.textContent = label;
+      container.appendChild(anchor);
+    } catch (_) {}
+  }
+
+  fetch("/portfolio-showcase.json", { cache: "no-store" })
+    .then(function(response){ return response.ok ? response.json() : []; })
+    .then(function(projects){
+      if (!Array.isArray(projects) || !projects.length) return;
+      projects.forEach(function(project){
+        if (!project || !project.name || !project.url) return;
+        var card = document.createElement("article");
+        card.className = "showcase-card";
+
+        var heading = document.createElement("h3");
+        var titleLink = document.createElement("a");
+        titleLink.href = project.url;
+        titleLink.target = "_blank";
+        titleLink.rel = "noopener noreferrer";
+        titleLink.textContent = project.title || project.name;
+        heading.appendChild(titleLink);
+        card.appendChild(heading);
+
+        var description = document.createElement("p");
+        description.textContent = project.description || "Open the repository for project details.";
+        card.appendChild(description);
+
+        var metaParts = [];
+        if (project.language) metaParts.push(project.language);
+        if (project.updatedAt) metaParts.push("Updated " + String(project.updatedAt).slice(0, 10));
+        if (metaParts.length) {
+          var meta = document.createElement("p");
+          meta.className = "showcase-meta";
+          meta.textContent = metaParts.join(" · ");
+          card.appendChild(meta);
+        }
+
+        var links = document.createElement("div");
+        links.className = "showcase-links";
+        addLink(links, project.url, "Source code ↗");
+        addLink(links, project.homepage, "Live project ↗");
+        card.appendChild(links);
+        grid.appendChild(card);
+      });
+
+      if (grid.children.length) section.hidden = false;
+    })
+    .catch(function(){ /* Keep the existing animated CV usable if the index is unavailable. */ });
 })();
 </script>
 </body>
