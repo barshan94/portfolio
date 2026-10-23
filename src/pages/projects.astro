@@ -2,14 +2,29 @@
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { githubRepositories, repositoryCategories } from "../data/github-repositories";
+import showcaseProjects from "../data/portfolio-showcase.json";
 
 const projectEntries = (await getCollection("projects")).sort((a, b) =>
   a.data.title.localeCompare(b.data.title)
 );
 
+const knownRepositoryNames = new Set(
+  githubRepositories.map((repository) => repository.name.toLowerCase())
+);
+
+const syncedRepositories = showcaseProjects
+  .filter((repository) => !knownRepositoryNames.has(repository.name.toLowerCase()))
+  .map((repository) => ({
+    name: repository.name,
+    category: "Core software projects" as const,
+    description: repository.description,
+  }));
+
+const allRepositories = [...githubRepositories, ...syncedRepositories];
+
 const groups = repositoryCategories.slice(1).map((category) => ({
   category,
-  repositories: githubRepositories.filter((repository) => repository.category === category),
+  repositories: allRepositories.filter((repository) => repository.category === category),
 }));
 ---
 <Layout
@@ -19,11 +34,11 @@ const groups = repositoryCategories.slice(1).map((category) => ({
   <main class="archive-shell">
     <a class="back-link" href="/">← Back to portfolio</a>
     <header class="archive-header">
-      <p class="eyebrow">REPOSITORY DIRECTORY / {githubRepositories.length} REPOSITORIES</p>
+      <p class="eyebrow">REPOSITORY DIRECTORY / {allRepositories.length} REPOSITORIES</p>
       <h1>Every project.<br /><span>One searchable archive.</span></h1>
       <p>Start with the selected projects, then search the full repository directory below. The homepage is the short portfolio; this page is the organized index of source repositories and earlier experiments.</p>
       <div class="archive-stats">
-        <span><strong>{githubRepositories.length}</strong> repositories indexed</span>
+        <span><strong>{allRepositories.length}</strong> repositories indexed</span>
         <span><strong>{groups.length}</strong> categories</span>
         <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">Open GitHub profile ↗</a>
       </div>
@@ -57,7 +72,7 @@ const groups = repositoryCategories.slice(1).map((category) => ({
           <button type="button" class:list={["filter-button", { active: index === 0 }]} data-category={category} aria-pressed={index === 0 ? "true" : "false"}>{category}</button>
         ))}
       </div>
-      <p class="result-count" id="result-count" aria-live="polite">{githubRepositories.length} repositories shown</p>
+      <p class="result-count" id="result-count" aria-live="polite">{allRepositories.length} repositories shown</p>
     </section>
 
     <div class="repository-groups">
