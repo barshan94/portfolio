@@ -803,7 +803,6 @@ const getExperienceDate = (experience: any) =>
   .project-category,
   .fact-label,
   .timeline-meta,
-  .writing-type,
   .window-title,
   .window-label,
   .preview-eyebrow,
@@ -2401,26 +2400,6 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
       padding: 21px 15px;
     }
 
-    .writing-item {
-      grid-template-columns: 28px minmax(0, 1fr) 17px;
-      gap: 12px;
-      padding: 22px 3px;
-    }
-
-    .writing-item:hover {
-      padding-right: 6px;
-      padding-left: 6px;
-    }
-
-    .writing-main h3 {
-      font-size: 1.08rem;
-      line-height: 1.4;
-    }
-
-    .writing-main p {
-      font-size: 0.8rem;
-    }
-
     .contact-wrap {
       gap: 20px;
       padding: 27px 20px;
@@ -3760,6 +3739,31 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     .portfolio-shell .hero-quick-links {
       gap: 10px 14px;
       margin-top: 14px;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Final desktop rhythm: keep sections connected without removing visual hierarchy. */
+  @media (min-width: 761px) {
+    .portfolio-shell > .section-block {
+      padding-top: 8px !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .portfolio-shell > .section-block .section-heading {
+      margin-bottom: 14px !important;
+    }
+
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: clamp(30px, 3vw, 40px) !important;
+      padding-bottom: 12px !important;
+    }
+
+    .portfolio-shell > .cv-download.section-block {
+      padding-top: 0 !important;
     }
   }
 </style>
