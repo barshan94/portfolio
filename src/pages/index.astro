@@ -11,6 +11,7 @@ const selectedProjectIds = [
   "asta-store",
   "mount-royal-academy",
   "student-performance-dashboard",
+  "keyword-research",
   "digital-coaching-management",
   "999-national-emergency-service",
 ];
@@ -147,15 +148,6 @@ const getExperienceDate = (experience: any) =>
           </a>
         </div>
 
-        <nav class="hero-quick-links" aria-label="Email and professional profiles">
-          {contact?.email && <a href={`mailto:${contact.email}`}>Email</a>}
-          {contact?.github && (
-            <a href={contact.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          )}
-          {contact?.linkedin && (
-            <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          )}
-        </nav>
       </div>
     </section>
 
@@ -3560,5 +3552,25 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   }
   @media (prefers-reduced-motion: reduce) {
     .portfolio-shell .hero-quick-links a { transition: none; }
+  }
+
+  /* Separate toolkit and contact sections clearly; prevent the next section
+     from visually crowding the final row of skill cards on desktop. */
+  .portfolio-shell > #skills.section-block {
+    padding-bottom: clamp(30px, 3.5vw, 48px) !important;
+  }
+
+  .portfolio-shell > #contact.section-block {
+    padding-top: clamp(28px, 3vw, 40px) !important;
+  }
+
+  @media (max-width: 760px) {
+    .portfolio-shell > #skills.section-block {
+      padding-bottom: 24px !important;
+    }
+
+    .portfolio-shell > #contact.section-block {
+      padding-top: 24px !important;
+    }
   }
 </style>
