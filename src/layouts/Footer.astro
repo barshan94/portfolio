@@ -17,12 +17,27 @@
 <style>
   .site-footer { position:relative; margin-top:clamp(1.5rem,2.5vw,2.5rem); padding:1.5rem 0 1.25rem; border-top:1px solid rgba(145,164,255,.2); background:radial-gradient(ellipse at 12% 0%,rgba(48,194,177,.06),transparent 32rem),#080b12; }
   .footer-inner { width:min(calc(100% - 3rem),1440px); margin-inline:auto; }
-  .footer-nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:.65rem clamp(1.25rem,3vw,2.75rem); margin:0; padding:.35rem 0 1.35rem; }
-  .footer-nav a { display:inline-flex; align-items:center; min-height:2rem; color:#c0c8d8; font-size:.9rem; font-weight:500; text-decoration:none; transition:color 160ms ease; }
+  .footer-nav {
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-evenly;
+    gap:.65rem clamp(1rem,2.5vw,2.5rem);
+    margin:0;
+    padding:.35rem 0 1.35rem;
+    text-align:center;
+  }
+  .footer-nav a { display:inline-flex; align-items:center; justify-content:center; min-height:2rem; color:#c0c8d8; font-size:.9rem; font-weight:500; text-decoration:none; transition:color 160ms ease; }
   .footer-nav a:hover,.footer-nav a:focus-visible { color:#91a4ff; }
   .footer-meta { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-top:1rem; border-top:1px solid rgba(145,164,255,.12); color:#778196; font-family:Inter,sans-serif; font-size:.78rem; }
   .footer-built { margin-left:auto; text-align:right; white-space:nowrap; }
-  @media(max-width:600px) { .footer-inner { width:calc(100% - 1.5rem); } .footer-nav { gap:.35rem 1rem; padding-bottom:1rem; } .footer-nav a { font-size:.82rem; } .footer-meta { align-items:flex-start; font-size:.72rem; } }
+  @media(max-width:600px) {
+    .footer-inner { width:calc(100% - 1.5rem); }
+    .footer-nav { justify-content:center; gap:.35rem 1.25rem; padding-bottom:1rem; }
+    .footer-nav a { font-size:.82rem; }
+    .footer-meta { align-items:flex-start; font-size:.72rem; }
+  }
   @media(prefers-reduced-motion:reduce) { .footer-nav a { transition:none; } }
 </style>
 
