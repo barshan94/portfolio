@@ -35,8 +35,22 @@
   .footer-built { margin-left:auto; text-align:right; white-space:nowrap; }
   @media(max-width:600px) {
     .footer-inner { width:calc(100% - 1.5rem); }
-    .footer-nav { justify-content:center; gap:.35rem 1.25rem; padding-bottom:1rem; }
-    .footer-nav a { font-size:.82rem; }
+    /* Keep all six destinations on one line on phones, including Contact. */
+    .footer-nav {
+      flex-wrap:nowrap;
+      justify-content:space-between;
+      gap:4px;
+      padding-bottom:1rem;
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+    .footer-nav::-webkit-scrollbar { display:none; }
+    .footer-nav a {
+      flex:0 0 auto;
+      min-height:2rem;
+      font-size:clamp(.58rem, 2.1vw, .68rem);
+      white-space:nowrap;
+    }
     .footer-meta { align-items:flex-start; font-size:.72rem; }
   }
   @media(prefers-reduced-motion:reduce) { .footer-nav a { transition:none; } }

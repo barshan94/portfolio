@@ -7,11 +7,11 @@ Last updated: 2026-10-23 (CV download path and cinematic video CV refined)
 
 ## Current CV source (2026-10-23)
 
-- The latest user-edited CV is stored at `public/Barshan_Ghosh_Master_CV (1).pdf`.
-- `public/cv.pdf` now points to the exact same Git blob as that uploaded PDF. The homepage Download CV button already links to `/cv.pdf` and downloads it as `Barshan-Ghosh-CV.pdf`; preserve this canonical path unless the button is intentionally changed.
+- The canonical downloadable CV is `public/Barshan Ghosh.pdf`; replace this exact file path when the user uploads a revised CV.
+- The homepage Download CV button links to `/Barshan%20Ghosh.pdf` and downloads it as `Barshan Ghosh.pdf`. Keep this filename and path stable so a same-name PDF replacement updates the download.
 - The current CV uses a clear, ATS-conscious structure: professional summary, technical skills, selected projects, professional experience, education, private tutoring experience, certifications/professional development, and languages. It includes clickable portfolio, GitHub/repository, LinkedIn, and digital-marketing certificate links.
 - Private tutoring includes O-Level/Edexcel subjects: Physics, ICT, Computer Science, Mathematics B, and Further Pure Mathematics (from June 2026). Keep these details consistent when updating CV-related content.
-- Do not revert `public/cv.pdf` to the older hand-authored one-page PDF. Verify the canonical download asset after future CV uploads.
+- Do not restore the old `public/cv.pdf` alias as the primary download. Verify `public/Barshan Ghosh.pdf` after future CV uploads.
 
 ---
 
@@ -119,3 +119,10 @@ All live as of 2026-10-12:
 - Preview: `npm run preview` → `localhost:4321`
 - Deploy target: Vercel, connected to `barshan94/portfolio`.
 - Do not report a deployment as successful until the Vercel status is `success` and the live page reflects the latest commit.
+
+## Mobile navigation, animated CV controls, and canonical CV filename (2026-10-23)
+
+- Footer navigation uses a single non-wrapping row on mobile; all six links, including Contact, stay in the same row.
+- Animated CV playback controls use a four-column mobile row for Pause/Play, Previous, Next, and Replay. The elapsed/total time moves to its own line below.
+- Canonical downloadable PDF: `public/Barshan Ghosh.pdf`. The homepage links to `/Barshan%20Ghosh.pdf` and the download filename is `Barshan Ghosh.pdf`. To update the CV in the future, replace this exact file in `public/` with the newly edited PDF using the same filename; do not change the link.
+- The old uploaded filename and the `cv.pdf` alias are removed from the repository to avoid multiple competing copies.

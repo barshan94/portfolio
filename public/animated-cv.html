@@ -304,7 +304,34 @@ body{min-height:100svh}
 }
 
 </style>
-<noscript><style>.cinema,.controls{display:none!important}.noscript-msg{display:block!important}</style></noscript>
+<noscript><style>.cinema,.controls{display:none!important}.noscript-msg{display:block!important}
+/* Final mobile QA: all four playback controls remain on one line. */
+@media(max-width:520px){
+  .ctrl-top{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    align-items:center;
+    gap:5px;
+  }
+  .ctrl-top .btn{
+    min-width:0;
+    justify-content:center;
+    gap:4px;
+    padding:8px 4px;
+    font-size:9px;
+    letter-spacing:0;
+    white-space:nowrap;
+  }
+  .ctrl-top .btn svg{width:11px;height:11px}
+  .ctrl-top .spacer{display:none}
+  .ctrl-top .tc{
+    grid-column:1/-1;
+    justify-self:end;
+    margin-left:0;
+    font-size:9px;
+  }
+}
+</style></noscript>
 </head>
 <body>
 
