@@ -11,15 +11,12 @@ try {
 
   const projects = await getCollection("projects");
   if (projects) {
-    projectData = projects
-      .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
-      .map((project) => ({
-        id: project.id,
-        title: project.data.title,
-        description: project.data.description,
-        tags: project.data.tags || [],
-        order: project.data.order,
-      }));
+    projectData = projects.map((project) => ({
+      id: project.id,
+      title: project.data.title,
+      description: project.data.description,
+      tags: project.data.tags || [],
+    }));
   }
 } catch (error) {
   console.error("Unable to load animated CV content:", error);
