@@ -11,12 +11,27 @@ try {
 
   const projects = await getCollection("projects");
   if (projects) {
-    projectData = projects.map((project) => ({
-      id: project.id,
-      title: project.data.title,
-      description: project.data.description,
-      tags: project.data.tags || [],
-    }));
+    const projectPriority = [
+      "money-calculator",
+      "digital-coaching-management",
+      "student-performance-dashboard",
+      "mount-royal-academy",
+      "asta-store",
+      "999-national-emergency-service",
+      "keyword-research",
+    ];
+    projectData = projects
+      .map((project) => ({
+        id: project.id,
+        title: project.data.title,
+        description: project.data.description,
+        tags: project.data.tags || [],
+      }))
+      .sort((a, b) => {
+        const aIndex = projectPriority.indexOf(a.id.replace(/\.md$/, ""));
+        const bIndex = projectPriority.indexOf(b.id.replace(/\.md$/, ""));
+        return (aIndex < 0 ? 99 : aIndex) - (bIndex < 0 ? 99 : bIndex);
+      });
   }
 } catch (error) {
   console.error("Unable to load animated CV content:", error);
