@@ -147,19 +147,6 @@ const getExperienceDate = (experience: any) =>
             Get in touch <span aria-hidden="true">↗</span>
           </a>
         </div>
-        <nav class="hero-profile-links" aria-label="Contact and professional profiles">
-          {contact?.email && <a href={`mailto:${contact.email}`}>Email <span aria-hidden="true">↗</span></a>}
-          {contact?.github && (
-            <a href={contact.github.startsWith("http") ? contact.github : `https://github.com/${contact.github.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">
-              GitHub <span aria-hidden="true">↗</span>
-            </a>
-          )}
-          {contact?.linkedin && (
-            <a href={contact.linkedin.startsWith("http") ? contact.linkedin : `https://www.linkedin.com/in/${contact.linkedin.replace(/^@/, "")}`} target="_blank" rel="noopener noreferrer">
-              LinkedIn <span aria-hidden="true">↗</span>
-            </a>
-          )}
-        </nav>
       </div>
     </section>
 
