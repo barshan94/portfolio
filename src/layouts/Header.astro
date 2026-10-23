@@ -40,24 +40,51 @@ const nav = [
   .brand { display: flex; align-items: center; justify-content: center; width: 100%; color: var(--ink, #f1f1ed); text-align: center; text-decoration: none; }
   .brand-name { color: var(--ink, #f1f1ed); font-family: "Space Grotesk", "Inter", sans-serif; font-size: clamp(1.6rem, 2.6vw, 2.15rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
   .system-dock {
-    position: relative; z-index: 110; display: flex; flex-direction: row; align-items: stretch; justify-content: space-between;
-    gap: .35rem; width: min(calc(100% - 3rem), 1440px); margin: 1rem auto 1.25rem; padding: .4rem;
-    border: 1px solid rgba(145,164,255,.2); border-radius: 12px; background: rgba(12,16,25,.94);
-    box-shadow: 0 12px 36px rgba(0,0,0,.16); backdrop-filter: blur(16px); font-family: "JetBrains Mono", monospace;
+    position: fixed;
+    z-index: 110;
+    top: 50%;
+    right: clamp(12px, 2vw, 28px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .25rem;
+    width: 178px;
+    margin: 0;
+    padding: .4rem;
+    transform: translateY(-50%);
+    border: 1px solid rgba(145,164,255,.2);
+    border-radius: 12px;
+    background: rgba(12,16,25,.94);
+    box-shadow: 0 12px 36px rgba(0,0,0,.22);
+    backdrop-filter: blur(16px);
+    font-family: "JetBrains Mono", monospace;
   }
-  .dock-link { display:flex; flex:1 1 0; min-width:0; align-items:center; justify-content:center; gap:.55rem; padding:.8rem .75rem; border-radius:8px; color:#929292; text-decoration:none; font-size:.68rem; letter-spacing:.06em; white-space:nowrap; transition:color 160ms ease,background 160ms ease; }
+  .dock-link { display:flex; min-width:0; align-items:center; justify-content:flex-start; gap:.65rem; padding:.72rem .7rem; border-radius:8px; color:#929292; text-decoration:none; font-size:.66rem; letter-spacing:.055em; white-space:nowrap; transition:color 160ms ease,background 160ms ease; }
   .dock-number { color:#686868; font-size:.58rem; }
-  .dock-arrow { opacity:0; margin-left:.1rem; }
+  .dock-arrow { opacity:0; margin-left:auto; }
   .dock-link:hover,.dock-link:focus-visible,.dock-link.active { color:#f1f1ed; background:rgba(145,164,255,.08); }
   .dock-link:hover .dock-number,.dock-link:focus-visible .dock-number,.dock-link.active .dock-number { color:var(--accent,#c6ff4d); }
   .dock-link:hover .dock-arrow,.dock-link:focus-visible .dock-arrow,.dock-link.active .dock-arrow { opacity:1; color:var(--accent,#c6ff4d); }
-  @media(max-width:700px) {
-    .system-header { width:calc(100% - 1.5rem); padding:1rem 0; }
-    .system-dock { width:calc(100% - 1.5rem); flex-wrap:wrap; gap:.2rem; padding:.3rem; }
-    .dock-link { flex:1 1 calc(33.333% - .2rem); gap:.35rem; padding:.65rem .25rem; font-size:.6rem; letter-spacing:.025em; }
-    .dock-number { font-size:.52rem; } .dock-arrow { display:none; }
+  @media(max-width:1000px) {
+    .system-dock {
+      top: auto;
+      right: 50%;
+      bottom: 12px;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: .2rem;
+      width: min(calc(100% - 1.5rem), 620px);
+      transform: translateX(50%);
+      padding: .3rem;
+    }
+    .dock-link { flex:1 1 0; justify-content:center; gap:.35rem; padding:.65rem .25rem; font-size:.6rem; letter-spacing:.025em; }
+    .dock-number { font-size:.52rem; }
+    .dock-arrow { display:none; }
   }
-  @media(max-width:380px) { .dock-link { flex-basis:calc(50% - .2rem); } }
+  @media(max-width:420px) {
+    .system-dock { width: calc(100% - 1rem); }
+    .dock-link { flex-direction:column; gap:.15rem; padding:.5rem .1rem; font-size:.52rem; }
+  }
   @media(prefers-reduced-motion:reduce) { .dock-link { transition:none; } }
 </style>
 
