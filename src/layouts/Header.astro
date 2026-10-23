@@ -4,13 +4,15 @@ const nav = [
   { number: "01", label: "PROJECTS", href: "/#projects" },
   { number: "02", label: "EXPERIENCE", href: "/#experience" },
   { number: "03", label: "TOOLKIT", href: "/#skills" },
-  { number: "04", label: "CONTACT", href: "/#contact" },
+  { number: "04", label: "INTERESTS", href: "/#interests" },
+  { number: "05", label: "CONTACT", href: "/#contact" },
 ];
 ---
 
 <header class="system-header">
   <a href="/" class="brand" aria-label="Barshan Ghosh home">
     <span class="brand-name">Barshan Ghosh</span>
+    <span class="brand-motto">“Transform ideas into reality.”</span>
   </a>
 </header>
 
@@ -37,8 +39,9 @@ const nav = [
     border-bottom: 1px solid var(--line, #292929);
     font-family: "JetBrains Mono", monospace;
   }
-  .brand { display: flex; align-items: center; justify-content: center; width: 100%; color: var(--ink, #f1f1ed); text-align: center; text-decoration: none; }
+  .brand { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .38rem; width: 100%; color: var(--ink, #f1f1ed); text-align: center; text-decoration: none; }
   .brand-name { color: var(--ink, #f1f1ed); font-family: "Space Grotesk", "Inter", sans-serif; font-size: clamp(1.6rem, 2.6vw, 2.15rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
+  .brand-motto { color: #9ba8bc; font-family: "Inter", sans-serif; font-size: clamp(.72rem, 1vw, .84rem); font-weight: 500; letter-spacing: .015em; line-height: 1.45; }
   .system-dock {
     position: fixed;
     z-index: 110;
