@@ -53,7 +53,7 @@ jobs:
 
           gh pr create \
             --title "Review showcased GitHub projects" \
-            --body "Generated from public repositories tagged `portfolio-showcase`.
+            --body "Generated from public repositories tagged portfolio-showcase.
 
           Review project descriptions and links before merging. Existing hand-curated project files are preserved. Merging updates the repository archive and refreshes the CV project appendix." \
             --base main
