@@ -113,8 +113,8 @@ const getExperienceDate = (experience: any) =>
 </script>
 
 <Layout
-  title="Barshan Ghosh — Software Developer"
-  description="Barshan Ghosh is a computer science graduate and software developer interested in practical web applications, financial systems, and AI engineering."
+  title="Barshan Ghosh — Software Engineer · Full-Stack Developer · AI & Data"
+  description="Barshan Ghosh is a software engineer and full-stack developer with interests in data analytics, artificial intelligence, machine learning, and practical software systems."
 >
   
 <main class="portfolio-shell">
@@ -122,8 +122,14 @@ const getExperienceDate = (experience: any) =>
     <section class="hero section-wrap hero-editorial" id="about" aria-labelledby="hero-title">
       <div class="hero-eyebrow" data-reveal>
         <span class="hero-eyebrow-mark" aria-hidden="true"></span>
-        <span>SOFTWARE ENGINEERING <span aria-hidden="true">/</span> FINANCIAL SYSTEMS <span aria-hidden="true">/</span> APPLIED AI</span>
+        <span>SOFTWARE ENGINEER <span aria-hidden="true">/</span> FULL-STACK DEVELOPER <span aria-hidden="true">/</span> DATA ANALYST <span aria-hidden="true">/</span> AI ENGINEER <span aria-hidden="true">/</span> MACHINE LEARNING ENGINEER</span>
       </div>
+
+      <nav class="hero-social-links" aria-label="Contact and professional profiles" data-reveal>
+        {contact?.email && <a href={`mailto:${contact.email}`}>Email <span aria-hidden="true">↗</span></a>}
+        {contact?.github && <a href={contact.github} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>}
+        {contact?.linkedin && <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>}
+      </nav>
 
       <div class="hero-copy" data-reveal>
         <p class="hero-intro">Practical engineering. Thoughtful solutions.</p>
@@ -3461,6 +3467,56 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
 </style>
 
 <style is:global>
+  /* Compact hero identity links: email first, followed by professional profiles. */
+  .hero-social-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 18px;
+    width: 100%;
+    margin: -10px 0 26px;
+    color: #aeb9ca;
+    font: 500 .72rem/1.5 "JetBrains Mono", monospace;
+    letter-spacing: .035em;
+  }
+  .hero-social-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+  .hero-social-links a:hover,
+  .hero-social-links a:focus-visible { color: #7ce5d2; }
+  .hero-social-links a span { color: #7ce5d2; }
+
+  /* Keep desktop sections visually connected and avoid oversized blank bands. */
+  .portfolio-shell > .section-block {
+    padding-top: clamp(8px, .85vw, 13px) !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .portfolio-shell > .section-block .section-heading {
+    margin-bottom: clamp(14px, 1.25vw, 20px);
+  }
+  .portfolio-shell > .hero.hero-editorial {
+    padding-top: clamp(34px, 4vw, 54px);
+    padding-bottom: clamp(12px, 1.5vw, 20px);
+  }
+  .portfolio-shell > .cv-download.section-block { padding-top: 0 !important; }
+  .portfolio-shell > .contact.section-block { padding-bottom: clamp(14px, 2vw, 24px) !important; }
+  @media (max-width: 760px) {
+    .hero-social-links { margin: -4px 0 20px; gap: 10px 16px; font-size: .68rem; }
+    .portfolio-shell > .section-block { padding-top: 14px !important; }
+    .portfolio-shell > .hero.hero-editorial { padding-top: 34px; padding-bottom: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-social-links a { transition: none; }
+  }
+
   /* Four-column toolkit on desktop, with responsive layouts for smaller screens. */
   .portfolio-shell #skills .skills-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
