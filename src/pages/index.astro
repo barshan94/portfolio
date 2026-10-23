@@ -166,9 +166,14 @@ const getExperienceDate = (experience: any) =>
             <span>Full-stack development · Applied AI</span>
           </div>
         </div>
-        <a class="button button-primary cv-download-button" href="/cv.pdf" download="Barshan-Ghosh-CV.pdf">
-          Download CV (PDF) <span aria-hidden="true">↓</span>
-        </a>
+        <div class="cv-download-actions">
+          <a class="button button-primary cv-download-button" href="/cv.pdf" download="Barshan-Ghosh-CV.pdf">
+            Download CV (PDF) <span aria-hidden="true">↓</span>
+          </a>
+          <a class="button button-quiet cv-download-button" href="/cv/animated/">
+            Watch Animated CV <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -2987,6 +2992,13 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     color: var(--muted);
     font-size: 0.76rem;
   }
+  .cv-download-actions {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
   .cv-download-button { flex: 0 0 auto; white-space: nowrap; }
   .art-asta-animation,
   .art-academy-animation { display: grid; place-items: center; }
@@ -2994,6 +3006,7 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   .art-academy-animation .art-academy { width: 78%; }
   @media (max-width: 760px) {
     .cv-download-card { align-items: flex-start; flex-direction: column; }
+    .cv-download-actions { align-items: flex-start; flex-direction: column; width: 100%; }
     .cv-download-button { width: fit-content; }
   }
 
