@@ -18,4 +18,4 @@ When the showcase index changes on `main`, the **Refresh CV project appendix** w
 
 On the first successful refresh, the workflow stores the current PDF as `cv-source/Barshan Ghosh.base.pdf`. If the core CV (education, experience, skills, contact details, or layout) changes later, replace that base file with the updated core PDF, then run **Actions → Refresh CV project appendix → Run workflow**. Do not update only the generated PDF, because the next refresh is rebuilt from the base file.
 
-The animated CV is a separate hand-authored presentation and is not rewritten by the repository sync. Repository descriptions are sourced from GitHub metadata; the automation does not invent impact metrics or claims of completion.
+The animated CV keeps its hand-authored scenes, but its page now loads the same selected-project index below the animation. Repository descriptions are sourced from GitHub metadata; the automation does not invent impact metrics or claims of completion.
