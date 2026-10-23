@@ -1,7 +1,7 @@
 ---
 name: "Barshan Ghosh"
 headline: "Building Practical Software. Exploring Intelligent Systems."
-role: "Software Developer · Full-Stack Applications · AI & Automation"
+role: "Software Engineer · Full-Stack Developer · Data Analyst · AI Engineer · Machine Learning Engineer"
 education:
   - degree: "Bachelor of Science in Computer Science and Engineering"
     institution: "American International University-Bangladesh (AIUB)"
