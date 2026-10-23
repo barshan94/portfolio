@@ -150,7 +150,7 @@ const getExperienceDate = (experience: any) =>
 
         <nav class="hero-quick-links" aria-label="Contact and professional profiles">
           {contact?.email && (
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <a href={`mailto:${contact.email}`} aria-label={`Email ${contact.email}`}>Email · {contact.email} ↗</a>
           )}
           {contact?.github && (
             <a href={contact.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
@@ -3647,3 +3647,57 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   }
 
 </style>
+
+<style is:global>
+  /* Final desktop spacing pass: reduce empty bands between homepage sections. */
+  @media (min-width: 761px) {
+    .portfolio-shell > .section-block {
+      padding-top: clamp(8px, 0.65vw, 12px) !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .portfolio-shell > .section-block .section-heading {
+      margin-bottom: clamp(14px, 1.15vw, 18px) !important;
+    }
+
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: clamp(32px, 3.2vw, 42px) !important;
+      padding-bottom: 14px !important;
+    }
+
+    .portfolio-shell > .cv-download.section-block {
+      padding-top: 0 !important;
+    }
+
+    .portfolio-shell > #skills.section-block {
+      padding-bottom: 14px !important;
+    }
+
+    .portfolio-shell > #contact.section-block {
+      padding-top: 14px !important;
+    }
+  }
+
+  .portfolio-shell .hero-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px 18px;
+    margin-top: 16px;
+  }
+
+  .portfolio-shell .hero-quick-links a {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 760px) {
+    .portfolio-shell .hero-quick-links {
+      gap: 12px;
+      margin-top: 16px;
+    }
+  }
+</style>
+
