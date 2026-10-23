@@ -1,0 +1,78 @@
+---
+import AnimatedCV from "../../components/AnimatedCV.astro";
+
+let profileData = null;
+let projectData = [];
+
+try {
+  const { getEntry, getCollection } = await import("astro:content");
+  const profile = await getEntry("cv", "profile");
+  if (profile) profileData = profile.data;
+
+  const projects = await getCollection("projects");
+  if (projects) {
+    projectData = projects
+      .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+      .map((project) => ({
+        id: project.id,
+        title: project.data.title,
+        description: project.data.description,
+        tags: project.data.tags || [],
+        order: project.data.order,
+      }));
+  }
+} catch (error) {
+  console.error("Unable to load animated CV content:", error);
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barshan Ghosh — Animated CV</title>
+    <meta
+      name="description"
+      content="Animated CV of Barshan Ghosh — Software Engineering, Financial Systems, and Applied AI."
+    />
+    <meta property="og:title" content="Barshan Ghosh — Animated CV" />
+    <meta
+      property="og:description"
+      content="Software Engineering · Financial Systems · Applied AI"
+    />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #07090d;
+        color: #edf2f7;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+      }
+      a:focus-visible {
+        outline: 2px solid #7ce5d2;
+        outline-offset: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <AnimatedCV profile={profileData} projects={projectData} />
+  </body>
+</html>
