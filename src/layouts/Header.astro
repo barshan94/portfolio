@@ -1,4 +1,11 @@
 ---
+const nav = [
+  { number: "00", label: "ABOUT", href: "/#about" },
+  { number: "01", label: "PROJECTS", href: "/#projects" },
+  { number: "02", label: "EXPERIENCE", href: "/#experience" },
+  { number: "03", label: "TOOLKIT", href: "/#skills" },
+  { number: "04", label: "CONTACT", href: "/#contact" },
+];
 ---
 
 <header class="system-header">
@@ -6,6 +13,16 @@
     <span class="brand-name">Barshan Ghosh</span>
   </a>
 </header>
+
+<nav class="system-dock" aria-label="Main navigation">
+  {nav.map((item) => (
+    <a href={item.href} class="dock-link" data-section={item.href.slice(2)}>
+      <span class="dock-number">{item.number}</span>
+      <span class="dock-label">{item.label}</span>
+      <span class="dock-arrow" aria-hidden="true">↗</span>
+    </a>
+  ))}
+</nav>
 
 <style>
   .system-header {
@@ -20,30 +37,45 @@
     border-bottom: 1px solid var(--line, #292929);
     font-family: "JetBrains Mono", monospace;
   }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    color: var(--ink, #f1f1ed);
-    text-align: center;
-    text-decoration: none;
+  .brand { display: flex; align-items: center; justify-content: center; width: 100%; color: var(--ink, #f1f1ed); text-align: center; text-decoration: none; }
+  .brand-name { color: var(--ink, #f1f1ed); font-family: "Space Grotesk", "Inter", sans-serif; font-size: clamp(1.6rem, 2.6vw, 2.15rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
+  .system-dock {
+    position: relative; z-index: 110; display: flex; flex-direction: row; align-items: stretch; justify-content: space-between;
+    gap: .35rem; width: min(calc(100% - 3rem), 1440px); margin: 1rem auto 1.25rem; padding: .4rem;
+    border: 1px solid rgba(145,164,255,.2); border-radius: 12px; background: rgba(12,16,25,.94);
+    box-shadow: 0 12px 36px rgba(0,0,0,.16); backdrop-filter: blur(16px); font-family: "JetBrains Mono", monospace;
   }
-
-  .brand-name {
-    color: var(--ink, #f1f1ed);
-    font-family: "Space Grotesk", "Inter", sans-serif;
-    font-size: clamp(1.6rem, 2.6vw, 2.15rem);
-    font-weight: 700;
-    letter-spacing: -0.045em;
-    line-height: 1;
+  .dock-link { display:flex; flex:1 1 0; min-width:0; align-items:center; justify-content:center; gap:.55rem; padding:.8rem .75rem; border-radius:8px; color:#929292; text-decoration:none; font-size:.68rem; letter-spacing:.06em; white-space:nowrap; transition:color 160ms ease,background 160ms ease; }
+  .dock-number { color:#686868; font-size:.58rem; }
+  .dock-arrow { opacity:0; margin-left:.1rem; }
+  .dock-link:hover,.dock-link:focus-visible,.dock-link.active { color:#f1f1ed; background:rgba(145,164,255,.08); }
+  .dock-link:hover .dock-number,.dock-link:focus-visible .dock-number,.dock-link.active .dock-number { color:var(--accent,#c6ff4d); }
+  .dock-link:hover .dock-arrow,.dock-link:focus-visible .dock-arrow,.dock-link.active .dock-arrow { opacity:1; color:var(--accent,#c6ff4d); }
+  @media(max-width:700px) {
+    .system-header { width:calc(100% - 1.5rem); padding:1rem 0; }
+    .system-dock { width:calc(100% - 1.5rem); flex-wrap:wrap; gap:.2rem; padding:.3rem; }
+    .dock-link { flex:1 1 calc(33.333% - .2rem); gap:.35rem; padding:.65rem .25rem; font-size:.6rem; letter-spacing:.025em; }
+    .dock-number { font-size:.52rem; } .dock-arrow { display:none; }
   }
-
-  @media (max-width: 600px) {
-    .system-header {
-      width: calc(100% - 1.5rem);
-      padding: 1rem 0;
-    }
-  }
+  @media(max-width:380px) { .dock-link { flex-basis:calc(50% - .2rem); } }
+  @media(prefers-reduced-motion:reduce) { .dock-link { transition:none; } }
 </style>
+
+<script>
+  const links = Array.from(document.querySelectorAll(".dock-link"));
+  const sections = links.map((link) => document.getElementById(link.dataset.section || "")).filter((section) => section instanceof HTMLElement);
+  if ("IntersectionObserver" in window && sections.length) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((link) => {
+          const active = link.dataset.section === entry.target.id;
+          link.classList.toggle("active", active);
+          if (active) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      }
+    }, { rootMargin: "-25% 0px -55% 0px" });
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
