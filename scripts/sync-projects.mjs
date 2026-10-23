@@ -10,6 +10,7 @@ const TOPIC = "portfolio-showcase";
 const CONTENT_DIR = resolve("src/content/projects");
 const SYNC_MAP_PATH = resolve("sync-map.json");
 const SHOWCASE_PATH = resolve("src/data/portfolio-showcase.json");
+const PUBLIC_SHOWCASE_PATH = resolve("public/portfolio-showcase.json");
 
 const curated = JSON.parse(readFileSync(SYNC_MAP_PATH, "utf8"));
 const curatedNames = new Set(Object.keys(curated).map((name) => name.toLowerCase()));
@@ -92,7 +93,9 @@ async function main() {
     topics: (repo.topics || []).filter((topic) => topic !== TOPIC).slice(0, 10),
   }));
 
-  writeFileSync(SHOWCASE_PATH, `${JSON.stringify(showcase, null, 2)}\n`, "utf8");
+  const showcaseJson = `${JSON.stringify(showcase, null, 2)}\n`;
+  writeFileSync(SHOWCASE_PATH, showcaseJson, "utf8");
+  writeFileSync(PUBLIC_SHOWCASE_PATH, showcaseJson, "utf8");
   console.log(`Repositories marked ${TOPIC}: ${tagged.length}`);
 
   let added = 0;
