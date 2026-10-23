@@ -70,8 +70,8 @@ body.is-paused .hud-dot{background:var(--amber);box-shadow:0 0 12px var(--amberG
 
 /* Scene container */
 .scenes-container{position:absolute;inset:0;z-index:3}
-.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(44px,5vw,60px) clamp(18px,3.6vw,54px) clamp(34px,4vw,50px);opacity:0;visibility:hidden;transition:opacity .6s var(--ease),visibility 0s .6s;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
-.scene.active{opacity:1;visibility:visible;transition:opacity .65s var(--ease),visibility 0s 0s}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(44px,5vw,60px) clamp(18px,3.6vw,54px) clamp(34px,4vw,50px);opacity:0;visibility:hidden;transform:translate3d(0,12px,0) scale(1.018);filter:blur(4px);transition:opacity .82s var(--ease),transform 1s var(--ease),filter .72s var(--ease),visibility 0s .82s;will-change:opacity,transform,filter;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+.scene.active{opacity:1;visibility:visible;transform:translate3d(0,0,0) scale(1);filter:blur(0);transition:opacity .82s var(--ease),transform 1s var(--ease),filter .72s var(--ease),visibility 0s 0s}
 .scene::-webkit-scrollbar{width:7px}
 .scene::-webkit-scrollbar-thumb{background:rgba(104,156,255,.18);border-radius:8px}
 .scene-inner{width:100%;max-width:1140px;margin:0 auto}
@@ -411,10 +411,10 @@ footer.page-foot{margin:clamp(36px,4vw,58px) 0 clamp(24px,3vw,36px);padding-top:
     <h2 class="h2 a" style="--d:1">Private tutoring, alongside everything else.</h2>
     <p class="sub a" style="--d:2">Student-centred instruction — a steady part of my week.</p>
     <div class="grid g4" style="margin-top:16px">
-      <div class="card accent-amber a" style="--d:3"><span class="bar"></span><div class="cardhead"><h3 class="h4">O-Level / Edexcel</h3><span class="badge amber">Private Tutor</span></div><div class="tags"><span class="tag">Physics</span><span class="tag">ICT</span><span class="tag">Computer Science</span><span class="tag">Mathematics B</span><span class="tag">Further Pure Mathematics</span></div></div>
-      <div class="card accent-amber a" style="--d:4"><span class="bar"></span><div class="cardhead"><h3 class="h4">HSC Science</h3><span class="badge amber">Oct 2024 – Present</span></div><div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Bengali</span></div></div>
-      <div class="card accent-amber a" style="--d:5"><span class="bar"></span><div class="cardhead"><h3 class="h4">SSC Arts</h3><span class="badge amber">Jan 2023 – Present</span></div><div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Gen Mathematics</span><span class="tag">Gen Science</span></div></div>
-      <div class="card accent-amber a" style="--d:6"><span class="bar"></span><div class="cardhead"><h3 class="h4">SSC Science</h3><span class="badge amber">Jan 2023 – Dec 2024</span></div><div class="tags"><span class="tag">Physics</span><span class="tag">Chemistry</span><span class="tag">Higher Maths</span><span class="tag">Biology</span></div></div>
+      <div class="card accent-amber a" style="--d:3"><span class="bar"></span><div class="cardhead"><h3 class="h4">O-Level / Edexcel</h3><span class="badge amber">June 2026</span></div><div class="tags"><span class="tag">Physics</span><span class="tag">ICT</span><span class="tag">Computer Science</span><span class="tag">Mathematics B</span><span class="tag">Further Pure Mathematics</span></div></div>
+      <div class="card accent-amber a" style="--d:4"><span class="bar"></span><div class="cardhead"><h3 class="h4">HSC Science</h3><span class="badge amber">Oct 2024</span></div><div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Bengali</span></div></div>
+      <div class="card accent-amber a" style="--d:5"><span class="bar"></span><div class="cardhead"><h3 class="h4">SSC Arts</h3><span class="badge amber">Jan 2023</span></div><div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Gen Mathematics</span><span class="tag">Gen Science</span></div></div>
+      <div class="card accent-amber a" style="--d:6"><span class="bar"></span><div class="cardhead"><h3 class="h4">SSC Science</h3><span class="badge amber">Jan 2023</span></div><div class="tags"><span class="tag">Physics</span><span class="tag">Chemistry</span><span class="tag">Higher Maths</span><span class="tag">Biology</span></div></div>
     </div>
   </div>
 </article>
@@ -600,10 +600,10 @@ footer.page-foot{margin:clamp(36px,4vw,58px) 0 clamp(24px,3vw,36px);padding-top:
 <div class="entry"><h3>Teachnook — AI Engineer Intern</h3><p class="dmeta">August 2022 – January 2023 · India · Remote internship</p><ul><li>Building, training and testing ML algorithms and AI models.</li><li>Remote collaboration on AI project work.</li></ul></div>
 
 <h2 class="sect">Teaching &amp; private tutoring</h2>
-<div class="entry"><h4>O-Level / Edexcel Curriculum — Private Tutor</h4><p>Subjects: Physics, ICT, Computer Science, Mathematics B, Further Pure Mathematics.</p></div>
-<div class="entry"><h4>HSC Science — Private Tutor</h4><p class="dmeta">October 2024 – Present</p><p>Subjects: ICT, English, Bengali.</p></div>
-<div class="entry"><h4>SSC Arts — Private Tutor</h4><p class="dmeta">January 2023 – Present</p><p>Subjects: ICT, English, General Mathematics, General Science.</p></div>
-<div class="entry"><h4>SSC Science — Private Tutor</h4><p class="dmeta">January 2023 – December 2024</p><p>Subjects: Physics, Chemistry, Higher Mathematics, Biology.</p></div>
+<div class="entry"><h4>O-Level / Edexcel Curriculum — Private Tutor</h4><p class="dmeta">June 2026</p><p>Subjects: Physics, ICT, Computer Science, Mathematics B, Further Pure Mathematics.</p></div>
+<div class="entry"><h4>HSC Science — Private Tutor</h4><p class="dmeta">October 2024</p><p>Subjects: ICT, English, Bengali.</p></div>
+<div class="entry"><h4>SSC Arts — Private Tutor</h4><p class="dmeta">January 2023</p><p>Subjects: ICT, English, General Mathematics, General Science.</p></div>
+<div class="entry"><h4>SSC Science — Private Tutor</h4><p class="dmeta">January 2023</p><p>Subjects: Physics, Chemistry, Higher Mathematics, Biology.</p></div>
 
 <h2 class="sect">Technical skills</h2>
 <div class="entry"><h4>Frontend &amp; web</h4><p>Astro · React · TypeScript · JavaScript · HTML/CSS · Tailwind CSS · WordPress · Shopify</p></div>
