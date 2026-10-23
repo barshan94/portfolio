@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { githubRepositories, repositoryCategories } from "../data/github-repositories";
 import showcaseProjects from "../data/portfolio-showcase.json";
+type ShowcaseRepository = { name: string; description: string };
 
 const projectEntries = (await getCollection("projects")).sort((a, b) =>
   a.data.title.localeCompare(b.data.title)
@@ -12,7 +13,7 @@ const knownRepositoryNames = new Set(
   githubRepositories.map((repository) => repository.name.toLowerCase())
 );
 
-const syncedRepositories = showcaseProjects
+const syncedRepositories = (showcaseProjects as ShowcaseRepository[])
   .filter((repository) => !knownRepositoryNames.has(repository.name.toLowerCase()))
   .map((repository) => ({
     name: repository.name,
