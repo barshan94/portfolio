@@ -1,18 +1,18 @@
 #!/usr/bin/env node
-// scripts/sync-projects.mjs
-//
-// Discovers public repositories owned by barshan94 across all API pages.
-// Creates missing project entries without overwriting existing content.
-// GitHub Actions opens a PR so changes can be reviewed before publishing.
+// Discover only public repositories explicitly marked with the portfolio-showcase topic.
+// New project records are generated conservatively; existing hand-written records are never overwritten.
 
 import { writeFileSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const USER = "barshan94";
+const TOPIC = "portfolio-showcase";
 const CONTENT_DIR = resolve("src/content/projects");
 const SYNC_MAP_PATH = resolve("sync-map.json");
+const SHOWCASE_PATH = resolve("src/data/portfolio-showcase.json");
 
 const curated = JSON.parse(readFileSync(SYNC_MAP_PATH, "utf8"));
+const curatedNames = new Set(Object.keys(curated).map((name) => name.toLowerCase()));
 
 const toSlug = (name) =>
   name
@@ -26,56 +26,41 @@ const existing = new Set(
     .map((file) => file.replace(/\.md$/, ""))
 );
 
-for (const slug of Object.values(curated)) {
-  existing.add(slug);
-}
+for (const slug of Object.values(curated)) existing.add(slug);
 
 async function fetchAllRepositories() {
   const repositories = [];
   let page = 1;
 
   while (true) {
-    const url = new URL(
-      `https://api.github.com/users/${USER}/repos`
-    );
-
+    const url = new URL(`https://api.github.com/users/${USER}/repos`);
     url.searchParams.set("type", "owner");
     url.searchParams.set("per_page", "100");
     url.searchParams.set("page", String(page));
     url.searchParams.set("sort", "updated");
     url.searchParams.set("direction", "desc");
 
-    const response = await fetch(url, {
-      headers: {
-        Accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    });
+    const headers = {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    };
+    if (process.env.GITHUB_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
 
+    const response = await fetch(url, { headers });
     if (!response.ok) {
-      throw new Error(
-        `GitHub API error ${response.status}: ${response.statusText}`
-      );
+      throw new Error(`GitHub API error ${response.status}: ${response.statusText}`);
     }
 
     const batch = await response.json();
-
     if (!Array.isArray(batch)) {
-      throw new Error(
-        "Unexpected GitHub API response: expected a repository list."
-      );
+      throw new Error("Unexpected GitHub API response: expected a repository list.");
     }
 
     repositories.push(...batch);
-
-    console.log(
-      `Fetched page ${page}: ${batch.length} repositories`
-    );
-
-    if (batch.length < 100) {
-      break;
-    }
-
+    console.log(`Fetched page ${page}: ${batch.length} repositories`);
+    if (batch.length < 100) break;
     page += 1;
   }
 
@@ -83,50 +68,48 @@ async function fetchAllRepositories() {
 }
 
 const yamlString = (value) => JSON.stringify(String(value));
+const isEligible = (repo) =>
+  repo.owner?.login?.toLowerCase() === USER.toLowerCase() &&
+  !repo.private &&
+  !repo.fork &&
+  !repo.archived &&
+  !repo.disabled;
 
 async function main() {
-  const repositories = await fetchAllRepositories();
+  const repositories = (await fetchAllRepositories()).filter(isEligible);
+  const tagged = repositories
+    .filter((repo) => Array.isArray(repo.topics) && repo.topics.includes(TOPIC))
+    .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
+
+  const showcase = tagged.map((repo) => ({
+    name: repo.name,
+    title: repo.name,
+    description: repo.description?.trim() || "Project details are available in the repository README.",
+    url: repo.html_url,
+    ...(repo.homepage?.trim() ? { homepage: repo.homepage.trim() } : {}),
+    ...(repo.language ? { language: repo.language } : {}),
+    ...(repo.updated_at ? { updatedAt: repo.updated_at } : {}),
+    topics: (repo.topics || []).filter((topic) => topic !== TOPIC).slice(0, 10),
+  }));
+
+  writeFileSync(SHOWCASE_PATH, `${JSON.stringify(showcase, null, 2)}\n`, "utf8");
+  console.log(`Repositories marked ${TOPIC}: ${tagged.length}`);
+
   let added = 0;
   let skipped = 0;
 
-  console.log(`Repositories fetched: ${repositories.length}`);
-
-  for (const repo of repositories) {
-    // Only original, public, active repositories owned by this account.
-    if (
-      repo.owner?.login?.toLowerCase() !== USER.toLowerCase() ||
-      repo.private ||
-      repo.fork ||
-      repo.archived ||
-      repo.disabled
-    ) {
-      skipped += 1;
-      continue;
-    }
-
-    // Preserve hand-curated portfolio projects.
-    if (curated[repo.name]) {
-      skipped += 1;
-      continue;
-    }
-
-    // Avoid generating entries without a verified description.
-    if (!repo.description?.trim()) {
-      skipped += 1;
-      continue;
-    }
-
+  for (const repo of tagged) {
     const slug = toSlug(repo.name);
-
-    // Never overwrite an existing project entry.
-    if (existing.has(slug)) {
+    if (curatedNames.has(repo.name.toLowerCase()) || existing.has(slug)) {
       skipped += 1;
       continue;
     }
 
+    const description =
+      repo.description?.trim() || "Project details are available in the repository README.";
     const tags = [
       ...(repo.language ? [repo.language] : []),
-      ...(repo.topics || []),
+      ...(repo.topics || []).filter((topic) => topic !== TOPIC),
     ]
       .filter((tag, index, all) => all.indexOf(tag) === index)
       .slice(0, 6);
@@ -134,55 +117,37 @@ async function main() {
     const frontmatter = [
       "---",
       `title: ${yamlString(repo.name)}`,
-      `description: ${yamlString(repo.description)}`,
+      `description: ${yamlString(description)}`,
       tags.length
         ? `tags:\n${tags.map((tag) => `  - ${yamlString(tag)}`).join("\n")}`
         : "tags: []",
-      
       `repo: ${yamlString(repo.html_url)}`,
-      ...(repo.homepage?.trim()
-        ? [`live: ${yamlString(repo.homepage.trim())}`]
-        : []),
-      ...(repo.language
-        ? [`language: ${yamlString(repo.language)}`]
-        : []),
-      ...(repo.updated_at
-        ? [`lastUpdated: ${yamlString(repo.updated_at)}`]
-        : []),
-
-      'status: "completed"',
+      ...(repo.homepage?.trim() ? [`live: ${yamlString(repo.homepage.trim())}`] : []),
+      ...(repo.language ? [`language: ${yamlString(repo.language)}`] : []),
+      ...(repo.updated_at ? [`lastUpdated: ${yamlString(repo.updated_at)}`] : []),
+      'status: "in-progress"',
       "featured: false",
       'accent: "default"',
       "---",
       "",
-      repo.description.trim(),
+      description,
       "",
-      "> Automatically discovered from GitHub. Add verified project details when available.",
+      "> Automatically discovered from a public GitHub repository tagged portfolio-showcase. Verify details before featuring it on the homepage.",
       "",
     ].join("\n");
 
-    const outputPath = resolve(CONTENT_DIR, `${slug}.md`);
-
-    writeFileSync(outputPath, `${frontmatter}\n`, {
+    writeFileSync(resolve(CONTENT_DIR, `${slug}.md`), `${frontmatter}\n`, {
       flag: "wx",
     });
-
     existing.add(slug);
-
     console.log(`+ ${slug} (${repo.full_name})`);
     added += 1;
   }
 
-  console.log(`New project entries: ${added}`);
-  console.log(`Skipped repositories: ${skipped}`);
-
-  if (added === 0) {
-    console.log("No new project entries were needed.");
-  }
+  console.log(`New project content files: ${added}; existing/curated entries skipped: ${skipped}`);
 }
 
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
-
