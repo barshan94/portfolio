@@ -1,29 +1,12 @@
----
-const nav = [
-  { number: "00", label: "ABOUT", href: "#about" },
-  { number: "01", label: "PROJECTS", href: "#projects" },
-  { number: "02", label: "EXPERIENCE", href: "#experience" },
-  { number: "03", label: "TOOLKIT", href: "#skills" },
-  { number: "04", label: "CONTACT", href: "#contact" },
-];
----
-
 <footer class="site-footer">
   <div class="footer-inner">
-    <nav class="footer-dock" aria-label="Footer navigation">
-      {nav.map((item) => (
-        <a
-          href={item.href}
-          class="footer-dock-link"
-          data-section={item.href.slice(1)}
-        >
-          <span class="footer-dock-number">{item.number}</span>
-          <span class="footer-dock-label">{item.label}</span>
-          <span class="footer-dock-arrow" aria-hidden="true">↗</span>
-        </a>
-      ))}
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="/#about">About</a>
+      <a href="/#projects">Projects</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#skills">Toolkit</a>
+      <a href="/#contact">Contact</a>
     </nav>
-
     <div class="footer-meta">
       <span>&copy; <span id="year"></span> Barshan Ghosh</span>
       <span class="footer-built">Built with Astro</span>
@@ -32,150 +15,18 @@ const nav = [
 </footer>
 
 <style>
-  .site-footer {
-    position: relative;
-    margin-top: clamp(1.5rem, 2.5vw, 2.5rem);
-    padding: 1.5rem 0 1.25rem;
-    border-top: 1px solid rgba(145, 164, 255, 0.2);
-    background:
-      radial-gradient(ellipse at 12% 0%, rgba(48, 194, 177, 0.06), transparent 32rem),
-      #080b12;
-    font-family: "JetBrains Mono", monospace;
-  }
-
-  .footer-inner {
-    width: min(calc(100% - 3rem), 1440px);
-    margin-inline: auto;
-  }
-
-  /* The former header navigation now lives here with the same visual language. */
-  .footer-dock {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 0.35rem;
-    width: 100%;
-    margin: 0 0 1.25rem;
-    padding: 0.4rem;
-    border: 1px solid rgba(145, 164, 255, 0.2);
-    border-radius: 12px;
-    background: rgba(12, 16, 25, 0.94);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
-    backdrop-filter: blur(16px);
-  }
-
-  .footer-dock-link {
-    display: flex;
-    flex: 1 1 0;
-    min-width: 0;
-    align-items: center;
-    justify-content: center;
-    gap: 0.55rem;
-    padding: 0.8rem 0.75rem;
-    border: 0;
-    border-radius: 8px;
-    color: #929292;
-    text-decoration: none;
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-    transition: color 160ms ease, background 160ms ease;
-  }
-
-  .footer-dock-number {
-    color: #686868;
-    font-size: 0.58rem;
-  }
-
-  .footer-dock-arrow { opacity: 0; margin-left: 0.1rem; }
-  .footer-dock-link:hover,
-  .footer-dock-link:focus-visible,
-  .footer-dock-link.active {
-    color: #f1f1ed;
-    background: rgba(145, 164, 255, 0.08);
-  }
-
-  .footer-dock-link:hover .footer-dock-number,
-  .footer-dock-link:focus-visible .footer-dock-number,
-  .footer-dock-link.active .footer-dock-number { color: var(--accent, #c6ff4d); }
-
-  .footer-dock-link:hover .footer-dock-arrow,
-  .footer-dock-link:focus-visible .footer-dock-arrow,
-  .footer-dock-link.active .footer-dock-arrow { opacity: 1; color: var(--accent, #c6ff4d); }
-
-  .footer-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(145, 164, 255, 0.12);
-    color: #778196;
-    font-family: Inter, sans-serif;
-    font-size: 0.78rem;
-  }
-
-  .footer-built {
-    margin-left: auto;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 700px) {
-    .footer-inner { width: calc(100% - 1.5rem); }
-    .footer-dock {
-      flex-wrap: wrap;
-      gap: 0.2rem;
-      padding: 0.3rem;
-    }
-    .footer-dock-link {
-      flex: 1 1 calc(33.333% - 0.2rem);
-      flex-direction: row;
-      gap: 0.35rem;
-      padding: 0.65rem 0.25rem;
-      font-size: 0.6rem;
-      letter-spacing: 0.025em;
-    }
-    .footer-dock-number { font-size: 0.52rem; }
-    .footer-dock-arrow { display: none; }
-    .footer-meta { font-size: 0.72rem; }
-  }
-
-  @media (max-width: 380px) {
-    .footer-dock-link { flex-basis: calc(50% - 0.2rem); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .footer-dock-link { transition: none; }
-  }
+  .site-footer { position:relative; margin-top:clamp(1.5rem,2.5vw,2.5rem); padding:1.5rem 0 1.25rem; border-top:1px solid rgba(145,164,255,.2); background:radial-gradient(ellipse at 12% 0%,rgba(48,194,177,.06),transparent 32rem),#080b12; }
+  .footer-inner { width:min(calc(100% - 3rem),1440px); margin-inline:auto; }
+  .footer-nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:.65rem clamp(1.25rem,3vw,2.75rem); margin:0; padding:.35rem 0 1.35rem; }
+  .footer-nav a { display:inline-flex; align-items:center; min-height:2rem; color:#c0c8d8; font-size:.9rem; font-weight:500; text-decoration:none; transition:color 160ms ease; }
+  .footer-nav a:hover,.footer-nav a:focus-visible { color:#91a4ff; }
+  .footer-meta { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding-top:1rem; border-top:1px solid rgba(145,164,255,.12); color:#778196; font-family:Inter,sans-serif; font-size:.78rem; }
+  .footer-built { margin-left:auto; text-align:right; white-space:nowrap; }
+  @media(max-width:600px) { .footer-inner { width:calc(100% - 1.5rem); } .footer-nav { gap:.35rem 1rem; padding-bottom:1rem; } .footer-nav a { font-size:.82rem; } .footer-meta { align-items:flex-start; font-size:.72rem; } }
+  @media(prefers-reduced-motion:reduce) { .footer-nav a { transition:none; } }
 </style>
 
 <script>
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
-
-  const links = Array.from(document.querySelectorAll(".footer-dock-link"));
-  const sections = links
-    .map((link) => document.getElementById(link.dataset.section || ""))
-    .filter((section) => section instanceof HTMLElement);
-
-  if ("IntersectionObserver" in window && sections.length) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          links.forEach((link) => {
-            const active = link.dataset.section === entry.target.id;
-            link.classList.toggle("active", active);
-            if (active) link.setAttribute("aria-current", "location");
-            else link.removeAttribute("aria-current");
-          });
-        }
-      },
-      { rootMargin: "-25% 0px -55% 0px" }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-  }
 </script>
