@@ -150,7 +150,7 @@ const getExperienceDate = (experience: any) =>
 
         <nav class="hero-quick-links" aria-label="Contact and professional profiles">
           {contact?.email && (
-            <a href={`mailto:${contact.email}`} aria-label={`Email ${contact.email}`}>Email · {contact.email} ↗</a>
+            <a href={`mailto:${contact.email}`} aria-label={`Email ${contact.email}`}>{contact.email} ↗</a>
           )}
           {contact?.github && (
             <a href={contact.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
@@ -3701,3 +3701,65 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
   }
 </style>
 
+
+<style is:global>
+  /* Final homepage rhythm: compact, consistent section spacing on desktop. */
+  @media (min-width: 761px) {
+    .portfolio-shell > .section-block {
+      padding-top: clamp(6px, 0.7vw, 10px) !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .portfolio-shell > .section-block .section-heading {
+      margin-bottom: clamp(14px, 1.15vw, 18px) !important;
+    }
+
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: clamp(30px, 3.2vw, 42px) !important;
+      padding-bottom: 10px !important;
+    }
+
+    .portfolio-shell > .cv-download.section-block {
+      padding-top: 0 !important;
+    }
+
+    .portfolio-shell > #skills.section-block {
+      padding-bottom: 10px !important;
+    }
+
+    .portfolio-shell > #contact.section-block {
+      padding-top: 10px !important;
+    }
+  }
+
+  .portfolio-shell .hero-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 18px;
+    margin-top: 14px;
+  }
+
+  .portfolio-shell .hero-quick-links a {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 760px) {
+    .portfolio-shell > .section-block {
+      padding-top: 12px !important;
+    }
+
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: 30px !important;
+      padding-bottom: 12px !important;
+    }
+
+    .portfolio-shell .hero-quick-links {
+      gap: 10px 14px;
+      margin-top: 14px;
+    }
+  }
+</style>
