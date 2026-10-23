@@ -1,1727 +1,925 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Barshan Ghosh — Animated CV | Software Engineering, Full-Stack &amp; Applied AI</title>
-<meta name="description" content="Explore Barshan Ghosh’s interactive animated CV: software engineering, full-stack development, applied AI, professional experience, education and selected projects." />
-<meta name="author" content="Barshan Ghosh" />
-<meta name="color-scheme" content="dark" />
-<noscript><style>
-  .player{display:none !important}
-  .nojs-note{display:block !important}
-</style></noscript>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Barshan Ghosh — Cinematic CV</title>
+<meta name="description" content="Cinematic animated CV of Barshan Ghosh — Software Engineer, Full-Stack Developer, AI/ML Engineer, Educator."/>
 <style>
-/* ============================================================
-   TOKENS
-   ============================================================ */
+/*===== RESET & TOKENS =====*/
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#07090D;
-  --bg-2:#0A0E14;
-  --panel:rgba(16,22,31,.72);
-  --panel-2:rgba(13,18,26,.9);
-  --text:#EAF1F7;
-  --muted:#8091A4;
-  --muted-2:#63738A;
-  --teal:#2DE2CE;
-  --blue:#689CFF;
-  --amber:#FFBE6A;
-  --line:rgba(94,124,160,.22);
-  --line-strong:rgba(94,124,160,.38);
-  --radius:16px;
-  --radius-sm:11px;
-  --sans:"Inter","SF Pro Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
-  --mono:"JetBrains Mono","SFMono-Regular",ui-monospace,"Cascadia Mono",Menlo,Consolas,"Liberation Mono",monospace;
-  --ease:cubic-bezier(.22,.78,.3,1);
+--bg:#06080C;--bg2:#0B0F16;--panel:rgba(14,19,28,.82);--panel2:rgba(10,14,22,.92);
+--text:#EBF2F8;--muted:#7E90A6;--muted2:#5A6B80;--dim:rgba(255,255,255,.04);
+--teal:#2DE2CE;--tealDim:rgba(45,226,206,.12);--tealGlow:rgba(45,226,206,.35);
+--blue:#689CFF;--blueDim:rgba(104,156,255,.1);--blueGlow:rgba(104,156,255,.3);
+--amber:#FFBE6A;--amberDim:rgba(255,190,106,.1);--amberGlow:rgba(255,190,106,.3);
+--red:#FF6B8A;
+--border:rgba(80,110,150,.18);--borderStrong:rgba(80,110,150,.32);
+--r:14px;--rs:10px;
+--sans:Inter,"SF Pro Text","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+--mono:"JetBrains Mono","SF Mono",ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+--ease:cubic-bezier(.22,.68,.28,1);--easeBounce:cubic-bezier(.34,1.56,.64,1);
 }
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:16px/1.6 var(--sans);overflow-x:hidden}
+a{color:var(--teal);text-decoration:none;transition:color .2s}
+a:hover{color:#5AEEDA;text-decoration:underline}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+img,canvas,svg{display:block;max-width:100%}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--sans);
-  font-size:16px;
-  line-height:1.55;
-  letter-spacing:.005em;
-  overflow-x:hidden;
-}
-img,canvas{display:block;max-width:100%}
-a{color:var(--teal);text-decoration:none}
-a:hover{text-decoration:underline}
-:focus-visible{
-  outline:2px solid var(--teal);
-  outline-offset:3px;
-  border-radius:6px;
-}
-.sr-only{
-  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
-  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
-}
-.skip{
-  position:absolute;left:12px;top:-60px;z-index:60;
-  background:var(--teal);color:#04120F;font-weight:650;
-  padding:10px 16px;border-radius:10px;transition:top .18s var(--ease);
-}
-.skip:focus{top:12px}
+/*===== SKIP =====*/
+.skip-link{position:fixed;top:-60px;left:16px;z-index:9999;background:var(--teal);color:#041210;font-weight:700;padding:10px 18px;border-radius:0 0 10px 10px;transition:top .2s}
+.skip-link:focus{top:0}
 
-/* ============================================================
-   PAGE SHELL
-   ============================================================ */
-.wrap{
-  width:min(1320px,100%);
-  margin:0 auto;
-  padding:clamp(16px,2.4vw,30px) clamp(14px,3vw,34px) 72px;
-}
-.topbar{
-  display:flex;flex-wrap:wrap;gap:14px 22px;
-  align-items:baseline;justify-content:space-between;
-  padding-bottom:16px;margin-bottom:clamp(14px,2vw,22px);
-  border-bottom:1px solid var(--line);
-}
-.topbar .who{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
-.topbar .nm{font-size:clamp(17px,2vw,21px);font-weight:700;letter-spacing:-.015em}
-.topbar .rl{
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--muted);
-}
-.topbar nav{display:flex;flex-wrap:wrap;gap:8px}
-.linkchip{
-  display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.03em;
-  color:var(--text);background:rgba(255,255,255,.035);
-  border:1px solid var(--line);border-radius:999px;
-  padding:7px 13px;transition:border-color .2s,background .2s,color .2s;
-  max-width:100%;overflow-wrap:anywhere;
-}
-.linkchip:hover{border-color:var(--teal);color:var(--teal);text-decoration:none;background:rgba(45,226,206,.07)}
-.linkchip svg{width:13px;height:13px;flex:none;opacity:.9}
+/*===== WRAPPER =====*/
+.wrap{max-width:1400px;margin:0 auto;padding:0 clamp(14px,3vw,36px)}
 
-/* ============================================================
-   PLAYER + STAGE
-   ============================================================ */
-.player{margin:0 0 42px}
-.stage{
-  position:relative;width:100%;
-  aspect-ratio:16/9;
-  min-height:470px;max-height:78vh;
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  background:var(--bg);
-  overflow:hidden;
-  isolation:isolate;
-  box-shadow:0 26px 70px -40px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.035);
-}
-#bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.vignette{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:
-    radial-gradient(130% 90% at 50% 8%, rgba(7,9,13,0) 42%, rgba(7,9,13,.78) 100%),
-    linear-gradient(180deg, rgba(7,9,13,.55) 0%, rgba(7,9,13,0) 22%, rgba(7,9,13,0) 72%, rgba(7,9,13,.62) 100%);
-}
-.hud{
-  position:absolute;z-index:4;top:0;left:0;right:0;
-  display:flex;justify-content:space-between;align-items:center;gap:10px;
-  padding:clamp(11px,1.5vw,18px) clamp(14px,2.4vw,28px);
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--muted-2);pointer-events:none;
-}
-.hud .chap{display:flex;align-items:center;gap:9px;min-width:0}
-.hud .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none;box-shadow:0 0 10px rgba(45,226,206,.8)}
-body.is-paused .hud .dot{background:var(--amber);box-shadow:0 0 10px rgba(255,190,106,.7)}
-.hud .chap span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/*===== TOP HEADER =====*/
+.topbar{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:baseline;justify-content:space-between;padding:clamp(14px,2vw,22px) 0;border-bottom:1px solid var(--border)}
+.topbar .identity{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.topbar .name{font-size:clamp(17px,2vw,21px);font-weight:750;letter-spacing:-.02em}
+.topbar .role{font:11.5px/1.4 var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.topbar nav{display:flex;flex-wrap:wrap;gap:7px}
+.contact-chip{display:inline-flex;align-items:center;gap:6px;font:12px/1.3 var(--mono);letter-spacing:.03em;color:var(--text);background:var(--dim);border:1px solid var(--border);border-radius:999px;padding:7px 13px;transition:all .2s;max-width:100%;overflow-wrap:anywhere}
+.contact-chip:hover{border-color:var(--teal);color:var(--teal);background:var(--tealDim);text-decoration:none}
+.contact-chip svg{width:13px;height:13px;flex:none;opacity:.85}
 
-/* --- scenes --- */
-.scenes{position:absolute;inset:0;z-index:3}
-.scene{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(42px,5vw,58px) clamp(18px,3.6vw,52px) clamp(32px,4vw,48px);
-  opacity:0;visibility:hidden;
-  overflow:auto;overscroll-behavior:contain;
-  transition:opacity .5s var(--ease), visibility 0s linear .5s;
-}
-.scene.is-active{opacity:1;visibility:visible;transition:opacity .55s var(--ease), visibility 0s linear 0s}
-.scene::-webkit-scrollbar{width:8px}
-.scene::-webkit-scrollbar-thumb{background:rgba(104,156,255,.22);border-radius:8px}
-.scene-inner{width:100%;max-width:1120px;margin:0 auto}
+/*===== REDUCED-MOTION BANNER =====*/
+.rm-banner{display:none;border:1px solid var(--amberGlow);background:var(--amberDim);border-radius:var(--r);padding:18px 20px;margin:20px 0 0}
+body.reduced-motion .rm-banner{display:block}
+body.reduced-motion .cinema{display:none}
+.rm-banner p{font-size:14px;color:#D8C7AC;margin:0 0 12px}
+.rm-banner .btn{margin:0}
 
-.anim{
-  opacity:0;transform:translateY(16px);
-  transition:opacity .62s var(--ease), transform .62s var(--ease);
-  transition-delay:0s;
-}
-.scene.is-active .anim{opacity:1;transform:none;transition-delay:calc(var(--i,0) * 85ms)}
-.anim-x{transform:translateX(-18px)}
-.scene.is-active .anim-x{transform:none}
+/*===== CINEMA (STAGE) =====*/
+.cinema{position:relative;margin:clamp(18px,3vw,30px) 0 0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--bg);box-shadow:0 30px 80px -40px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.03)}
+.cinema-viewport{position:relative;width:100%;aspect-ratio:16/9;min-height:480px;max-height:80vh;overflow:hidden}
+@media(max-width:860px){.cinema-viewport{aspect-ratio:auto;min-height:min(660px,86vh);max-height:none}}
 
-/* --- scene typography --- */
-.kicker{
-  font-family:var(--mono);font-size:clamp(10px,1.1vw,12px);
-  letter-spacing:.3em;text-transform:uppercase;color:var(--teal);
-  margin:0 0 clamp(10px,1.4vw,16px);display:flex;align-items:center;gap:12px;
-}
-.kicker::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(45,226,206,.5),rgba(45,226,206,0))}
-.kicker.blue{color:var(--blue)}
-.kicker.blue::after{background:linear-gradient(90deg,rgba(104,156,255,.5),rgba(104,156,255,0))}
-.kicker.amber{color:var(--amber)}
-.kicker.amber::after{background:linear-gradient(90deg,rgba(255,190,106,.5),rgba(255,190,106,0))}
+/* Canvas BG */
+#bgCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.cinema-vignette{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(130% 90% at 50% 8%,transparent 40%,rgba(6,8,12,.8) 100%),linear-gradient(180deg,rgba(6,8,12,.5) 0%,transparent 18%,transparent 75%,rgba(6,8,12,.6) 100%)}
 
-.h1{
-  font-size:clamp(34px,6.6vw,74px);line-height:1.02;font-weight:760;
-  letter-spacing:-.035em;margin:0;
-  background:linear-gradient(100deg,#FFFFFF 8%,#CFE3F2 45%,var(--teal) 115%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.h2{font-size:clamp(23px,3.5vw,40px);line-height:1.1;font-weight:700;letter-spacing:-.025em;margin:0 0 6px}
+/* HUD overlay */
+.hud{position:absolute;z-index:5;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:clamp(10px,1.5vw,18px) clamp(14px,2.4vw,28px);font:11px/1.3 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);pointer-events:none}
+.hud-left{display:flex;align-items:center;gap:9px}
+.hud-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--tealGlow);transition:background .3s,box-shadow .3s}
+body.is-paused .hud-dot{background:var(--amber);box-shadow:0 0 12px var(--amberGlow)}
+
+/* Scene container */
+.scenes-container{position:absolute;inset:0;z-index:3}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(44px,5vw,60px) clamp(18px,3.6vw,54px) clamp(34px,4vw,50px);opacity:0;visibility:hidden;transition:opacity .6s var(--ease),visibility 0s .6s;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+.scene.active{opacity:1;visibility:visible;transition:opacity .65s var(--ease),visibility 0s 0s}
+.scene::-webkit-scrollbar{width:7px}
+.scene::-webkit-scrollbar-thumb{background:rgba(104,156,255,.18);border-radius:8px}
+.scene-inner{width:100%;max-width:1140px;margin:0 auto}
+
+/* Anim helpers */
+.a{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.a.fromX{transform:translateX(-20px)}
+.a.fromScale{transform:scale(.92);opacity:0}
+.scene.active .a{opacity:1;transform:none}
+.scene.active .a{transition-delay:calc(var(--d,0)*.09s)}
+
+/* Cinematic overlay effects (light sweeps, glow lines) */
+.sweep{position:absolute;z-index:2;top:0;left:-60%;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(45,226,206,.04),transparent);transform:skewX(-15deg);pointer-events:none;opacity:0}
+.scene.active .sweep{animation:sweepMove 2.8s var(--ease) forwards;animation-delay:.3s}
+@keyframes sweepMove{0%{opacity:0;left:-60%}30%{opacity:1}100%{opacity:0;left:140%}}
+
+/*===== TYPOGRAPHY =====*/
+.kicker{font:clamp(10px,1.1vw,12px)/1.3 var(--mono);letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin:0 0 clamp(10px,1.4vw,16px);display:flex;align-items:center;gap:12px}
+.kicker::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--tealGlow),transparent)}
+.kicker.blue{color:var(--blue)}.kicker.blue::after{background:linear-gradient(90deg,var(--blueGlow),transparent)}
+.kicker.amber{color:var(--amber)}.kicker.amber::after{background:linear-gradient(90deg,var(--amberGlow),transparent)}
+
+.h1{font-size:clamp(36px,7vw,80px);font-weight:800;line-height:1;letter-spacing:-.04em;margin:0;background:linear-gradient(105deg,#fff 10%,#CFE3F2 42%,var(--teal) 120%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.h2{font-size:clamp(24px,3.6vw,42px);font-weight:720;line-height:1.08;letter-spacing:-.03em;margin:0 0 6px}
 .h3{font-size:clamp(16px,1.8vw,21px);font-weight:670;letter-spacing:-.012em;margin:0}
-.lead{font-size:clamp(14.5px,1.6vw,19px);color:#C3D2E0;margin:10px 0 0;max-width:62ch}
+.h4{font-size:clamp(13.5px,1.4vw,16px);font-weight:650;margin:0}
+.lead{font-size:clamp(15px,1.65vw,19px);color:#C3D2E0;margin:10px 0 0;max-width:62ch}
 .sub{font-size:clamp(13px,1.35vw,15.5px);color:var(--muted);margin:6px 0 0;max-width:68ch}
-.meta{
-  font-family:var(--mono);font-size:clamp(10.5px,1.05vw,12.5px);
-  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0;
-}
-.roleline{
-  font-family:var(--mono);font-size:clamp(10.5px,1.15vw,13px);
-  letter-spacing:.17em;text-transform:uppercase;color:var(--blue);
-  margin:14px 0 0;line-height:1.9;
-}
-.roleline em{font-style:normal;color:var(--muted-2)}
+.meta{font:clamp(10.5px,1.05vw,12.5px)/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.roleline{font:clamp(11px,1.2vw,13.5px)/1.9 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin:14px 0 0}
+.roleline em{font-style:normal;color:var(--muted2)}
 
-/* --- cards --- */
+/*===== CARDS =====*/
 .grid{display:grid;gap:clamp(9px,1.3vw,15px)}
-.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.g-hero{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.g-wide{grid-template-columns:1.08fr 1fr}
 
-.card{
-  position:relative;
-  background:linear-gradient(180deg,rgba(20,27,37,.82),rgba(11,15,22,.78));
-  border:1px solid var(--line);border-radius:var(--radius-sm);
-  padding:clamp(12px,1.5vw,19px);
-  min-width:0;
-}
-.card.accent{border-color:rgba(45,226,206,.4);background:linear-gradient(180deg,rgba(21,38,41,.78),rgba(10,16,20,.8))}
-.card.accent-blue{border-color:rgba(104,156,255,.36)}
-.card.accent-amber{border-color:rgba(255,190,106,.34)}
-.card .bar{position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:2px;background:linear-gradient(180deg,var(--teal),rgba(45,226,206,0))}
+.card{position:relative;background:linear-gradient(180deg,rgba(18,25,35,.85),rgba(10,14,22,.82));border:1px solid var(--border);border-radius:var(--rs);padding:clamp(13px,1.6vw,20px);min-width:0;transition:border-color .3s,box-shadow .3s}
+.card:hover{border-color:var(--borderStrong)}
+.card.accent{border-color:var(--tealGlow)}.card.accent-blue{border-color:var(--blueGlow)}.card.accent-amber{border-color:var(--amberGlow)}
+.card .bar{position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:2px}
+.card.accent .bar{background:linear-gradient(180deg,var(--teal),rgba(45,226,206,0))}
 .card.accent-blue .bar{background:linear-gradient(180deg,var(--blue),rgba(104,156,255,0))}
 .card.accent-amber .bar{background:linear-gradient(180deg,var(--amber),rgba(255,190,106,0))}
 
 .cardhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
-.badge{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);
-  white-space:nowrap;
-}
-.badge.live{color:#0A1512;background:var(--teal);border-color:var(--teal);font-weight:700}
-.badge.blue{color:var(--blue);border-color:rgba(104,156,255,.45);background:rgba(104,156,255,.08)}
-.badge.amber{color:var(--amber);border-color:rgba(255,190,106,.4);background:rgba(255,190,106,.07)}
-.pulse{width:6px;height:6px;border-radius:50%;background:#0A1512}
+.badge{display:inline-flex;align-items:center;gap:5px;font:10px/1.3 var(--mono);letter-spacing:.13em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.badge.live{color:#071210;background:var(--teal);border-color:var(--teal);font-weight:700}
+.badge.blue{color:var(--blue);border-color:rgba(104,156,255,.4);background:var(--blueDim)}
+.badge.amber{color:var(--amber);border-color:rgba(255,190,106,.4);background:var(--amberDim)}
+.badge .pulse{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
 
 ul.bul{margin:9px 0 0;padding:0;list-style:none}
-ul.bul li{
-  position:relative;padding-left:16px;margin:0 0 5px;
-  font-size:clamp(12.2px,1.22vw,14.5px);color:#AFC0D1;line-height:1.5;
-}
-ul.bul li::before{
-  content:"";position:absolute;left:1px;top:.62em;width:5px;height:1.5px;background:var(--teal);opacity:.85;
-}
+ul.bul li{position:relative;padding-left:16px;margin:0 0 5px;font-size:clamp(12.2px,1.22vw,14.5px);color:#AFC0D1;line-height:1.55}
+ul.bul li::before{content:"";position:absolute;left:1px;top:.65em;width:5px;height:1.5px;background:var(--teal);opacity:.8}
 .card.accent-blue ul.bul li::before{background:var(--blue)}
 .card.accent-amber ul.bul li::before{background:var(--amber)}
 
-.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
-.tag{
-  font-family:var(--mono);font-size:clamp(10px,1.02vw,11.6px);letter-spacing:.03em;
-  color:#BFCEDD;background:rgba(104,156,255,.08);
-  border:1px solid rgba(104,156,255,.2);border-radius:7px;padding:3.5px 8px;
-}
-.tag.t{color:#9DE9DE;background:rgba(45,226,206,.08);border-color:rgba(45,226,206,.22)}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin:11px 0 0}
+.tag{font:clamp(10px,1.02vw,11.6px)/1.3 var(--mono);letter-spacing:.03em;color:#BFCEDD;background:var(--blueDim);border:1px solid rgba(104,156,255,.2);border-radius:7px;padding:3.5px 9px}
+.tag.t{color:#9DE9DE;background:var(--tealDim);border-color:rgba(45,226,206,.22)}
 .tag.f{border-style:dashed;color:var(--muted);background:transparent}
-.legend{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted-2);margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px 18px;
-}
-.legend i{font-style:normal;color:var(--muted)}
 
-/* timeline */
-.tl{position:relative;padding-left:22px}
-.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;
-  background:linear-gradient(180deg,rgba(45,226,206,.55),rgba(104,156,255,.4),rgba(104,156,255,0))}
-.tl .node{position:absolute;left:1px;top:calc(var(--y,0px) + 16px);width:9px;height:9px;border-radius:50%;
-  background:var(--bg);border:1.5px solid var(--blue)}
-.tlrow{position:relative;margin:0 0 clamp(8px,1.1vw,13px)}
-.tlrow::before{
-  content:"";position:absolute;left:-21px;top:16px;width:9px;height:9px;border-radius:50%;
-  background:var(--bg-2);border:1.5px solid var(--blue);
-}
-.tlrow.now::before{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 4px rgba(45,226,206,.14)}
-
-.note{
-  font-family:var(--mono);font-size:clamp(10px,1.05vw,12px);letter-spacing:.06em;
-  color:var(--muted-2);margin:clamp(10px,1.3vw,16px) 0 0;line-height:1.7;
-}
+.note{font:clamp(10px,1.05vw,12px)/1.7 var(--mono);letter-spacing:.06em;color:var(--muted2);margin:clamp(10px,1.3vw,16px) 0 0}
 .note b{color:var(--muted);font-weight:600}
 
-.repo{
-  display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--mono);font-size:clamp(10.5px,1.05vw,12px);
-  color:var(--teal);border:1px solid rgba(45,226,206,.3);background:rgba(45,226,206,.07);
-  border-radius:999px;padding:5px 11px;margin-top:11px;overflow-wrap:anywhere;
-}
-.repo:hover{background:rgba(45,226,206,.15);text-decoration:none}
-.repo svg{width:12px;height:12px;flex:none}
+.repo-link{display:inline-flex;align-items:center;gap:7px;font:clamp(10.5px,1.05vw,12px)/1.3 var(--mono);color:var(--teal);border:1px solid rgba(45,226,206,.3);background:rgba(45,226,206,.06);border-radius:999px;padding:5px 12px;margin:11px 0 0;transition:all .2s;overflow-wrap:anywhere}
+.repo-link:hover{background:rgba(45,226,206,.15);text-decoration:none}
+.repo-link svg{width:12px;height:12px;flex:none}
 
-.statrow{display:flex;flex-wrap:wrap;gap:clamp(10px,2.4vw,34px);margin-top:clamp(12px,1.6vw,20px)}
+.statrow{display:flex;flex-wrap:wrap;gap:clamp(10px,2.4vw,34px);margin:clamp(12px,1.6vw,20px) 0 0}
 .stat .n{font-size:clamp(22px,3.2vw,38px);font-weight:720;letter-spacing:-.03em;line-height:1}
-.stat .n.teal{color:var(--teal)}
-.stat .n.blue{color:var(--blue)}
-.stat .n.amber{color:var(--amber)}
-.stat .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted-2);margin-top:7px}
+.stat .n.c-teal{color:var(--teal)}.stat .n.c-blue{color:var(--blue)}.stat .n.c-amber{color:var(--amber)}
+.stat .l{font:10.5px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin:7px 0 0}
 
-.contactrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:clamp(14px,1.8vw,22px)}
-.cbtn{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:var(--mono);font-size:clamp(11px,1.1vw,13px);letter-spacing:.04em;
-  color:var(--text);background:rgba(255,255,255,.04);
-  border:1px solid var(--line-strong);border-radius:10px;padding:9px 14px;
-  transition:border-color .2s,background .2s,transform .2s;overflow-wrap:anywhere;
-}
-.cbtn:hover{border-color:var(--teal);color:var(--teal);background:rgba(45,226,206,.08);text-decoration:none;transform:translateY(-1px)}
+.contact-row{display:flex;flex-wrap:wrap;gap:9px;margin:clamp(14px,1.8vw,22px) 0 0}
+.cbtn{display:inline-flex;align-items:center;gap:8px;font:clamp(11px,1.1vw,13px)/1.3 var(--mono);letter-spacing:.04em;color:var(--text);background:var(--dim);border:1px solid var(--borderStrong);border-radius:var(--rs);padding:9px 15px;transition:all .2s;overflow-wrap:anywhere}
+.cbtn:hover{border-color:var(--teal);color:var(--teal);background:var(--tealDim);text-decoration:none;transform:translateY(-1px)}
 .cbtn svg{width:14px;height:14px;flex:none}
 
-/* ============================================================
-   CONTROLS
-   ============================================================ */
-.controls{
-  margin-top:14px;
-  border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(180deg,rgba(16,22,31,.7),rgba(10,14,20,.7));
-  padding:12px clamp(12px,1.8vw,18px);
-}
-.ctop{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--text);background:rgba(255,255,255,.045);
-  border:1px solid var(--line-strong);border-radius:10px;
-  padding:9px 14px;cursor:pointer;transition:all .18s var(--ease);
-}
-.btn:hover{border-color:var(--teal);color:var(--teal);background:rgba(45,226,206,.08)}
-.btn.primary{background:var(--teal);color:#05130F;border-color:var(--teal);font-weight:700}
-.btn.primary:hover{background:#4defdc;color:#05130F}
+/* Timeline */
+.tl{position:relative;padding-left:22px}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:linear-gradient(180deg,var(--tealGlow),var(--blueGlow),transparent)}
+.tlrow{position:relative;margin:0 0 clamp(8px,1.1vw,13px)}
+.tlrow::before{content:"";position:absolute;left:-21px;top:16px;width:9px;height:9px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--blue);transition:all .3s}
+.tlrow.now::before{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 4px rgba(45,226,206,.12)}
+
+/*===== CONTROLS =====*/
+.controls{border:1px solid var(--border);border-top:0;border-radius:0 0 var(--r) var(--r);background:linear-gradient(180deg,rgba(14,20,30,.75),rgba(9,13,20,.75));padding:13px clamp(12px,1.8vw,20px)}
+.ctrl-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:7px;font:12px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--text);background:var(--dim);border:1px solid var(--borderStrong);border-radius:var(--rs);padding:9px 14px;cursor:pointer;transition:all .18s var(--ease)}
+.btn:hover{border-color:var(--teal);color:var(--teal);background:var(--tealDim)}
+.btn.primary{background:var(--teal);color:#041210;border-color:var(--teal);font-weight:700}
+.btn.primary:hover{background:#4DEFDC}
 .btn svg{width:13px;height:13px;flex:none}
-.btn[disabled]{opacity:.4;cursor:not-allowed}
-.spacer{flex:1 1 auto;min-width:8px}
-.tc{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+.spacer{flex:1}
+.tc{font:12px/1 var(--mono);color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+.progress-track{position:relative;height:6px;margin:12px 0 10px;border-radius:999px;background:rgba(104,156,255,.12);cursor:pointer;overflow:hidden}
+.progress-fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .08s linear}
+.progress-ticks{position:absolute;inset:0;pointer-events:none}
+.progress-ticks i{position:absolute;top:0;bottom:0;width:1px;background:rgba(6,8,12,.8)}
+.chapters{display:flex;flex-wrap:wrap;gap:5px}
+.ch-btn{font:10.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:999px;padding:6px 11px;cursor:pointer;transition:all .18s}
+.ch-btn:hover{color:var(--text);border-color:var(--borderStrong)}
+.ch-btn[aria-current="true"]{color:#041210;background:var(--teal);border-color:var(--teal);font-weight:700}
+.shortcut-hint{font:10.5px/1.3 var(--mono);color:var(--muted2);margin:10px 0 0;letter-spacing:.07em}
+.shortcut-hint kbd{font:inherit;background:var(--dim);border:1px solid var(--border);border-radius:5px;padding:1px 6px;color:var(--text)}
 
-.track{
-  position:relative;height:6px;margin:13px 0 11px;border-radius:999px;
-  background:rgba(104,156,255,.14);cursor:pointer;overflow:hidden;
-}
-.fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;
-  background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .1s linear}
-.ticks{position:absolute;inset:0;pointer-events:none}
-.ticks i{position:absolute;top:0;bottom:0;width:1px;background:rgba(7,9,13,.75)}
+/*===== TEXT CV =====*/
+.text-cv{border-top:1px solid var(--border);padding:clamp(28px,3.6vw,46px) 0 0;margin:clamp(30px,4vw,50px) 0 0}
+.text-cv .sect{font:12px/1.3 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin:clamp(32px,3.6vw,48px) 0 14px;display:flex;align-items:center;gap:12px}
+.text-cv .sect::after{content:"";flex:1;height:1px;background:var(--border)}
+.text-cv .sect:first-of-type{margin-top:0}
+.text-cv h3{font-size:17px;font-weight:670;margin:0 0 3px;letter-spacing:-.01em}
+.text-cv h4{font-size:14.5px;font-weight:640;margin:0 0 2px;color:#D3E0EC}
+.text-cv p{margin:0 0 10px;color:#B4C4D4;font-size:14.5px}
+.text-cv ul{margin:8px 0 0;padding-left:18px;color:#AFC0D1;font-size:14px}
+.text-cv ul li{margin-bottom:5px}
+.text-cv .entry{border:1px solid var(--border);border-radius:var(--rs);padding:16px 18px;background:var(--panel2);margin-bottom:12px}
+.text-cv .dmeta{font:11.5px/1.4 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.text-cv .intro{font-size:clamp(16px,1.9vw,20px);color:#CFDDE9;max-width:70ch}
 
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{
-  font-family:var(--mono);font-size:10.6px;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--muted);background:transparent;border:1px solid var(--line);
-  border-radius:999px;padding:6px 11px;cursor:pointer;transition:all .18s var(--ease);
-}
-.chip:hover{color:var(--text);border-color:var(--line-strong)}
-.chip[aria-current="true"]{color:#05130F;background:var(--teal);border-color:var(--teal);font-weight:700}
+footer.page-foot{margin:clamp(36px,4vw,58px) 0 clamp(24px,3vw,36px);padding-top:20px;border-top:1px solid var(--border);font:11.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:space-between}
 
-.hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted-2);margin:11px 0 0}
-.hint kbd{
-  font-family:var(--mono);background:rgba(255,255,255,.06);border:1px solid var(--line);
-  border-radius:5px;padding:1px 6px;font-size:10px;color:var(--text);
-}
+/*===== RESPONSIVE =====*/
+@media(max-width:1000px){.g4{grid-template-columns:repeat(2,1fr)}.g-wide{grid-template-columns:1fr}}
+@media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}.hud{font-size:9.5px;letter-spacing:.11em}.statrow{gap:14px 24px}.topbar nav{width:100%}}
+@media(max-width:520px){.scene{padding:46px 14px 28px}.btn{padding:8px 11px;font-size:11px}.card{padding:12px 13px}.tl{padding-left:18px}.tlrow::before{left:-17px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.a{opacity:1;transform:none}}
+@media print{.cinema,.controls,.skip-link,.rm-banner,.chapters,.shortcut-hint{display:none!important}body{background:#fff;color:#111}.text-cv .entry{border-color:#ccc;background:#fff}.text-cv p,.text-cv ul{color:#333}a{color:#07a}}
 
-.banner{
-  display:none;border:1px solid rgba(255,190,106,.34);background:rgba(255,190,106,.06);
-  border-radius:var(--radius);padding:16px 18px;margin:0 0 26px;
-}
-body.reduced .banner{display:block}
-body.reduced .player{display:none}
-.banner p{margin:0 0 12px;font-size:14px;color:#D8C7AC}
-.nojs-note{display:none;border:1px solid var(--line);background:var(--panel);
-  border-radius:var(--radius);padding:16px 18px;margin:0 0 26px;color:#C3D2E0;font-size:14.5px}
+/*===== CINEMATIC ENHANCEMENTS =====*/
+.glow-line{position:absolute;z-index:2;height:1px;width:0;pointer-events:none;opacity:0}
+.scene.active .glow-line{animation:glowGrow 1.8s var(--ease) forwards}
+@keyframes glowGrow{0%{width:0;opacity:0}40%{opacity:1}100%{width:100%;opacity:.3}}
+.glow-line.teal{background:linear-gradient(90deg,transparent,var(--teal),transparent);box-shadow:0 0 20px var(--tealGlow)}
+.glow-line.blue{background:linear-gradient(90deg,transparent,var(--blue),transparent);box-shadow:0 0 20px var(--blueGlow)}
 
-/* ============================================================
-   TEXT CV
-   ============================================================ */
-.doc{border-top:1px solid var(--line);padding-top:clamp(26px,3.4vw,44px)}
-.doc h2.sect{
-  font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--teal);margin:clamp(30px,3.6vw,46px) 0 14px;display:flex;align-items:center;gap:12px;
-}
-.doc h2.sect::after{content:"";flex:1;height:1px;background:var(--line)}
-.doc h2.sect:first-of-type{margin-top:0}
-.doc h3{font-size:17px;font-weight:670;margin:0 0 3px;letter-spacing:-.012em}
-.doc h4{font-size:14.5px;font-weight:650;margin:0 0 2px;color:#D3E0EC}
-.doc p{margin:0 0 10px;color:#B4C4D4;font-size:14.5px}
-.doc ul{margin:8px 0 0;padding-left:18px;color:#AFC0D1;font-size:14px}
-.doc ul li{margin-bottom:5px}
-.doc .entry{border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px;background:var(--panel-2)}
-.doc .dmeta{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 9px}
-.doc .grid{margin-bottom:12px}
-.doc .intro{font-size:clamp(16px,1.9vw,20px);color:#CFDDE9;max-width:70ch}
-.doc .tags{margin-top:9px}
-footer.pagefoot{
-  margin-top:clamp(34px,4vw,56px);padding-top:20px;border-top:1px solid var(--line);
-  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);
-  display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:space-between;
-}
+.float-particle{position:absolute;z-index:2;border-radius:50%;pointer-events:none;opacity:0}
+.scene.active .float-particle{animation:floatUp 4s ease-out forwards}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0)}15%{opacity:.6}100%{opacity:0;transform:translateY(-120px)}}
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width:1000px){
-  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .g-hero{grid-template-columns:minmax(0,1fr)}
-}
-@media (max-width:860px){
-  .stage{aspect-ratio:auto;height:auto;min-height:min(640px,84vh);max-height:none}
-  .scene{position:absolute;padding:48px 16px 30px}
-  .g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}
-  .hud{font-size:9.6px;letter-spacing:.12em}
-  .statrow{gap:14px 26px}
-  .topbar nav{width:100%}
-  .linkchip{font-size:11.4px;padding:6px 11px}
-}
-@media (max-width:520px){
-  .stage{min-height:min(620px,86vh)}
-  .scene{padding:46px 14px 26px}
-  .btn{padding:8px 11px;font-size:11px;letter-spacing:.06em}
-  .tc{font-size:11px}
-  .card{padding:12px 13px}
-  .tl{padding-left:18px}
-  .tlrow::before{left:-17px}
-}
+/* Scene-specific entrance choreography */
+.scene.active .stagger-1{transition-delay:.15s}
+.scene.active .stagger-2{transition-delay:.3s}
+.scene.active .stagger-3{transition-delay:.45s}
+.scene.active .stagger-4{transition-delay:.6s}
+.scene.active .stagger-5{transition-delay:.75s}
+.scene.active .stagger-6{transition-delay:.9s}
+.scene.active .stagger-7{transition-delay:1.05s}
+.scene.active .stagger-8{transition-delay:1.2s}
 
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
-  .anim{opacity:1;transform:none}
-}
-@media print{
-  .player,.controls,.skip,.banner,.chips{display:none !important}
-  body{background:#fff;color:#111}
-  .doc .entry{border-color:#ccc;background:#fff}
-  .doc p,.doc ul{color:#333}
-  a{color:#0b5}
-}
+/* Morph-transition overlay */
+.morph-overlay{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;transition:opacity .4s}
+.morph-overlay.show{opacity:1}
+.morph-wipe{position:absolute;inset:0;background:linear-gradient(90deg,transparent 30%,var(--bg) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s var(--ease)}
+.morph-overlay.show .morph-wipe{transform:translateX(120%)}
+
+/* Data-flow visual for Money Calculator */
+.data-flow{display:flex;align-items:center;gap:6px;margin:8px 0;font:11px/1.3 var(--mono);color:var(--muted)}
+.data-flow .arrow{color:var(--teal);font-size:14px}
+.data-flow .node{padding:3px 8px;border:1px solid var(--border);border-radius:6px;background:var(--dim);color:var(--text);font-size:11px}
+.data-flow .node.highlight{border-color:var(--tealGlow);color:var(--teal)}
 </style>
+<noscript><style>.cinema,.controls{display:none!important}.noscript-msg{display:block!important}</style></noscript>
 </head>
 <body>
 
-<a class="skip" href="#text-cv">Skip to text version of CV</a>
+<a class="skip-link" href="#text-cv">Skip to accessible text CV</a>
 
 <div class="wrap">
 
-  <!-- ===================== TOP BAR ===================== -->
-  <header class="topbar">
-    <div class="who">
-      <span class="nm">Barshan Ghosh</span>
-      <span class="rl">Software Engineer · Full-Stack Developer · AI / ML</span>
-    </div>
-    <nav aria-label="Contact and profiles">
-      <a class="linkchip" href="mailto:barshan.ghoshofficial@gmail.com">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-        barshan.ghoshofficial@gmail.com
-      </a>
-      <a class="linkchip" href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-        github.com/barshan94
-      </a>
-      <a class="linkchip" href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.3 8.2h4.4V24H.3V8.2Zm7.5 0h4.2v2.15h.06c.59-1.05 2.03-2.16 4.18-2.16 4.47 0 5.3 2.82 5.3 6.5V24h-4.4v-7.4c0-1.77-.03-4.05-2.6-4.05-2.6 0-3 1.93-3 3.92V24H7.8V8.2Z"/></svg>
-        linkedin.com/in/barshan-ghosh
-      </a>
-      <a class="linkchip" href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
-        Portfolio
-      </a>
-    </nav>
-  </header>
-
-  <!-- ===================== REDUCED MOTION / NOJS NOTICES ===================== -->
-  <div class="banner" role="status">
-    <p><strong>Reduced motion is enabled on your system.</strong> The animated presentation is paused by default and the complete written CV is shown below.</p>
-    <button class="btn primary" type="button" id="enableMotion">Play the animated CV anyway</button>
+<!-- ======== TOP BAR ======== -->
+<header class="topbar">
+  <div class="identity">
+    <span class="name">Barshan Ghosh</span>
+    <span class="role">Software Engineer · Full-Stack Developer · AI / ML</span>
   </div>
-
-  <div class="nojs-note">
-    <strong>JavaScript is disabled.</strong> The animated presentation needs JavaScript, but the complete CV is available as text below.
-  </div>
-
-  <!-- ===================== PLAYER ===================== -->
-  <section class="player" aria-label="Animated video CV of Barshan Ghosh">
-
-    <div class="stage" id="stage">
-      <canvas id="bg" aria-hidden="true">Your browser does not support canvas. The full CV is available as text below.</canvas>
-      <div class="vignette" aria-hidden="true"></div>
-
-      <div class="hud" aria-hidden="true">
-        <span class="chap"><span class="dot"></span><span id="hudChapter">Identity</span></span>
-        <span id="hudCount">01 / 14</span>
-      </div>
-
-      <div class="scenes" id="scenes">
-
-        <!-- ---------- 1 · IDENTITY ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 1: Identity">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">01 — Barshan Ghosh · Video CV</p>
-            <h2 class="h1 anim" style="--i:1">Barshan&nbsp;Ghosh</h2>
-            <p class="roleline anim" style="--i:2">
-              Software Engineer <em>·</em> Full-Stack Developer <em>·</em> Applied AI
-            </p>
-            <p class="lead anim" style="--i:3"><strong>Building practical software. Exploring intelligent systems.</strong></p>
-            <p class="sub anim" style="--i:4">I build software that makes complex work simpler — financial systems, school platforms, storefronts and data tools, backed by hands-on IT operations and classroom teaching.</p>
-            <div class="contactrow anim" style="--i:5">
-              <a class="cbtn" href="mailto:barshan.ghoshofficial@gmail.com">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-                barshan.ghoshofficial@gmail.com
-              </a>
-              <a class="cbtn" href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                GitHub
-              </a>
-              <a class="cbtn" href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.3 8.2h4.4V24H.3V8.2Zm7.5 0h4.2v2.15h.06c.59-1.05 2.03-2.16 4.18-2.16 4.47 0 5.3 2.82 5.3 6.5V24h-4.4v-7.4c0-1.77-.03-4.05-2.6-4.05-2.6 0-3 1.93-3 3.92V24H7.8V8.2Z"/></svg>
-                LinkedIn
-              </a>
-              <a class="cbtn" href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
-                Portfolio
-              </a>
-            </div>
-            <p class="note anim" style="--i:6"><b>Based in Narayanganj / Dhaka, Bangladesh</b> · Open to software engineering, full-stack and data / AI roles</p>
-          </div>
-        </article>
-
-        <!-- ---------- 2 · EDUCATION ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 2: Academic foundation">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">02 — Academic foundation</p>
-            <h2 class="h2 anim" style="--i:1">Computer Science, finished a year early.</h2>
-            <p class="sub anim" style="--i:2">Three qualifications, all in the science stream — the degree below is the foundation of my engineering work.</p>
-
-            <div class="grid g-hero" style="margin-top:clamp(14px,2vw,22px)">
-              <div class="card accent anim" style="--i:3">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead">
-                  <h3 class="h3">BSc in Computer Science &amp; Engineering</h3>
-                  <span class="badge live"><span class="pulse"></span>Highest qualification</span>
-                </div>
-                <p class="meta" style="margin-top:7px">American International University-Bangladesh (AIUB) · Dhaka</p>
-                <div class="statrow">
-                  <div class="stat"><div class="n teal">3.83<span style="font-size:.5em;color:var(--muted)">/4.00</span></div><div class="l">CGPA</div></div>
-                  <div class="stat"><div class="n">2019–2023</div><div class="l">Period</div></div>
-                  <div class="stat"><div class="n blue">3 yrs</div><div class="l">Completed in</div></div>
-                </div>
-                <p class="note">Undergraduate thesis: <b>Blockchain Internet of Things (bIoT)</b> — blockchain security technologies in healthcare.</p>
-              </div>
-
-              <div class="grid" style="align-content:start">
-                <div class="card accent-blue anim" style="--i:4">
-                  <span class="bar" aria-hidden="true"></span>
-                  <div class="cardhead">
-                    <h3 class="h3">Higher Secondary Certificate — Science</h3>
-                    <span class="badge blue">GPA 3.92 / 5.00</span>
-                  </div>
-                  <p class="meta" style="margin-top:6px">Government Tolaram College · 2017–2019</p>
-                </div>
-                <div class="card accent-blue anim" style="--i:5">
-                  <span class="bar" aria-hidden="true"></span>
-                  <div class="cardhead">
-                    <h3 class="h3">Secondary School Certificate — Science</h3>
-                    <span class="badge blue">GPA 5.00 / 5.00</span>
-                  </div>
-                  <p class="meta" style="margin-top:6px">Narayanganj High School &amp; College · 2014–2017</p>
-                </div>
-                <p class="note anim" style="--i:6">Languages: <b>Bengali · English · Hindi</b></p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 3 · CURRENT ROLE ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 3: Current role">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">03 — Professional journey · now</p>
-            <div class="cardhead anim" style="--i:1">
-              <h2 class="h2">Mount Royal Academy</h2>
-              <span class="badge live"><span class="pulse"></span>Current · Full-time</span>
-            </div>
-            <p class="meta anim" style="--i:2">June 2025 – Present · Narayanganj, Bangladesh</p>
-            <p class="roleline anim" style="--i:3">IT Coordinator <em>·</em> Computer Science Teacher <em>·</em> O-Level Physics Guest Lecturer</p>
-
-            <div class="grid g3" style="margin-top:clamp(14px,2vw,20px)">
-              <div class="card accent anim" style="--i:4">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">IT operations</h3>
-                <ul class="bul">
-                  <li>Oversee the school's IT infrastructure and day-to-day technology operations.</li>
-                  <li>Keep systems reliable for staff and students.</li>
-                </ul>
-              </div>
-              <div class="card accent-blue anim" style="--i:5">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">Computer Science teaching</h3>
-                <ul class="bul">
-                  <li>Teach Computer Science to students in Grades 3–7.</li>
-                  <li>Plan lessons and classroom technology activities.</li>
-                </ul>
-              </div>
-              <div class="card accent-amber anim" style="--i:6">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">O-Level Physics</h3>
-                <ul class="bul">
-                  <li>Deliver guest lectures in O-Level Physics.</li>
-                  <li>Translate abstract concepts into worked examples.</li>
-                </ul>
-              </div>
-            </div>
-            <p class="note anim" style="--i:7">I also build and maintain the school's website — see <b>Mount Royal Academy Website</b> in the projects section.</p>
-          </div>
-        </article>
-
-        <!-- ---------- 4 · EXPERIENCE I ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 4: Professional experience, part one">
-          <div class="scene-inner">
-            <p class="kicker blue anim" style="--i:0">04 — Professional journey · 2023 → 2025</p>
-            <h2 class="h2 anim" style="--i:1">Teaching, marketing and IT operations.</h2>
-
-            <div class="tl" style="margin-top:clamp(14px,2vw,22px)">
-              <div class="tlrow anim anim-x card accent-blue" style="--i:2">
-                <div class="cardhead">
-                  <h3 class="h3">Heritage School — Proxy ICT Teacher</h3>
-                  <span class="badge">Temporary · short-term</span>
-                </div>
-                <p class="meta" style="margin-top:6px">April 2025 – May 2025 · Narayanganj, Bangladesh</p>
-                <ul class="bul">
-                  <li>Covered ICT classes during regular teachers' absences and maintained continuity of learning.</li>
-                  <li>Delivered planned lessons and guided students through classroom technology activities.</li>
-                </ul>
-              </div>
-
-              <div class="tlrow anim anim-x card accent-blue" style="--i:3">
-                <div class="cardhead">
-                  <h3 class="h3">Edupy Academy — Digital Marketer</h3>
-                  <span class="badge">Remote</span>
-                </div>
-                <p class="meta" style="margin-top:6px">October 2024 – January 2025 · Dhaka, Bangladesh</p>
-                <ul class="bul">
-                  <li>Executed online marketing activities to strengthen brand visibility and reach prospective learners.</li>
-                  <li>Supported social media outreach and promotional content distribution across digital channels.</li>
-                </ul>
-              </div>
-
-              <div class="tlrow anim anim-x card accent-blue" style="--i:4">
-                <div class="cardhead">
-                  <h3 class="h3">CNBDEXIM — IT Associate</h3>
-                  <span class="badge">Hybrid</span>
-                </div>
-                <p class="meta" style="margin-top:6px">January 2023 – September 2024 · Dhaka, Bangladesh</p>
-                <ul class="bul">
-                  <li>Maintained day-to-day IT systems and provided hardware support.</li>
-                  <li>Troubleshot network and user-technology issues for on-site and remote operations.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 5 · EXPERIENCE II ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 5: Professional experience, part two">
-          <div class="scene-inner">
-            <p class="kicker blue anim" style="--i:0">05 — Professional journey · 2022 → 2024</p>
-            <h2 class="h2 anim" style="--i:1">Where the AI and systems work began.</h2>
-
-            <div class="tl" style="margin-top:clamp(14px,2vw,22px)">
-              <div class="tlrow anim anim-x card accent-blue" style="--i:2">
-                <div class="cardhead">
-                  <h3 class="h3">Digital Fire Safety Solution Ltd — IT Consultant</h3>
-                  <span class="badge">Remote</span>
-                </div>
-                <p class="meta" style="margin-top:6px">August 2022 – October 2024 · Dhaka, Bangladesh</p>
-                <ul class="bul">
-                  <li>Provided remote technical consultation and system troubleshooting.</li>
-                  <li>Addressed system and user issues as they were reported.</li>
-                  <li>Reviewed IT infrastructure and recommended practical improvements to operational efficiency.</li>
-                </ul>
-              </div>
-
-              <div class="tlrow anim anim-x card accent" style="--i:3">
-                <div class="cardhead">
-                  <h3 class="h3">Teachnook — AI Engineer Intern</h3>
-                  <span class="badge amber">Remote internship · India</span>
-                </div>
-                <p class="meta" style="margin-top:6px">August 2022 – January 2023</p>
-                <ul class="bul">
-                  <li>Contributed to building, training and testing machine-learning algorithms and AI models.</li>
-                  <li>Collaborated remotely on AI project work and technical tasks.</li>
-                </ul>
-                <div class="tags">
-                  <span class="tag t">Python</span><span class="tag t">Model training</span><span class="tag t">Model testing</span><span class="tag t">Remote collaboration</span>
-                </div>
-              </div>
-            </div>
-
-            <p class="note anim" style="--i:4"><b>Note on overlap:</b> several roles ran in parallel — the Teachnook internship and the Digital Fire Safety consultancy overlapped with my final year of study, and the CNBDEXIM role overlapped with both consultancy and tutoring work. Not every position was sequential or full-time.</p>
-          </div>
-        </article>
-
-        <!-- ---------- 6 · TEACHING & MENTORING ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 6: Teaching and mentoring">
-          <div class="scene-inner">
-            <p class="kicker amber anim" style="--i:0">06 — Teaching &amp; mentoring</p>
-            <h2 class="h2 anim" style="--i:1">Private tutoring, alongside everything else.</h2>
-            <p class="sub anim" style="--i:2">Structured, student-centred subject support — separate from formal employment, and a steady part of my week.</p>
-
-            <div class="grid g3" style="margin-top:clamp(14px,2vw,20px)">
-              <div class="card accent-amber anim" style="--i:3">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h3">Private Tutor — HSC Science</h3><span class="badge amber">Oct 2024 – Present</span></div>
-                <ul class="bul"><li>Structured, student-centred support for an HSC Science learner.</li></ul>
-                <div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Bengali</span></div>
-              </div>
-              <div class="card accent-amber anim" style="--i:4">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h3">Private Tutor — SSC Arts</h3><span class="badge amber">Jan 2023 – Present</span></div>
-                <ul class="bul"><li>Regular lessons, practice sets and concept clarification.</li></ul>
-                <div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">General Mathematics</span><span class="tag">General Science</span></div>
-              </div>
-              <div class="card accent-amber anim" style="--i:5">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h3">Private Tutor — SSC Science</h3><span class="badge amber">Jan 2023 – Dec 2024</span></div>
-                <ul class="bul"><li>Core science tuition, adapting explanations and practice to each learner.</li></ul>
-                <div class="tags"><span class="tag">Physics</span><span class="tag">Chemistry</span><span class="tag">Higher Mathematics</span><span class="tag">Biology</span></div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 7 · SKILLS I ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 7: Technical capabilities, part one">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">07 — Technical capabilities · build</p>
-            <h2 class="h2 anim" style="--i:1">What I build with.</h2>
-
-            <div class="grid g3" style="margin-top:clamp(14px,2vw,20px)">
-              <div class="card accent anim" style="--i:2">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">Frontend &amp; web</h3>
-                <div class="tags">
-                  <span class="tag t">Astro</span><span class="tag t">React</span><span class="tag t">TypeScript</span><span class="tag t">JavaScript</span>
-                  <span class="tag t">HTML</span><span class="tag t">CSS</span><span class="tag t">Tailwind CSS</span><span class="tag">WordPress</span><span class="tag">Shopify</span>
-                </div>
-              </div>
-              <div class="card accent-blue anim" style="--i:3">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">Backend &amp; databases</h3>
-                <div class="tags">
-                  <span class="tag t">Node.js</span><span class="tag t">Supabase</span><span class="tag t">PostgreSQL</span>
-                  <span class="tag">MySQL</span><span class="tag">Firebase</span><span class="tag t">REST APIs</span>
-                </div>
-              </div>
-              <div class="card accent-amber anim" style="--i:4">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">AI, ML &amp; analytics</h3>
-                <div class="tags">
-                  <span class="tag t">Python</span><span class="tag f">TensorFlow (fundamentals)</span><span class="tag f">Keras (fundamentals)</span>
-                  <span class="tag">Weka</span><span class="tag">Kaggle</span><span class="tag">Power BI</span>
-                  <span class="tag">ChatGPT</span><span class="tag">Gemini</span><span class="tag t">LLM prompting</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card anim" style="--i:5;margin-top:clamp(9px,1.3vw,15px)">
-              <h3 class="h3">Programming languages</h3>
-              <div class="tags">
-                <span class="tag t">Python</span><span class="tag t">JavaScript</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Java</span>
-                <span class="tag f">PHP — read, write &amp; understand existing code</span>
-              </div>
-            </div>
-
-            <p class="legend anim" style="--i:6">
-              <span><i>■ solid</i> — hands-on build experience</span>
-              <span><i>▢ dashed</i> — foundational / working knowledge</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- ---------- 8 · SKILLS II ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 8: Technical capabilities, part two">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">08 — Technical capabilities · operate &amp; teach</p>
-            <h2 class="h2 anim" style="--i:1">How I ship, support and explain it.</h2>
-
-            <div class="grid g3" style="margin-top:clamp(14px,2vw,20px)">
-              <div class="card accent anim" style="--i:2">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">DevOps, systems &amp; support</h3>
-                <div class="tags">
-                  <span class="tag t">Git</span><span class="tag t">GitHub</span><span class="tag t">Vercel</span>
-                  <span class="tag t">Playwright</span><span class="tag t">Vitest</span><span class="tag f">Docker (fundamentals)</span>
-                  <span class="tag">Linux</span><span class="tag">Windows</span>
-                  <span class="tag">Hardware troubleshooting</span><span class="tag">Network troubleshooting</span>
-                </div>
-              </div>
-              <div class="card accent-blue anim" style="--i:3">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">Teaching &amp; digital learning</h3>
-                <div class="tags">
-                  <span class="tag">Curriculum design</span><span class="tag">Classroom management</span><span class="tag">Student-centred instruction</span>
-                  <span class="tag">Google Classroom</span><span class="tag">Zoom</span><span class="tag">Microsoft Teams</span>
-                  <span class="tag">Kahoot</span><span class="tag">Quizizz</span><span class="tag">Padlet</span>
-                </div>
-              </div>
-              <div class="card accent-amber anim" style="--i:4">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">Digital marketing &amp; productivity</h3>
-                <div class="tags">
-                  <span class="tag">SEO</span><span class="tag">Google Analytics 4</span><span class="tag">Google Tag Manager</span>
-                  <span class="tag">Meta Pixel</span><span class="tag">Canva</span>
-                  <span class="tag">Microsoft Office</span><span class="tag">Google Workspace</span>
-                </div>
-              </div>
-            </div>
-
-            <p class="note anim" style="--i:5">These are capability groups, not proficiency scores. My core direction is <b>software engineering and applied data / AI work</b>; IT operations, teaching and marketing tooling are supporting strengths I use in real jobs.</p>
-          </div>
-        </article>
-
-        <!-- ---------- 9 · MONEY CALCULATOR ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 9: Money Calculator project">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">09 — Selected project 01 · flagship</p>
-            <div class="cardhead anim" style="--i:1">
-              <h2 class="h2">Money Calculator</h2>
-              <span class="badge amber">Evolving personal project</span>
-            </div>
-            <p class="sub anim" style="--i:2">A personal-finance platform built around a ledger-first approach, traceable financial changes and reliable balance calculations.</p>
-
-            <div class="grid g-hero" style="margin-top:clamp(12px,1.8vw,18px)">
-              <div class="grid" style="align-content:start">
-                <div class="card accent anim" style="--i:3">
-                  <span class="bar" aria-hidden="true"></span>
-                  <h3 class="h3">The engineering problem</h3>
-                  <ul class="bul">
-                    <li>Financial apps become unreliable when a corrected transaction leaves its old balance effect behind.</li>
-                    <li>They break again when a repayment loses the link to the loan it belongs to.</li>
-                  </ul>
-                </div>
-                <div class="card accent-blue anim" style="--i:4">
-                  <span class="bar" aria-hidden="true"></span>
-                  <h3 class="h3">The design principle</h3>
-                  <ul class="bul">
-                    <li>Balances follow the underlying records — never the other way round.</li>
-                    <li>Edits, voids and reversals stay <b>auditable</b> rather than silently rewriting history.</li>
-                    <li>Every row is ownership-aware, enforced by PostgreSQL Row Level Security.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card anim" style="--i:5">
-                <h3 class="h3">Documented capabilities</h3>
-                <div class="grid g2" style="gap:0 14px;margin-top:4px">
-                  <ul class="bul">
-                    <li>Multi-account tracking</li>
-                    <li>Income, expenses, transfers, donations, opening balances</li>
-                    <li>Transaction ledger with balanced debit &amp; credit entries</li>
-                    <li>Auditable edits, voids and reversals</li>
-                    <li>Lending, borrowing, loan repayments, partial settlements, repayment cancellation</li>
-                    <li>Loan grouping that preserves individual loans and repayment relationships</li>
-                  </ul>
-                  <ul class="bul">
-                    <li>Tuition students, fees, partial payments, outstanding dues, payment history</li>
-                    <li>Deposits, investments and long-term asset tracking</li>
-                    <li>Budgets, savings goals, recurring activity, donation targets</li>
-                    <li>Reports, cash-flow analysis, net-worth tracking, forecasting</li>
-                    <li>Authentication and ownership-aware database operations</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="tags anim" style="--i:6;margin-top:clamp(10px,1.4vw,14px)">
-              <span class="tag t">Next.js 16</span><span class="tag t">React 19</span><span class="tag t">TypeScript</span>
-              <span class="tag t">Supabase</span><span class="tag t">PostgreSQL</span><span class="tag t">Tailwind CSS</span>
-              <span class="tag t">Recharts</span><span class="tag t">Vitest</span><span class="tag t">Playwright</span>
-            </div>
-            <div class="anim" style="--i:7">
-              <a class="repo" href="https://github.com/barshan94/money-calculator" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                github.com/barshan94/money-calculator
-              </a>
-              <p class="note">Actively evolving: the capability list above reflects documented project scope, not a claim that every flow is finished, fully browser-tested or production-ready.</p>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 10 · PROJECTS I ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 10: ASTA Store and Mount Royal Academy website">
-          <div class="scene-inner">
-            <p class="kicker blue anim" style="--i:0">10 — Selected projects 02 &amp; 03 · shipped web platforms</p>
-
-            <div class="grid g2" style="margin-top:clamp(10px,1.6vw,16px)">
-              <div class="card accent anim" style="--i:1">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h2" style="font-size:clamp(20px,2.6vw,30px)">ASTA Store</h3><span class="badge t">E-commerce</span></div>
-                <p class="sub" style="margin-top:4px">An Astro-powered storefront for handmade leather bags — a small maker needs a real shop, not a social-media inbox.</p>
-                <ul class="bul">
-                  <li>Product browsing and product detail pages</li>
-                  <li>Cart management and checkout flow</li>
-                  <li>Admin dashboard with product management</li>
-                  <li>Supabase authentication — login, registration, password recovery</li>
-                </ul>
-                <div class="tags">
-                  <span class="tag t">Astro</span><span class="tag t">TypeScript</span><span class="tag t">Supabase</span><span class="tag t">Tailwind CSS</span>
-                </div>
-                <a class="repo" href="https://github.com/barshan94/asta-store" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                  github.com/barshan94/asta-store
-                </a>
-              </div>
-
-              <div class="card accent-blue anim" style="--i:2">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h2" style="font-size:clamp(20px,2.6vw,30px)">Mount Royal Academy Website</h3><span class="badge blue">EdTech · workplace</span></div>
-                <p class="sub" style="margin-top:4px">A school website with public academic information and a content-management dashboard, so staff can publish without touching code.</p>
-                <ul class="bul">
-                  <li>School overview, announcements and notice board</li>
-                  <li>Admission page with an application flow</li>
-                  <li>Academic calendar</li>
-                  <li>Admission &amp; application management, gallery management, site settings</li>
-                </ul>
-                <div class="tags">
-                  <span class="tag t">Astro</span><span class="tag t">TypeScript</span><span class="tag t">Supabase</span>
-                  <span class="tag t">PostgreSQL</span><span class="tag t">Supabase Auth &amp; Storage</span>
-                </div>
-                <a class="repo" href="https://github.com/barshan94/MountRoyalAcademy-website" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                  github.com/barshan94/MountRoyalAcademy-website
-                </a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 11 · PROJECTS II ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 11: Education analytics, coaching management and public-service projects">
-          <div class="scene-inner">
-            <p class="kicker blue anim" style="--i:0">11 — Selected projects 04–06 · data, operations &amp; public service</p>
-
-            <div class="grid g3" style="margin-top:clamp(10px,1.6vw,16px)">
-              <div class="card accent-amber anim" style="--i:1">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h3">Student Performance Dashboard</h3><span class="badge amber">Education analytics</span></div>
-                <p class="sub" style="margin-top:4px"><b>Need:</b> teachers read results as rows in a spreadsheet, which hides patterns.</p>
-                <ul class="bul">
-                  <li>Brings student assessment data into one dashboard view.</li>
-                  <li>Visualises performance so trends across subjects and learners are readable at a glance.</li>
-                  <li>Built as an applied data-analysis exercise from my portfolio.</li>
-                </ul>
-                <div class="tags"><span class="tag t">Python</span><span class="tag">Data analysis</span><span class="tag">Visualisation</span></div>
-                <p class="note">Described using documented scope only — no dataset claims, model accuracy or measured outcomes.</p>
-              </div>
-
-              <div class="card accent-blue anim" style="--i:2">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h3">Digital Coaching Management System</h3><span class="badge blue">Education operations</span></div>
-                <p class="sub" style="margin-top:4px"><b>Need:</b> coaching centres run on paper registers and scattered messages.</p>
-                <ul class="bul">
-                  <li>Digitises routine coaching-centre administration and record keeping.</li>
-                  <li>Focused on everyday operational workflows rather than paperwork.</li>
-                  <li>Grew directly out of my own tutoring and classroom experience.</li>
-                </ul>
-                <a class="repo" href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                  View repository
-                </a>
-              </div>
-
-              <div class="card accent anim" style="--i:3">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead"><h3 class="h3">999 National Emergency Service</h3><span class="badge">Public-service concept</span></div>
-                <p class="sub" style="margin-top:4px"><b>Need:</b> in an emergency, people need the right contact and the right instruction fast.</p>
-                <ul class="bul">
-                  <li>A public-service software project making emergency service information quick to reach.</li>
-                  <li>Built as an independent academic / personal project.</li>
-                </ul>
-                <p class="note"><b>Not affiliated with</b> and not operated by any government agency — an independent project only.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 12 · RESEARCH + MARKETING PROJECT ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 12: Thesis research and digital growth project">
-          <div class="scene-inner">
-            <p class="kicker amber anim" style="--i:0">12 — Research &amp; applied analytics</p>
-
-            <div class="grid g-hero" style="margin-top:clamp(10px,1.6vw,16px)">
-              <div class="card accent-amber anim" style="--i:1">
-                <span class="bar" aria-hidden="true"></span>
-                <div class="cardhead">
-                  <h3 class="h2" style="font-size:clamp(19px,2.4vw,28px)">Blockchain IoT (bIoT) — Undergraduate Thesis</h3>
-                  <span class="badge amber">Literature review</span>
-                </div>
-                <p class="sub" style="margin-top:4px">“Blockchain Internet of Things (bIoT): a review of blockchain healthcare security technologies, applications and market opportunities.”</p>
-                <div class="grid g2" style="gap:0 14px">
-                  <ul class="bul">
-                    <li>Wearable sensors and remote patient monitoring</li>
-                    <li>IoT healthcare architectures and communication protocols</li>
-                    <li>Authentication, data integrity and access control</li>
-                  </ul>
-                  <ul class="bul">
-                    <li>Medical-data privacy and healthcare compliance considerations</li>
-                    <li>A proposed blockchain-based IoT healthcare architecture</li>
-                    <li>Identified research gaps and market opportunities</li>
-                  </ul>
-                </div>
-                <p class="note">This is a <b>literature review with a proposed architecture</b> — not a clinically deployed healthcare platform.</p>
-                <a class="repo" href="https://github.com/barshan94/Thesis" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                  github.com/barshan94/Thesis
-                </a>
-              </div>
-
-              <div class="card anim" style="--i:2">
-                <div class="cardhead"><h3 class="h3">Keyword Research &amp; Digital Growth</h3><span class="badge">Supporting project</span></div>
-                <p class="sub" style="margin-top:4px">A practical search and analytics study: researching keywords, grouping them by search intent and planning content around what people actually look for.</p>
-                <ul class="bul">
-                  <li>Keyword research and intent grouping</li>
-                  <li>Content planning informed by search demand</li>
-                  <li>Measurement with analytics and tag tooling</li>
-                </ul>
-                <div class="tags"><span class="tag">SEO</span><span class="tag">GA4</span><span class="tag">Google Tag Manager</span><span class="tag">Meta Pixel</span></div>
-                <p class="note">Kept deliberately secondary — my primary direction is software engineering.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 13 · CREDENTIALS ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 13: Certifications and languages">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">13 — Certifications, courses &amp; languages</p>
-            <h2 class="h2 anim" style="--i:1">Continuing study.</h2>
-
-            <div class="grid g-hero" style="margin-top:clamp(12px,1.8vw,20px)">
-              <div class="card accent anim" style="--i:2">
-                <span class="bar" aria-hidden="true"></span>
-                <h3 class="h3">Certifications &amp; courses</h3>
-                <div class="grid g2" style="gap:0 14px">
-                  <ul class="bul">
-                    <li>Operating System</li>
-                    <li>AI For Everyone</li>
-                    <li>Python for Everybody</li>
-                    <li>IT Fundamentals for Cybersecurity</li>
-                  </ul>
-                  <ul class="bul">
-                    <li>MS Excel — Beginner to Advanced</li>
-                    <li>MS PowerPoint Advanced Course</li>
-                    <li>Digital Marketing Business Workshop</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="grid" style="align-content:start">
-                <div class="card accent-blue anim" style="--i:3">
-                  <span class="bar" aria-hidden="true"></span>
-                  <h3 class="h3">Languages</h3>
-                  <div class="tags" style="margin-top:9px">
-                    <span class="tag">Bengali</span><span class="tag">English</span><span class="tag">Hindi</span>
-                  </div>
-                </div>
-                <div class="card accent-amber anim" style="--i:4">
-                  <span class="bar" aria-hidden="true"></span>
-                  <h3 class="h3">Working style</h3>
-                  <ul class="bul">
-                    <li>Comfortable across remote, hybrid and on-site work.</li>
-                    <li>Used to balancing engineering work with teaching commitments.</li>
-                    <li>Documentation-first: if it isn't written down, it isn't finished.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ---------- 14 · CLOSING ---------- -->
-        <article class="scene" aria-hidden="true" aria-label="Scene 14: Closing and contact">
-          <div class="scene-inner">
-            <p class="kicker anim" style="--i:0">14 — Let's build something</p>
-            <h2 class="h1 anim" style="--i:1">Barshan&nbsp;Ghosh</h2>
-            <p class="roleline anim" style="--i:2">Software Engineer <em>·</em> Full-Stack Developer <em>·</em> Applied AI</p>
-            <p class="lead anim" style="--i:3">Building practical software. Exploring intelligent systems.</p>
-            <p class="sub anim" style="--i:4">Next: deeper full-stack product engineering, with applied data and AI work alongside it.</p>
-
-            <div class="contactrow anim" style="--i:5">
-              <a class="cbtn" href="mailto:barshan.ghoshofficial@gmail.com">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-                barshan.ghoshofficial@gmail.com
-              </a>
-              <a class="cbtn" href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0 0 12 .5Z"/></svg>
-                github.com/barshan94
-              </a>
-              <a class="cbtn" href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.3 8.2h4.4V24H.3V8.2Zm7.5 0h4.2v2.15h.06c.59-1.05 2.03-2.16 4.18-2.16 4.47 0 5.3 2.82 5.3 6.5V24h-4.4v-7.4c0-1.77-.03-4.05-2.6-4.05-2.6 0-3 1.93-3 3.92V24H7.8V8.2Z"/></svg>
-                linkedin.com/in/barshan-ghosh
-              </a>
-              <a class="cbtn" href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
-                Portfolio
-              </a>
-            </div>
-            <p class="note anim" style="--i:6">Thank you for watching. The complete written CV is available below this player.</p>
-          </div>
-        </article>
-
-      </div><!-- /scenes -->
-    </div><!-- /stage -->
-
-    <!-- ===================== CONTROLS ===================== -->
-    <div class="controls">
-      <div class="ctop">
-        <button class="btn primary" type="button" id="btnPlay" aria-pressed="false">
-          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-          <span id="playLabel">Pause</span>
-        </button>
-        <button class="btn" type="button" id="btnPrev" title="Previous chapter">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h2v12H6zm12 0-9 6 9 6z"/></svg> Prev
-        </button>
-        <button class="btn" type="button" id="btnNext" title="Next chapter">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 6h2v12h-2zM6 6l9 6-9 6z"/></svg> Next
-        </button>
-        <button class="btn" type="button" id="btnReplay" title="Replay from the beginning">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg> Replay
-        </button>
-        <span class="spacer"></span>
-        <span class="tc" id="timecode">00:00 / 00:00</span>
-      </div>
-
-      <div class="track" id="track" role="progressbar" aria-label="Presentation progress" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100" tabindex="-1">
-        <div class="fill" id="fill"></div>
-        <div class="ticks" id="ticks" aria-hidden="true"></div>
-      </div>
-
-      <div class="chips" id="chips" role="group" aria-label="Chapters"></div>
-
-      <p class="hint"><kbd>Space</kbd> play / pause · <kbd>←</kbd> <kbd>→</kbd> chapters · <kbd>R</kbd> replay · <kbd>Home</kbd> start</p>
-      <p class="sr-only" role="status" aria-live="polite" id="status">Presentation ready.</p>
-    </div>
-  </section>
-
-  <!-- ===================== TEXT CV ===================== -->
-  <section class="doc" id="text-cv" aria-label="Full text version of the CV">
-    <h2 class="sect">Text version of the CV</h2>
-    <p class="intro"><strong>Barshan Ghosh</strong> — Software Engineer · Full-Stack Developer · Applied AI. Building practical software and exploring intelligent systems. I build software that makes complex work simpler.</p>
-    <p>Narayanganj / Dhaka, Bangladesh ·
-      <a href="mailto:barshan.ghoshofficial@gmail.com">barshan.ghoshofficial@gmail.com</a> ·
-      <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener noreferrer">LinkedIn</a> ·
-      <a href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-    </p>
-
-    <h2 class="sect">Education</h2>
-    <div class="grid g3">
-      <div class="entry">
-        <h3>BSc in Computer Science &amp; Engineering</h3>
-        <p class="dmeta">AIUB, Dhaka · 2019–2023 · CGPA 3.83/4.00</p>
-        <p>American International University-Bangladesh. Completed in three years. Undergraduate thesis on Blockchain Internet of Things (bIoT) in healthcare security.</p>
-      </div>
-      <div class="entry">
-        <h3>Higher Secondary Certificate — Science</h3>
-        <p class="dmeta">Government Tolaram College · 2017–2019 · GPA 3.92/5.00</p>
-      </div>
-      <div class="entry">
-        <h3>Secondary School Certificate — Science</h3>
-        <p class="dmeta">Narayanganj High School &amp; College · 2014–2017 · GPA 5.00/5.00</p>
-      </div>
-    </div>
-
-    <h2 class="sect">Professional experience</h2>
-    <p>Note: several roles overlapped. The list below is in reverse-chronological order and distinguishes full-time, temporary, hybrid, remote and internship arrangements.</p>
-    <div class="grid g2">
-      <div class="entry">
-        <h3>Mount Royal Academy — IT Coordinator, Computer Science Teacher &amp; O-Level Physics Guest Lecturer</h3>
-        <p class="dmeta">June 2025 – Present · Narayanganj, Bangladesh · Full-time (current)</p>
-        <ul>
-          <li>Oversee the school's IT infrastructure and day-to-day technology operations.</li>
-          <li>Teach Computer Science to students in Grades 3–7.</li>
-          <li>Deliver guest lectures in O-Level Physics.</li>
-          <li>Support reliable technology operations for staff and students.</li>
-        </ul>
-      </div>
-      <div class="entry">
-        <h3>Heritage School — Proxy ICT Teacher</h3>
-        <p class="dmeta">April 2025 – May 2025 · Narayanganj, Bangladesh · Temporary, short-term</p>
-        <ul>
-          <li>Covered ICT classes during regular teachers' absences.</li>
-          <li>Maintained continuity of classroom learning.</li>
-          <li>Delivered planned lessons and guided students through classroom technology activities.</li>
-        </ul>
-      </div>
-      <div class="entry">
-        <h3>Edupy Academy — Digital Marketer</h3>
-        <p class="dmeta">October 2024 – January 2025 · Dhaka, Bangladesh · Remote</p>
-        <ul>
-          <li>Executed online marketing activities to strengthen brand visibility and reach prospective learners.</li>
-          <li>Supported social media outreach and promotional content distribution across digital channels.</li>
-        </ul>
-      </div>
-      <div class="entry">
-        <h3>CNBDEXIM — IT Associate</h3>
-        <p class="dmeta">January 2023 – September 2024 · Dhaka, Bangladesh · Hybrid</p>
-        <ul>
-          <li>Maintained day-to-day IT systems and provided hardware support.</li>
-          <li>Troubleshot network and user-technology issues.</li>
-          <li>Supported both on-site and remote technical operations.</li>
-        </ul>
-      </div>
-      <div class="entry">
-        <h3>Digital Fire Safety Solution Ltd — IT Consultant</h3>
-        <p class="dmeta">August 2022 – October 2024 · Dhaka, Bangladesh · Remote</p>
-        <ul>
-          <li>Provided remote technical consultation and system troubleshooting.</li>
-          <li>Addressed system and user issues.</li>
-          <li>Reviewed IT infrastructure and recommended practical improvements to operational efficiency.</li>
-        </ul>
-      </div>
-      <div class="entry">
-        <h3>Teachnook — AI Engineer Intern</h3>
-        <p class="dmeta">August 2022 – January 2023 · India · Remote internship</p>
-        <ul>
-          <li>Contributed to building, training and testing machine-learning algorithms and AI models.</li>
-          <li>Collaborated remotely on AI project work and technical tasks.</li>
-        </ul>
-      </div>
-    </div>
-
-    <h2 class="sect">Teaching &amp; mentoring (private tutoring)</h2>
-    <div class="grid g3">
-      <div class="entry">
-        <h4>Private Tutor — HSC Science</h4>
-        <p class="dmeta">October 2024 – Present</p>
-        <p>Structured, student-centred subject support for an HSC Science learner. Subjects: ICT, English, Bengali.</p>
-      </div>
-      <div class="entry">
-        <h4>Private Tutor — SSC Arts</h4>
-        <p class="dmeta">January 2023 – Present</p>
-        <p>Regular lessons, practice and concept clarification. Subjects: ICT, English, General Mathematics, General Science.</p>
-      </div>
-      <div class="entry">
-        <h4>Private Tutor — SSC Science</h4>
-        <p class="dmeta">January 2023 – December 2024</p>
-        <p>Private tuition across core science subjects, adapting explanations and practice to learners' needs. Subjects: Physics, Chemistry, Higher Mathematics, Biology.</p>
-      </div>
-    </div>
-
-    <h2 class="sect">Technical skills</h2>
-    <div class="grid g2">
-      <div class="entry">
-        <h4>Frontend &amp; web development</h4>
-        <p>Astro · React · TypeScript · JavaScript · HTML &amp; CSS · Tailwind CSS · WordPress · Shopify</p>
-      </div>
-      <div class="entry">
-        <h4>Backend &amp; databases</h4>
-        <p>Node.js · Supabase · PostgreSQL · MySQL · Firebase · REST APIs</p>
-      </div>
-      <div class="entry">
-        <h4>AI, machine learning &amp; analytics</h4>
-        <p>Python · TensorFlow and Keras fundamentals · Weka · Kaggle · Power BI · ChatGPT · Gemini · large language model prompting</p>
-      </div>
-      <div class="entry">
-        <h4>DevOps, systems &amp; technical support</h4>
-        <p>Git &amp; GitHub · Vercel · Playwright · Vitest · Docker fundamentals · Linux · Windows · hardware troubleshooting · network troubleshooting</p>
-      </div>
-      <div class="entry">
-        <h4>Teaching &amp; digital learning</h4>
-        <p>Curriculum design · classroom management · student-centred instruction · Google Classroom · Zoom · Microsoft Teams · Kahoot · Quizizz · Padlet</p>
-      </div>
-      <div class="entry">
-        <h4>Digital marketing &amp; productivity</h4>
-        <p>SEO · Google Analytics 4 (GA4) · Google Tag Manager (GTM) · Meta Pixel · Canva · Microsoft Office · Google Workspace</p>
-      </div>
-      <div class="entry">
-        <h4>Programming languages</h4>
-        <p>C · C++ · Python · Java · JavaScript · PHP (reading, writing and understanding existing code)</p>
-      </div>
-      <div class="entry">
-        <h4>How to read this list</h4>
-        <p>These are capability groups rather than proficiency scores. Items marked “fundamentals” reflect foundational working knowledge rather than deep production experience.</p>
-      </div>
-    </div>
-
-    <h2 class="sect">Selected projects</h2>
-    <div class="grid g2">
-      <div class="entry">
-        <h3>Money Calculator</h3>
-        <p class="dmeta">Personal-finance platform · evolving personal project</p>
-        <p><strong>Problem:</strong> financial applications become unreliable when corrected transactions leave old balance effects behind, or when repayments become disconnected from their original loans.</p>
-        <p><strong>Approach:</strong> a ledger-first design in which balances follow the underlying records, and corrections remain traceable.</p>
-        <ul>
-          <li>Multi-account financial tracking.</li>
-          <li>Income, expenses, transfers, donations and opening balances.</li>
-          <li>Transaction ledger with balanced debit and credit entries.</li>
-          <li>Auditable edits, voids and reversals.</li>
-          <li>Lending, borrowing, loan repayments, partial settlements and repayment cancellation.</li>
-          <li>Loan grouping while preserving individual loans and repayment relationships.</li>
-          <li>Tuition students, fees, partial payments, outstanding dues and payment history.</li>
-          <li>Deposits, investments and long-term asset tracking.</li>
-          <li>Budgets, savings goals, recurring financial activity and donation targets.</li>
-          <li>Reports, cash-flow analysis, net-worth tracking and financial forecasting.</li>
-          <li>Authentication, PostgreSQL Row Level Security and ownership-aware database operations.</li>
-        </ul>
-        <p class="dmeta" style="margin-top:10px">Next.js 16 · React 19 · TypeScript · Supabase · PostgreSQL · Tailwind CSS · Recharts · Vitest · Playwright</p>
-        <p><a href="https://github.com/barshan94/money-calculator" target="_blank" rel="noopener noreferrer">github.com/barshan94/money-calculator</a> — an evolving project; the capability list reflects documented scope, not a claim that every feature is complete or production-ready.</p>
-      </div>
-
-      <div class="entry">
-        <h3>ASTA Store</h3>
-        <p class="dmeta">Astro-powered e-commerce storefront for handmade leather bags</p>
-        <ul>
-          <li>Product browsing and product detail pages.</li>
-          <li>Cart management and checkout flow.</li>
-          <li>Admin dashboard and product management.</li>
-          <li>Supabase authentication, including login, registration and password recovery.</li>
-        </ul>
-        <p class="dmeta" style="margin-top:10px">Astro · TypeScript · Supabase · Tailwind CSS</p>
-        <p><a href="https://github.com/barshan94/asta-store" target="_blank" rel="noopener noreferrer">github.com/barshan94/asta-store</a></p>
-      </div>
-
-      <div class="entry">
-        <h3>Mount Royal Academy Website</h3>
-        <p class="dmeta">School website with public academic information and a content-management dashboard</p>
-        <ul>
-          <li>School overview and announcements.</li>
-          <li>Admission page and application flow.</li>
-          <li>Academic calendar and notice board.</li>
-          <li>Admission and application management.</li>
-          <li>Gallery management and site settings.</li>
-        </ul>
-        <p class="dmeta" style="margin-top:10px">Astro · Supabase · PostgreSQL · Supabase authentication and storage · TypeScript</p>
-        <p><a href="https://github.com/barshan94/MountRoyalAcademy-website" target="_blank" rel="noopener noreferrer">github.com/barshan94/MountRoyalAcademy-website</a></p>
-      </div>
-
-      <div class="entry">
-        <h3>Student Performance Dashboard</h3>
-        <p class="dmeta">Education analytics project</p>
-        <p>An education-analytics project that brings student assessment data into a single dashboard view so performance patterns are readable instead of buried in spreadsheet rows. Described using documented functionality and tooling only — no dataset, model-accuracy or improvement claims are made.</p>
-      </div>
-
-      <div class="entry">
-        <h3>Digital Coaching Management System</h3>
-        <p class="dmeta">Education operations &amp; digital workflow management</p>
-        <p>A system for digitising routine coaching-centre administration and record keeping, focused on everyday operational workflows rather than paper registers. Described using documented repository and portfolio information only.</p>
-        <p><a href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener noreferrer">github.com/barshan94/digital-coaching-management-system</a></p>
-      </div>
-
-      <div class="entry">
-        <h3>999 National Emergency Service</h3>
-        <p class="dmeta">Public-service software project</p>
-        <p>A public-service software project making emergency service information quick to reach. This is an independent academic / personal project and is not affiliated with, endorsed by or operated by any government agency.</p>
-      </div>
-
-      <div class="entry">
-        <h3>Blockchain Internet of Things (bIoT) — Undergraduate Thesis</h3>
-        <p class="dmeta">“Blockchain Internet of Things (bIoT): A review of blockchain healthcare security technologies and its applications and market opportunities.”</p>
-        <ul>
-          <li>Wearable sensors and remote patient monitoring.</li>
-          <li>IoT healthcare architectures and communication protocols.</li>
-          <li>Authentication, data integrity, access control and medical-data privacy.</li>
-          <li>Healthcare compliance considerations.</li>
-          <li>A proposed blockchain-based IoT healthcare architecture and identified research gaps.</li>
-        </ul>
-        <p>This work is a literature review with a proposed architecture — not a clinically deployed healthcare platform.</p>
-        <p><a href="https://github.com/barshan94/Thesis" target="_blank" rel="noopener noreferrer">github.com/barshan94/Thesis</a></p>
-      </div>
-
-      <div class="entry">
-        <h3>Keyword Research &amp; Digital Growth</h3>
-        <p class="dmeta">Applied search and analytics project</p>
-        <p>Keyword research, grouping terms by search intent and planning content around real search demand, with measurement through analytics and tag-management tooling. Presented as supporting work alongside my software engineering focus.</p>
-      </div>
-    </div>
-
-    <h2 class="sect">Certifications &amp; courses</h2>
-    <ul>
-      <li>Operating System</li>
-      <li>AI For Everyone</li>
-      <li>Python for Everybody</li>
-      <li>IT Fundamentals for Cybersecurity</li>
-      <li>MS Excel — Beginner to Advanced</li>
-      <li>MS PowerPoint Advanced Course</li>
-      <li>Digital Marketing Business Workshop</li>
-    </ul>
-
-    <h2 class="sect">Languages</h2>
-    <p>Bengali · English · Hindi</p>
-
-    <h2 class="sect">Contact</h2>
-    <p>
-      Email: <a href="mailto:barshan.ghoshofficial@gmail.com">barshan.ghoshofficial@gmail.com</a><br />
-      GitHub: <a href="https://github.com/barshan94" target="_blank" rel="noopener noreferrer">https://github.com/barshan94</a><br />
-      LinkedIn: <a href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/barshan-ghosh/</a><br />
-      Portfolio: <a href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener noreferrer">https://portfolio-beta-eight-b4vx6dfs83.vercel.app/</a>
-    </p>
-  </section>
-
-  <footer class="pagefoot">
-    <span>Barshan Ghosh — Animated Video CV</span>
-    <span>Single-file HTML · CSS · Canvas · Vanilla JavaScript</span>
-  </footer>
+  <nav aria-label="Contact">
+    <a class="contact-chip" href="mailto:barshan.ghoshofficial@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>barshan.ghoshofficial@gmail.com</a>
+    <a class="contact-chip" href="https://github.com/barshan94" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>GitHub</a>
+    <a class="contact-chip" href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.49 2.49 0 010 3.5a2.49 2.49 0 014.98 0zM.3 8.2h4.4V24H.3V8.2zm7.5 0h4.2v2.15h.06c.59-1.05 2.03-2.16 4.18-2.16 4.47 0 5.3 2.82 5.3 6.5V24h-4.4v-7.4c0-1.77-.03-4.05-2.6-4.05-2.6 0-3 1.93-3 3.92V24H7.8V8.2z"/></svg>LinkedIn</a>
+    <a class="contact-chip" href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg>Portfolio</a>
+  </nav>
+</header>
+
+<!-- ======== REDUCED-MOTION BANNER ======== -->
+<div class="rm-banner" role="status">
+  <p><strong>Reduced motion is enabled.</strong> The animated presentation is hidden. The complete text CV is available below.</p>
+  <button class="btn primary" type="button" id="forcePlay">Play animated CV anyway</button>
 </div>
 
+<div class="noscript-msg" style="display:none;border:1px solid var(--border);border-radius:var(--r);padding:18px;margin:20px 0;color:#B4C4D4">
+  <strong>JavaScript is disabled.</strong> The animated experience requires JavaScript. The complete CV text is available below.
+</div>
+
+<!-- ================================================================
+     CINEMA
+     ================================================================ -->
+<section class="cinema" aria-label="Cinematic animated CV">
+
+<div class="cinema-viewport" id="viewport">
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <div class="cinema-vignette" aria-hidden="true"></div>
+
+  <div class="hud" aria-hidden="true">
+    <span class="hud-left"><span class="hud-dot"></span><span id="hudLabel">Identity</span></span>
+    <span id="hudCount">01 / 16</span>
+  </div>
+
+  <!-- Morph transition overlay -->
+  <div class="morph-overlay" id="morphOverlay" aria-hidden="true"><div class="morph-wipe"></div></div>
+
+  <div class="scenes-container" id="scenesWrap">
+
+<!-- === SCENE 1 — OPENING IDENTITY === -->
+<article class="scene" data-chapter="Identity" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="glow-line teal" style="top:38%;left:5%;right:5%" aria-hidden="true"></div>
+  <div class="scene-inner" style="text-align:center">
+    <p class="kicker a stagger-1" style="justify-content:center;--d:1">Software Engineer · Video CV</p>
+    <h2 class="h1 a stagger-2" style="--d:2">Barshan Ghosh</h2>
+    <p class="roleline a stagger-3" style="--d:3;text-align:center">Software Engineer <em>·</em> Full-Stack Developer <em>·</em> Data&nbsp;Analyst <em>·</em> AI&nbsp;Engineer <em>·</em> ML&nbsp;Engineer</p>
+    <p class="lead a stagger-4" style="--d:4;margin:16px auto 0;text-align:center;max-width:56ch"><strong>"I build useful systems that make complex work simpler."</strong></p>
+    <p class="sub a stagger-5" style="--d:5;margin:10px auto 0;text-align:center;max-width:64ch">Financial systems, school platforms, storefronts, data tools — backed by hands-on IT operations and classroom teaching.</p>
+    <div class="contact-row a stagger-6" style="--d:6;justify-content:center">
+      <a class="cbtn" href="mailto:barshan.ghoshofficial@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>Email</a>
+      <a class="cbtn" href="https://github.com/barshan94" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>GitHub</a>
+      <a class="cbtn" href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.49 2.49 0 010 3.5a2.49 2.49 0 014.98 0zM.3 8.2h4.4V24H.3V8.2zm7.5 0h4.2v2.15h.06c.59-1.05 2.03-2.16 4.18-2.16 4.47 0 5.3 2.82 5.3 6.5V24h-4.4v-7.4c0-1.77-.03-4.05-2.6-4.05-2.6 0-3 1.93-3 3.92V24H7.8V8.2z"/></svg>LinkedIn</a>
+      <a class="cbtn" href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg>Portfolio</a>
+    </div>
+    <p class="note a stagger-7" style="--d:7;text-align:center"><b>Based in Narayanganj / Dhaka, Bangladesh</b></p>
+  </div>
+</article>
+
+<!-- === SCENE 2 — EDUCATION === -->
+<article class="scene" data-chapter="Education" data-accent="blue">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="glow-line blue" style="top:32%;left:5%;right:5%" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker blue a" style="--d:0">02 — Academic foundation</p>
+    <h2 class="h2 a" style="--d:1">Computer Science, finished a year early.</h2>
+    <p class="sub a" style="--d:2">Three qualifications, all in the science stream.</p>
+    <div class="grid g-wide" style="margin-top:18px">
+      <div class="card accent a" style="--d:3">
+        <span class="bar"></span>
+        <div class="cardhead"><h3 class="h3">BSc in Computer Science &amp; Engineering</h3><span class="badge live"><span class="pulse"></span>Highest</span></div>
+        <p class="meta" style="margin-top:7px">American International University-Bangladesh (AIUB) · Dhaka</p>
+        <div class="statrow">
+          <div class="stat"><div class="n c-teal">3.83<span style="font-size:.48em;color:var(--muted)">/4.00</span></div><div class="l">CGPA</div></div>
+          <div class="stat"><div class="n">2019–23</div><div class="l">Period</div></div>
+          <div class="stat"><div class="n c-blue">3 yrs</div><div class="l">Completed in</div></div>
+        </div>
+        <p class="note">Thesis: <b>Blockchain IoT (bIoT)</b> — a literature review and proposed architecture for blockchain-secured healthcare IoT systems.</p>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="card accent-blue a" style="--d:4"><span class="bar"></span><div class="cardhead"><h3 class="h3">HSC — Science</h3><span class="badge blue">GPA 3.92/5.00</span></div><p class="meta" style="margin-top:6px">Government Tolaram College · 2017–2019</p></div>
+        <div class="card accent-blue a" style="--d:5"><span class="bar"></span><div class="cardhead"><h3 class="h3">SSC — Science</h3><span class="badge blue">GPA 5.00/5.00</span></div><p class="meta" style="margin-top:6px">Narayanganj High School &amp; College · 2014–2017</p></div>
+        <p class="note a" style="--d:6">Languages: <b>Bengali · English · Hindi</b></p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 3 — CURRENT ROLE === -->
+<article class="scene" data-chapter="Current role" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker a" style="--d:0">03 — Professional journey · now</p>
+    <div class="cardhead a" style="--d:1"><h2 class="h2">Mount Royal Academy</h2><span class="badge live"><span class="pulse"></span>Current · Full-time</span></div>
+    <p class="meta a" style="--d:2">June 2025 – Present · Narayanganj, Bangladesh</p>
+    <p class="roleline a" style="--d:3">IT Coordinator <em>·</em> Computer Science Teacher <em>·</em> O-Level Physics Guest Lecturer</p>
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card accent a" style="--d:4"><span class="bar"></span><h3 class="h4">IT operations</h3><ul class="bul"><li>School IT infrastructure and day-to-day technology operations</li><li>Reliable systems for staff and students</li></ul></div>
+      <div class="card accent-blue a" style="--d:5"><span class="bar"></span><h3 class="h4">Computer Science</h3><ul class="bul"><li>Teach CS to Grades 3–7</li><li>Lesson planning and classroom technology activities</li></ul></div>
+      <div class="card accent-amber a" style="--d:6"><span class="bar"></span><h3 class="h4">O-Level Physics</h3><ul class="bul"><li>Guest lectures in O-Level Physics</li><li>Translating abstract concepts into worked examples</li></ul></div>
+    </div>
+    <p class="note a" style="--d:7">I also build the school's website — see <b>Mount Royal Academy Website</b> in projects.</p>
+  </div>
+</article>
+
+<!-- === SCENE 4 — EXPERIENCE I (2024-2025) === -->
+<article class="scene" data-chapter="Experience I" data-accent="blue">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker blue a" style="--d:0">04 — Professional journey · 2024–2025</p>
+    <h2 class="h2 a" style="--d:1">Teaching, marketing, IT operations.</h2>
+    <div class="tl" style="margin-top:18px">
+      <div class="tlrow a fromX card accent-blue" style="--d:2">
+        <div class="cardhead"><h3 class="h3">Heritage School — Proxy ICT Teacher</h3><span class="badge">Temporary</span></div>
+        <p class="meta" style="margin-top:6px">Apr 2025 – May 2025 · Narayanganj</p>
+        <ul class="bul"><li>Covered ICT classes during teacher absences; maintained learning continuity</li><li>Delivered planned lessons and guided students through technology activities</li></ul>
+      </div>
+      <div class="tlrow a fromX card accent-blue" style="--d:3">
+        <div class="cardhead"><h3 class="h3">Edupy Academy — Digital Marketer</h3><span class="badge">Remote</span></div>
+        <p class="meta" style="margin-top:6px">Oct 2024 – Jan 2025 · Dhaka</p>
+        <ul class="bul"><li>Online marketing to strengthen brand visibility and reach prospective learners</li><li>Social media outreach and content distribution across channels</li></ul>
+      </div>
+      <div class="tlrow a fromX card accent-blue" style="--d:4">
+        <div class="cardhead"><h3 class="h3">CNBDEXIM — IT Associate</h3><span class="badge">Hybrid</span></div>
+        <p class="meta" style="margin-top:6px">Jan 2023 – Sep 2024 · Dhaka</p>
+        <ul class="bul"><li>Day-to-day IT systems maintenance and hardware support</li><li>Network and user-technology troubleshooting, on-site and remote</li></ul>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 5 — EXPERIENCE II (2022-2024) === -->
+<article class="scene" data-chapter="Experience II" data-accent="blue">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker blue a" style="--d:0">05 — Professional journey · 2022–2024</p>
+    <h2 class="h2 a" style="--d:1">Where the AI and systems work began.</h2>
+    <div class="tl" style="margin-top:18px">
+      <div class="tlrow a fromX card accent-blue" style="--d:2">
+        <div class="cardhead"><h3 class="h3">Digital Fire Safety Solution Ltd — IT Consultant</h3><span class="badge">Remote</span></div>
+        <p class="meta" style="margin-top:6px">Aug 2022 – Oct 2024 · Dhaka</p>
+        <ul class="bul"><li>Remote technical consultation and system troubleshooting</li><li>IT infrastructure review and practical improvement recommendations</li></ul>
+      </div>
+      <div class="tlrow a fromX card accent" style="--d:3">
+        <div class="cardhead"><h3 class="h3">Teachnook — AI Engineer Intern</h3><span class="badge amber">Remote internship · India</span></div>
+        <p class="meta" style="margin-top:6px">Aug 2022 – Jan 2023</p>
+        <ul class="bul"><li>Building, training and testing ML algorithms and AI models</li><li>Remote collaboration on AI project work</li></ul>
+        <div class="tags"><span class="tag t">Python</span><span class="tag t">ML</span><span class="tag t">Model training</span></div>
+      </div>
+    </div>
+    <p class="note a" style="--d:4"><b>Overlap note:</b> several roles ran in parallel — Teachnook and Digital Fire Safety overlapped with my final year of study; CNBDEXIM overlapped with both consultancy and tutoring.</p>
+  </div>
+</article>
+
+<!-- === SCENE 6 — TEACHING & TUTORING === -->
+<article class="scene" data-chapter="Teaching" data-accent="amber">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker amber a" style="--d:0">06 — Teaching &amp; mentoring</p>
+    <h2 class="h2 a" style="--d:1">Private tutoring, alongside everything else.</h2>
+    <p class="sub a" style="--d:2">Student-centred instruction — a steady part of my week.</p>
+    <div class="grid g4" style="margin-top:16px">
+      <div class="card accent-amber a" style="--d:3"><span class="bar"></span><div class="cardhead"><h3 class="h4">O-Level / Edexcel</h3><span class="badge amber">Private Tutor</span></div><div class="tags"><span class="tag">Physics</span><span class="tag">ICT</span><span class="tag">Computer Science</span><span class="tag">Mathematics B</span><span class="tag">Further Pure Mathematics</span></div></div>
+      <div class="card accent-amber a" style="--d:4"><span class="bar"></span><div class="cardhead"><h3 class="h4">HSC Science</h3><span class="badge amber">Oct 2024 – Present</span></div><div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Bengali</span></div></div>
+      <div class="card accent-amber a" style="--d:5"><span class="bar"></span><div class="cardhead"><h3 class="h4">SSC Arts</h3><span class="badge amber">Jan 2023 – Present</span></div><div class="tags"><span class="tag">ICT</span><span class="tag">English</span><span class="tag">Gen Mathematics</span><span class="tag">Gen Science</span></div></div>
+      <div class="card accent-amber a" style="--d:6"><span class="bar"></span><div class="cardhead"><h3 class="h4">SSC Science</h3><span class="badge amber">Jan 2023 – Dec 2024</span></div><div class="tags"><span class="tag">Physics</span><span class="tag">Chemistry</span><span class="tag">Higher Maths</span><span class="tag">Biology</span></div></div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 7 — SKILLS · BUILD === -->
+<article class="scene" data-chapter="Skills · Build" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker a" style="--d:0">07 — Technical capabilities · what I build with</p>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card accent a" style="--d:1"><span class="bar"></span><h3 class="h4">Frontend &amp; web</h3><div class="tags"><span class="tag t">Astro</span><span class="tag t">React</span><span class="tag t">TypeScript</span><span class="tag t">JavaScript</span><span class="tag t">HTML</span><span class="tag t">CSS</span><span class="tag t">Tailwind CSS</span><span class="tag">WordPress</span><span class="tag">Shopify</span></div></div>
+      <div class="card accent-blue a" style="--d:2"><span class="bar"></span><h3 class="h4">Backend &amp; databases</h3><div class="tags"><span class="tag t">Node.js</span><span class="tag t">Supabase</span><span class="tag t">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">Firebase</span><span class="tag t">REST APIs</span></div></div>
+      <div class="card accent-amber a" style="--d:3"><span class="bar"></span><h3 class="h4">AI, ML &amp; analytics</h3><div class="tags"><span class="tag t">Python</span><span class="tag f">TensorFlow (fundamentals)</span><span class="tag f">Keras (fundamentals)</span><span class="tag">Weka</span><span class="tag">Kaggle</span><span class="tag">Power BI</span><span class="tag">ChatGPT</span><span class="tag">Gemini</span><span class="tag t">LLM prompting</span></div></div>
+    </div>
+    <div class="card a" style="--d:4;margin-top:12px"><h3 class="h4">Programming languages</h3><div class="tags"><span class="tag t">Python</span><span class="tag t">JavaScript</span><span class="tag">C</span><span class="tag">C++</span><span class="tag">Java</span><span class="tag f">PHP — read, write &amp; maintain</span></div></div>
+    <p class="note a" style="--d:5"><b>■ solid</b> — hands-on build experience · <b>▢ dashed</b> — foundational knowledge</p>
+  </div>
+</article>
+
+<!-- === SCENE 8 — SKILLS · OPERATE === -->
+<article class="scene" data-chapter="Skills · Operate" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker a" style="--d:0">08 — How I ship, support &amp; explain it</p>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card accent a" style="--d:1"><span class="bar"></span><h3 class="h4">DevOps, systems &amp; support</h3><div class="tags"><span class="tag t">Git</span><span class="tag t">GitHub</span><span class="tag t">Vercel</span><span class="tag t">Playwright</span><span class="tag t">Vitest</span><span class="tag f">Docker (fundamentals)</span><span class="tag">Linux</span><span class="tag">Windows</span><span class="tag">HW troubleshooting</span><span class="tag">Network troubleshooting</span></div></div>
+      <div class="card accent-blue a" style="--d:2"><span class="bar"></span><h3 class="h4">Teaching &amp; digital learning</h3><div class="tags"><span class="tag">Curriculum design</span><span class="tag">Classroom management</span><span class="tag">Student-centred instruction</span><span class="tag">Google Classroom</span><span class="tag">Zoom</span><span class="tag">MS Teams</span><span class="tag">Kahoot</span><span class="tag">Quizizz</span><span class="tag">Padlet</span></div></div>
+      <div class="card accent-amber a" style="--d:3"><span class="bar"></span><h3 class="h4">Digital marketing &amp; productivity</h3><div class="tags"><span class="tag">SEO</span><span class="tag">GA4</span><span class="tag">GTM</span><span class="tag">Google Search Console</span><span class="tag">Meta Pixel</span><span class="tag">Canva</span><span class="tag">MS Office</span><span class="tag">Google Workspace</span></div></div>
+    </div>
+    <p class="note a" style="--d:4">Core direction: <b>software engineering + applied AI</b>. IT operations, teaching and marketing are supporting strengths used in real jobs.</p>
+  </div>
+</article>
+
+<!-- === SCENE 9 — MONEY CALCULATOR === -->
+<article class="scene" data-chapter="Money Calculator" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="glow-line teal" style="top:28%;left:5%;right:5%" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker a" style="--d:0">09 — Flagship project</p>
+    <div class="cardhead a" style="--d:1"><h2 class="h2">Money Calculator</h2><span class="badge amber">Evolving personal project</span></div>
+    <p class="sub a" style="--d:2">A personal-finance platform built around a ledger-first approach, traceable financial changes and reliable balance calculations.</p>
+    <div class="data-flow a" style="--d:3"><span class="node highlight">Transaction</span><span class="arrow">→</span><span class="node">Ledger</span><span class="arrow">→</span><span class="node highlight">Balance</span><span class="arrow">→</span><span class="node">Audit Trail</span></div>
+    <div class="grid g-wide" style="margin-top:12px">
+      <div class="grid" style="align-content:start">
+        <div class="card accent a" style="--d:4"><span class="bar"></span><h3 class="h4">The engineering problem</h3><ul class="bul"><li>Corrected transactions leave old balance effects behind</li><li>Repayments become disconnected from their original loans</li></ul></div>
+        <div class="card accent-blue a" style="--d:5"><span class="bar"></span><h3 class="h4">Design principle</h3><ul class="bul"><li>Balances follow underlying records, never the reverse</li><li>Edits, voids and reversals stay <b>auditable</b></li><li>Every row is ownership-aware via PostgreSQL RLS</li></ul></div>
+      </div>
+      <div class="card a" style="--d:6"><h3 class="h4">Documented capabilities</h3><div class="grid g2" style="gap:0 14px;margin-top:4px"><ul class="bul"><li>Multi-account tracking</li><li>Income, expenses, transfers, donations</li><li>Transaction ledger (debit/credit)</li><li>Auditable edits, voids, reversals</li><li>Lending, borrowing, repayments</li><li>Loan grouping</li></ul><ul class="bul"><li>Tuition students, fees, partial payments</li><li>Deposits, investments, long-term assets</li><li>Budgets, savings goals, recurring activity</li><li>Reports, cash-flow, net-worth, forecasting</li><li>Auth + ownership-aware DB operations</li></ul></div></div>
+    </div>
+    <div class="tags a" style="--d:7;margin-top:12px"><span class="tag t">Next.js 16</span><span class="tag t">React 19</span><span class="tag t">TypeScript</span><span class="tag t">Supabase</span><span class="tag t">PostgreSQL</span><span class="tag t">Tailwind CSS</span><span class="tag t">Recharts</span><span class="tag t">Vitest</span><span class="tag t">Playwright</span></div>
+    <div class="a" style="--d:8"><a class="repo-link" href="https://github.com/barshan94/money-calculator" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>github.com/barshan94/money-calculator</a><p class="note">Actively evolving — the scope above reflects documented project design, not a claim that every feature is complete or production-ready.</p></div>
+  </div>
+</article>
+
+<!-- === SCENE 10 — ASTA STORE + MRA WEBSITE === -->
+<article class="scene" data-chapter="Web platforms" data-accent="blue">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker blue a" style="--d:0">10 — Shipped web platforms</p>
+    <div class="grid g2" style="margin-top:12px">
+      <div class="card accent a" style="--d:1"><span class="bar"></span><div class="cardhead"><h3 class="h3">ASTA Store</h3><span class="badge">E-commerce</span></div><p class="sub" style="margin-top:4px">Astro-powered storefront for handmade leather bags.</p><ul class="bul"><li>Product browsing and detail pages</li><li>Cart management and checkout flow</li><li>Admin dashboard, product management</li><li>Supabase auth — login, register, recovery</li></ul><div class="tags"><span class="tag t">Astro</span><span class="tag t">TypeScript</span><span class="tag t">Supabase</span><span class="tag t">Tailwind CSS</span></div><a class="repo-link" href="https://github.com/barshan94/asta-store" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>asta-store</a></div>
+      <div class="card accent-blue a" style="--d:2"><span class="bar"></span><div class="cardhead"><h3 class="h3">Mount Royal Academy Website</h3><span class="badge blue">EdTech</span></div><p class="sub" style="margin-top:4px">School website with a content-management dashboard — staff publish without touching code.</p><ul class="bul"><li>Overview, announcements, notice board</li><li>Admission page and application flow</li><li>Academic calendar</li><li>Gallery, settings, application management</li></ul><div class="tags"><span class="tag t">Astro</span><span class="tag t">TypeScript</span><span class="tag t">Supabase</span><span class="tag t">PostgreSQL</span></div><a class="repo-link" href="https://github.com/barshan94/MountRoyalAcademy-website" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>MountRoyalAcademy-website</a></div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 11 — MORE PROJECTS === -->
+<article class="scene" data-chapter="More projects" data-accent="blue">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker blue a" style="--d:0">11 — Data, operations &amp; public service</p>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="card accent-amber a" style="--d:1"><span class="bar"></span><div class="cardhead"><h3 class="h4">Student Performance Dashboard</h3><span class="badge amber">Analytics</span></div><ul class="bul"><li>Student assessment data in one dashboard view</li><li>Visualises performance patterns across subjects</li></ul><div class="tags"><span class="tag t">Python</span><span class="tag">Data analysis</span></div></div>
+      <div class="card accent-blue a" style="--d:2"><span class="bar"></span><div class="cardhead"><h3 class="h4">Digital Coaching Management</h3><span class="badge blue">EdOps</span></div><ul class="bul"><li>Digitises coaching-centre administration</li><li>Replaces paper registers with workflow tools</li></ul><a class="repo-link" href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>Repository</a></div>
+      <div class="card accent a" style="--d:3"><span class="bar"></span><div class="cardhead"><h3 class="h4">999 Emergency Service</h3><span class="badge">Concept</span></div><ul class="bul"><li>Emergency-service info, quick to reach</li><li>Independent project — not government-affiliated</li></ul></div>
+    </div>
+    <div class="grid g3" style="margin-top:12px">
+      <div class="card a" style="--d:4"><h3 class="h4">Cancer Prediction</h3><ul class="bul"><li>ML classification on a Kaggle dataset</li></ul><div class="tags"><span class="tag t">Python</span><span class="tag">ML</span></div></div>
+      <div class="card a" style="--d:5"><h3 class="h4">Automated Testing</h3><ul class="bul"><li>Software quality / testing project</li></ul><div class="tags"><span class="tag t">Playwright</span><span class="tag t">Vitest</span></div></div>
+      <div class="card a" style="--d:6"><h3 class="h4">WordPress E-commerce</h3><ul class="bul"><li>Functional store with tracking/analytics tools</li><li>Separate from ASTA Store (Astro)</li></ul><div class="tags"><span class="tag">WordPress</span><span class="tag">GA4</span><span class="tag">GTM</span></div></div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 12 — RESEARCH + THESIS === -->
+<article class="scene" data-chapter="Research" data-accent="amber">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker amber a" style="--d:0">12 — Research &amp; applied analytics</p>
+    <div class="grid g-wide" style="margin-top:12px">
+      <div class="card accent-amber a" style="--d:1"><span class="bar"></span><div class="cardhead"><h3 class="h3">Blockchain IoT (bIoT) — Thesis</h3><span class="badge amber">Literature review</span></div><p class="sub" style="margin-top:4px">"Blockchain Internet of Things (bIoT): a review of blockchain healthcare security technologies, applications and market opportunities."</p><div class="grid g2" style="gap:0 14px"><ul class="bul"><li>Wearable sensors &amp; remote patient monitoring</li><li>IoT healthcare architectures &amp; protocols</li><li>Authentication, data integrity, access control</li></ul><ul class="bul"><li>Medical-data privacy &amp; compliance</li><li>Proposed blockchain-based IoT healthcare architecture</li><li>Identified research gaps &amp; market opportunities</li></ul></div><p class="note"><b>Literature review + proposed architecture</b> — not a clinically deployed system.</p><a class="repo-link" href="https://github.com/barshan94/Thesis" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>Thesis</a></div>
+      <div class="grid" style="align-content:start">
+        <div class="card a" style="--d:2"><h3 class="h4">Keyword Research &amp; Digital Growth</h3><ul class="bul"><li>Keyword research and intent grouping</li><li>Content planning from search demand</li><li>Measurement via analytics &amp; tag tooling</li></ul><div class="tags"><span class="tag">SEO</span><span class="tag">GA4</span><span class="tag">GTM</span><span class="tag">Meta Pixel</span></div></div>
+        <div class="card a" style="--d:3"><h3 class="h4">Digital marketing work samples</h3><ul class="bul"><li>ManyChat automations</li><li>Facebook Live Ad Campaign</li><li>Comprehensive SEO Audit</li><li>On-Page Optimization</li><li>Affiliate content writing</li><li>Amazon affiliate keyword research</li></ul><p class="note">Supporting work — not the main engineering focus.</p></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 13 — CERTIFICATIONS === -->
+<article class="scene" data-chapter="Credentials" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="scene-inner">
+    <p class="kicker a" style="--d:0">13 — Certifications, courses &amp; languages</p>
+    <h2 class="h2 a" style="--d:1">Continuing study.</h2>
+    <div class="grid g-wide" style="margin-top:16px">
+      <div class="card accent a" style="--d:2"><span class="bar"></span><h3 class="h4">Certifications &amp; courses</h3><div class="grid g2" style="gap:0 14px"><ul class="bul"><li>Operating System</li><li>AI For Everyone</li><li>Python for Everybody</li><li>IT Fundamentals for Cybersecurity</li></ul><ul class="bul"><li>MS Excel — Beginner to Advanced</li><li>MS PowerPoint Advanced Course</li><li>Digital Marketing Business Workshop</li><li>Professional Digital Marketing A+</li></ul></div></div>
+      <div class="grid" style="align-content:start">
+        <div class="card accent-blue a" style="--d:3"><span class="bar"></span><h3 class="h4">Languages</h3><div class="tags" style="margin-top:8px"><span class="tag">Bengali</span><span class="tag">English</span><span class="tag">Hindi</span></div></div>
+        <div class="card accent-amber a" style="--d:4"><span class="bar"></span><h3 class="h4">Working style</h3><ul class="bul"><li>Remote, hybrid and on-site experience</li><li>Balancing engineering with teaching</li><li>Documentation-first approach</li></ul></div>
+        <div class="card a" style="--d:5"><h3 class="h4">Interests</h3><ul class="bul"><li>Reading (leadership, science, education)</li><li>Social-welfare volunteering (Leo Club of Narayanganj Central)</li><li>Cricket · Photography · Solo walking</li></ul></div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- === SCENE 14 — CLOSING === -->
+<article class="scene" data-chapter="Contact" data-accent="teal">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="glow-line teal" style="top:42%;left:5%;right:5%" aria-hidden="true"></div>
+  <div class="scene-inner" style="text-align:center">
+    <p class="kicker a stagger-1" style="--d:1;justify-content:center">Let's build something</p>
+    <h2 class="h1 a stagger-2" style="--d:2">Barshan Ghosh</h2>
+    <p class="roleline a stagger-3" style="--d:3;text-align:center">Software Engineer <em>·</em> Full-Stack Developer <em>·</em> Data&nbsp;Analyst <em>·</em> AI / ML&nbsp;Engineer</p>
+    <p class="lead a stagger-4" style="--d:4;text-align:center;margin:16px auto 0">Building practical software. Exploring intelligent systems.</p>
+    <p class="sub a stagger-5" style="--d:5;text-align:center;margin:10px auto 0">Next: deeper full-stack product engineering, with applied data and AI work alongside it.</p>
+    <div class="contact-row a stagger-6" style="--d:6;justify-content:center">
+      <a class="cbtn" href="mailto:barshan.ghoshofficial@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>barshan.ghoshofficial@gmail.com</a>
+      <a class="cbtn" href="https://github.com/barshan94" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.1.82-.26.82-.58v-2.2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.24-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.24a11.4 11.4 0 016 0c2.3-1.56 3.3-1.24 3.3-1.24.66 1.66.24 2.88.12 3.18.77.84 1.24 1.92 1.24 3.24 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57A12 12 0 0012 .5z"/></svg>GitHub</a>
+      <a class="cbtn" href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.49 2.49 0 010 3.5a2.49 2.49 0 014.98 0zM.3 8.2h4.4V24H.3V8.2zm7.5 0h4.2v2.15h.06c.59-1.05 2.03-2.16 4.18-2.16 4.47 0 5.3 2.82 5.3 6.5V24h-4.4v-7.4c0-1.77-.03-4.05-2.6-4.05-2.6 0-3 1.93-3 3.92V24H7.8V8.2z"/></svg>LinkedIn</a>
+      <a class="cbtn" href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg>Portfolio</a>
+    </div>
+    <p class="note a stagger-7" style="--d:7;text-align:center">Thank you for watching. The complete written CV is available below.</p>
+  </div>
+</article>
+
+  </div><!-- /scenes -->
+</div><!-- /viewport -->
+
+<!-- ======== CONTROLS ======== -->
+<div class="controls">
+  <div class="ctrl-top">
+    <button class="btn primary" type="button" id="btnPlay" aria-pressed="false"><svg id="playIco" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg><span id="playTxt">Pause</span></button>
+    <button class="btn" type="button" id="btnPrev" title="Previous"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm12 0-9 6 9 6z"/></svg>Prev</button>
+    <button class="btn" type="button" id="btnNext" title="Next"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 6l9 6-9 6z"/></svg>Next</button>
+    <button class="btn" type="button" id="btnReplay" title="Replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg>Replay</button>
+    <span class="spacer"></span>
+    <span class="tc" id="tcDisplay">00:00 / 00:00</span>
+  </div>
+  <div class="progress-track" id="progressTrack" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
+    <div class="progress-fill" id="progressFill"></div>
+    <div class="progress-ticks" id="progressTicks"></div>
+  </div>
+  <div class="chapters" id="chapterBtns" role="group" aria-label="Chapters"></div>
+  <p class="shortcut-hint"><kbd>Space</kbd> play/pause · <kbd>←</kbd><kbd>→</kbd> chapters · <kbd>R</kbd> replay · <kbd>Home</kbd> start</p>
+  <p class="sr-only" role="status" aria-live="polite" id="statusMsg">Ready.</p>
+</div>
+
+</section><!-- /cinema -->
+
+<!-- ================================================================
+     FULL TEXT CV
+     ================================================================ -->
+<section class="text-cv" id="text-cv" aria-label="Complete text CV">
+
+<h2 class="sect">About</h2>
+<p class="intro"><strong>Barshan Ghosh</strong> — Software Engineer · Full-Stack Developer · Data Analyst · AI / ML Engineer · Educator. Building practical software. Exploring intelligent systems.</p>
+<p>Narayanganj / Dhaka, Bangladesh · <a href="mailto:barshan.ghoshofficial@gmail.com">barshan.ghoshofficial@gmail.com</a> · <a href="https://github.com/barshan94" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener">Portfolio</a></p>
+
+<h2 class="sect">Education</h2>
+<div class="entry"><h3>BSc in Computer Science &amp; Engineering</h3><p class="dmeta">AIUB, Dhaka · 2019–2023 · CGPA 3.83/4.00 · Completed in 3 years</p><p>Thesis: Blockchain Internet of Things (bIoT) — a literature review and proposed architecture for blockchain-secured healthcare IoT systems.</p></div>
+<div class="entry"><h3>Higher Secondary Certificate — Science</h3><p class="dmeta">Government Tolaram College · 2017–2019 · GPA 3.92/5.00</p></div>
+<div class="entry"><h3>Secondary School Certificate — Science</h3><p class="dmeta">Narayanganj High School &amp; College · 2014–2017 · GPA 5.00/5.00</p></div>
+
+<h2 class="sect">Professional experience</h2>
+<p style="font-size:13.5px;color:var(--muted);margin-bottom:14px">Several roles overlapped. Dates are accurate; not all positions were sequential or full-time.</p>
+
+<div class="entry"><h3>Mount Royal Academy — IT Coordinator, CS Teacher &amp; O-Level Physics Guest Lecturer</h3><p class="dmeta">June 2025 – Present · Narayanganj · Full-time (current)</p><ul><li>Oversee school IT infrastructure and day-to-day technology operations.</li><li>Teach Computer Science to Grades 3–7.</li><li>Deliver guest lectures in O-Level Physics.</li><li>Support reliable technology operations for staff and students.</li></ul></div>
+<div class="entry"><h3>Heritage School — Proxy ICT Teacher</h3><p class="dmeta">April 2025 – May 2025 · Narayanganj · Temporary</p><ul><li>Covered ICT classes during teacher absences; maintained learning continuity.</li><li>Delivered planned lessons and guided students through technology activities.</li></ul></div>
+<div class="entry"><h3>Edupy Academy — Digital Marketer</h3><p class="dmeta">October 2024 – January 2025 · Dhaka · Remote</p><ul><li>Online marketing to strengthen brand visibility and reach prospective learners.</li><li>Social media outreach and content distribution.</li></ul></div>
+<div class="entry"><h3>CNBDEXIM — IT Associate</h3><p class="dmeta">January 2023 – September 2024 · Dhaka · Hybrid</p><ul><li>Day-to-day IT systems maintenance and hardware support.</li><li>Network and user-technology troubleshooting, on-site and remote.</li></ul></div>
+<div class="entry"><h3>Digital Fire Safety Solution Ltd — IT Consultant</h3><p class="dmeta">August 2022 – October 2024 · Dhaka · Remote</p><ul><li>Remote technical consultation and system troubleshooting.</li><li>IT infrastructure review and practical improvement recommendations.</li></ul></div>
+<div class="entry"><h3>Teachnook — AI Engineer Intern</h3><p class="dmeta">August 2022 – January 2023 · India · Remote internship</p><ul><li>Building, training and testing ML algorithms and AI models.</li><li>Remote collaboration on AI project work.</li></ul></div>
+
+<h2 class="sect">Teaching &amp; private tutoring</h2>
+<div class="entry"><h4>O-Level / Edexcel Curriculum — Private Tutor</h4><p>Subjects: Physics, ICT, Computer Science, Mathematics B, Further Pure Mathematics.</p></div>
+<div class="entry"><h4>HSC Science — Private Tutor</h4><p class="dmeta">October 2024 – Present</p><p>Subjects: ICT, English, Bengali.</p></div>
+<div class="entry"><h4>SSC Arts — Private Tutor</h4><p class="dmeta">January 2023 – Present</p><p>Subjects: ICT, English, General Mathematics, General Science.</p></div>
+<div class="entry"><h4>SSC Science — Private Tutor</h4><p class="dmeta">January 2023 – December 2024</p><p>Subjects: Physics, Chemistry, Higher Mathematics, Biology.</p></div>
+
+<h2 class="sect">Technical skills</h2>
+<div class="entry"><h4>Frontend &amp; web</h4><p>Astro · React · TypeScript · JavaScript · HTML/CSS · Tailwind CSS · WordPress · Shopify</p></div>
+<div class="entry"><h4>Backend &amp; databases</h4><p>Node.js · Supabase · PostgreSQL · MySQL · Firebase · REST APIs</p></div>
+<div class="entry"><h4>AI, ML &amp; analytics</h4><p>Python · TensorFlow/Keras fundamentals · Weka · Kaggle · Power BI · ChatGPT · Gemini · LLM prompting</p></div>
+<div class="entry"><h4>DevOps, systems &amp; support</h4><p>Git/GitHub · Vercel · Playwright · Vitest · Docker fundamentals · Linux · Windows · HW/network troubleshooting</p></div>
+<div class="entry"><h4>Teaching &amp; digital learning</h4><p>Curriculum design · Classroom management · Student-centred instruction · Google Classroom · Zoom · MS Teams · Kahoot · Quizizz · Padlet</p></div>
+<div class="entry"><h4>Digital marketing &amp; productivity</h4><p>SEO · GA4 · GTM · Google Search Console · Meta Pixel · Canva · MS Office · Google Workspace</p></div>
+<div class="entry"><h4>Programming languages</h4><p>Python · JavaScript · C · C++ · Java · PHP (read, write &amp; maintain existing code)</p></div>
+
+<h2 class="sect">Selected projects</h2>
+<div class="entry"><h3>Money Calculator</h3><p class="dmeta">Evolving personal-finance platform</p><p>Ledger-first personal finance: multi-account tracking, income/expenses/transfers, balanced debit/credit entries, auditable edits/voids/reversals, lending/borrowing/loan repayments, tuition tracking, budgets, savings goals, reports, cash-flow analysis, net-worth tracking, forecasting. Authentication + PostgreSQL RLS.</p><p class="dmeta">Next.js 16 · React 19 · TypeScript · Supabase · PostgreSQL · Tailwind CSS · Recharts · Vitest · Playwright</p><p><a href="https://github.com/barshan94/money-calculator" target="_blank" rel="noopener">github.com/barshan94/money-calculator</a> — scope reflects documented design, not a claim every feature is complete.</p></div>
+<div class="entry"><h3>ASTA Store</h3><p class="dmeta">Astro e-commerce storefront</p><p>Product browsing, cart, checkout, admin dashboard, Supabase auth.</p><p><a href="https://github.com/barshan94/asta-store" target="_blank" rel="noopener">github.com/barshan94/asta-store</a></p></div>
+<div class="entry"><h3>Mount Royal Academy Website</h3><p class="dmeta">School website + CMS</p><p>Announcements, notice board, admission flow, academic calendar, gallery, settings, application management.</p><p><a href="https://github.com/barshan94/MountRoyalAcademy-website" target="_blank" rel="noopener">github.com/barshan94/MountRoyalAcademy-website</a></p></div>
+<div class="entry"><h3>Student Performance Dashboard</h3><p>Education analytics — student assessment data in one dashboard, visualising performance patterns.</p></div>
+<div class="entry"><h3>Digital Coaching Management System</h3><p>Digitises coaching-centre administration.</p><p><a href="https://github.com/barshan94/digital-coaching-management-system" target="_blank" rel="noopener">Repository</a></p></div>
+<div class="entry"><h3>999 National Emergency Service</h3><p>Public-service concept — independent project, not government-affiliated.</p></div>
+<div class="entry"><h3>Blockchain IoT (bIoT) Thesis</h3><p>Literature review + proposed architecture for blockchain-secured healthcare IoT.</p><p><a href="https://github.com/barshan94/Thesis" target="_blank" rel="noopener">github.com/barshan94/Thesis</a></p></div>
+<div class="entry"><h3>Cancer Prediction</h3><p>ML classification on a Kaggle dataset.</p></div>
+<div class="entry"><h3>Automated Testing</h3><p>Software quality/testing project using Playwright and Vitest.</p></div>
+<div class="entry"><h3>WordPress E-commerce Website</h3><p>Functional WordPress store with GA4, GTM and tracking tools. Separate from ASTA Store.</p></div>
+<div class="entry"><h3>Keyword Research &amp; Digital Growth</h3><p>SEO keyword research, intent grouping, content planning, analytics measurement.</p></div>
+<div class="entry"><h3>Digital marketing work samples</h3><p>ManyChat automations · Facebook Live Ad Campaign · Comprehensive SEO Audit · SEO Keyword Research · Keyword Research &amp; Competitor Analysis (incl. Amazon affiliate) · Affiliate Content Writing · On-Page Optimization.</p></div>
+
+<h2 class="sect">Certifications &amp; courses</h2>
+<ul>
+<li>Operating System</li><li>AI For Everyone</li><li>Python for Everybody</li><li>IT Fundamentals for Cybersecurity</li><li>MS Excel — Beginner to Advanced</li><li>MS PowerPoint Advanced Course</li><li>Digital Marketing Business Workshop</li><li>Professional Digital Marketing A+</li>
+</ul>
+
+<h2 class="sect">Languages</h2>
+<p>Bengali · English · Hindi</p>
+
+<h2 class="sect">Interests</h2>
+<p>Reading (leadership, science, education) · Social-welfare volunteering (Leo Club of Narayanganj Central) · Cricket · Photography · Solo walking</p>
+
+<h2 class="sect">Contact</h2>
+<p>Email: <a href="mailto:barshan.ghoshofficial@gmail.com">barshan.ghoshofficial@gmail.com</a><br>GitHub: <a href="https://github.com/barshan94" target="_blank" rel="noopener">github.com/barshan94</a><br>LinkedIn: <a href="https://www.linkedin.com/in/barshan-ghosh/" target="_blank" rel="noopener">linkedin.com/in/barshan-ghosh</a><br>Portfolio: <a href="https://portfolio-beta-eight-b4vx6dfs83.vercel.app/" target="_blank" rel="noopener">portfolio-beta-eight-b4vx6dfs83.vercel.app</a></p>
+
+</section>
+
+<footer class="page-foot">
+<span>Barshan Ghosh — Cinematic Video CV</span>
+<span>Self-contained HTML · CSS · Canvas · Vanilla JS</span>
+</footer>
+
+</div><!-- /wrap -->
+
 <script>
-(function () {
-  "use strict";
+(function(){
+"use strict";
 
-  /* ========================================================
-     CHAPTERS
-     ======================================================== */
-  var CHAPTERS = [
-    { label: "Identity",          dur: 11, accent: "teal"  },
-    { label: "Education",         dur: 13, accent: "blue"  },
-    { label: "Current role",      dur: 12, accent: "teal"  },
-    { label: "Experience I",      dur: 13, accent: "blue"  },
-    { label: "Experience II",     dur: 13, accent: "blue"  },
-    { label: "Teaching",          dur: 11, accent: "amber" },
-    { label: "Skills · build",    dur: 12, accent: "teal"  },
-    { label: "Skills · operate",  dur: 12, accent: "teal"  },
-    { label: "Money Calculator",  dur: 17, accent: "teal"  },
-    { label: "Projects I",        dur: 13, accent: "blue"  },
-    { label: "Projects II",       dur: 14, accent: "blue"  },
-    { label: "Research",          dur: 13, accent: "amber" },
-    { label: "Credentials",       dur: 11, accent: "teal"  },
-    { label: "Contact",           dur: 13, accent: "teal"  }
-  ];
+/* ================================================================
+   DATA
+   ================================================================ */
+var CHAPTERS=[
+{label:"Identity",dur:11,accent:"teal"},{label:"Education",dur:13,accent:"blue"},
+{label:"Current role",dur:12,accent:"teal"},{label:"Experience I",dur:13,accent:"blue"},
+{label:"Experience II",dur:13,accent:"blue"},{label:"Teaching",dur:12,accent:"amber"},
+{label:"Skills · Build",dur:12,accent:"teal"},{label:"Skills · Operate",dur:12,accent:"teal"},
+{label:"Money Calculator",dur:17,accent:"teal"},{label:"Web platforms",dur:14,accent:"blue"},
+{label:"More projects",dur:14,accent:"blue"},{label:"Research",dur:14,accent:"amber"},
+{label:"Credentials",dur:12,accent:"teal"},{label:"Contact",dur:13,accent:"teal"}
+];
+var ACCENTS={teal:[45,226,206],blue:[104,156,255],amber:[255,190,106]};
 
-  var ACCENTS = {
-    teal:  [45, 226, 206],
-    blue:  [104, 156, 255],
-    amber: [255, 190, 106]
-  };
+var scenes=Array.prototype.slice.call(document.querySelectorAll(".scene"));
+var n=Math.min(scenes.length,CHAPTERS.length);CHAPTERS=CHAPTERS.slice(0,n);
+var starts=[],total=0;
+for(var i=0;i<n;i++){starts.push(total);total+=CHAPTERS[i].dur;}
 
-  var scenes   = Array.prototype.slice.call(document.querySelectorAll(".scene"));
-  var stage    = document.getElementById("stage");
-  var canvas   = document.getElementById("bg");
-  var ctx      = canvas && canvas.getContext ? canvas.getContext("2d") : null;
+/* DOM refs */
+var viewport=document.getElementById("viewport");
+var canvas=document.getElementById("bgCanvas");
+var ctx=canvas&&canvas.getContext?canvas.getContext("2d"):null;
+var morphOv=document.getElementById("morphOverlay");
+var btnPlay=document.getElementById("btnPlay");
+var playIco=document.getElementById("playIco");
+var playTxt=document.getElementById("playTxt");
+var btnPrev=document.getElementById("btnPrev");
+var btnNext=document.getElementById("btnNext");
+var btnReplay=document.getElementById("btnReplay");
+var progressFill=document.getElementById("progressFill");
+var progressTrack=document.getElementById("progressTrack");
+var progressTicks=document.getElementById("progressTicks");
+var chapterBtns=document.getElementById("chapterBtns");
+var tcDisplay=document.getElementById("tcDisplay");
+var hudLabel=document.getElementById("hudLabel");
+var hudCount=document.getElementById("hudCount");
+var statusMsg=document.getElementById("statusMsg");
+var forcePlayBtn=document.getElementById("forcePlay");
 
-  var btnPlay  = document.getElementById("btnPlay");
-  var playIcon = document.getElementById("playIcon");
-  var playLbl  = document.getElementById("playLabel");
-  var btnPrev  = document.getElementById("btnPrev");
-  var btnNext  = document.getElementById("btnNext");
-  var btnReplay= document.getElementById("btnReplay");
-  var fill     = document.getElementById("fill");
-  var track    = document.getElementById("track");
-  var ticks    = document.getElementById("ticks");
-  var chipsBox = document.getElementById("chips");
-  var timecode = document.getElementById("timecode");
-  var hudChap  = document.getElementById("hudChapter");
-  var hudCount = document.getElementById("hudCount");
-  var statusEl = document.getElementById("status");
-  var enableBtn= document.getElementById("enableMotion");
+var t=0,playing=false,current=-1,lastTick=null,wasPlaying=false;
+var reduced=false;
+try{reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches}catch(e){}
 
-  var n = Math.min(scenes.length, CHAPTERS.length);
-  CHAPTERS = CHAPTERS.slice(0, n);
+/* ================================================================
+   CHAPTER BUTTONS + TICKS
+   ================================================================ */
+CHAPTERS.forEach(function(c,idx){
+  var b=document.createElement("button");b.type="button";b.className="ch-btn";
+  b.textContent=(idx+1<10?"0":"")+(idx+1)+" "+c.label;
+  b.setAttribute("aria-current","false");
+  b.addEventListener("click",function(){goTo(idx,true)});
+  chapterBtns.appendChild(b);
+  if(idx>0){var tk=document.createElement("i");tk.style.left=(starts[idx]/total*100)+"%";progressTicks.appendChild(tk)}
+});
+var chipEls=Array.prototype.slice.call(chapterBtns.children);
 
-  var starts = [];
-  var total = 0;
-  for (var i = 0; i < n; i++) { starts.push(total); total += CHAPTERS[i].dur; }
+/* ================================================================
+   SCENE MANAGEMENT
+   ================================================================ */
+var target=ACCENTS.teal.slice(),cur=ACCENTS.teal.slice();
+var morphTimeout=null;
 
-  var t = 0;
-  var playing = false;
-  var current = -1;
-  var lastTick = null;
-  var resumeAfterHidden = false;
+function indexAt(time){for(var i=n-1;i>=0;i--)if(time>=starts[i])return i;return 0}
 
-  var reduced = false;
-  try {
-    reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  } catch (e) { reduced = false; }
-
-  /* ========================================================
-     CHAPTER CHIPS + TICKS
-     ======================================================== */
-  CHAPTERS.forEach(function (c, idx) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "chip";
-    b.textContent = (idx + 1 < 10 ? "0" : "") + (idx + 1) + " " + c.label;
-    b.setAttribute("aria-current", "false");
-    b.addEventListener("click", function () { goTo(idx, true); });
-    chipsBox.appendChild(b);
-
-    if (idx > 0) {
-      var tk = document.createElement("i");
-      tk.style.left = (starts[idx] / total * 100) + "%";
-      ticks.appendChild(tk);
-    }
-  });
-  var chipEls = Array.prototype.slice.call(chipsBox.children);
-
-  /* ========================================================
-     SCENE SWITCHING
-     ======================================================== */
-  function indexAt(time) {
-    for (var i = n - 1; i >= 0; i--) { if (time >= starts[i]) return i; }
-    return 0;
+function setScene(idx){
+  if(idx===current)return;
+  // Morph transition
+  if(current>=0&&!reduced){
+    morphOv.classList.add("show");
+    clearTimeout(morphTimeout);
+    morphTimeout=setTimeout(function(){morphOv.classList.remove("show")},700);
   }
+  current=idx;
+  scenes.forEach(function(s,i){var on=i===idx;s.classList.toggle("active",on);s.setAttribute("aria-hidden",on?"false":"true")});
+  chipEls.forEach(function(c,i){c.setAttribute("aria-current",i===idx?"true":"false")});
+  hudLabel.textContent=CHAPTERS[idx].label;
+  hudCount.textContent=(idx+1<10?"0":"")+(idx+1)+" / "+(n<10?"0":"")+n;
+  target=ACCENTS[CHAPTERS[idx].accent]||ACCENTS.teal;
+}
 
-  function setScene(idx) {
-    if (idx === current) return;
-    current = idx;
-    scenes.forEach(function (s, i) {
-      var on = (i === idx);
-      s.classList.toggle("is-active", on);
-      s.setAttribute("aria-hidden", on ? "false" : "true");
-    });
-    chipEls.forEach(function (c, i) { c.setAttribute("aria-current", i === idx ? "true" : "false"); });
-    hudChap.textContent = CHAPTERS[idx].label;
-    hudCount.textContent = (idx + 1 < 10 ? "0" : "") + (idx + 1) + " / " + (n < 10 ? "0" : "") + n;
-    target = ACCENTS[CHAPTERS[idx].accent] || ACCENTS.teal;
-  }
+function fmt(s){s=Math.max(0,Math.floor(s));var m=Math.floor(s/60);s=s%60;return(m<10?"0":"")+m+":"+(s<10?"0":"")+s}
 
-  function fmt(sec) {
-    sec = Math.max(0, Math.floor(sec));
-    var m = Math.floor(sec / 60), s = sec % 60;
-    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-  }
+function render(){
+  setScene(indexAt(t));
+  var pct=total?(t/total)*100:0;
+  progressFill.style.width=pct+"%";
+  progressTrack.setAttribute("aria-valuenow",Math.round(pct));
+  tcDisplay.textContent=fmt(t)+" / "+fmt(total);
+}
 
-  function render() {
-    setScene(indexAt(t));
-    var pct = total ? (t / total) * 100 : 0;
-    fill.style.width = pct + "%";
-    track.setAttribute("aria-valuenow", Math.round(pct));
-    timecode.textContent = fmt(t) + " / " + fmt(total);
-  }
+function setPlayUI(){
+  document.body.classList.toggle("is-paused",!playing);
+  btnPlay.setAttribute("aria-pressed",playing?"true":"false");
+  if(playing){playTxt.textContent="Pause";playIco.innerHTML='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';}
+  else{playTxt.textContent=t>=total?"Replay":"Play";playIco.innerHTML='<path d="M8 5v14l11-7z"/>';}
+}
+function say(m){if(statusMsg)statusMsg.textContent=m}
+function play(){if(t>=total-.01)t=0;playing=true;lastTick=null;setPlayUI();say("Playing — "+CHAPTERS[Math.max(0,current)].label)}
+function pause(){playing=false;setPlayUI();say("Paused — "+CHAPTERS[Math.max(0,current)].label)}
+function toggle(){playing?pause():play()}
+function goTo(idx,autoplay){idx=Math.max(0,Math.min(n-1,idx));t=starts[idx]+.001;render();if(autoplay)play();else setPlayUI();say("Chapter "+(idx+1)+": "+CHAPTERS[idx].label)}
+function replay(){t=0;render();play();say("Replaying.")}
 
-  function setPlayUI() {
-    document.body.classList.toggle("is-paused", !playing);
-    btnPlay.setAttribute("aria-pressed", playing ? "true" : "false");
-    if (playing) {
-      playLbl.textContent = "Pause";
-      playIcon.innerHTML = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
-    } else {
-      playLbl.textContent = (t >= total) ? "Replay" : "Play";
-      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-    }
-  }
-
-  function say(msg) { if (statusEl) statusEl.textContent = msg; }
-
-  function play() {
-    if (t >= total - 0.01) { t = 0; }
-    playing = true; lastTick = null; setPlayUI();
-    say("Playing — chapter " + (current + 1) + ", " + CHAPTERS[Math.max(0, current)].label + ".");
-  }
-  function pause() {
-    playing = false; setPlayUI();
-    say("Paused at chapter " + (current + 1) + ", " + CHAPTERS[Math.max(0, current)].label + ".");
-  }
-  function toggle() { playing ? pause() : play(); }
-
-  function goTo(idx, autoplay) {
-    idx = Math.max(0, Math.min(n - 1, idx));
-    t = starts[idx] + 0.001;
+/* ================================================================
+   MAIN LOOP
+   ================================================================ */
+function loop(now){
+  if(playing){
+    if(lastTick===null)lastTick=now;
+    var dt=(now-lastTick)/1000;lastTick=now;
+    if(dt>.12)dt=.12;
+    t+=dt;
+    if(t>=total){t=total;playing=false;setPlayUI();say("Finished. Full CV is below.")}
     render();
-    if (autoplay) { play(); } else { setPlayUI(); }
-    say("Chapter " + (idx + 1) + ": " + CHAPTERS[idx].label + ".");
-  }
+  }else{lastTick=null}
+  drawBg(now);
+  requestAnimationFrame(loop);
+}
 
-  function replay() { t = 0; render(); play(); say("Replaying from the beginning."); }
-
-  /* ========================================================
-     CLOCK
-     ======================================================== */
-  function loop(now) {
-    if (playing) {
-      if (lastTick === null) lastTick = now;
-      var dt = (now - lastTick) / 1000;
-      lastTick = now;
-      if (dt > 0.12) dt = 0.12;          /* guard against background-tab jumps */
-      t += dt;
-      if (t >= total) {
-        t = total;
-        playing = false;
-        setPlayUI();
-        say("Presentation finished. The full written CV is below the player.");
-      }
-      render();
-    } else {
-      lastTick = null;
-    }
-    drawBg(now);
-    raf = window.requestAnimationFrame(loop);
-  }
-
-  /* ========================================================
-     AMBIENT CANVAS BACKGROUND
-     ======================================================== */
-  var dpr = 1, W = 0, H = 0;
-  var cur = ACCENTS.teal.slice();
-  var target = ACCENTS.teal.slice();
-
-  function resize() {
-    if (!ctx) return;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var r = stage.getBoundingClientRect();
-    W = Math.max(1, r.width); H = Math.max(1, r.height);
-    canvas.width = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-    drawBg(performance.now ? performance.now() : 0);
-  }
-
-  function blob(x, y, r, rgb, a) {
-    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + a + ")");
-    g.addColorStop(1, "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ",0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(x - r, y - r, r * 2, r * 2);
-  }
-
-  function drawBg(now) {
-    if (!ctx) return;
-    var time = (now || 0) / 1000;
-    if (reduced) time = 0;
-
-    for (var k = 0; k < 3; k++) cur[k] += (target[k] - cur[k]) * 0.045;
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = "#07090D";
-    ctx.fillRect(0, 0, W, H);
-
-    /* grid */
-    var gap = W < 640 ? 42 : 66;
-    var off = reduced ? 0 : (time * 5) % gap;
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(104,156,255,0.055)";
-    ctx.beginPath();
-    for (var x = -gap + off; x < W + gap; x += gap) {
-      ctx.moveTo(Math.round(x) + 0.5, 0); ctx.lineTo(Math.round(x) + 0.5, H);
-    }
-    for (var y = -gap + off * 0.5; y < H + gap; y += gap) {
-      ctx.moveTo(0, Math.round(y) + 0.5); ctx.lineTo(W, Math.round(y) + 0.5);
-    }
-    ctx.stroke();
-
-    /* ambient lighting */
-    var rgb = [Math.round(cur[0]), Math.round(cur[1]), Math.round(cur[2])];
-    var s = Math.max(W, H);
-    var bx = W * (0.22 + Math.sin(time * 0.11) * 0.05);
-    var by = H * (0.18 + Math.cos(time * 0.09) * 0.06);
-    blob(bx, by, s * 0.62, rgb, 0.1);
-
-    var cx = W * (0.86 + Math.cos(time * 0.08) * 0.05);
-    var cy = H * (0.86 + Math.sin(time * 0.1) * 0.05);
-    blob(cx, cy, s * 0.55, [104, 156, 255], 0.085);
-
-    /* horizon line */
-    var hg = ctx.createLinearGradient(0, H - 1, W, H - 1);
-    hg.addColorStop(0, "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ",0)");
-    hg.addColorStop(0.5, "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ",0.28)");
-    hg.addColorStop(1, "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ",0)");
-    ctx.fillStyle = hg;
-    ctx.fillRect(0, H - 1.5, W, 1.5);
-  }
-
-  /* ========================================================
-     EVENTS
-     ======================================================== */
-  btnPlay.addEventListener("click", toggle);
-  btnPrev.addEventListener("click", function () {
-    var i = indexAt(t);
-    if (t - starts[i] > 1.2) { goTo(i, playing); } else { goTo(i - 1, playing); }
-  });
-  btnNext.addEventListener("click", function () { goTo(indexAt(t) + 1, playing); });
-  btnReplay.addEventListener("click", replay);
-
-  track.addEventListener("click", function (e) {
-    var r = track.getBoundingClientRect();
-    var p = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
-    t = p * total;
-    render(); setPlayUI();
-  });
-
-  document.addEventListener("keydown", function (e) {
-    var tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
-    if (tag === "input" || tag === "textarea" || tag === "select") return;
-    if (document.body.classList.contains("reduced")) return;
-
-    if (e.key === " " || e.code === "Space") {
-      if (e.target && e.target.classList && e.target.classList.contains("chip")) return;
-      if (e.target === btnPlay || e.target === btnPrev || e.target === btnNext || e.target === btnReplay) return;
-      e.preventDefault(); toggle();
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault(); goTo(indexAt(t) + 1, playing);
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      var i = indexAt(t);
-      if (t - starts[i] > 1.2) goTo(i, playing); else goTo(i - 1, playing);
-    } else if (e.key === "r" || e.key === "R") {
-      e.preventDefault(); replay();
-    } else if (e.key === "Home") {
-      e.preventDefault(); goTo(0, playing);
-    } else if (e.key === "End") {
-      e.preventDefault(); goTo(n - 1, playing);
-    }
-  });
-
-  document.addEventListener("visibilitychange", function () {
-    if (document.hidden) {
-      resumeAfterHidden = playing;
-      if (playing) { playing = false; setPlayUI(); }
-    } else {
-      lastTick = null;
-      if (resumeAfterHidden) { resumeAfterHidden = false; play(); }
-    }
-  });
-
-  window.addEventListener("resize", resize);
-  if (window.ResizeObserver) { new ResizeObserver(resize).observe(stage); }
-
-  if (enableBtn) {
-    enableBtn.addEventListener("click", function () {
-      document.body.classList.remove("reduced");
-      reduced = false;
-      resize();
-      goTo(0, true);
-      stage.scrollIntoView({ block: "center" });
+/* ================================================================
+   CANVAS BACKGROUND
+   ================================================================ */
+var dpr=1,W=0,H=0;
+// Particle system
+var particles=[];
+function initParticles(){
+  particles=[];
+  for(var i=0;i<60;i++){
+    particles.push({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.12-.06,
+      r:Math.random()*1.5+.3,
+      a:Math.random()*.3+.05
     });
   }
+}
 
-  /* ========================================================
-     BOOT
-     ======================================================== */
-  var raf = null;
-  resize();
-  render();
-  setScene(0);
+function resize(){
+  if(!ctx)return;
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  var r=viewport.getBoundingClientRect();
+  W=Math.max(1,r.width);H=Math.max(1,r.height);
+  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+  initParticles();
+  drawBg(performance.now?performance.now():0);
+}
 
-  if (reduced) {
-    document.body.classList.add("reduced");
-    playing = false;
-    setPlayUI();
-    say("Reduced motion is enabled. A static text CV is shown.");
-  } else {
-    setPlayUI();
-    window.setTimeout(function () { play(); }, 450);
+function drawBg(now){
+  if(!ctx)return;
+  var time=(now||0)/1000;
+  if(reduced)time=0;
+  for(var k=0;k<3;k++)cur[k]+=(target[k]-cur[k])*.04;
+  var rgb=[Math.round(cur[0]),Math.round(cur[1]),Math.round(cur[2])];
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle="#06080C";ctx.fillRect(0,0,W,H);
+
+  // Perspective grid
+  var gap=W<640?38:62;
+  var drift=reduced?0:(time*4)%gap;
+  ctx.lineWidth=1;ctx.strokeStyle="rgba(104,156,255,.045)";ctx.beginPath();
+  for(var x=-gap+drift;x<W+gap;x+=gap){ctx.moveTo(Math.round(x)+.5,0);ctx.lineTo(Math.round(x)+.5,H)}
+  for(var y=-gap+drift*.5;y<H+gap;y+=gap){ctx.moveTo(0,Math.round(y)+.5);ctx.lineTo(W,Math.round(y)+.5)}
+  ctx.stroke();
+
+  // Ambient blobs
+  var s=Math.max(W,H);
+  function blob(bx,by,br,brgb,ba){
+    var g=ctx.createRadialGradient(bx,by,0,bx,by,br);
+    g.addColorStop(0,"rgba("+brgb[0]+","+brgb[1]+","+brgb[2]+","+ba+")");
+    g.addColorStop(1,"rgba("+brgb[0]+","+brgb[1]+","+brgb[2]+",0)");
+    ctx.fillStyle=g;ctx.fillRect(bx-br,by-br,br*2,br*2);
+  }
+  blob(W*(0.2+Math.sin(time*.1)*.06),H*(0.16+Math.cos(time*.08)*.07),s*.65,rgb,.11);
+  blob(W*(0.85+Math.cos(time*.07)*.05),H*(0.88+Math.sin(time*.09)*.05),s*.55,[104,156,255],.08);
+  // Secondary warm blob for depth
+  blob(W*(0.5+Math.sin(time*.06)*.15),H*(0.5+Math.cos(time*.05)*.1),s*.4,[255,190,106],.035);
+
+  // Particles
+  if(!reduced){
+    for(var i=0;i<particles.length;i++){
+      var p=particles[i];
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;
+      if(p.y<-10)p.y=H+10;if(p.y>H+10)p.y=-10;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle="rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+","+p.a+")";
+      ctx.fill();
+    }
+
+    // Connecting lines between nearby particles
+    ctx.lineWidth=.5;
+    for(var i=0;i<particles.length;i++){
+      for(var j=i+1;j<particles.length;j++){
+        var dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          var alpha=(1-dist/120)*.08;
+          ctx.strokeStyle="rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+","+alpha+")";
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();
+        }
+      }
+    }
   }
 
-  raf = window.requestAnimationFrame(loop);
+  // Horizon glow line
+  var hg=ctx.createLinearGradient(0,H-1,W,H-1);
+  hg.addColorStop(0,"rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+",0)");
+  hg.addColorStop(.5,"rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+",.25)");
+  hg.addColorStop(1,"rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+",0)");
+  ctx.fillStyle=hg;ctx.fillRect(0,H-1.5,W,1.5);
+
+  // Slow moving light beam
+  if(!reduced){
+    var beamX=W*(0.5+Math.sin(time*.15)*.5);
+    var beamG=ctx.createRadialGradient(beamX,0,0,beamX,0,H*.7);
+    beamG.addColorStop(0,"rgba("+rgb[0]+","+rgb[1]+","+rgb[2]+",.04)");
+    beamG.addColorStop(1,"transparent");
+    ctx.fillStyle=beamG;ctx.fillRect(0,0,W,H);
+  }
+}
+
+/* ================================================================
+   EVENTS
+   ================================================================ */
+btnPlay.addEventListener("click",toggle);
+btnPrev.addEventListener("click",function(){var i=indexAt(t);if(t-starts[i]>1.2)goTo(i,playing);else goTo(i-1,playing)});
+btnNext.addEventListener("click",function(){goTo(indexAt(t)+1,playing)});
+btnReplay.addEventListener("click",replay);
+progressTrack.addEventListener("click",function(e){var r=progressTrack.getBoundingClientRect();var p=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));t=p*total;render();setPlayUI()});
+
+document.addEventListener("keydown",function(e){
+  var tag=(e.target&&e.target.tagName)?e.target.tagName.toLowerCase():"";
+  if(tag==="input"||tag==="textarea"||tag==="select")return;
+  if(document.body.classList.contains("reduced-motion"))return;
+  if(e.key===" "||e.code==="Space"){
+    if(e.target&&e.target.classList&&(e.target.classList.contains("ch-btn")||e.target.classList.contains("btn")))return;
+    e.preventDefault();toggle();
+  }else if(e.key==="ArrowRight"){e.preventDefault();goTo(indexAt(t)+1,playing)}
+  else if(e.key==="ArrowLeft"){e.preventDefault();var i=indexAt(t);if(t-starts[i]>1.2)goTo(i,playing);else goTo(i-1,playing)}
+  else if(e.key==="r"||e.key==="R"){e.preventDefault();replay()}
+  else if(e.key==="Home"){e.preventDefault();goTo(0,playing)}
+  else if(e.key==="End"){e.preventDefault();goTo(n-1,playing)}
+});
+
+document.addEventListener("visibilitychange",function(){
+  if(document.hidden){wasPlaying=playing;if(playing){playing=false;setPlayUI()}}
+  else{lastTick=null;if(wasPlaying){wasPlaying=false;play()}}
+});
+
+window.addEventListener("resize",resize);
+if(window.ResizeObserver)new ResizeObserver(resize).observe(viewport);
+
+if(forcePlayBtn){forcePlayBtn.addEventListener("click",function(){document.body.classList.remove("reduced-motion");reduced=false;resize();goTo(0,true);viewport.scrollIntoView({block:"center"})})}
+
+/* ================================================================
+   BOOT
+   ================================================================ */
+resize();render();setScene(0);
+if(reduced){document.body.classList.add("reduced-motion");playing=false;setPlayUI();say("Reduced motion. Text CV shown.")}
+else{setPlayUI();setTimeout(function(){play()},500)}
+requestAnimationFrame(loop);
+
 })();
 </script>
 </body>
