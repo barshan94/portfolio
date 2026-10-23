@@ -10,7 +10,6 @@ const selectedProjectIds = [
   "money-calculator",
   "asta-store",
   "mount-royal-academy",
-  "keyword-research",
   "student-performance-dashboard",
   "digital-coaching-management",
   "999-national-emergency-service",
@@ -147,6 +146,16 @@ const getExperienceDate = (experience: any) =>
             Get in touch <span aria-hidden="true">↗</span>
           </a>
         </div>
+
+        <nav class="hero-quick-links" aria-label="Email and professional profiles">
+          {contact?.email && <a href={`mailto:${contact.email}`}>Email</a>}
+          {contact?.github && (
+            <a href={contact.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          )}
+          {contact?.linkedin && (
+            <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          )}
+        </nav>
       </div>
     </section>
 
@@ -3504,5 +3513,52 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     .portfolio-shell #skills .skills-grid {
       grid-template-columns: minmax(0, 1fr);
     }
+  }
+</style>
+
+
+<style is:global>
+  /* One consistent vertical rhythm; older legacy rules above are intentionally overridden. */
+  .portfolio-shell > .section-block {
+    padding-top: clamp(14px, 1.5vw, 22px) !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .portfolio-shell > .section-block .section-heading {
+    margin-bottom: clamp(16px, 1.7vw, 22px) !important;
+  }
+  .portfolio-shell > .hero.hero-editorial {
+    padding-top: clamp(38px, 4.5vw, 58px) !important;
+    padding-bottom: clamp(18px, 2vw, 26px) !important;
+  }
+  .portfolio-shell > .cv-download.section-block { padding-top: 0 !important; }
+  .portfolio-shell .hero-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 18px;
+    font-size: .82rem;
+  }
+  .portfolio-shell .hero-quick-links a {
+    color: #aeb9ca;
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+  .portfolio-shell .hero-quick-links a:hover,
+  .portfolio-shell .hero-quick-links a:focus-visible {
+    color: #7ce5d2;
+  }
+  @media (max-width: 760px) {
+    .portfolio-shell > .section-block { padding-top: 18px !important; }
+    .portfolio-shell > .hero.hero-editorial {
+      padding-top: 34px !important;
+      padding-bottom: 18px !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-shell .hero-quick-links a { transition: none; }
   }
 </style>
