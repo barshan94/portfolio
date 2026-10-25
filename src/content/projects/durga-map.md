@@ -1,6 +1,6 @@
 ---
 title: "Durga-Map"
-description: "An Android-focused Durga Puja location explorer with GPS photo extraction, map browsing, and location inventory."
+description: "Android-focused Durga Puja location explorer for extracting GPS coordinates from photos, organizing location records, and opening mapped locations in Google Maps."
 tags:
   - "Maps"
   - "GPS"
@@ -14,4 +14,4 @@ featured: true
 accent: "default"
 ---
 
-Durga-Map is an Android-focused Durga Puja location explorer. The browser demo showcases its map, photo GPS workflow, and location inventory; the primary app target remains Android.
+Durga-Map processes available photo GPS metadata, organizes location records, and supports map-based browsing of Durga Puja locations. The primary app target is Android, packaged with Capacitor; the portfolio's Play demo is a browser-rendered walkthrough rather than the production Android app.
