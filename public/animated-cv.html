@@ -514,7 +514,7 @@
           pageWasHidden = false;
         }
       });
-      window.addEventListener("pagehide", () => { if (rafId) cancelAnimationFrame(rafId); });
+      window.addEventListener("pagehide", () => { if (rafId) cancelAnimationFrame(rafId); rafId = 0; });
       window.addEventListener("pageshow", () => { if (!rafId) { lastFrame = performance.now(); rafId = requestAnimationFrame(tick); } });
 
       slides.forEach((slide, i) => slide.setAttribute("aria-hidden", i === 0 ? "false" : "true"));
