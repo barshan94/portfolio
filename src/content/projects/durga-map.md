@@ -7,7 +7,6 @@ tags:
   - "Android"
   - "Web"
 repo: "https://github.com/barshan94/Durga-Map"
-live: "https://durga-map.vercel.app"
 language: "HTML"
 lastUpdated: "2026-10-25T15:57:59Z"
 status: "in-progress"
