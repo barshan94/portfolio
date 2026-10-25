@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#11100f">
+<title>Durga-Map — Animated Product Demo</title>
+<style>
+:root{color-scheme:dark;--bg:#11100f;--panel:#1b1917;--line:#42362b;--gold:#f2c66d;--red:#e15e50;--muted:#b9b0a3;--white:#fff8eb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#38271d 0,transparent 48%),var(--bg);color:var(--white);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
+.wrap{width:min(1200px,100%)}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px;color:var(--gold);font-size:11px;letter-spacing:.16em;text-transform:uppercase}.top a{color:var(--muted);text-decoration:none;letter-spacing:0;text-transform:none}.screen{position:relative;border:1px solid #624a34;border-radius:18px;overflow:hidden;background:#121411;box-shadow:0 32px 100px #0008;aspect-ratio:16/9}canvas{display:block;width:100%;height:100%}.hud{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(12px,2.5vw,28px)}.hudrow{display:flex;justify-content:space-between;gap:10px;color:#d7c6aa;font:clamp(8px,1vw,11px)/1.4 ui-monospace,SFMono-Regular,monospace;letter-spacing:.1em;text-transform:uppercase}.progress{height:2px;background:#ffffff20;margin-top:12px}.progress span{display:block;height:100%;width:0;background:var(--gold)}.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px}.controls button{border:1px solid #65513c;background:#211d19;color:var(--white);padding:11px 15px;border-radius:999px;font:inherit;cursor:pointer}.controls button.primary{background:var(--gold);color:#1a130b;border-color:var(--gold);font-weight:750}.controls button:disabled{opacity:.45;cursor:wait}.time{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}.note{color:var(--muted);font-size:12px;margin-top:12px}.note strong{color:#f2c66d}.status{color:#a9d8ad}.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:600px){body{padding:12px}.screen{border-radius:10px}.controls{gap:7px}.controls button{padding:9px 11px;font-size:12px}.time{width:100%;margin-left:0}.top{font-size:9px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="top"><span>Durga-Map / Product film</span><a href="/">← Back to portfolio</a></div>
+  <section class="screen" aria-label="Animated Durga-Map product walkthrough">
+    <canvas id="film" width="1920" height="1080" aria-label="Animated product walkthrough showing map pins, photo GPS extraction, and location inventory"></canvas>
+    <div class="hud" aria-hidden="true"><div class="hudrow"><span>FIELD NOTES / LOCATION SYSTEMS</span><span id="sceneLabel">01 — EXPLORE</span></div><div><div class="hudrow"><span>ANDROID-FOCUSED EXPERIENCE</span><span id="clock">00:00 / 00:40</span></div><div class="progress"><span id="progress"></span></div></div></div>
+  </section>
+  <div class="controls"><button class="primary" id="play">▶ Play demo</button><button id="restart">↺ Restart</button><button id="export">Export WebM</button><span class="time" id="status" role="status">Ready · 40-second animated walkthrough</span></div>
+  <p class="note">A cinematic, continuously animated product walkthrough—not a live app screen. <strong>Export WebM</strong> records the animation in real time in a browser that supports MediaRecorder.</p>
+</main>
+<script>
+(() => {
+  const canvas=document.getElementById('film'),ctx=canvas.getContext('2d');
+  const play=document.getElementById('play'),restart=document.getElementById('restart'),exportBtn=document.getElementById('export');
+  const progress=document.getElementById('progress'),clock=document.getElementById('clock'),sceneLabel=document.getElementById('sceneLabel'),status=document.getElementById('status');
+  const W=1920,H=1080,DURATION=40;
+  let start=0,elapsed=0,running=false,raf=0,recording=false,recorder=null,chunks=[];
+  const scenes=[
+    {at:0,name:'01 — EXPLORE',title:'Find the celebration.',sub:'A clearer view of Durga Puja locations.',kind:'opening'},
+    {at:6.5,name:'02 — MAP',title:'Every place, on the map.',sub:'Browse mandap locations and map pins.',kind:'map'},
+    {at:13,name:'03 — PHOTO GPS',title:'Turn photos into coordinates.',sub:'Import a photo. Detect GPS. Review the location.',kind:'gps'},
+    {at:20,name:'04 — VERIFY',title:'Keep location data trustworthy.',sub:'Review coordinates before adding a place.',kind:'verify'},
+    {at:27,name:'05 — INVENTORY',title:'Build a useful location inventory.',sub:'Organize, search, and revisit saved places.',kind:'inventory'},
+    {at:34,name:'06 — CLOSING',title:'Explore with confidence.',sub:'Durga-Map · an Android-focused location explorer.',kind:'closing'}
+  ];
+  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+  const ease=v=>{v=clamp(v);return v*v*(3-2*v)};
+  function roundRect(x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke()}}
+  function text(s,x,y,size,color='#fff8eb',weight=500,align='left'){ctx.fillStyle=color;ctx.font=weight+' '+size+'px Inter,system-ui,sans-serif';ctx.textAlign=align;ctx.fillText(s,x,y)}
+  function line(x1,y1,x2,y2,color='#ffffff22',width=2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()}
+  function glow(x,y,r,color,alpha=1){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color.replace('ALPHA',String(alpha)));g.addColorStop(1,color.replace('ALPHA','0'));ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
+  function pin(x,y,scale=1,hot=false){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.shadowColor=hot?'#f2c66d':'#e15e50';ctx.shadowBlur=hot?28:12;ctx.fillStyle=hot?'#f2c66d':'#e15e50';ctx.beginPath();ctx.arc(0,-10,17,Math.PI,0);ctx.quadraticCurveTo(17,10,0,30);ctx.quadraticCurveTo(-17,10,-17,-10);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#211610';ctx.beginPath();ctx.arc(0,-10,6,0,Math.PI*2);ctx.fill();ctx.restore()}
+  function base(t){ctx.fillStyle='#111411';ctx.fillRect(0,0,W,H);glow(1420,120,700,'rgba(180,92,45,ALPHA)',.16);glow(400,900,600,'rgba(190,130,55,ALPHA)',.08);for(let i=0;i<90;i++){const x=(i*317)%W,y=(i*191)%H;ctx.fillStyle='rgba(255,235,205,'+(.05+.04*Math.sin(t*1.3+i))+')';ctx.fillRect(x,y,2,2)}}
+  function mapPanel(x,y,w,h,t){roundRect(x,y,w,h,28,'#171d19','#66533a');ctx.save();ctx.beginPath();ctx.roundRect(x,y,w,h,28);ctx.clip();ctx.translate(x,y);ctx.fillStyle='#1c251e';ctx.fillRect(0,0,w,h);for(let i=-h;i<w+h;i+=100){line(i,0,i+h,h,'#ffffff0c',2);line(i,0,i-h,h,'#ffffff0c',2)}for(let i=0;i<12;i++){const yy=(i*97+t*11)%(h+80)-40;line(0,yy,w,yy+Math.sin(i)*35,'#d8c18a24',5)}for(let i=0;i<8;i++){const px=x+w*(.16+((i*37)%70)/100)+Math.sin(t*.4+i)*20,py=y+h*(.16+((i*29)%68)/100)+Math.cos(t*.5+i)*15;pin(px,py,.75+(i%3)*.12,i===Math.floor(t*1.2)%8)}ctx.restore()}
+  function phone(x,y,w,h,t){roundRect(x,y,w,h,44,'#090b0a','#92724c');roundRect(x+13,y+13,w-26,h-26,34,'#171c17');roundRect(x+w*.35,y+16,w*.3,10,5,'#423b30');mapPanel(x+30,y+65,w-60,h*.53,t);roundRect(x+30,y+h*.66,w-60,48,14,'#25271f','#5b4a35');text('NEARBY PUJA LOCATIONS',x+50,y+h*.66+30,15,'#f2c66d',700);for(let i=0;i<3;i++){roundRect(x+30,y+h*.66+62+i*51,w-60,42,10,'#222720','#353d30');ctx.fillStyle=i===0?'#e15e50':'#f2c66d';ctx.beginPath();ctx.arc(x+53,y+h*.66+83+i*51,7,0,Math.PI*2);ctx.fill();text(['Mandap location','Saved place','Nearby location'][i],x+75,y+h*.66+89+i*51,17,'#e8e1d4',500)}}
+  function photoCard(x,y,w,h,t){roundRect(x,y,w,h,24,'#f0dfc1','#fff1d8');const g=ctx.createLinearGradient(x,y,x+w,y+h);g.addColorStop(0,'#9b4e31');g.addColorStop(.55,'#e2a04b');g.addColorStop(1,'#4c362b');roundRect(x+16,y+16,w-32,h*.61,16,g);for(let i=0;i<6;i++){const xx=x+35+i*45;line(xx,y+35,xx,y+h*.61,'#fff1d82a',3)}text('PHOTO / JPG',x+30,y+h*.61+53,18,'#38271b',800);text('GPS METADATA',x+30,y+h*.61+88,14,'#765538',700);roundRect(x+30,y+h*.61+105,w-60,44,10,'#fff7e8');text('PXL_2026…jpg',x+45,y+h*.61+134,16,'#4d392a',600)}
+  function dataCard(x,y,w,h,title,rows,accent='#f2c66d'){roundRect(x,y,w,h,24,'#1b201b','#66533a');text(title,x+30,y+48,22,accent,750);rows.forEach((r,i)=>{line(x+28,y+68+i*57,x+w-28,y+68+i*57,'#ffffff18',2);text(r[0],x+30,y+103+i*57,16,'#b9b0a3',500);text(r[1],x+w-30,y+103+i*57,16,'#fff8eb',650,'right')})}
+  function sceneDraw(s,t,local){
+    const intro=ease(local/1.3),outro=1-ease((local-5.7)/1.1);
+    ctx.save();ctx.globalAlpha=Math.min(intro,outro);
+    if(s.kind==='opening'||s.kind==='closing'){
+      ctx.save();ctx.translate(1420,520);for(let i=0;i<24;i++){ctx.rotate(Math.PI/12);ctx.strokeStyle='#f2c66d'+(i%2?'35':'70');ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(0,-145,38,145,0,0,Math.PI*2);ctx.stroke()}ctx.restore();
+      for(let i=0;i<7;i++){const a=t*.25+i*Math.PI*2/7;pin(1420+Math.cos(a)*200,520+Math.sin(a)*170,.65,i===Math.floor(t)%7)}
+      text('DURGA',170,400,36,'#f2c66d',750);text('MAP',170,520,112,'#fff8eb',850);line(175,560,560,560,'#e15e50',6);text(s.title,170,665,42,'#fff8eb',650);text(s.sub,170,730,24,'#c8bba8',450);text('LOCATION EXPLORER  /  ANDROID',175,815,17,'#f2c66d',700);
+    } else if(s.kind==='map'){
+      text(s.title,140,210,54,'#fff8eb',750);text(s.sub,140,270,25,'#c8bba8',450);mapPanel(140,330,1000,580,t);phone(1260,275,400,700,t);
+      text('MAP VIEW',180,390,17,'#f2c66d',700);text('LIVE LOCATION LAYERS',180,875,15,'#b9b0a3',600);
+    } else if(s.kind==='gps'){
+      text(s.title,140,200,52,'#fff8eb',750);text(s.sub,140,260,24,'#c8bba8',450);photoCard(170,340,370,440,t);line(590,560,850,560,'#f2c66d',4);for(let i=0;i<4;i++){const p=(t*0.5+i*.25)%1;glow(590+p*260,560,35,'rgba(242,198,109,ALPHA)',.45);ctx.fillStyle='#f2c66d';ctx.beginPath();ctx.arc(590+p*260,560,7,0,Math.PI*2);ctx.fill()}dataCard(890,350,620,410,'GPS EXTRACTED',[['LATITUDE','23.7806° N'],['LONGITUDE','90.2794° E'],['SOURCE','Photo metadata'],['REVIEW','Ready to verify']]);pin(1570,620,1.4,true);text('COORDINATES FOUND',1515,710,16,'#f2c66d',750,'center');
+    } else if(s.kind==='verify'){
+      text(s.title,140,200,52,'#fff8eb',750);text(s.sub,140,260,24,'#c8bba8',450);dataCard(160,350,690,470,'LOCATION REVIEW',[['PLACE NAME','Puja location'],['LATITUDE','23.7806° N'],['LONGITUDE','90.2794° E'],['GPS STATUS','Detected'],['CONFIRMATION','Pending review']]);mapPanel(980,350,670,470,t);roundRect(1020,810,580,70,18,'#f2c66d');text('✓  REVIEW BEFORE SAVING',1310,854,20,'#21160d',800,'center');
+    } else if(s.kind==='inventory'){
+      text(s.title,140,200,52,'#fff8eb',750);text(s.sub,140,260,24,'#c8bba8',450);mapPanel(140,330,770,540,t);dataCard(1000,330,650,250,'LOCATION INVENTORY',[['TOTAL PLACES','12'],['GPS VERIFIED','09'],['NEEDS REVIEW','03']]);for(let i=0;i<3;i++){roundRect(1000,620+i*85,650,65,14,'#20251f','#484637');pin(1040,653+i*85,.45,i===Math.floor(t)%3);text(['North-side mandap','Community location','Saved Puja place'][i],1080,660+i*85,19,'#e8e1d4',600);text(['VERIFIED','SAVED','REVIEW'][i],1615,660+i*85,13,i===2?'#e7a26b':'#f2c66d',750,'right')}
+    }
+    ctx.restore();
+  }
+  function render(time){const t=running?Math.min(DURATION,(time-start)/1000):elapsed;elapsed=t;base(t);const s=[...scenes].reverse().find(x=>t>=x.at)||scenes[0];sceneDraw(s,t,t-s.at);sceneLabel.textContent=s.name;clock.textContent='00:'+String(Math.floor(t)).padStart(2,'0')+' / 00:40';progress.style.width=(t/DURATION*100)+'%';if(t>=DURATION&&running){running=false;play.textContent='▶ Replay demo';status.textContent='Demo complete';if(recording)stopRecording();}if(running)raf=requestAnimationFrame(render)}
+  function playFilm(){if(running)return;if(elapsed>=DURATION)elapsed=0;running=true;start=performance.now()-elapsed*1000;play.textContent='Ⅱ Pause';status.textContent=recording?'Recording animation…':'Playing animated walkthrough';raf=requestAnimationFrame(render)}
+  function pauseFilm(){if(!running)return;elapsed=Math.min(DURATION,(performance.now()-start)/1000);running=false;cancelAnimationFrame(raf);play.textContent='▶ Resume';render(performance.now());if(recording)status.textContent='Recording paused — resume to continue export'}
+  function reset(){running=false;cancelAnimationFrame(raf);elapsed=0;play.textContent='▶ Play demo';status.textContent='Ready · 40-second animated walkthrough';render(performance.now())}
+  function stopRecording(){if(recorder&&recorder.state!=='inactive')recorder.stop();recording=false;exportBtn.disabled=false}
+  function exportVideo(){if(!canvas.captureStream||!window.MediaRecorder){status.textContent='WebM recording is not supported by this browser.';return}reset();const stream=canvas.captureStream(30);let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))mime='video/webm';try{chunks=[];recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:8000000});recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};recorder.onstop=()=>{const blob=new Blob(chunks,{type:'video/webm'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='durga-map-demo.webm';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);stream.getTracks().forEach(track=>track.stop());status.textContent='WebM exported';exportBtn.disabled=false};recorder.start();recording=true;exportBtn.disabled=true;status.textContent='Recording 40-second WebM… keep this tab open';playFilm()}catch(e){stream.getTracks().forEach(track=>track.stop());status.textContent='Could not start recording in this browser.';exportBtn.disabled=false}}
+  play.addEventListener('click',()=>running?pauseFilm():playFilm());restart.addEventListener('click',reset);exportBtn.addEventListener('click',exportVideo);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)pauseFilm()});
+  render(performance.now());
+})();
+</script>
+</body>
+</html>
