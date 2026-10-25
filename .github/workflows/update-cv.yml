@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "src/data/portfolio-showcase.json"
+      - "src/content/projects/**"
+      - "scripts/update_cv_pdf.py"
   workflow_dispatch:
 
 permissions:

@@ -36,29 +36,29 @@ def build_appendix(projects: list[dict], output_path: Path) -> None:
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle(
         "PortfolioTitle", parent=styles["Title"], fontName="Helvetica-Bold",
-        fontSize=21, leading=25, alignment=TA_LEFT, textColor=colors.HexColor("#10252c"),
+        fontSize=21, leading=25, alignment=TA_LEFT, textColor=colors.HexColor("#111111"),
         spaceAfter=5,
     )
     subtitle_style = ParagraphStyle(
         "PortfolioSubtitle", parent=styles["Normal"], fontName="Helvetica",
-        fontSize=9, leading=13, textColor=colors.HexColor("#52656c"), spaceAfter=12,
+        fontSize=9, leading=13, textColor=colors.HexColor("#444444"), spaceAfter=12,
     )
     project_title_style = ParagraphStyle(
         "ProjectTitle", parent=styles["Heading2"], fontName="Helvetica-Bold",
-        fontSize=11.2, leading=14, textColor=colors.HexColor("#10252c"),
+        fontSize=11.2, leading=14, textColor=colors.HexColor("#111111"),
         spaceBefore=2, spaceAfter=3,
     )
     description_style = ParagraphStyle(
         "ProjectDescription", parent=styles["BodyText"], fontName="Helvetica",
-        fontSize=9, leading=12.5, textColor=colors.HexColor("#26363b"), spaceAfter=4,
+        fontSize=9, leading=12.5, textColor=colors.HexColor("#222222"), spaceAfter=4,
     )
     meta_style = ParagraphStyle(
         "ProjectMeta", parent=styles["BodyText"], fontName="Helvetica",
-        fontSize=8, leading=11, textColor=colors.HexColor("#52656c"), spaceAfter=9,
+        fontSize=8, leading=11, textColor=colors.HexColor("#444444"), spaceAfter=9,
     )
     note_style = ParagraphStyle(
         "ProjectNote", parent=styles["BodyText"], fontName="Helvetica-Oblique",
-        fontSize=7.5, leading=10, textColor=colors.HexColor("#66777d"), spaceBefore=8,
+        fontSize=7.5, leading=10, textColor=colors.HexColor("#555555"), spaceBefore=8,
     )
 
     document = SimpleDocTemplate(
@@ -75,7 +75,7 @@ def build_appendix(projects: list[dict], output_path: Path) -> None:
             "with the portfolio-showcase topic.",
             subtitle_style,
         ),
-        HRFlowable(width="100%", thickness=1, color=colors.HexColor("#b9d2cf"), spaceAfter=13),
+        HRFlowable(width="100%", thickness=1, color=colors.HexColor("#333333"), spaceAfter=13),
     ]
 
     for project in projects:
@@ -103,7 +103,7 @@ def build_appendix(projects: list[dict], output_path: Path) -> None:
         )
 
     story.extend([
-        HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#d6e0df"), spaceBefore=3, spaceAfter=7),
+        HRFlowable(width="100%", thickness=0.6, color=colors.HexColor("#999999"), spaceBefore=3, spaceAfter=7),
         Paragraph(
             "Repository names, descriptions, and links are sourced from GitHub metadata. "
             "No unverified claims about impact, adoption, or completion are added.",
@@ -113,10 +113,10 @@ def build_appendix(projects: list[dict], output_path: Path) -> None:
 
     def footer(canvas, doc):
         canvas.saveState()
-        canvas.setStrokeColor(colors.HexColor("#d6e0df"))
+        canvas.setStrokeColor(colors.HexColor("#999999"))
         canvas.line(18 * mm, 12 * mm, A4[0] - 18 * mm, 12 * mm)
         canvas.setFont("Helvetica", 7.5)
-        canvas.setFillColor(colors.HexColor("#66777d"))
+        canvas.setFillColor(colors.HexColor("#555555"))
         canvas.drawString(18 * mm, 7 * mm, "BARSHAN GHOSH  /  SELECTED PROJECTS")
         canvas.drawRightString(A4[0] - 18 * mm, 7 * mm, f"Appendix · {doc.page}")
         canvas.restoreState()
