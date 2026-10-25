@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Durga-Map project preview</title>
+<desc id="desc">An illustrative dark map with highlighted routes and Durga Puja location pins.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101518"/><stop offset="1" stop-color="#242820"/></linearGradient>
+ <linearGradient id="gold"><stop stop-color="#f5d78e"/><stop offset="1" stop-color="#c18a42"/></linearGradient>
+ <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#a0ad95" stroke-opacity=".13"/></pattern>
+ <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#000" flood-opacity=".4"/></filter>
+</defs>
+<rect width="1200" height="675" rx="24" fill="url(#bg)"/><rect x="24" y="24" width="1152" height="627" rx="18" fill="url(#grid)" stroke="#b5b59a" stroke-opacity=".2"/>
+<g fill="none" stroke="#8c9c84" stroke-opacity=".38" stroke-width="5" stroke-linecap="round"><path d="M-30 170C150 220 190 70 350 155S540 310 700 230 940 145 1230 245"/><path d="M-30 420C160 350 250 510 420 420S650 320 800 430 1040 520 1230 390"/><path d="M160-20C250 120 160 230 270 330S390 490 330 700"/><path d="M760-20C670 130 830 200 760 330S680 530 820 700"/></g>
+<path d="M215 465C300 410 345 305 470 315S650 410 740 310 900 235 1000 300" fill="none" stroke="#d5b566" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 13" opacity=".8"/>
+<g transform="translate(70 64)"><rect width="300" height="45" rx="22" fill="#202824" stroke="#d5b76f" stroke-opacity=".65"/><circle cx="23" cy="22" r="5" fill="#e8c779"/><text x="40" y="28" fill="#e8c779" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="2.5">PROJECT PREVIEW</text></g>
+<g transform="translate(70 145)"><text fill="#f6f1e6" font-family="Arial,sans-serif" font-size="66" font-weight="700" letter-spacing="-2">Durga-Map</text><text y="42" fill="#c0c1b3" font-family="Arial,sans-serif" font-size="24">Discover Durga Puja locations</text><rect y="70" width="200" height="3" rx="1.5" fill="url(#gold)"/></g>
+<g filter="url(#shadow)">
+ <g transform="translate(250 380)"><path d="M0-36C-22-36-38-20-38 2c0 29 38 62 38 62S38 31 38 2C38-20 22-36 0-36Z" fill="#c94d43" stroke="#f7c7a4" stroke-width="3"/><circle cy="1" r="13" fill="#fff1dc"/><path d="M-8 1h16M0-7v16" stroke="#c94d43" stroke-width="3" stroke-linecap="round"/></g>
+ <g transform="translate(500 310)"><path d="M0-30C-19-30-32-16-32 2c0 25 32 52 32 52S32 27 32 2C32-16 19-30 0-30Z" fill="#d4ad5c" stroke="#f9e4a9" stroke-width="3"/><circle cy="1" r="10" fill="#202824"/><path d="M-6 1h12M0-5v12" stroke="#f9e4a9" stroke-width="2.5" stroke-linecap="round"/></g>
+ <g transform="translate(745 360)"><path d="M0-36C-22-36-38-20-38 2c0 29 38 62 38 62S38 31 38 2C38-20 22-36 0-36Z" fill="#c94d43" stroke="#f7c7a4" stroke-width="3"/><circle cy="1" r="13" fill="#fff1dc"/><path d="M-8 1h16M0-7v16" stroke="#c94d43" stroke-width="3" stroke-linecap="round"/></g>
+ <g transform="translate(1000 300)"><path d="M0-39C-24-39-41-21-41 2c0 31 41 66 41 66S41 33 41 2C41-21 24-39 0-39Z" fill="url(#gold)" stroke="#fff0c2" stroke-width="3"/><circle cy="1" r="14" fill="#242821"/><path d="M-9 1h18M0-8v18" stroke="#f8e7bb" stroke-width="3" stroke-linecap="round"/></g>
+</g>
+<g transform="translate(70 555)"><rect width="310" height="58" rx="13" fill="#202824" stroke="#9b9b7c" stroke-opacity=".5"/><circle cx="25" cy="29" r="6" fill="#d4ad5c"/><text x="44" y="25" fill="#f4eee0" font-family="Arial,sans-serif" font-size="17" font-weight="700">Location discovery</text><text x="44" y="44" fill="#aeb3a5" font-family="Arial,sans-serif" font-size="13">Explore the live project</text></g>
+</svg>
