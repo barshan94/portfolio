@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Durga-Map project preview</title>
+  <desc id="desc">A dark map interface with location pins, a highlighted route, and a Durga Puja location marker.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111518"/><stop offset="1" stop-color="#1c201d"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f6d68a"/><stop offset="1" stop-color="#c28a43"/></linearGradient>
+    <pattern id="grid" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M46 0H0V46" fill="none" stroke="#8c9a83" stroke-opacity=".12" stroke-width="1"/></pattern>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#000" flood-opacity=".4"/></filter>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <rect x="26" y="26" width="1148" height="623" rx="20" fill="url(#grid)" stroke="#a7a98e" stroke-opacity=".18"/>
+  <g opacity=".3" fill="none" stroke="#7f927c" stroke-width="4" stroke-linecap="round">
+    <path d="M-30 170C140 220 190 80 340 150S530 310 690 240 910 140 1230 240"/>
+    <path d="M-30 420C160 350 250 500 410 420S650 320 790 430 1040 520 1230 390"/>
+    <path d="M170 -20C250 110 170 230 260 330S390 490 330 700"/>
+    <path d="M760 -20C670 130 830 200 760 330S680 530 820 700"/>
+    <path d="M1010 -20C940 110 1080 230 1000 340S980 520 1080 700"/>
+  </g>
+  <g opacity=".62" fill="none" stroke="#d6b66b" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 13">
+    <path d="M215 465C300 410 345 305 470 315S650 410 740 310 900 235 1000 300"/>
+  </g>
+  <g transform="translate(76 70)">
+    <rect width="330" height="48" rx="24" fill="#202824" stroke="#d5b76f" stroke-opacity=".6"/>
+    <circle cx="24" cy="24" r="6" fill="#e8c779"/>
+    <text x="42" y="30" fill="#e8c779" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">PROJECT PREVIEW</text>
+  </g>
+  <g transform="translate(76 152)">
+    <text fill="#f6f1e6" font-family="Arial,sans-serif" font-size="66" font-weight="700" letter-spacing="-2">Durga-Map</text>
+    <text y="42" fill="#b8b8a8" font-family="Arial,sans-serif" font-size="24">Discover Durga Puja locations</text>
+    <rect y="70" width="206" height="3" rx="1.5" fill="url(#gold)"/>
+  </g>
+  <g filter="url(#shadow)">
+    <g transform="translate(250 380)">
+      <path d="M0-36C-22-36-38-20-38 2c0 29 38 62 38 62S38 31 38 2C38-20 22-36 0-36Z" fill="#c94d43" stroke="#f7c7a4" stroke-width="3"/>
+      <circle cy="1" r="13" fill="#fff1dc"/>
+      <path d="M-8 1h16M0-7v16" stroke="#c94d43" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(500 310)">
+      <path d="M0-30C-19-30-32-16-32 2c0 25 32 52 32 52S32 27 32 2C32-16 19-30 0-30Z" fill="#d4ad5c" stroke="#f9e4a9" stroke-width="3"/>
+      <circle cy="1" r="10" fill="#202824"/>
+      <path d="M-6 1h12M0-5v12" stroke="#f9e4a9" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(745 360)">
+      <path d="M0-36C-22-36-38-20-38 2c0 29 38 62 38 62S38 31 38 2C38-20 22-36 0-36Z" fill="#c94d43" stroke="#f7c7a4" stroke-width="3"/>
+      <circle cy="1" r="13" fill="#fff1dc"/>
+      <path d="M-8 1h16M0-7v16" stroke="#c94d43" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(1000 300)">
+      <path d="M0-39C-24-39-41-21-41 2c0 31 41 66 41 66S41 33 41 2C41-21 24-39 0-39Z" fill="url(#gold)" stroke="#fff0c2" stroke-width="3"/>
+      <circle cy="1" r="14" fill="#242821"/>
+      <path d="M-9 1h18M0-8v18" stroke="#f8e7bb" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g transform="translate(76 556)">
+    <rect width="330" height="58" rx="14" fill="#202824" stroke="#9b9b7c" stroke-opacity=".4"/>
+    <circle cx="26" cy="29" r="6" fill="#d4ad5c"/>
+    <text x="45" y="25" fill="#f4eee0" font-family="Arial,sans-serif" font-size="17" font-weight="700">Location discovery</text>
+    <text x="45" y="44" fill="#aeb3a5" font-family="Arial,sans-serif" font-size="13">Explore the live project</text>
+  </g>
+  <g transform="translate(1050 575)">
+    <circle r="34" fill="#e3bd6d" fill-opacity=".12" stroke="#e3bd6d" stroke-opacity=".7"/>
+    <path d="M-7-12L14 0-7 12Z" fill="#f5d68e"/>
+  </g>
+</svg>
