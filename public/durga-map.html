@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Durga Map — Durga Puja Explorer</title>
+<link rel="icon" type="image/svg+xml" href="./assets/durga-map-icon.svg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{color-scheme:dark;--bg:#101713;--panel:#19231d;--p2:#202d25;--line:#33483a;--text:#f3f5ed;--muted:#a8b7a9;--lime:#c4f36a;--err:#ff8f85}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,sans-serif}
+.wrap{max-width:1200px;margin:auto;padding:20px 14px 40px}h1{font-size:clamp(28px,5vw,48px);line-height:1.05;margin:12px 0}h1 span{color:var(--lime)}
+.muted{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}h2{font-size:17px;margin:0 0 8px}
+button,.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--p2);color:var(--text);padding:10px 14px;border-radius:11px;font-weight:650;display:inline-block}
+button:disabled{opacity:.4;cursor:not-allowed}.primary{background:var(--lime);color:#172014;border-color:var(--lime)}
+input[type=file]{display:none}input[type=text],select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat{background:var(--p2);border-radius:10px;padding:10px}.stat b{display:block;font-size:22px}
+#status{margin-top:10px;font-size:13px;color:var(--muted);white-space:pre-wrap}#status.error{color:var(--err)}
+#map{height:380px;border-radius:12px;border:1px solid var(--line)}
+.tw{overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px}table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);font-size:13px}th{background:#1d2921;color:var(--muted)}
+.tag{background:#293a2d;color:var(--lime);padding:2px 7px;border-radius:6px;font-size:11px}.none{color:var(--err)}
+.warn{background:#2c2a18;border:1px solid #6b6430;border-radius:12px;padding:12px;margin:12px 0;font-size:13px}
+.review-list{display:grid;gap:7px;margin-top:12px;max-height:260px;overflow:auto}.review-item{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--p2);border:1px solid var(--line);border-radius:10px;padding:9px}.review-item .review-info{min-width:0;overflow-wrap:anywhere}.review-item .review-meta{font-size:12px;color:var(--muted)}.review-item button{padding:6px 10px;flex-shrink:0}.review-state{font-size:11px;color:var(--lime)}
+.auth-fields{display:grid;gap:6px;margin-top:12px}.auth-fields label{font-size:13px;color:var(--muted)}input[type=email],input[type=password]{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit}.journey-stat b{font-size:25px}.nearby-item{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--p2);border:1px solid var(--line);border-radius:10px;padding:10px}.nearby-item .nearby-info{min-width:0;overflow-wrap:anywhere}.nearby-item .nearby-meta{font-size:12px;color:var(--muted)}.nearby-item button{flex-shrink:0;padding:7px 10px}.history-item{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;padding:10px 2px;border-bottom:1px solid var(--line)}.history-item:last-child{border-bottom:0}.history-item .history-meta{font-size:12px;color:var(--muted)}.auth-status,.visit-status{white-space:pre-wrap;margin-top:8px}
+
+.route-number{background:transparent;border:0}
+.route-number span{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:2px solid #101713;border-radius:50%;background:#ffb454;color:#172014;font-weight:800;box-shadow:0 2px 7px #0008}.page-view{display:none}.page-view.active{display:block}.main-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:18px 0 16px}.main-nav button{padding:10px 6px;font-size:13px}.main-nav button.active{background:var(--lime);color:#172014;border-color:var(--lime)}.page-intro{margin:0 0 12px}#nearbyMap,#routeMap{height:360px;border-radius:12px;border:1px solid var(--line);margin:12px 0}.map-link{display:inline-block;margin-top:6px;color:var(--lime);font-size:13px}@media(max-width:520px){.main-nav{grid-template-columns:repeat(3,minmax(0,1fr))}.main-nav button{font-size:12px;padding:9px 4px}#nearbyMap,#routeMap{height:300px}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><img src="./assets/durga-map-icon.svg" alt="" width="44" height="44" style="border-radius:12px;flex:none"><span style="font-size:18px;font-weight:800;letter-spacing:.2px">Durga Map</span></div>
+<p class="muted">Android-first · Photo GPS · Puja route planner</p><h1>Turn your photos into a <span>festival map.</span></h1>
+<p class="muted">Photos are read temporarily on your device and never uploaded. Valid GPS coordinates can be shared publicly; pandal names are optional.</p>
+
+<nav class="main-nav" aria-label="Main navigation">
+  <button type="button" data-page="page-map" class="active">Public map</button>
+  <button type="button" data-page="page-import">Import photos</button>
+  <button type="button" data-page="page-journey">My Puja Journey</button>
+  <button type="button" data-page="page-route">Visiting route</button>
+  <button type="button" data-page="page-account" id="accountNavLabel">Sign in</button>
+</nav>
+
+<section id="page-import" class="page-view">
+<div class="grid">
+<section class="panel">
+<h2>1 · Import</h2>
+<div class="muted">Choose one or more photos. Durga Map reads their GPS on this device, then automatically looks for place-name suggestions where names are missing. Photos are never uploaded.</div>
+<div class="row">
+<label class="btn primary" for="files">Choose files (keep GPS)</label>
+<input id="files" type="file" accept="image/*,.json" multiple>
+<label class="btn" for="folderFiles">Select whole folder</label>
+<input id="folderFiles" type="file" accept="image/*,.json" webkitdirectory directory multiple>
+</div>
+<div class="stats"><div class="stat"><b id="nTotal">0</b><span class="muted">Photos scanned</span></div><div class="stat"><b id="nGps">0</b><span class="muted">Locations found</span></div><div class="stat"><b id="nPandal">0</b><span class="muted">Named pandals</span></div></div>
+<div id="status">Waiting for photos.</div>
+</section>
+
+<section class="panel">
+<h2>2 · Review locations</h2>
+<p class="muted">Import your photos once. GPS is detected automatically, and we’ll fill in a nearby place-name suggestion when map data has one. Please review names before sharing; photos stay on this device.</p>
+<select id="mPhoto" disabled><option>Import photos first</option></select>
+<label class="muted" for="mPandalName">Pandal name (optional)</label>
+<input id="mPandalName" type="text" maxlength="160" style="margin-top:4px" placeholder="Auto-suggested place name (editable)">
+<label class="muted" for="mCoord" style="display:block;margin-top:10px">GPS coordinates</label>
+<input id="mCoord" type="text" style="margin-top:4px" placeholder="23.615944, 90.503167 or 23°36'57.4&quot;N 90°30'11.4&quot;E">
+<div class="row"><button id="mApply" class="primary" disabled>Save this location</button><button id="mConfirm" disabled>Confirm this location</button><button id="mClear" disabled>Remove GPS</button><button id="mSaveAll" disabled>Save all GPS locations</button></div>
+<div id="mStatus" class="muted" style="margin-top:6px"></div>
+<div id="reviewList" class="review-list" aria-live="polite"></div>
+</section>
+</div>
+</section>
+
+<section id="page-map" class="page-view active">
+<section class="panel" style="margin-top:0" aria-labelledby="mapHeading">
+  <h2 id="mapHeading">3 · Your Puja map</h2>
+  <p class="muted">All locations detected from your photos appear here. Give a location a pandal name in Step 2 to make it easier to identify.</p>
+  <div class="stats"><div class="stat"><b id="nPuja">0</b><span class="muted">Puja locations</span></div><div class="stat"><b id="nUnlocated">0</b><span class="muted">Photos without GPS</span></div><div class="stat"><b id="nNamed">0</b><span class="muted">Named locations</span></div></div>
+  <div id="map" style="margin-top:12px"></div>
+</section>
+
+<div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:12px 0 0">Location inventory</h2><input id="q" type="text" placeholder="Filter locations…" style="max-width:240px"></div>
+<div class="row"><button id="csv" disabled>Export locations CSV</button><button id="json" disabled>Export locations JSON</button><button id="clear" disabled>Clear local locations</button></div>
+<p class="muted">Shared mandap locations and GPS coordinates are retained. Photos are read temporarily and never uploaded.</p>
+<div class="tw"><table><thead><tr><th>Location name</th><th>GPS coordinates</th><th>Status</th></tr></thead><tbody id="rows"><tr><td colspan="3" class="muted" style="text-align:center;padding:20px">No locations yet.</td></tr></tbody></table></div>
+</section>
+
+<section id="page-account" class="page-view">
+<section class="panel" style="margin-top:0" aria-labelledby="accountHeading">
+  <h2 id="accountHeading">4 · Your account</h2>
+  <p class="muted">Explore the shared mandap map without signing in. Create an account to keep your personal visit history across devices and years. Your visit history is private.</p>
+  <div id="authFields" class="auth-fields">
+    <label for="authEmail">Email address</label>
+    <input id="authEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com">
+    <label for="authPassword">Password</label>
+    <input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters">
+  </div>
+  <div class="row">
+    <button id="signUp" class="primary" type="button">Create account</button>
+    <button id="signIn" type="button">Sign in</button>
+    <button id="signOut" type="button" style="display:none">Sign out</button>
+  </div>
+  <div id="accountStatus" class="muted auth-status" aria-live="polite">Not signed in. You can still browse the public map.</div>
+</section>
+
+</section>
+
+<section id="page-journey" class="page-view">
+<section class="panel" style="margin-top:0" aria-labelledby="journeyHeading">
+  <h2 id="journeyHeading">My Puja Journey</h2>
+  <p class="muted page-intro">Choose the mandaps you want to visit. Use the Visiting route tab when you are ready to plan your stops.</p>
+  <div class="row" style="margin:0 0 10px"><button type="button" data-page="page-route">Plan visiting route</button><button type="button" data-page="page-account" id="journeyAccountLink">Sign in to sync</button></div>
+  <p class="muted">Find public mandaps within 5 km of you. Use the map to see where they are, select places one by one or select all, and mark your visit status. Sign in is only needed to save private visit choices.</p>
+  <div class="row">
+    <button id="findNearby" class="primary" type="button">Find nearby mandaps</button>
+    <label class="row" style="align-items:center;margin:0;gap:7px;padding:8px 4px"><input id="selectAllNearby" type="checkbox" style="width:auto"> Select all nearby</label>
+  </div>
+  <div class="row">
+    <button id="markSelectedVisited" type="button" disabled>Mark selected visited</button>
+    <button id="markSelectedNotVisited" type="button" disabled>Mark selected not visited</button>
+  </div>
+  <div id="visitStatus" class="muted visit-status" aria-live="polite">Sign in to sync your private visit choices.</div>
+  <h3 style="margin:16px 0 4px;font-size:15px">Nearby mandaps on the map</h3>
+  <p class="muted" style="margin:0">Your location and each nearby mandap will appear here. Tap a marker to see its name.</p>
+  <div id="nearbyMap" role="application" aria-label="Map of nearby mandaps"></div>
+  <div id="nearbyList" class="review-list" aria-live="polite"><p class="muted">Tap Find nearby mandaps to get started.</p></div>
+  <details style="margin-top:12px">
+    <summary style="cursor:pointer;font-weight:650">My saved visit history</summary>
+    <div class="stats">
+      <div class="stat journey-stat"><b id="visitsThisYear">0</b><span class="muted">Unique this year</span></div>
+      <div class="stat journey-stat"><b id="visitsAllTime">0</b><span class="muted">All-time unique</span></div>
+      <div class="stat journey-stat"><b id="visitsRepeat">0</b><span class="muted">Repeat visits</span></div>
+    </div>
+    <div id="visitHistory" class="muted" style="margin-top:8px">Sign in to view your saved visits across years.</div>
+  </details>
+</section>
+
+</section>
+
+<section id="page-route" class="page-view">
+<section class="panel" style="margin-top:0" aria-labelledby="routeHeading">
+  <h2 id="routeHeading">Shortest visiting route</h2>
+  <div class="row" style="margin:0 0 10px"><button type="button" data-page="page-journey">Choose mandaps</button></div>
+  <p class="muted">Select mandaps on the My Puja Journey page first. Choose your starting point here, then the app orders the selected stops by approximate geographic distance and plots them below.</p>
+  <label for="routeStartMode" class="muted">Start route from</label>
+  <select id="routeStartMode" style="margin-top:4px">
+    <option value="gps">My current GPS location</option>
+    <option value="mandap">A mandap I choose</option>
+  </select>
+  <div id="routeStartMandapWrap" style="display:none;margin-top:8px">
+    <label for="routeStartMandap" class="muted">Choose starting mandap</label>
+    <select id="routeStartMandap" style="margin-top:4px"></select>
+  </div>
+  <div class="row">
+    <button id="planRoute" class="primary" type="button" disabled>Find shortest route</button>
+    <button id="openRoute" type="button" disabled>Open route in Google Maps</button>
+  </div>
+  <div id="routeSummary" class="muted" style="margin-top:10px">Select pandals in My Puja Journey, then return here to plan your route.</div>
+  <div id="routeMap" role="application" aria-label="Optimized visiting route map"></div>
+  <ol id="routeStops" style="padding-left:24px"></ol>
+</section>
+
+
+</section>
+
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script type="module">
+const $=id=>document.getElementById(id);
+function showPage(id){
+  document.querySelectorAll('.page-view').forEach(page=>page.classList.toggle('active',page.id===id));
+  document.querySelectorAll('[data-page]').forEach(button=>button.classList.toggle('active',button.dataset.page===id));
+  if(id==='page-map'&&map)requestAnimationFrame(()=>map.invalidateSize());
+  if(id==='page-journey'&&nearbyMap)requestAnimationFrame(()=>nearbyMap.invalidateSize());
+  if(id==='page-route'&&routeMap)requestAnimationFrame(()=>routeMap.invalidateSize());
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('[data-page]').forEach(button=>button.addEventListener('click',()=>showPage(button.dataset.page)));
+
+const SUPABASE_URL='https://iomikfkjawupfyppzamj.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_oq6KLlCX0CBDxydBXWkKjA__6veVLGY';
+function loadSavedRecords(){
+  try{
+    localStorage.removeItem('durgaMap.records.v1');
+    const saved=JSON.parse(localStorage.getItem('durgaMap.locations.v2')||'[]');
+    if(!Array.isArray(saved))return [];
+    return saved.map((r,i)=>({name:String(r.name||r.pandalName||'Saved location '+(i+1)),pandalName:String(r.pandalName||r.name||''),lat:Number.isFinite(r.lat)?r.lat:NaN,lon:Number.isFinite(r.lon)?r.lon:NaN,confirmed:!!r.confirmed,file:null,remoteId:r.remoteId||null,isPublic:!!r.isPublic}));
+  }catch{return []}
+}
+let records=loadSavedRecords(),sidecars=new Map(),map,layer,routeMap,routeLayer,nearbyMap,nearbyLayer,nearbyOrigin=null,exifr=null,optimizedRoute=[],selectedRecordIndex=0,placeLookupToken=0;
+let nearbyMandaps=[],selectedPandalIds=new Set(),pandalStatuses=new Map();
+function persistRecords(){
+  try{
+    const locations=[];
+    for(const r of records){
+      const name=(r.pandalName||'').trim();
+      if(!name||!validPair(r.lat,r.lon)||!r.isPublic||!r.remoteId)continue;
+      const duplicate=locations.some(x=>x.name.toLowerCase()===name.toLowerCase()&&Math.abs(x.lat-r.lat)<0.0003&&Math.abs(x.lon-r.lon)<0.0003);
+      if(!duplicate)locations.push({name,pandalName:name,lat:r.lat,lon:r.lon,confirmed:!!r.confirmed,isPublic:!!r.isPublic,remoteId:r.remoteId||null});
+    }
+    localStorage.setItem('durgaMap.locations.v2',JSON.stringify(locations));
+    return true;
+  }catch(e){console.warn('Could not persist location records',e);return false}
+}
+// A publishable key belongs in apikey. Do not send it as a Bearer JWT; that can make REST writes fail.
+const SUPABASE_HEADERS={'apikey':SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'};
+
+// Account-based personal visit history. Only user-confirmed visit events are uploaded.
+const AUTH_STORAGE_KEY='durgaMap.auth.v1';
+let authSession=null,visitRecords=[];
+function setAccountStatus(message,isError=false){
+  $('accountStatus').textContent=message;
+  $('accountStatus').classList.toggle('none',isError);
+}
+function setVisitStatus(message,isError=false){
+  $('visitStatus').textContent=message;
+  $('visitStatus').classList.toggle('none',isError);
+}
+function saveAuthSession(data,previous=null){
+  const expiry=data.expires_at
+    ? (Number(data.expires_at)>1e12?Number(data.expires_at):Number(data.expires_at)*1000)
+    : Date.now()+Number(data.expires_in||3600)*1000;
+  authSession={
+    access_token:data.access_token,
+    refresh_token:data.refresh_token||previous?.refresh_token,
+    expires_at:expiry,
+    user:data.user||previous?.user||null
+  };
+  localStorage.setItem(AUTH_STORAGE_KEY,JSON.stringify(authSession));
+}
+function clearAuthSession(){
+  authSession=null;visitRecords=[];
+  try{localStorage.removeItem(AUTH_STORAGE_KEY)}catch{}
+  updateAccountUI();
+  renderVisitHistory();
+}
+async function authRequest(path,body,token=null){
+  const headers={...SUPABASE_HEADERS};
+  if(token)headers.Authorization='Bearer '+token;
+  const response=await fetch(SUPABASE_URL+path,{method:'POST',headers,body:JSON.stringify(body),cache:'no-store'});
+  const raw=await response.text();
+  let data={};try{data=raw?JSON.parse(raw):{}}catch{}
+  if(!response.ok)throw new Error(data.msg||data.message||data.error_description||data.error||raw||('Authentication failed ('+response.status+')'));
+  return data;
+}
+async function hydrateSessionUser(session){
+  if(!session?.access_token||session.user)return session;
+  try{
+    const response=await fetch(SUPABASE_URL+'/auth/v1/user',{headers:{...SUPABASE_HEADERS,Authorization:'Bearer '+session.access_token},cache:'no-store'});
+    if(response.ok){
+      session.user=await response.json();
+      localStorage.setItem(AUTH_STORAGE_KEY,JSON.stringify(session));
+    }else if(response.status===401){
+      clearAuthSession();
+      return null;
+    }
+  }catch(e){console.warn('Could not restore account profile:',e)}
+  return session;
+}
+async function getValidSession(){
+  if(!authSession){
+    try{authSession=JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)||'null')}catch{authSession=null}
+  }
+  if(!authSession?.access_token)return null;
+  if(authSession.expires_at>Date.now()+60000)return await hydrateSessionUser(authSession);
+  if(!authSession.refresh_token){clearAuthSession();return null}
+  try{
+    const previous=authSession;
+    const refreshed=await authRequest('/auth/v1/token?grant_type=refresh_token',{refresh_token:previous.refresh_token});
+    saveAuthSession(refreshed,previous);
+    return await hydrateSessionUser(authSession);
+  }catch(e){
+    if(/invalid refresh token|refresh token not found|session.*not found/i.test(e.message)){
+      clearAuthSession();return null;
+    }
+    throw e;
+  }
+}
+function updateAccountUI(){
+  const signedIn=!!authSession?.access_token&&!!authSession?.user;
+  $('authFields').style.display=signedIn?'none':'grid';
+  $('signUp').style.display=signedIn?'none':'inline-block';
+  $('signIn').style.display=signedIn?'none':'inline-block';
+  $('signOut').style.display=signedIn?'inline-block':'none';
+  const accountLabel=$('accountNavLabel');
+  if(accountLabel)accountLabel.textContent=signedIn?'Account':'Sign in';
+  const journeyLink=$('journeyAccountLink');
+  if(journeyLink)journeyLink.textContent=signedIn?'Manage account':'Sign in to sync';
+  $('accountHeading').textContent=signedIn?'Your account':'Sign in or create an account';
+  if(signedIn)setAccountStatus('Signed in as '+(authSession.user.email||'your account')+'. Your private Puja journey is syncing.');
+}
+async function loadVisitHistory(){
+  const session=await getValidSession();
+  if(!session){visitRecords=[];renderVisitHistory();return}
+  const all=[];
+  for(let start=0;;start+=1000){
+    const response=await fetch(SUPABASE_URL+'/rest/v1/personal_visits?select=id,pandal_id,pandal_name,latitude,longitude,visited_at,puja_year,method&order=visited_at.desc&limit=1000',{
+      headers:{...SUPABASE_HEADERS,Authorization:'Bearer '+session.access_token,Range:start+'-'+(start+999)},
+      cache:'no-store'
+    });
+    if(!response.ok){
+      const detail=await response.text().catch(()=> '');
+      throw new Error('Could not load your visit history ('+response.status+'): '+detail.slice(0,180));
+    }
+    const page=await response.json();
+    all.push(...page);
+    if(page.length<1000)break;
+  }
+  visitRecords=all;
+  renderVisitHistory();
+}
+function visitKey(v){return v.pandal_id||('coords:'+Number(v.latitude).toFixed(4)+','+Number(v.longitude).toFixed(4))}
+function renderVisitHistory(){
+  const year=new Date().getFullYear();
+  const thisYear=visitRecords.filter(v=>Number(v.puja_year)===year);
+  const uniqueThisYear=new Set(thisYear.map(visitKey));
+  for(const [id,status] of pandalStatuses){
+    if(status.visited)uniqueThisYear.add(id);else uniqueThisYear.delete(id);
+  }
+  const uniqueAll=new Set(visitRecords.map(visitKey));
+  $('visitsThisYear').textContent=uniqueThisYear.size;
+  $('visitsAllTime').textContent=uniqueAll.size;
+  $('visitsRepeat').textContent=Math.max(0,visitRecords.length-uniqueAll.size);
+  if(!authSession?.user){
+    $('visitHistory').textContent='Sign in to view your saved visits across years.';
+    $('nearbyList').innerHTML='';
+    return;
+  }
+  if(!visitRecords.length){
+    $('visitHistory').innerHTML='<p class="muted">No visits recorded yet. Find a nearby mandap and confirm your first visit.</p>';
+    return;
+  }
+  $('visitHistory').innerHTML=visitRecords.slice(0,100).map(v=>{
+    const date=new Date(v.visited_at);
+    const when=Number.isNaN(date.getTime())?'Date unavailable':date.toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    return '<div class="history-item"><div><strong>'+esc(v.pandal_name||'Unnamed mandap')+'</strong><div class="history-meta">'+esc(when)+' · Puja '+esc(v.puja_year)+' · '+(v.method==='gps'?'GPS suggestion confirmed':'Manually marked')+'</div></div></div>';
+  }).join('')+(visitRecords.length>100?'<p class="muted">Showing the latest 100 visits.</p>':'');
+}
+async function initAccount(){
+  try{
+    authSession=JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)||'null');
+    const session=await getValidSession();
+    if(session){
+      updateAccountUI();
+      await loadVisitHistory();
+      await loadPandalStatuses();
+      setVisitStatus('Your visit history is synced. Find nearby mandaps when you are ready.');
+    }else{
+      updateAccountUI();
+    }
+  }catch(e){
+    console.warn('Account restore failed:',e);
+    setAccountStatus('Could not restore your session. Check your internet connection or sign in again.',true);
+  }
+}
+async function signUp(){
+  const email=$('authEmail').value.trim(),password=$('authPassword').value;
+  if(!email||!password){setAccountStatus('Enter your email and password first.',true);return}
+  if(password.length<6){setAccountStatus('Use a password with at least 6 characters.',true);return}
+  $('signUp').disabled=true;
+  try{
+    const data=await authRequest('/auth/v1/signup',{email,password});
+    if(data.access_token&&data.refresh_token){
+      saveAuthSession(data);updateAccountUI();
+      setAccountStatus('Account created and signed in. Your Puja journey is ready.');
+      try{await loadVisitHistory();await loadPandalStatuses();setVisitStatus('Your visit history is synced. Find nearby mandaps when you are ready.')}catch(e){setVisitStatus('Signed in, but visit history could not load: '+e.message,true)}
+    }else{
+      setAccountStatus('Account created. Check your email for the confirmation link, then return here and sign in.');
+    }
+  }catch(e){setAccountStatus('Could not create account: '+e.message,true)}
+  finally{$('signUp').disabled=false}
+}
+async function signIn(){
+  const email=$('authEmail').value.trim(),password=$('authPassword').value;
+  if(!email||!password){setAccountStatus('Enter your email and password first.',true);return}
+  $('signIn').disabled=true;
+  try{
+    const data=await authRequest('/auth/v1/token?grant_type=password',{email,password});
+    saveAuthSession(data);updateAccountUI();
+    setAccountStatus('Signed in successfully.');
+    try{await loadVisitHistory();await loadPandalStatuses();setVisitStatus('Signed in. Your personal visit choices are synced across devices.')}catch(e){setVisitStatus('Signed in, but visit history could not load: '+e.message,true)}
+  }catch(e){setAccountStatus('Could not sign in: '+e.message,true)}
+  finally{$('signIn').disabled=false}
+}
+async function signOut(){
+  try{
+    const session=await getValidSession();
+    if(session)await authRequest('/auth/v1/logout',{},session.access_token);
+  }catch(e){console.warn('Server sign-out did not complete:',e)}
+  clearAuthSession();
+  pandalStatuses.clear();
+  renderNearbyList();
+  setAccountStatus('Signed out. Your cloud visit history remains saved to your account.');
+  setVisitStatus('Sign in to sync your private visit choices.');
+}
+let savingVisit=false;
+async function saveVisit(r,method='manual'){
+  if(savingVisit)return;
+  if(!r||!r.isPublic||!r.remoteId||!validPair(r.lat,r.lon)){
+    setVisitStatus('Choose a mandap from the shared map before recording a visit.',true);return;
+  }
+  let session;
+  try{session=await getValidSession()}catch(e){setVisitStatus('Could not refresh your session: '+e.message,true);return}
+  if(!session){
+    setVisitStatus('Please create an account or sign in before saving a visit. The shared map remains available without an account.',true);
+    $('authEmail').focus();return;
+  }
+  const year=new Date().getFullYear();
+  const already=visitRecords.some(v=>v.pandal_id===r.remoteId&&Number(v.puja_year)===year);
+  if(already&&!confirm('You already recorded this mandap this year. Record another visit?'))return;
+  savingVisit=true;
+  const button=$('findNearby');button.disabled=true;
+  try{
+    const body={
+      user_id:session.user.id,
+      pandal_id:r.remoteId,
+      pandal_name:(r.pandalName||r.name||'Unnamed mandap').trim(),
+      latitude:r.lat,longitude:r.lon,
+      visited_at:new Date().toISOString(),
+      puja_year:year,
+      method:method==='gps'?'gps':'manual'
+    };
+    const response=await fetch(SUPABASE_URL+'/rest/v1/personal_visits?select=id,pandal_id,pandal_name,latitude,longitude,visited_at,puja_year,method',{
+      method:'POST',
+      headers:{...SUPABASE_HEADERS,Authorization:'Bearer '+session.access_token,Prefer:'return=representation'},
+      body:JSON.stringify(body),cache:'no-store'
+    });
+    const raw=await response.text();let data=[];try{data=raw?JSON.parse(raw):[]}catch{}
+    if(!response.ok)throw new Error(data.message||data.details||raw||('Save failed ('+response.status+')'));
+    if(!Array.isArray(data)||!data[0]?.id)throw new Error('The server did not confirm the saved visit.');
+    await loadVisitHistory();
+    setVisitStatus('Visit saved to your private history: '+body.pandal_name+'.');
+  }catch(e){
+    setVisitStatus('Visit was not confirmed as saved: '+e.message,true);
+  }finally{button.disabled=false;savingVisit=false}
+}
+async function getCurrentVisitPosition(){
+  const C=window.Capacitor;
+  if(C&&C.isNativePlatform&&C.isNativePlatform()&&C.registerPlugin){
+    const Geo=C.registerPlugin('Geolocation');
+    try{
+      let permission=await Geo.checkPermissions();
+      if(permission.location!=='granted'&&permission.coarseLocation!=='granted'){
+        permission=await Geo.requestPermissions();
+      }
+      if(permission.location!=='granted'&&permission.coarseLocation!=='granted'){
+        throw new Error('Location access is blocked. Open Android Settings → Apps → Durga Map → Permissions → Location, choose “Allow only while using the app”, and enable “Use precise location”. Then return here and try again.');
+      }
+    }catch(error){
+      if(error?.message?.includes('Location access is blocked'))throw error;
+      throw new Error('Android could not request location permission. Open Settings → Apps → Durga Map → Permissions → Location, allow access while using the app, then try again. Details: '+(error?.message||'permission request failed'));
+    }
+    try{
+      return await Geo.getCurrentPosition({enableHighAccuracy:true,maximumAge:10000,timeout:20000});
+    }catch(error){
+      if(error?.code==='OS-PLUG-GLOC-0003'||error?.code===1||/permission|denied/i.test(error?.message||'')){
+        throw new Error('Location access was denied. Open Android Settings → Apps → Durga Map → Permissions → Location, choose “Allow only while using the app”, and enable “Use precise location”. Also make sure the phone’s main Location setting is on, then try again.');
+      }
+      throw error;
+    }
+  }
+  if(!navigator.geolocation)throw new Error('This device does not provide GPS location in this app.');
+  return await new Promise((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{
+    enableHighAccuracy:true,maximumAge:10000,timeout:20000
+  }));
+}
+async function loadPandalStatuses(){
+  const session=await getValidSession();
+  if(!session){pandalStatuses.clear();renderNearbyList();renderVisitHistory();return}
+  const year=new Date().getFullYear();
+  const response=await fetch(SUPABASE_URL+'/rest/v1/personal_pandal_status?select=pandal_id,visited,puja_year,updated_at&puja_year=eq.'+year+'&order=updated_at.desc',{
+    headers:{...SUPABASE_HEADERS,Authorization:'Bearer '+session.access_token},
+    cache:'no-store'
+  });
+  if(!response.ok)throw new Error('Could not load visit choices ('+response.status+'): '+(await response.text()).slice(0,180));
+  const rows=await response.json();
+  pandalStatuses=new Map(rows.map(row=>[row.pandal_id,{visited:!!row.visited,updatedAt:row.updated_at}]));
+  renderNearbyList();
+  renderVisitHistory();
+}
+async function setPandalStatus(session,record,visited,year){
+  const response=await fetch(SUPABASE_URL+'/rest/v1/personal_pandal_status?on_conflict=user_id,pandal_id,puja_year',{
+    method:'POST',
+    headers:{...SUPABASE_HEADERS,Authorization:'Bearer '+session.access_token,Prefer:'resolution=merge-duplicates,return=representation'},
+    body:JSON.stringify({user_id:session.user.id,pandal_id:record.remoteId,puja_year:year,visited,updated_at:new Date().toISOString()}),
+    cache:'no-store'
+  });
+  const raw=await response.text();let data=[];try{data=raw?JSON.parse(raw):[]}catch{}
+  if(!response.ok)throw new Error(data.message||data.details||raw||('Could not save visit status ('+response.status+')'));
+  if(!Array.isArray(data)||!data[0])throw new Error('The server did not confirm the saved visit status.');
+  pandalStatuses.set(record.remoteId,{visited,updatedAt:data[0].updated_at});
+}
+function renderNearbyMap(){
+  if(!nearbyMap||!nearbyLayer)return;
+  nearbyLayer.clearLayers();
+  if(nearbyOrigin&&validPair(nearbyOrigin.lat,nearbyOrigin.lon)){
+    L.circleMarker([nearbyOrigin.lat,nearbyOrigin.lon],{radius:9,color:'#fff',weight:3,fillColor:'#388bff',fillOpacity:1})
+      .bindPopup('<b>Your current location</b>').addTo(nearbyLayer);
+  }
+  for(const r of nearbyMandaps){
+    const marker=L.marker([r.lat,r.lon]).bindPopup('<b>'+esc(r.pandalName||r.name||'Unnamed mandap')+'</b><br>'+(r.distance>=1000?(r.distance/1000).toFixed(1)+' km away':Math.round(r.distance)+' m away'));
+    marker.addTo(nearbyLayer);
+    marker.on('click',()=>{if(!selectedPandalIds.has(String(r.remoteId))){selectedPandalIds.add(String(r.remoteId));renderNearbyList();}});
+  }
+  const points=[...(nearbyOrigin&&validPair(nearbyOrigin.lat,nearbyOrigin.lon)?[[nearbyOrigin.lat,nearbyOrigin.lon]]:[]),...nearbyMandaps.map(r=>[r.lat,r.lon])];
+  if(points.length)nearbyMap.fitBounds(L.latLngBounds(points).pad(.18),{maxZoom:16});
+}
+function renderNearbyList(){
+  const list=$('nearbyList');
+  if(!list)return;
+  if(!nearbyMandaps.length){
+    list.innerHTML='<p class="muted">Tap Find nearby mandaps to see public mandaps within 5 km.</p>';
+  }else{
+    list.innerHTML=nearbyMandaps.map(r=>{
+      const id=String(r.remoteId);
+      const status=pandalStatuses.get(id);
+      const statusText=status?(status.visited?'Visited this year':'Marked not visited'):'Not marked yet';
+      const statusClass=status?.visited?'review-state':'review-meta';
+      return '<label class="nearby-item"><input type="checkbox" data-select-pandal="'+esc(id)+'" '+(selectedPandalIds.has(id)?'checked':'')+' style="width:auto;flex-shrink:0"><div class="nearby-info" style="flex:1"><strong>'+esc(r.pandalName||r.name||'Unnamed mandap')+'</strong><div class="nearby-meta">'+(r.distance>=1000?(r.distance/1000).toFixed(1)+' km away':Math.round(r.distance)+' m away')+' · <span class="'+statusClass+'">'+statusText+'</span></div></div></label>';
+    }).join('');
+  }
+  list.querySelectorAll('[data-select-pandal]').forEach(input=>input.addEventListener('change',()=>{
+    const id=input.dataset.selectPandal;
+    if(input.checked)selectedPandalIds.add(id);else selectedPandalIds.delete(id);
+    updateJourneyControls();
+  }));
+  const selectAll=$('selectAllNearby');
+  if(selectAll){
+    selectAll.checked=nearbyMandaps.length>0&&nearbyMandaps.every(r=>selectedPandalIds.has(String(r.remoteId)));
+    selectAll.indeterminate=nearbyMandaps.some(r=>selectedPandalIds.has(String(r.remoteId)))&&!selectAll.checked;
+  }
+  updateJourneyControls();
+}
+function updateJourneyControls(){
+  const selectedCount=selectedPandalIds.size;
+  $('markSelectedVisited').disabled=!selectedCount||!authSession?.user;
+  $('markSelectedNotVisited').disabled=!selectedCount||!authSession?.user;
+  $('planRoute').disabled=!selectedCount;
+  const mode=$('routeStartMode')?.value||'gps';
+  $('routeStartMandapWrap').style.display=mode==='mandap'?'block':'none';
+  const startSelect=$('routeStartMandap');
+  if(startSelect){
+    const publicRecords=[...new Map(records.filter(r=>r.isPublic&&r.remoteId&&validPair(r.lat,r.lon)).map(r=>[String(r.remoteId),r])).values()];
+    const current=startSelect.value;
+    startSelect.innerHTML=publicRecords.map(r=>'<option value="'+esc(r.remoteId)+'">'+esc(r.pandalName||r.name||'Unnamed mandap')+'</option>').join('');
+    if(publicRecords.some(r=>String(r.remoteId)===current))startSelect.value=current;
+    startSelect.disabled=!publicRecords.length;
+  }
+}
+async function markSelectedMandaps(visited){
+  if(savingVisit)return;
+  const selected=[...new Map(records.filter(r=>r.isPublic&&r.remoteId&&validPair(r.lat,r.lon)&&selectedPandalIds.has(String(r.remoteId))).map(r=>[String(r.remoteId),r])).values()];
+  if(!selected.length){setVisitStatus('Select at least one nearby mandap first.',true);return}
+  let session;
+  try{session=await getValidSession()}catch(e){setVisitStatus('Could not refresh your session: '+e.message,true);return}
+  if(!session){setVisitStatus('Please sign in to save your private visit choices.',true);$('authEmail').focus();return}
+  savingVisit=true;
+  $('markSelectedVisited').disabled=true;$('markSelectedNotVisited').disabled=true;$('findNearby').disabled=true;
+  const year=new Date().getFullYear();let saved=0;const failures=[];
+  try{
+    for(let i=0;i<selected.length;i++){
+      const record=selected[i];
+      setVisitStatus('Saving '+(i+1)+' of '+selected.length+' mandaps…');
+      try{
+        if(visited){
+          const previousStatus=pandalStatuses.get(String(record.remoteId));
+          const alreadyRecorded=visitRecords.some(v=>v.pandal_id===record.remoteId&&Number(v.puja_year)===year)&&previousStatus?.visited!==false;
+          if(!alreadyRecorded){
+            const eventResponse=await fetch(SUPABASE_URL+'/rest/v1/personal_visits?select=id,pandal_id,pandal_name,latitude,longitude,visited_at,puja_year,method',{
+              method:'POST',
+              headers:{...SUPABASE_HEADERS,Authorization:'Bearer '+session.access_token,Prefer:'return=representation'},
+              body:JSON.stringify({user_id:session.user.id,pandal_id:record.remoteId,pandal_name:(record.pandalName||record.name||'Unnamed mandap').trim(),latitude:record.lat,longitude:record.lon,visited_at:new Date().toISOString(),puja_year:year,method:'manual'}),
+              cache:'no-store'
+            });
+            const raw=await eventResponse.text();let data=[];try{data=raw?JSON.parse(raw):[]}catch{}
+            if(!eventResponse.ok||!Array.isArray(data)||!data[0]?.id)throw new Error(data.message||data.details||raw||'Visit event was not confirmed as saved.');
+          }
+        }
+        await setPandalStatus(session,record,visited,year);
+        saved++;
+      }catch(e){failures.push((record.pandalName||record.name||'Mandap')+': '+e.message)}
+    }
+    await loadVisitHistory();
+    renderNearbyList();
+    if(failures.length)setVisitStatus(saved+' of '+selected.length+' mandap(s) saved. Failed: '+failures.slice(0,2).join('; ')+(failures.length>2?'…':''),true);
+    else setVisitStatus(saved+' mandap(s) marked '+(visited?'visited':'not visited')+' and synced to your private account.');
+  }catch(e){
+    setVisitStatus('Could not finish saving visit choices: '+e.message,true);
+  }finally{
+    savingVisit=false;
+    $('findNearby').disabled=false;
+    updateJourneyControls();
+  }
+}
+async function findNearbyMandaps(){
+  if(savingVisit)return;
+  $('findNearby').disabled=true;
+  $('nearbyList').innerHTML='<p class="muted">Checking your current location…</p>';
+  try{
+    const position=await getCurrentVisitPosition();
+    const here={lat:position.coords.latitude,lon:position.coords.longitude};
+    if(!validPair(here.lat,here.lon))throw new Error('The device returned invalid GPS coordinates.');
+    const unique=new Map();
+    records.filter(r=>r.isPublic&&r.remoteId&&validPair(r.lat,r.lon)).forEach(r=>{
+      if(!unique.has(String(r.remoteId)))unique.set(String(r.remoteId),r);
+    });
+    nearbyMandaps=[...unique.values()].map(r=>({...r,distance:distanceKm(here,r)*1000}))
+      .filter(r=>r.distance<=5000).sort((a,b)=>a.distance-b.distance).slice(0,30);
+    if(position.coords.accuracy>100)setVisitStatus('GPS accuracy is about '+Math.round(position.coords.accuracy)+' m. Nearby search covers up to 5 km; move to a clearer area if results look wrong.');
+    else setVisitStatus('Found '+nearbyMandaps.length+' public mandap(s) within 5 km. Select the places you visited or want to route through.');
+    nearbyOrigin=here;
+    renderNearbyMap();
+    renderNearbyList();
+  }catch(error){
+    const messages={1:'Location permission was denied. Allow location access in Android settings to find nearby mandaps.',2:'Your current location could not be determined. Try again outdoors.',3:'GPS timed out. Please try again.'};
+    setVisitStatus(messages[error.code]||error.message||'Could not read your current location. Try again.',true);
+    nearbyMandaps=[];nearbyOrigin=null;renderNearbyMap();renderNearbyList();
+  }finally{
+    $('findNearby').disabled=false;
+  }
+}
+async function loadPublicLocations(){
+  try{
+    const res=await fetch(SUPABASE_URL+'/rest/v1/puja_locations?select=id,name,latitude,longitude,description&order=name.asc',{headers:SUPABASE_HEADERS});
+    if(!res.ok)throw new Error('Public locations request failed ('+res.status+')');
+    const rows=await res.json();
+    // The cloud is the source of truth for shared locations. Remove cached shared
+    // records first so deleted cloud locations do not reappear from localStorage.
+    records=records.filter(r=>!r.isPublic);
+    for(const p of rows){
+      const lat=Number(p.latitude),lon=Number(p.longitude),name=String(p.name||'').trim();
+      if(!name||!validPair(lat,lon))continue;
+      const existing=records.find(r=>(r.pandalName||r.name||'').trim().toLowerCase()===name.toLowerCase()&&validPair(r.lat,r.lon)&&Math.abs(r.lat-lat)<0.0003&&Math.abs(r.lon-lon)<0.0003);
+      if(existing){
+        existing.name=name;existing.pandalName=name;existing.lat=lat;existing.lon=lon;
+        existing.confirmed=true;existing.remoteId=p.id;existing.isPublic=true;existing.src=existing.src||'Community map';
+      }else{
+        records.push({name,pandalName:name,lat,lon,confirmed:true,file:null,remoteId:p.id,isPublic:true,src:'Community map'});
+      }
+    }
+    render();
+    setStatus('Loaded '+rows.length+' public Puja location(s). Photo files are not uploaded or saved.');
+  }catch(e){console.warn('Could not load public Puja locations',e);setStatus('Could not load shared locations. Saved device locations remain available.',true)}
+}
+async function publishLocation(r){
+  if(!r||!validPair(r.lat,r.lon)){
+    $('mStatus').textContent='Cannot save: valid GPS coordinates are required.';
+    return false;
+  }
+  // Pandal name is optional. The database requires a name column, so generate a stable fallback from coordinates.
+  const optionalName=(r.pandalName||'').trim();
+  const body={name:optionalName||('Unnamed location '+Number(r.lat).toFixed(5)+', '+Number(r.lon).toFixed(5)),latitude:r.lat,longitude:r.lon,description:optionalName?'':'Pandal name not provided'};
+  const endpoint=SUPABASE_URL+'/rest/v1/puja_locations?select=id,name,latitude,longitude,description';
+  const matchesThisLocation=rows=>Array.isArray(rows)&&rows.find(p=>
+    String(p.name||'').trim().toLowerCase()===body.name.toLowerCase()&&
+    Math.abs(Number(p.latitude)-body.latitude)<0.0003&&
+    Math.abs(Number(p.longitude)-body.longitude)<0.0003&&!!p.id
+  );
+  try{
+    // First check whether this exact named location already exists in the cloud.
+    const check=await fetch(endpoint+'&name=eq.'+encodeURIComponent(body.name),{headers:SUPABASE_HEADERS,cache:'no-store'});
+    if(!check.ok){
+      const detail=await check.text().catch(()=> '');
+      throw new Error('Could not verify cloud database ('+check.status+'): '+detail.slice(0,240));
+    }
+    const existing=matchesThisLocation(await check.json());
+    if(existing){
+      r.remoteId=existing.id;r.isPublic=true;
+      return true;
+    }
+
+    // Ask PostgREST to return the inserted row. Never treat an empty response as success.
+    const res=await fetch(endpoint,{
+      method:'POST',
+      headers:{...SUPABASE_HEADERS,'Prefer':'return=representation'},
+      body:JSON.stringify(body),
+      cache:'no-store'
+    });
+    const responseText=await res.text().catch(()=> '');
+    let payload;
+    try{payload=responseText?JSON.parse(responseText):null}catch{payload=null}
+    if(!res.ok){
+      const detail=payload?.message||payload?.details||payload?.hint||responseText||'No error details returned';
+      throw new Error('Supabase rejected the save ('+res.status+'): '+String(detail).slice(0,300));
+    }
+    const inserted=Array.isArray(payload)?payload[0]:(payload&&typeof payload==='object'?payload:null);
+    if(inserted?.id&&matchesThisLocation([inserted])){
+      r.remoteId=inserted.id;r.isPublic=true;
+      return true;
+    }
+
+    // Some gateways return no inserted representation. Verify by reading the database again.
+    const verify=await fetch(endpoint+'&name=eq.'+encodeURIComponent(body.name),{
+      headers:SUPABASE_HEADERS,cache:'no-store'
+    });
+    if(verify.ok){
+      const saved=matchesThisLocation(await verify.json());
+      if(saved){r.remoteId=saved.id;r.isPublic=true;return true}
+    }
+    throw new Error('The server did not confirm a matching row in Supabase. The location has NOT been marked as saved.');
+  }catch(e){
+    console.error('Cloud location save/verification failed:',e);
+    $('mStatus').textContent='CLOUD SAVE FAILED: '+(e.message||'network error')+'. This location is not confirmed as shared.';
+    return false;
+  }
+}
+const setStatus=(m,e=false)=>{$('status').textContent=m;$('status').classList.toggle('error',e)};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const validPair=(a,b)=>Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a)<=90&&Math.abs(b)<=180&&!(a===0&&b===0);
+
+// Optional library (decodes HEIC and odd layouts). Failure is fine: built-in parser is used.
+const exifrReady=import('https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.esm.mjs').then(m=>{exifr=m;return m}).catch(error=>{console.warn('EXIF library unavailable; using built-in GPS parser:',error);return null});
+
+function initMap(){
+  if(!window.L)return;
+  const addTiles=target=>L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(target);
+  map=L.map('map').setView([23.685,90.356],7);addTiles(map);
+  layer=L.layerGroup().addTo(map);
+  nearbyMap=L.map('nearbyMap').setView([23.685,90.356],7);addTiles(nearbyMap);
+  nearbyLayer=L.layerGroup().addTo(nearbyMap);
+  routeMap=L.map('routeMap').setView([23.685,90.356],7);addTiles(routeMap);
+  routeLayer=L.layerGroup().addTo(routeMap);
+  map.on('click',e=>{
+    const r=records[+$('mPhoto').value];
+    if(!r)return;
+    $('mCoord').value=e.latlng.lat.toFixed(6)+', '+e.latlng.lng.toFixed(6);
+    $('mStatus').textContent='Coordinates filled from map for '+(r.pandalName||r.name)+'. Tap “Save this location” to publish it.';
+  });
+}
+
+
+/* ---------- Built-in EXIF parser ----------
+   Instead of walking JPEG segments (which breaks on Pixel/MPF/HEIC files),
+   find every TIFF header ("II*\0" or "MM\0*") anywhere in the file and try
+   to read GPS from it. */
+function parseTiff(dv,base){
+  const sig=dv.getUint16(base,false);
+  const le=sig===0x4949;
+  if(!le&&sig!==0x4d4d)return null;
+  if(dv.getUint16(base+2,le)!==42)return null;
+  const u16=p=>dv.getUint16(p,le),u32=p=>dv.getUint32(p,le);
+  const readIfd=off=>{
+    const out={},n=u16(base+off);
+    if(n>500)throw new Error('bad IFD');
+    for(let i=0;i<n;i++){
+      const p=base+off+2+i*12,tag=u16(p),type=u16(p+2),cnt=u32(p+4);
+      out[tag]={p,type,cnt,val:u32(p+8)};
+    }
+    return out;
+  };
+  const ifd0=readIfd(u32(base+4));
+  const res={lat:NaN,lon:NaN,time:null};
+  const ascii=(e)=>{ // ASCII value; inline if <=4 bytes
+    const start=e.cnt<=4?e.p+8:base+e.val;let s='';
+    for(let i=0;i<e.cnt-1;i++)s+=String.fromCharCode(dv.getUint8(start+i));
+    return s;
+  };
+  if(ifd0[0x8769]){
+    try{const ex=readIfd(ifd0[0x8769].val);const t=ex[0x9003]||ex[0x9004];if(t)res.time=ascii(t)}catch{}
+  }
+  if(!res.time&&ifd0[0x132]){try{res.time=ascii(ifd0[0x132])}catch{}}
+  if(ifd0[0x8825]){
+    const g=readIfd(ifd0[0x8825].val);res.gpsTags=Object.keys(g).join(',');
+    const dms=e=>{
+      if(!e||e.cnt<3||(e.type!==5&&e.type!==10))return NaN;
+      const o=base+e.val,v=[];
+      for(let i=0;i<3;i++){
+        const a=e.type===5?dv.getUint32(o+i*8,le):dv.getInt32(o+i*8,le);
+        const b=e.type===5?dv.getUint32(o+i*8+4,le):dv.getInt32(o+i*8+4,le);
+        v.push(b?a/b:0);
+      }
+      return Math.abs(v[0])+v[1]/60+v[2]/3600;
+    };
+    const ref=e=>e?String.fromCharCode(dv.getUint8(e.p+8)).toUpperCase():'';
+    let lat=dms(g[2]),lon=dms(g[4]);
+    if(ref(g[1])==='S')lat=-lat;
+    if(ref(g[3])==='W')lon=-lon;
+    res.lat=lat;res.lon=lon;
+  }
+  return res;
+}
+function readExifBuiltIn(buf){
+  const u8=new Uint8Array(buf),dv=new DataView(buf);
+  let time=null,dbg='No GPS block in EXIF';
+  for(let i=0;i+8<u8.length;i++){
+    const a=u8[i],b=u8[i+1];
+    if(!((a===0x49&&b===0x49&&u8[i+2]===42&&u8[i+3]===0)||(a===0x4d&&b===0x4d&&u8[i+2]===0&&u8[i+3]===42)))continue;
+    try{
+      const r=parseTiff(dv,i);
+      if(!r)continue;
+      if(r.time&&!time)time=r.time;
+      if(r.gpsTags!==undefined)dbg='GPS block exists but tags='+(r.gpsTags||'none')+' (need 1-4 for coordinates)';
+      if(validPair(r.lat,r.lon))return {lat:r.lat,lon:r.lon,time:r.time||time,src:'EXIF (built-in)'};
+    }catch{}
+  }
+  return {lat:NaN,lon:NaN,time,src:'',dbg};
+}
+
+/* ---------- XMP fallback ---------- */
+function xmpCoord(raw){
+  if(!raw)return NaN;
+  const s=raw.trim();const ref=(s.match(/[NSEW]/i)||[''])[0].toUpperCase();
+  const n=(s.match(/\d+(?:\.\d+)?/g)||[]).map(Number);
+  if(!n.length)return NaN;
+  let v=n[0]+(n[1]||0)/60+(n[2]||0)/3600;
+  if(ref==='S'||ref==='W')v=-v;
+  return v;
+}
+function readXmp(buf){
+  const txt=new TextDecoder('latin1').decode(buf);
+  const g=n=>{let i=txt.indexOf(n);while(i>=0){const sn=txt.substr(i,160);const m=sn.match(/^[\w]*\s*=\s*"([^"]{1,60})"/)||sn.match(/^[\w]*>([^<]{1,60})</);if(m)return m[1];i=txt.indexOf(n,i+1)}return null};
+  const lat=xmpCoord(g('GPSLatitude')),lon=xmpCoord(g('GPSLongitude'));
+  return validPair(lat,lon)?{lat,lon,src:'XMP'}:null;
+}
+
+function fmtTime(t){
+  if(!t)return '';
+  if(t instanceof Date)return isNaN(t)?'':t.toISOString().slice(0,19).replace('T',' ');
+  return String(t).replace(/^(\d{4}):(\d\d):(\d\d)/,'$1-$2-$3');
+}
+
+async function analyze(file){
+  const rec={name:file.name,pandalName:'',size:file.size,lat:NaN,lon:NaN,time:'',src:'',note:'',file};
+  try{
+    // Do not race the asynchronous EXIF-library import when a user selects a photo quickly.
+    if(!exifr)await exifrReady;
+    const buf=await file.arrayBuffer();
+    // 1) exifr
+    if(exifr){
+      try{
+        const g=await exifr.gps(buf);
+        if(g&&validPair(g.latitude,g.longitude)){rec.lat=g.latitude;rec.lon=g.longitude;rec.src='EXIF (exifr)'}
+        const t=await exifr.parse(buf,['DateTimeOriginal','CreateDate']);
+        if(t)rec.time=fmtTime(t.DateTimeOriginal||t.CreateDate);
+      }catch{}
+    }
+    // 2) built-in
+    if(!validPair(rec.lat,rec.lon)||!rec.time){
+      const b=readExifBuiltIn(buf);rec.dbg=b.dbg;
+      if(!rec.time&&b.time)rec.time=fmtTime(b.time);
+      if(!validPair(rec.lat,rec.lon)&&validPair(b.lat,b.lon)){rec.lat=b.lat;rec.lon=b.lon;rec.src=b.src}
+    }
+    // 3) XMP
+    if(!validPair(rec.lat,rec.lon)){
+      const x=readXmp(buf);
+      if(x){rec.lat=x.lat;rec.lon=x.lon;rec.src=x.src}
+    }
+    if(!validPair(rec.lat,rec.lon)){rec.lat=NaN;rec.lon=NaN}
+  }catch(e){rec.note='Read error: '+(e.message||e)}
+  return rec;
+}
+
+function applySidecar(rec){
+  const key=n=>n.toLowerCase().replace(/\.(supplemental-metadata|supplemental-meta|supplemental-metadat|supplemental-m|supplemental-)?\.?json$/,'').replace(/\(\d+\)/,'');
+  const sc=sidecars.get(key(rec.name))||sidecars.get(rec.name.toLowerCase());
+  if(!sc)return;
+  if(!validPair(rec.lat,rec.lon)){
+    for(const k of ['geoDataExif','geoData']){
+      const g=sc[k];
+      if(g&&validPair(+g.latitude,+g.longitude)){rec.lat=+g.latitude;rec.lon=+g.longitude;rec.src='Google sidecar';break}
+    }
+  }
+  if(!rec.time&&sc.photoTakenTime?.timestamp)rec.time=new Date(sc.photoTakenTime.timestamp*1000).toISOString().slice(0,19).replace('T',' ');
+}
+
+async function handle(list){
+  const files=[...list];if(!files.length)return;
+  const jsons=files.filter(f=>/\.json$/i.test(f.name)),photos=files.filter(f=>!/\.json$/i.test(f.name));
+  const firstImportedIndex=records.length;
+  setStatus('Reading '+files.length+' file(s)…');
+  for(const j of jsons){
+    try{
+      const d=JSON.parse(await j.text());
+      const k1=j.name.toLowerCase().replace(/\.(supplemental-metadata|supplemental-meta|supplemental-metadat|supplemental-m|supplemental-)?\.?json$/,'').replace(/\(\d+\)/,'');
+      sidecars.set(k1,d);if(d.title)sidecars.set(String(d.title).toLowerCase(),d);
+    }catch{}
+  }
+  for(const f of photos){const r=await analyze(f);records.push(r)}
+  records.forEach(applySidecar);
+  records.forEach(r=>{
+    if(validPair(r.lat,r.lon))r.note='';
+    else if(!r.note)r.note='['+(r.dbg||'')+'] No GPS inside this file. If exiftool shows GPS for the original, this copy was stripped by the picker — re-select it with "Choose files (keeps GPS)".';
+  });
+  render();
+  if(photos.length)selectRecord(firstImportedIndex);
+  const g=records.filter(r=>validPair(r.lat,r.lon)).length;
+  setStatus(g?`Done. ${g} of ${records.length} photo(s) have GPS. Place names are being suggested automatically where possible.`:'No GPS found in any selected file. See the note in the table.',!g);
+  if(g)void autoSuggestMissingPlaceNames();
+}
+
+function uniquePujaLocations(){
+  const gps=records.filter(r=>validPair(r.lat,r.lon));
+  const unique=[];
+  for(const r of gps){
+    const name=(r.pandalName||'').trim().toLowerCase();
+    const existing=unique.find(x=>distanceKm(x,r)<=0.03&&(!(name&&(x.pandalName||'').trim()&&name!==(x.pandalName||'').trim().toLowerCase())));
+    if(!existing)unique.push(r);
+    else if(!(existing.pandalName||'').trim()&&name)unique[unique.indexOf(existing)]=r;
+  }
+  return unique;
+}
+function selectRecord(index){
+  if(!Number.isInteger(index)||index<0||index>=records.length)return;
+  selectedRecordIndex=index;
+  const r=records[index];
+  $('mPhoto').value=String(index);
+  $('mCoord').value=validPair(r.lat,r.lon)?r.lat.toFixed(6)+', '+r.lon.toFixed(6):'';
+  $('mPandalName').value=r.pandalName||'';
+  $('mStatus').textContent='Reviewing '+(r.pandalName||r.name)+(r.confirmed?' · confirmed':' · needs review')+'.';
+  if(validPair(r.lat,r.lon)&&!String(r.pandalName||'').trim()&&!placeNameLookupCache.has(placeKey(r)))$('mStatus').textContent='Looking for a nearby place-name suggestion automatically…';
+}
+const placeNameLookupCache=new Map();
+function placeKey(record){return Number(record.lat).toFixed(5)+','+Number(record.lon).toFixed(5)}
+async function autoSuggestMissingPlaceNames(){
+  for(let i=0;i<records.length;i++){
+    const record=records[i];
+    if(!validPair(record.lat,record.lon)||String(record.pandalName||'').trim())continue;
+    if(selectedRecordIndex===i&&String($('mPandalName').value||'').trim())continue;
+    const key=placeKey(record);
+    if(placeNameLookupCache.has(key)){
+      const cached=placeNameLookupCache.get(key);
+      if(cached&&!String(record.pandalName||'').trim())record.pandalName=record.name=cached;
+      continue;
+    }
+    // Respect the public reverse-geocoding service's rate limit: one request at a time.
+    try{
+      const url='https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+encodeURIComponent(record.lat)+'&lon='+encodeURIComponent(record.lon)+'&zoom=18&addressdetails=1';
+      const response=await fetch(url,{headers:{Accept:'application/json'}});
+      if(!response.ok)throw new Error('Map lookup unavailable');
+      const data=await response.json(),address=data.address||{};
+      const suggestion=String(data.name||address.amenity||address.building||address.tourism||address.historic||address.man_made||address.leisure||address.shop||address.place||address.village||address.suburb||address.neighbourhood||'').trim();
+      placeNameLookupCache.set(key,suggestion||null);
+      if(suggestion&&!String(record.pandalName||'').trim()){
+        record.pandalName=suggestion;
+        record.name=suggestion;
+        record.mapNameSuggestion=suggestion;
+        persistRecords();
+        render();
+        if(selectedRecordIndex===i&&!String($('mPandalName').value||'').trim()){
+          $('mPandalName').value=suggestion;
+          $('mStatus').textContent='Suggested place name: “'+suggestion+'”. Please check it is the correct pandal before sharing.';
+        }
+      }else if(selectedRecordIndex===i&&!String($('mPandalName').value||'').trim()){
+        $('mStatus').textContent='No nearby named place was found. You can leave the name blank or enter one yourself.';
+      }
+    }catch{
+      placeNameLookupCache.set(key,null);
+      if(selectedRecordIndex===i&&!String($('mPandalName').value||'').trim())$('mStatus').textContent='Automatic name lookup is temporarily unavailable. You can still save the GPS location without a name.';
+    }
+    await new Promise(resolve=>setTimeout(resolve,1100));
+  }
+}
+function render(){
+  const gps=records.filter(r=>validPair(r.lat,r.lon));
+  const unique=uniquePujaLocations();
+  const named=unique.filter(r=>(r.pandalName||'').trim());
+  $('nTotal').textContent=records.length;$('nGps').textContent=gps.length;
+  $('nPandal').textContent=named.length;$('nPuja').textContent=unique.length;
+  $('nUnlocated').textContent=records.length-gps.length;$('nNamed').textContent=named.length;
+  ['csv','json','clear'].forEach(i=>$(i).disabled=!records.length);
+  $('planRoute').disabled=selectedPandalIds.size<1;
+  $('openRoute').disabled=optimizedRoute.length<2;
+  const q=$('q').value.toLowerCase();
+  const shown=records.filter(r=>validPair(r.lat,r.lon)&&(r.pandalName||r.isPublic)&&(!q||[r.pandalName,r.name].join(' ').toLowerCase().includes(q)));
+  $('rows').innerHTML=shown.length?shown.map(r=>{
+    const name=(r.pandalName||r.name||'Unnamed location');
+    return `<tr><td>${esc(name)}</td><td>${r.lat.toFixed(6)}, ${r.lon.toFixed(6)}</td><td>${r.isPublic?'<span class="tag">Public community map</span>':(r.confirmed?'Confirmed · local':'Not yet confirmed')}</td></tr>`;
+  }).join(''):'<tr><td colspan="3" class="muted" style="text-align:center;padding:20px">No locations yet. Import photos with GPS or load the shared mandap map.</td></tr>';
+  if(layer){
+    layer.clearLayers();
+    unique.forEach(r=>{
+      const title=(r.pandalName||'').trim()||r.name;
+      const marker=L.circleMarker([r.lat,r.lon],{radius:8,color:'#172014',weight:2,fillColor:r.src==='Manual'?'#75c7ff':'#c4f36a',fillOpacity:.98})
+        .bindPopup('<b>'+esc(title)+'</b>'+(title!==r.name?'<br><span>'+esc(r.name)+'</span>':'')+'<br><span>Captured: '+esc(r.time||'Unknown')+'</span><br><span>GPS: '+r.lat.toFixed(6)+', '+r.lon.toFixed(6)+'</span><br><span>Source: '+esc(r.src||'Unknown')+'</span>')
+        .addTo(layer);
+      marker.on('click',()=>{
+        const i=records.indexOf(r);
+        selectRecord(i);
+        $('mStatus').textContent='Selected '+title+'.';
+      });
+    });
+    if(gps.length)map.fitBounds(L.latLngBounds(gps.map(r=>[r.lat,r.lon])).pad(.2),{maxZoom:16});
+  }
+  const sel=$('mPhoto');sel.disabled=!records.length;
+  sel.innerHTML=records.length?records.map((r,i)=>`<option value="${i}">${esc(r.pandalName||r.name)}${r.isPublic?' · Public':(r.confirmed?' ✓':'')}</option>`).join(''):'<option>Import files first</option>';
+  if(records.length){selectedRecordIndex=Math.max(0,Math.min(selectedRecordIndex,records.length-1));sel.value=String(selectedRecordIndex);}
+  const selected=records[selectedRecordIndex];
+  $('markSelectedVisited').disabled=!(selected&&selected.isPublic&&selected.remoteId);
+  $('mApply').disabled=$('mClear').disabled=$('mConfirm').disabled=!records.length;
+  const gpsCount=records.filter(r=>validPair(r.lat,r.lon)).length;
+  $('mSaveAll').disabled=!gpsCount;
+  $('reviewList').innerHTML=records.length?records.map((r,i)=>{
+    const hasGps=validPair(r.lat,r.lon);
+    const label=(r.pandalName||'').trim()||r.name;
+    const state=r.confirmed?'Confirmed':(hasGps?'GPS found · needs confirmation':'GPS missing');
+    return '<div class="review-item"><div class="review-info"><strong>'+esc(label)+'</strong><div class="review-meta">'+(hasGps?esc(r.lat.toFixed(6)+', '+r.lon.toFixed(6)):'No GPS coordinates')+' · '+esc(state)+'</div></div><button type="button" data-review-index="'+i+'">Review</button></div>';
+  }).join(''):'<p class="muted">No photos imported yet. Import photos to review each location.</p>';
+  $('reviewList').querySelectorAll('[data-review-index]').forEach(button=>button.addEventListener('click',()=>{
+    selectRecord(Number(button.dataset.reviewIndex));
+    $('mCoord').focus();
+  }));
+  persistRecords();
+  renderNearbyList();
+}
+
+function parseManual(s){
+  s=s.trim().replace(/&quot;/g,'"');
+  const re=/(\d+(?:\.\d+)?)\s*°\s*(?:(\d+(?:\.\d+)?)\s*['′’]\s*)?(?:(\d+(?:\.\d+)?)\s*(?:["″”]|''))?\s*([NSEW])/gi;
+  const m=[...s.matchAll(re)];
+  if(m.length>=2){
+    const cv=x=>{let v=+x[1]+(+x[2]||0)/60+(+x[3]||0)/3600;return /[SW]/i.test(x[4])?-v:v};
+    let a=null,b=null;
+    for(const x of m){if(/[NS]/i.test(x[4]))a=cv(x);else b=cv(x)}
+    return [a,b];
+  }
+  const n=s.match(/-?\d+(?:\.\d+)?/g);
+  return n&&n.length>=2?[+n[0],+n[1]]:[NaN,NaN];
+}
+$('mApply').onclick=async()=>{
+  const [a,b]=parseManual($('mCoord').value);
+  if(!validPair(a,b)){$('mStatus').textContent='Could not read those coordinates.';return}
+  const r=records[selectedRecordIndex];if(!r)return;
+  r.lat=a;r.lon=b;r.pandalName=$('mPandalName').value.trim();r.name=r.pandalName||r.name||('Unnamed location '+a.toFixed(5)+', '+b.toFixed(5));r.confirmed=true;
+  optimizedRoute=[];render();
+  const saved=persistRecords();
+  if(!saved){$('mStatus').textContent='Could not save on this device. Check browser/app storage settings.';return}
+  $('mStatus').textContent='Saving location to the shared database…';
+  if(await publishLocation(r)){persistRecords();await loadPublicLocations();$('mStatus').textContent='Saved permanently and shared with all users: '+(r.pandalName||r.name||'Unnamed location')}
+  else $('mStatus').textContent='CLOUD SAVE FAILED. This location is only a temporary device draft and is not shared. Please retry; do not rely on it being saved.'
+};
+$('mConfirm').onclick=async()=>{
+  const r=records[selectedRecordIndex];if(!r)return;
+  if(!validPair(r.lat,r.lon)){$('mStatus').textContent='This record has no valid GPS coordinates to confirm.';return}
+  r.pandalName=$('mPandalName').value.trim();r.name=r.pandalName||r.name||('Unnamed location '+Number(r.lat).toFixed(5)+', '+Number(r.lon).toFixed(5));r.confirmed=true;
+  render();
+  const saved=persistRecords();
+  if(!saved){$('mStatus').textContent='Could not save on this device. Check browser/app storage settings.';return}
+  $('mStatus').textContent='Saving location to the shared database…';
+  if(await publishLocation(r)){persistRecords();await loadPublicLocations();$('mStatus').textContent='Saved permanently and shared with all users: '+(r.pandalName||r.name||'Unnamed location')}
+  else $('mStatus').textContent='CLOUD SAVE FAILED. This location is only a temporary device draft and is not shared. Please retry; do not rely on it being saved.'
+};
+$('mSaveAll').onclick=async()=>{
+  const gps=records.filter(r=>validPair(r.lat,r.lon)&&!r.isPublic);
+  if(!gps.length){$('mStatus').textContent='No unpublished GPS locations with valid coordinates are ready.';return}
+  const button=$('mSaveAll');
+  button.disabled=true;
+  $('mStatus').textContent='Saving '+gps.length+' GPS location(s) to the shared database…';
+  let succeeded=0;
+  const failed=[];
+  try{
+    for(let i=0;i<gps.length;i++){
+      const r=gps[i];
+      r.pandalName=(r.pandalName||'').trim();
+      r.name=r.pandalName||r.name||('Unnamed location '+Number(r.lat).toFixed(5)+', '+Number(r.lon).toFixed(5));
+      r.confirmed=true;
+      $('mStatus').textContent='Saving location '+(i+1)+' of '+gps.length+'…';
+      if(await publishLocation(r)){
+        succeeded++;
+        persistRecords();
+      }else{
+        failed.push(r.pandalName||r.name||('Location '+(i+1)));
+      }
+    }
+    persistRecords();
+    await loadPublicLocations();
+    if(failed.length){
+      $('mStatus').textContent='Bulk save finished: '+succeeded+' of '+gps.length+' locations saved and verified in the shared database; '+failed.length+' failed. Failed: '+failed.slice(0,3).join(', ')+(failed.length>3?'…':'')+'. Retry the failed locations individually or tap Save all again.';
+    }else{
+      $('mStatus').textContent='Success! All '+succeeded+' location(s) were saved permanently and verified in the shared database. Pandal names were optional.';
+    }
+  }catch(e){
+    console.error('Save all locations failed:',e);
+    $('mStatus').textContent='Bulk save interrupted after '+succeeded+' verified save(s). Please tap Save all again to retry the remaining locations.';
+  }finally{
+    render();
+  }
+};
+$('mClear').onclick=()=>{const r=records[selectedRecordIndex];if(!r)return;r.lat=r.lon=NaN;r.confirmed=false;optimizedRoute=[];render();persistRecords();};
+
+function download(name,text,type){
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+const clean=()=>records.filter(r=>validPair(r.lat,r.lon)&&(r.pandalName||r.name)).map(r=>({pandal_name:r.pandalName||r.name,latitude:r.lat,longitude:r.lon,public:!!r.isPublic,confirmed:!!r.confirmed}));
+$('csv').onclick=()=>{const d=clean();if(!d.length)return;const h=Object.keys(d[0]);download('puja-locations.csv',[h.join(','),...d.map(o=>h.map(k=>'"'+String(o[k]).replace(/"/g,'""')+'"').join(','))].join('\n'),'text/csv')};
+$('json').onclick=()=>download('puja-locations.json',JSON.stringify(clean(),null,2),'application/json');
+$('clear').onclick=()=>{records=records.filter(r=>r.isPublic);sidecars.clear();optimizedRoute=[];selectedRecordIndex=0;routeLayer?.clearLayers();render();persistRecords();setStatus('Cleared local location data. Shared public locations remain available.')};
+$('q').oninput=render;
+const handleFilePicker=async e=>{if(!e.target.files?.length)return;await handle(e.target.files);optimizedRoute=[];e.target.value=''};
+$('files').onchange=handleFilePicker;
+$('folderFiles').onchange=handleFilePicker;
+$('signUp').addEventListener('click',signUp);
+$('signIn').addEventListener('click',signIn);
+$('signOut').addEventListener('click',signOut);
+$('findNearby').addEventListener('click',findNearbyMandaps);
+$('selectAllNearby').addEventListener('change',()=>{
+  for(const record of nearbyMandaps){
+    const id=String(record.remoteId);
+    if($('selectAllNearby').checked)selectedPandalIds.add(id);else selectedPandalIds.delete(id);
+  }
+  renderNearbyList();
+});
+$('markSelectedVisited').addEventListener('click',()=>markSelectedMandaps(true));
+$('markSelectedNotVisited').addEventListener('click',()=>markSelectedMandaps(false));
+$('routeStartMode').addEventListener('change',()=>{updateJourneyControls();$('openRoute').disabled=true;});
+$('routeStartMandap').addEventListener('change',()=>{$('openRoute').disabled=true;});
+$('mPhoto').addEventListener('change',()=>{
+  const index=Number($('mPhoto').value);
+  if(!Number.isInteger(index)||!records[index])return;
+  selectedRecordIndex=index;selectRecord(index);
+});
+
+function distanceKm(a,b){
+  const rad=x=>x*Math.PI/180,R=6371;
+  const dLat=rad(b.lat-a.lat),dLon=rad(b.lon-a.lon);
+  const h=Math.sin(dLat/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.min(1,Math.sqrt(h)));
+}
+function routeLength(list){
+  let sum=0;
+  for(let i=1;i<list.length;i++)sum+=distanceKm(list[i-1],list[i]);
+  return sum;
+}
+async function optimizeStops(){
+  const stops=[...new Map(records.filter(r=>r.isPublic&&r.remoteId&&validPair(r.lat,r.lon)&&selectedPandalIds.has(String(r.remoteId))).map(r=>[String(r.remoteId),r])).values()];
+  if(!stops.length){$('routeSummary').textContent='Select at least one mandap above to plan a route.';return}
+  let origin;
+  if($('routeStartMode').value==='mandap'){
+    const start=records.find(r=>r.isPublic&&String(r.remoteId)===$('routeStartMandap').value&&validPair(r.lat,r.lon));
+    if(!start){$('routeSummary').textContent='Choose a valid starting mandap.';return}
+    origin={...start,pandalName:start.pandalName||start.name,routeOrigin:true};
+  }else{
+    $('routeSummary').textContent='Checking your current GPS location…';
+    $('planRoute').disabled=true;
+    try{
+      const position=await getCurrentVisitPosition();
+      if(!validPair(position.coords.latitude,position.coords.longitude))throw new Error('The device returned invalid GPS coordinates.');
+      origin={name:'Your current location',pandalName:'Your current location',lat:position.coords.latitude,lon:position.coords.longitude,routeOrigin:true};
+    }catch(e){
+      $('routeSummary').textContent='Could not get your starting location: '+(e.message||'GPS unavailable')+'. Choose a mandap as the starting point or allow GPS access.';
+      $('planRoute').disabled=false;return;
+    }
+  }
+  let remaining=stops.filter(r=>String(r.remoteId)!==String(origin.remoteId||''));
+  if(!remaining.length){$('routeSummary').textContent='Select at least one other mandap beyond your chosen starting mandap.';$('planRoute').disabled=false;return}
+  const candidate=[origin];
+  while(remaining.length){
+    const last=candidate[candidate.length-1];let bestIndex=0,bestDistance=Infinity;
+    for(let i=0;i<remaining.length;i++){const d=distanceKm(last,remaining[i]);if(d<bestDistance){bestDistance=d;bestIndex=i}}
+    candidate.push(remaining.splice(bestIndex,1)[0]);
+  }
+  let changed=true,passes=0;
+  while(changed&&passes++<Math.min(30,candidate.length)){
+    changed=false;
+    for(let i=1;i<candidate.length-2;i++)for(let k=i+1;k<candidate.length-1;k++){
+      const before=distanceKm(candidate[i-1],candidate[i])+distanceKm(candidate[k],candidate[k+1]);
+      const after=distanceKm(candidate[i-1],candidate[k])+distanceKm(candidate[i],candidate[k+1]);
+      if(after+0.0001<before){candidate.splice(i,k-i+1,...candidate.slice(i,k+1).reverse());changed=true}
+    }
+  }
+  optimizedRoute=candidate;
+  routeLayer.clearLayers();
+  const points=optimizedRoute.map(r=>[r.lat,r.lon]);
+  L.polyline(points,{color:'#ffb454',weight:4,opacity:.9,dashArray:'8 7'}).addTo(routeLayer);
+  const originMarker=L.marker([origin.lat,origin.lon],{icon:L.divIcon({className:'route-number',html:'<span>●</span>',iconSize:[30,30],iconAnchor:[15,15]})})
+    .bindPopup('<b>Start: '+esc(origin.pandalName||origin.name)+'</b>').addTo(routeLayer);
+  optimizedRoute.slice(1).forEach((r,i)=>{
+    const index=i+1;
+    L.marker([r.lat,r.lon],{icon:L.divIcon({className:'route-number',html:'<span>'+(index)+'</span>',iconSize:[30,30],iconAnchor:[15,15]})})
+      .bindPopup('<b>Stop '+index+': '+esc((r.pandalName||'').trim()||r.name)+'</b><br>'+r.lat.toFixed(6)+', '+r.lon.toFixed(6))
+      .addTo(routeLayer);
+  });
+  $('routeStops').innerHTML='<li><b>Start: '+esc(origin.pandalName||origin.name)+'</b><div class="muted">Starting point</div></li>'+optimizedRoute.slice(1).map((r,i)=>'<li><b>'+esc((r.pandalName||'').trim()||r.name)+'</b><div class="muted">'+distanceKm(optimizedRoute[i],r).toFixed(1)+' km from previous stop</div></li>').join('');
+  const total=routeLength(optimizedRoute);
+  $('routeSummary').textContent=optimizedRoute.length-1+' selected mandap(s) · approx. '+total.toFixed(1)+' km straight-line distance. The map shows every selected stop; Google Maps road distance may differ.';
+  $('openRoute').disabled=optimizedRoute.length<2||optimizedRoute.length>11;
+  if(optimizedRoute.length>11)$('routeSummary').textContent+=' Google Maps supports only a limited number of stops per route, so open this route in sections.';
+  routeMap.fitBounds(L.latLngBounds(points).pad(.2),{maxZoom:16});
+  $('planRoute').disabled=false;
+}
+$('planRoute').addEventListener('click',optimizeStops);
+$('openRoute').addEventListener('click',()=>{
+  if(optimizedRoute.length<2||optimizedRoute.length>11)return;
+  const enc=p=>p.lat+','+p.lon;
+  const first=optimizedRoute[0],last=optimizedRoute[optimizedRoute.length-1];
+  const waypoints=optimizedRoute.slice(1,-1).map(enc).join('|');
+  const url='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(enc(first))+'&destination='+encodeURIComponent(enc(last))+(waypoints?'&waypoints='+encodeURIComponent(waypoints):'')+'&travelmode=driving';
+  window.open(url,'_blank','noopener');
+});
+
+initMap();render();loadPublicLocations();initAccount();showPage('page-map');
+</script>
+</body>
+</html>
