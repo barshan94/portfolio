@@ -14,6 +14,7 @@ const selectedProjectIds = [
   "keyword-research",
   "digital-coaching-management",
   "999-national-emergency-service",
+  "durga-map",
 ];
 
 const selectedOrder = new Map(
@@ -230,7 +231,9 @@ const getExperienceDate = (experience: any) =>
                             ? "Education operations"
                             : projectId(project) === "999-national-emergency-service"
                               ? "Public-service software"
-                              : "Selected project"}
+                              : projectId(project) === "durga-map"
+                                ? "Maps & community"
+                                : "Selected project"}
                 </span>
               </div>
 
@@ -279,6 +282,10 @@ const getExperienceDate = (experience: any) =>
                 ) : projectId(project) === "999-national-emergency-service" ? (
                   <div class="art-emergency-thumbnail">
                     <img src="/images/999-national-emergency-service-thumbnail.svg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                ) : projectId(project) === "durga-map" ? (
+                  <div class="art-durga-map-thumbnail">
+                    <img src="/images/durga-map-thumbnail.svg" alt="" loading="lazy" decoding="async" />
                   </div>
                 ) : (
                   <div class="art-generic">
