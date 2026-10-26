@@ -2204,6 +2204,14 @@ box-shadow: 0 0 8px rgba(86, 214, 194, 0.35);
     transform: translateY(0);
   }
 
+  /* Keep above-the-fold content visible before JavaScript runs.
+     Below-the-fold sections retain their scroll reveal animation. */
+  .hero [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   @media (max-width: 900px) {
     .section-wrap {
       width: min(100% - 42px, var(--content-width));
