@@ -61,6 +61,14 @@
       border-bottom: 1px solid rgba(177,210,255,.1);
       background: rgba(4,12,23,.45); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+      min-height: 36px; padding: 0 12px; border: 1px solid var(--border); border-radius: 10px;
+      color: #dceaff; background: rgba(47,79,117,.22); text-decoration: none;
+      font-size: 11px; font-weight: 750; white-space: nowrap;
+      transition: background .22s ease, border-color .22s ease, transform .22s ease;
+    }
+    .back-link:hover { background: rgba(67,133,191,.4); border-color: rgba(101,214,255,.55); transform: translateY(-1px); }
     .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: .12em; font-size: 12px; }
     .brand-mark {
       width: 34px; height: 34px; flex: 0 0 34px; display: grid; place-items: center; border-radius: 10px;
@@ -97,6 +105,18 @@
       opacity: 1; visibility: visible; transform: translate3d(0,0,0) scale(1); pointer-events: auto;
       transition-delay: .03s;
     }
+    @keyframes slideContentReveal {
+      from { opacity: 0; transform: translate3d(0,18px,0); filter: blur(4px); }
+      to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+    }
+    .slide.active > * { animation: slideContentReveal .72s var(--ease) both; }
+    .slide.active > *:nth-child(1) { animation-delay: .05s; }
+    .slide.active > *:nth-child(2) { animation-delay: .12s; }
+    .slide.active > *:nth-child(3) { animation-delay: .19s; }
+    .slide.active > *:nth-child(4) { animation-delay: .26s; }
+    .slide.active > *:nth-child(5) { animation-delay: .33s; }
+    .slide.active > *:nth-child(6) { animation-delay: .40s; }
+    .slide.active > *:nth-child(7) { animation-delay: .47s; }
     .slide.exit-left { opacity: 0; transform: translate3d(-36px,0,0) scale(.99); visibility: hidden; }
     .slide-number { position: absolute; top: 22px; right: 26px; color: rgba(194,214,241,.6); font-size: 11px; font-weight: 800; letter-spacing: .15em; }
     .eyebrow {
@@ -172,9 +192,11 @@
     }
     @media (max-width: 600px) {
       header { min-height: 55px; padding: 9px 13px; }
-      .brand { gap: 8px; font-size: 10px; letter-spacing: .09em; }
-      .brand-mark { width: 30px; height: 30px; flex-basis: 30px; border-radius: 8px; }
-      .header-right { font-size: 9px; gap: 7px; letter-spacing: .07em; }
+      header { gap: 8px; }
+      .back-link { min-height: 32px; padding: 0 8px; font-size: 9px; gap: 4px; }
+      .brand { gap: 6px; font-size: 9px; letter-spacing: .04em; }
+      .brand-mark { width: 28px; height: 28px; flex-basis: 28px; border-radius: 8px; }
+      .header-right { font-size: 8px; gap: 5px; letter-spacing: .03em; }
       main { padding: 9px; align-items: stretch; }
       .stage { width: 100%; height: auto; min-height: 0; flex: 1; border-radius: 18px; }
       .slide { padding: 38px 18px 24px; }
@@ -218,6 +240,8 @@
       .slide-label { min-width: 49px; font-size: 9px; }
     }
     @media (max-width: 360px) {
+      .back-link span { display: none; }
+      .back-link { width: 32px; justify-content: center; padding: 0; }
       .header-right span { display: none; }
       .controls { gap: 4px; }
       .control-left,.control-right { gap: 3px; }
@@ -247,6 +271,7 @@
   <div class="orb one" aria-hidden="true"></div><div class="orb two" aria-hidden="true"></div><div class="orb three" aria-hidden="true"></div>
   <div id="app">
     <header>
+      <a class="back-link" href="/" aria-label="Back to portfolio homepage">← <span>Back to Portfolio</span></a>
       <div class="brand"><div class="brand-mark" aria-hidden="true">BG</div><span>BARSHAN GHOSH</span></div>
       <div class="header-right"><span class="live-dot" aria-hidden="true"></span><span>ANIMATED VIDEO CV</span></div>
     </header>
@@ -393,8 +418,8 @@
       "use strict";
       const slides = Array.from(document.querySelectorAll(".slide"));
       const total = slides.length;
-      const defaultDuration = 9000;
-      const durationBySlide = { 2: 11000, 3: 10500, 4: 10500, 5: 11000, 6: 11000, 7: 11000, 8: 9500 };
+      const defaultDuration = 14000;
+      const durationBySlide = { 1: 16000, 2: 18000, 3: 17000, 4: 17000, 5: 18000, 6: 18000, 7: 18000, 8: 15000 };
       const durationFor = index => durationBySlide[index] || defaultDuration;
       const progress = document.getElementById("progress");
       const progressWrap = document.getElementById("progressWrap");
@@ -410,6 +435,7 @@
       let touchStartX = null;
       let touchStartY = null;
       let pageWasHidden = false;
+      let manualScroll = false;
 
       const formatSlide = index => String(index + 1).padStart(2, "0") + " / " + String(total).padStart(2, "0");
 
@@ -435,6 +461,7 @@
         elapsed = 0;
         lastFrame = performance.now();
         slides[current].scrollTop = 0;
+        manualScroll = false;
         updateControls();
         announcement.textContent = "Slide " + formatSlide(current) + ": " + (slides[current].getAttribute("aria-label") || "CV section");
       }
@@ -451,10 +478,19 @@
         if (!lastFrame) lastFrame = now;
         if (playing && !document.hidden) {
           elapsed += Math.max(0, Math.min(100, now - lastFrame));
-          if (elapsed >= durationFor(current)) {
+          const duration = durationFor(current);
+          const ratio = Math.min(1, elapsed / duration);
+          const activeSlide = slides[current];
+          const maxScroll = Math.max(0, activeSlide.scrollHeight - activeSlide.clientHeight);
+          // Long slides gently scroll during reading time; manual scrolling takes priority.
+          if (maxScroll > 12 && !manualScroll) {
+            const scrollProgress = Math.max(0, Math.min(1, (ratio - 0.12) / 0.78));
+            activeSlide.scrollTop = maxScroll * scrollProgress;
+          }
+          if (elapsed >= duration) {
             showSlide(current + 1, 1);
           } else {
-            progress.style.width = (elapsed / durationFor(current) * 100) + "%";
+            progress.style.width = (ratio * 100) + "%";
           }
         }
         lastFrame = now;
@@ -488,6 +524,11 @@
         else if (event.key === "ArrowLeft") { event.preventDefault(); showSlide(current - 1, -1); }
         else if (event.code === "Space") { event.preventDefault(); togglePlay(); }
         else if (event.key.toLowerCase() === "r") { showSlide(0, -1); setPlaying(true); }
+      });
+
+      slides.forEach(slide => {
+        slide.addEventListener("wheel", () => { manualScroll = true; }, { passive: true });
+        slide.addEventListener("touchmove", () => { manualScroll = true; }, { passive: true });
       });
 
       stage.addEventListener("touchstart", event => {
