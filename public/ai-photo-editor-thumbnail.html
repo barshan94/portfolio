@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Photo Editor — Portfolio Thumbnail</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a0b10;font-family:Inter,Segoe UI,system-ui,sans-serif;color:#f5f6fb}
+.aipe-thumbnail{position:relative;width:100%;height:100%;aspect-ratio:16/9;overflow:hidden;background:radial-gradient(ellipse at 46% 44%,#25263b 0,transparent 55%),linear-gradient(140deg,#0b0d14,#171827 60%,#10121b);container-type:inline-size}
+.aipe-thumbnail:before{content:"";position:absolute;inset:0;opacity:.12;background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);background-size:28px 28px}
+.topbar{height:7%;min-height:22px;display:flex;align-items:center;gap:5px;padding:0 2%;position:relative;z-index:4;background:#0a0b10b8;border-bottom:1px solid #ffffff12;font-size:clamp(5px,.8cqi,11px);color:#a1a4b5}
+.dot{width:5px;height:5px;border-radius:50%;background:#ff625b}.dot:nth-child(2){background:#ffc247}.dot:nth-child(3){background:#3bd16e}.filename{margin-left:8px}.top-actions{margin-left:auto;display:flex;gap:6px}.top-actions span{padding:4px 7px;border:1px solid #ffffff18;border-radius:4px}.top-actions .active{color:#9ecaff;border-color:#719bff55;background:#729dff12}
+.layout{position:absolute;inset:7% 0 0;display:grid;grid-template-columns:7% 1fr 25%;grid-template-rows:1fr 12%;z-index:2}
+.toolbar{grid-row:1/3;display:flex;align-items:center;flex-direction:column;gap:8%;padding-top:12%;background:#0b0d14bb;border-right:1px solid #ffffff12}
+.tool{width:52%;aspect-ratio:1;border-radius:5px;border:1px solid #ffffff12;display:grid;place-items:center;color:#828ba5;font-size:clamp(7px,1.1cqi,15px)}.tool.active{color:#a5c8ff;background:#6f9dff20;border-color:#7aa8ff55}
+.canvas{position:relative;display:grid;place-items:center;overflow:hidden;background:#0b0c12}
+.photo{position:relative;width:88%;height:78%;border-radius:5px;overflow:hidden;box-shadow:0 12px 30px #0008;background:linear-gradient(180deg,#243859 0%,#627e9b 19%,#e8a66b 31%,#f3d39a 35%,#427b43 36%,#276a30 52%,#102a1a 100%)}
+.landscape:before{content:"";position:absolute;inset:20% 0 0;background:linear-gradient(150deg,transparent 0 17%,#24452b 17.5% 26%,transparent 26.5%),linear-gradient(30deg,transparent 0 31%,#1d482a 31.5% 43%,transparent 43.5%),linear-gradient(180deg,transparent 0 42%,#5b9bc3 43%,#2d6c8d 48%,transparent 56%);opacity:.85}
+.landscape:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 24%,#fff0a6 0 4%,#ffc46d55 5%,transparent 20%),linear-gradient(90deg,#0005,transparent 55%,#fff1);mix-blend-mode:screen}
+.before{position:absolute;inset:0;z-index:2;clip-path:inset(0 50% 0 0);background:linear-gradient(180deg,#758291 0%,#a4aab2 25%,#b2b6ba 34%,#53624b 35%,#40513a 55%,#17231c 100%);filter:saturate(.45) brightness(.72)}
+.before:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(140deg,transparent 0 20%,#243323 20.5% 35%,transparent 35.5%),linear-gradient(30deg,transparent 0 42%,#263a28 42.5% 56%,transparent 56.5%)}
+.person{position:absolute;z-index:3;left:50%;bottom:-2%;height:61%;width:20%;transform:translateX(-50%);background:linear-gradient(90deg,#091b12,#23432a 45%,#0b1d13);clip-path:polygon(42% 0,58% 0,64% 13%,60% 24%,70% 40%,83% 100%,17% 100%,30% 40%,40% 24%,36% 13%)}
+.person:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0005,transparent 55%,#9acb8540);clip-path:inset(0 0 0 50%)}
+.split{position:absolute;z-index:5;left:50%;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 12px #fff8}
+.handle{position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);width:25px;height:25px;border-radius:50%;background:#f7f8ff;box-shadow:0 2px 12px #0008;display:grid;place-items:center;color:#333;font-size:12px}
+.label{position:absolute;z-index:7;top:3%;padding:4px 7px;background:#05060ab8;border:1px solid #ffffff20;border-radius:3px;font-size:clamp(5px,.8cqi,10px);letter-spacing:1px;text-transform:uppercase}.label.left{left:3%;color:#d0d1d8}.label.right{right:3%;color:#a9cfff;background:#263a6a88}
+.ai-tag{position:absolute;bottom:3%;right:3%;z-index:7;padding:4px 7px;border:1px solid #9c85ff55;border-radius:4px;background:#211743bd;color:#c6b7ff;font-size:clamp(5px,.75cqi,9px);letter-spacing:1px}
+.title{position:absolute;z-index:8;left:10%;bottom:14%;pointer-events:none;text-shadow:0 2px 18px #0009}.title h1{margin:0;font-size:clamp(15px,3.3cqi,44px);line-height:1;font-weight:850;letter-spacing:.04em;text-transform:uppercase}.title h1 span{color:#9d9bff}.title p{margin:7px 0 0;font-size:clamp(5px,.9cqi,12px);letter-spacing:.2em;color:#d0d2e0a8;text-transform:uppercase}
+.panel{padding:7%;background:#0c0e16e8;border-left:1px solid #ffffff12;overflow:hidden}.panel-title{font-size:clamp(6px,.9cqi,12px);text-transform:uppercase;letter-spacing:.18em;color:#777f99;margin-bottom:12%}.section{font-size:clamp(5px,.7cqi,9px);letter-spacing:.12em;color:#8f91b3;margin:10% 0 6%;text-transform:uppercase}.slider{display:grid;grid-template-columns:31% 1fr 17%;gap:5%;align-items:center;margin:8% 0;font-size:clamp(5px,.75cqi,10px);color:#a7adbf}.track{height:3px;background:#ffffff18;border-radius:9px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#667fff,#70d7f0);border-radius:9px}.value{text-align:right;color:#b4c9ff;font-variant-numeric:tabular-nums}.analysis{border:1px solid #9584ff28;border-radius:5px;padding:7%;background:#8d70ff0b}.item{display:flex;justify-content:space-between;gap:4px;margin:9% 0;font-size:clamp(5px,.72cqi,9px);color:#9299ae}.item b{color:#7ee0b5;font-weight:600}.timeline{grid-column:2/4;display:flex;align-items:center;justify-content:space-around;gap:2%;padding:0 3%;background:#0c0e16d9;border-top:1px solid #ffffff12}.step{font-size:clamp(5px,.7cqi,9px);color:#8c93a8;white-space:nowrap}.step b{color:#70ddb3;margin-right:4px}.step.current{color:#a9c9ff}.step.current b{color:#a9c9ff}
+@media(max-aspect-ratio:1/1){.layout{grid-template-columns:0 1fr 0;grid-template-rows:1fr 12%}.toolbar,.panel{display:none}.timeline{grid-column:1/4}.title{left:5%;bottom:15%}}
+</style>
+</head>
+<body>
+<div class="aipe-thumbnail">
+  <div class="topbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="filename">landscape_RAW_4928.dng</span><div class="top-actions"><span>Original</span><span class="active">AI Enhanced</span><span>Export</span></div></div>
+  <div class="layout">
+    <aside class="toolbar"><div class="tool">⌗</div><div class="tool active">✧</div><div class="tool">✳</div><div class="tool">☼</div><div class="tool">◉</div><div class="tool">☷</div><div class="tool">▱</div></aside>
+    <main class="canvas"><div class="photo"><div class="landscape"></div><div class="before"></div><div class="person"></div><div class="split"></div><div class="handle">‹ ›</div><span class="label left">Before</span><span class="label right">AI Enhanced</span><span class="ai-tag">✦ AI ENHANCED</span></div><div class="title"><h1><span>AI</span> Photo Editor</h1><p>Intelligent editing · Natural results</p></div></main>
+    <aside class="panel"><div class="panel-title">Adjustments</div><div class="section">✦ AI Auto-Enhance</div>
+      <div class="slider"><span>Exposure</span><div class="track"><div class="fill" style="width:68%"></div></div><span class="value">+1.4</span></div>
+      <div class="slider"><span>Contrast</span><div class="track"><div class="fill" style="width:52%"></div></div><span class="value">+18</span></div>
+      <div class="slider"><span>Highlights</span><div class="track"><div class="fill" style="width:35%"></div></div><span class="value">−26</span></div>
+      <div class="slider"><span>Shadows</span><div class="track"><div class="fill" style="width:74%"></div></div><span class="value">+42</span></div>
+      <div class="section">✦ Color Intelligence</div>
+      <div class="slider"><span>Vibrance</span><div class="track"><div class="fill" style="width:62%"></div></div><span class="value">+38</span></div>
+      <div class="slider"><span>Warmth</span><div class="track"><div class="fill" style="width:58%"></div></div><span class="value">+14</span></div>
+      <div class="slider"><span>Clarity</span><div class="track"><div class="fill" style="width:45%"></div></div><span class="value">+22</span></div>
+      <div class="section">Scene Analysis</div><div class="analysis"><div class="item"><span>Scene</span><b>Landscape</b></div><div class="item"><span>Subject</span><b>Detected</b></div><div class="item"><span>Lighting</span><b>Golden hour</b></div><div class="item"><span>Quality</span><b>Recoverable</b></div></div>
+    </aside>
+    <footer class="timeline"><span class="step"><b>✓</b> Import</span><span class="step"><b>✓</b> Analyze</span><span class="step current"><b>03</b> AI Enhance</span><span class="step">04 Refine</span><span class="step">05 Export</span></footer>
+  </div>
+</div>
+</body>
+</html>
