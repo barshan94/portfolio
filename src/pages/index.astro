@@ -7,6 +7,7 @@ const allProjects = await getCollection("projects");
 const projectId = (project) => project.id.replace(/\.md$/, "");
 
 const selectedProjectIds = [
+  "ai-photo-editor",
   "money-calculator",
   "asta-store",
   "mount-royal-academy",
@@ -46,6 +47,7 @@ const getProjectRepo = (project: (typeof allProjects)[number]) =>
 
 const getProjectDemo = (project: (typeof allProjects)[number]) => {
   const demoByProject: Record<string, string> = {
+    "ai-photo-editor": "/ai-photo-editor-thumbnail.html",
     "money-calculator": "/money-calculator.html",
     "asta-store": "/asta-store-animation.html",
     "mount-royal-academy": "/mount-royal-academy-animation.html",
@@ -216,7 +218,9 @@ const getExperienceDate = (experience: any) =>
               <div class="project-card-top">
                 <span class="project-number">{projectNumber(index)}</span>
                 <span class="project-category">
-                  {projectId(project) === "money-calculator"
+                  {projectId(project) === "ai-photo-editor"
+                    ? "AI & photo editing"
+                    : projectId(project) === "money-calculator"
                     ? "Personal finance"
                     : projectId(project) === "asta-store"
                     ? "E-commerce"
@@ -239,7 +243,11 @@ const getExperienceDate = (experience: any) =>
               </div>
 
               <div class="project-art" aria-hidden="true">
-                {projectId(project) === "money-calculator" ? (
+                {projectId(project) === "ai-photo-editor" ? (
+                  <div class="art-ai-photo-editor-thumbnail">
+                    <iframe src="/ai-photo-editor-thumbnail.html" title="AI Photo Editor static portfolio thumbnail" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+                  </div>
+                ) : projectId(project) === "money-calculator" ? (
                   <div class="art-money-thumbnail">
                     <img
                       src="/images/money-calculator-thumbnail.svg"
@@ -355,6 +363,19 @@ const getExperienceDate = (experience: any) =>
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Play demo: ${project.data.title}`}
+                    >
+                      <span aria-hidden="true">▶</span> Play demo
+                    </a>
+                  )}
+
+                  {projectId(project) === "ai-photo-editor" && (
+                    <a
+                      class="project-demo-link"
+                      href="/ai-photo-editor-thumbnail.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Open AI Photo Editor preview; animated demo coming soon"
+                      title="Static preview for now — animated demo will be added later"
                     >
                       <span aria-hidden="true">▶</span> Play demo
                     </a>
@@ -605,6 +626,25 @@ const getExperienceDate = (experience: any) =>
   </main>
 
 <style>
+
+  /* AI Photo Editor portfolio thumbnail */
+  .art-ai-photo-editor-thumbnail {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    background: #0a0b10;
+  }
+
+  .art-ai-photo-editor-thumbnail iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;
+    background: #0a0b10;
+  }
+
   /* 999 National Emergency Service project thumbnail */
   .art-emergency-thumbnail,
   .art-durga-map-thumbnail {
