@@ -21,9 +21,17 @@ button{font:inherit;color:inherit}.demo{width:min(1440px,100%);aspect-ratio:16/9
 .caption-preview{font-size:clamp(12px,1.35vw,18px);font-style:italic;color:#d9d3ff;line-height:1.5}.caption-preview span{color:#8eaaff}
 @media(max-width:800px){body{padding:0}.demo{aspect-ratio:auto;min-height:560px;height:100dvh;max-height:none;border-radius:0;border:0}.top{height:52px;padding:0 13px}.workspace{inset:52px 0 58px;grid-template-columns:44px minmax(0,1fr)}.tools{padding-top:12px;gap:7px}.tool{width:30px;height:30px;font-size:14px}.stage{padding:12px}.photo{width:100%;height:55%;min-height:200px}.side{display:none}.stage-title{left:5%;bottom:7%}.timeline{height:58px;padding:0 10px;gap:6px}.progress{margin-right:3px}.ctrl{width:28px;height:28px}.overlay{inset:52px 0 58px}.file{font-size:9px}.live{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Match the persistent return control used by the other portfolio demos. */
+.portfolio-return{position:fixed;top:16px;right:16px;z-index:1000;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid rgba(130,160,180,.42);border-radius:999px;background:rgba(8,13,20,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#eaf0f6;text-decoration:none;font:600 12px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.015em;box-shadow:0 6px 24px rgba(0,0,0,.22);transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.portfolio-return:hover{background:rgba(24,37,49,.96);border-color:rgba(100,220,215,.8);transform:translateY(-1px)}
+.portfolio-return:focus-visible{outline:2px solid #5de6d7;outline-offset:3px}
+@media(max-width:520px){.portfolio-return{top:10px;right:10px;min-height:36px;padding:0 11px;font-size:11px;gap:6px}}
+
 </style>
 </head>
 <body>
+<a class="portfolio-return" href="/#projects" target="_top" aria-label="Back to portfolio projects"><span aria-hidden="true">←</span> Back to Portfolio</a>
 <main class="demo" id="demo" aria-label="AI Photo Editor animated product demo">
 <header class="top"><div class="brandmark">✦</div><div class="brand">AI Photo Editor<small>Intelligent photo workflow</small></div><div class="file">landscape_RAW_4928.dng</div><div class="live"><i></i><span id="status">Demo playing</span></div></header>
 <div class="workspace">
