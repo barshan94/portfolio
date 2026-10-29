@@ -47,6 +47,7 @@ const getProjectRepo = (project: (typeof allProjects)[number]) =>
 
 const getProjectDemo = (project: (typeof allProjects)[number]) => {
   const demoByProject: Record<string, string> = {
+    "ai-photo-editor": "/ai-photo-editor-demo.html",
     "money-calculator": "/money-calculator.html",
     "asta-store": "/asta-store-animation.html",
     "mount-royal-academy": "/mount-royal-academy-animation.html",
@@ -367,18 +368,7 @@ const getExperienceDate = (experience: any) =>
                     </a>
                   )}
 
-                  {projectId(project) === "ai-photo-editor" && (
-                    <a
-                      class="project-demo-link"
-                      href="/ai-photo-editor-thumbnail.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Open AI Photo Editor preview; animated demo coming soon"
-                      title="Static preview for now — animated demo will be added later"
-                    >
-                      <span aria-hidden="true">▶</span> Play demo
-                    </a>
-                  )}
+
                 </div>
               </div>
             </article>
